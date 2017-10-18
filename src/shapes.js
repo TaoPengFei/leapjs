@@ -20,9 +20,11 @@ function Line(x1, y1, x2, y2, color){
 
 Line.prototype.draw = function(){
   ctx.strokeStyle = this.strokeStyle;
+  ctx.beginPath();
   ctx.moveTo(this.x1, this.y1);
   ctx.lineTo(this.x2, this.y2);
   ctx.stroke();
+  ctx.closePath();
 }
 
 function Rectangle(x, y, w, h, color){

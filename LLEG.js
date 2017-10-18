@@ -106,9 +106,11 @@ function Line(x1, y1, x2, y2, color){
 
 Line.prototype.draw = function(){
   ctx.strokeStyle = this.strokeStyle;
+  ctx.beginPath();
   ctx.moveTo(this.x1, this.y1);
   ctx.lineTo(this.x2, this.y2);
   ctx.stroke();
+  ctx.closePath();
 }
 
 function Rectangle(x, y, w, h, color){
@@ -142,25 +144,22 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 const canvas = __webpack_require__(0).canvas;
+const ctx = __webpack_require__(0).ctx;
 const Line = __webpack_require__(1).Line;
 const Rectangle = __webpack_require__(1).Rectangle;
 
-
-canvas.width = 600;
-canvas.height = 300;
-
-line = new Line(10, 20, 30, 40, "red");
-rect = new Rectangle(100, 100, 200, 200, "green");
-
-function animation(){
-  canvas.clear();
+function drawLine(x1, y1, x2, y2, c){
+  var line = new Line(x1, y1, x2, y2, c);
   line.draw();
-  rect.draw();
-  requestAnimationFrame(animation);
+  return line;
 }
 
-animation();
+window.canvas = canvas;
+window.ctx = ctx;
+window.Line = Line;
+window.Rectangle = Rectangle;
 
+window.drawLine = drawLine;
 
 
 /***/ })
