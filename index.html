@@ -1,0 +1,131 @@
+<html>
+<head>
+    <title>JSBIN Demo</title>
+    
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width initial-scale=1'>
+    
+    <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.29.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.29.0/theme/ambiance.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.29.0/addon/lint/lint.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.29.0/addon/hint/show-hint.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jshint/2.9.5/jshint.min.js"></script>
+    <script src="https://cdn.bootcss.com/codemirror/5.29.0/codemirror.min.js"></script>
+    <script src="https://cdn.bootcss.com/codemirror/5.29.0/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/lint/lint.min.js"></script>
+    <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/lint/javascript-lint.min.js"></script>
+    <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/hint/show-hint.min.js"></script>    
+    <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/hint/javascript-hint.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/codemirror/5.30.0/mode/xml/xml.min.js"></script>
+    <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/hint/xml-hint.min.js"></script>
+
+    <style type="text/css">
+    div.half {
+        float: left;
+        width: 45%;
+    }
+
+    iframe {
+        height: 600px;
+        width: 100%;
+    }
+    </style>
+</head>
+<body>
+    <div class="half">
+        BODY
+        <textarea id="html">
+<audio id='bgm' loop="loop"><source src='http://oq2qlcey8.bkt.clouddn.com/bgm.mp3' type='audio/mp3'></audio>
+<audio id='jump'><source src='http://oq2qlcey8.bkt.clouddn.com/jump.mp3' type='audio/mp3'></audio>
+<audio id='jump2'><source src='http://oq2qlcey8.bkt.clouddn.com/jump2.mp3' type='audio/mp3'></audio>
+<audio id='collision'><source src='http://oq2qlcey8.bkt.clouddn.com/collision.mp3' type='audio/mp3'></audio>
+    
+<canvas id="canvas" width="600" height="300"></canvas>
+<canvas id="canvas1" width="600" height="300" style="display:none"></canvas>
+<canvas id="canvas2" width="600" height="300" style="display:none"></canvas>
+<script src="http://oq2qlcey8.bkt.clouddn.com/images.js"></script>
+<script src="http://oq2qlcey8.bkt.clouddn.com/runner.min.js?"></script>
+<script src="http://oq2qlcey8.bkt.clouddn.com/YoMo.js"></script>
+        </textarea>
+        JS
+        <textarea id="js">
+canvas.width=600;
+canvas.height=300;
+
+var game = new LL.RunnerGame();
+
+game.newScene()
+ .text("The runner", 200, 100, "white")
+ .animation(flower, 200, 170)  
+ .image(tree, 400, 170);  
+
+
+game.newScene()
+  .image(spike2, 100, 150)
+  .image(cacti, 300, 170)
+  .animation(crab, 500, 180);
+
+game.init();
+game.start();
+        </textarea>
+    </div>
+    <div class="half">
+        DISPLAY <button onclick="submit()">Run</button>
+        <iframe id="iframe"></iframe>
+    </div>
+    <script>
+        //var HeadEditor = CodeMirror.fromTextArea(document.getElementById("head"), {
+        //    mode: "xml",
+        //    lineNumbers: true,
+        //    styleActiveLine: true,
+        //    indentUnit: 4,
+        //});
+        //HeadEditor.setSize('auto', 140);
+
+        var HtmlEditor = CodeMirror.fromTextArea(document.getElementById("html"), {
+            mode: "xml",
+            lineNumbers: true,
+            styleActiveLine: true,
+            indentUnit: 4,
+        });
+        HtmlEditor.setSize('auto', 200);
+
+        var JSEditor = CodeMirror.fromTextArea(document.getElementById("js"), {
+            lineNumbers: true,
+            styleActiveLine: true,
+            indentUnit: 4,
+            //theme: "ambiance",
+
+            mode: {name: "javascript", globalVars: true},
+
+            extraKeys: {"Ctrl-p": "autocomplete"},
+            gutters: ["CodeMirror-lint-markers"],
+            lint: true
+
+        });
+        JSEditor.setSize('auto', 400);
+
+        function submit(){
+            var value = "data:text/html,"
+
+             + "<html>"
+             //+ "<head>"
+             //+      HeadEditor.getValue()
+             //+ "<\/head>"
+             + "<body>"
+             +      HtmlEditor.getValue()
+             + "<script>" 
+             +      JSEditor.getValue() 
+             + "<\/script>"
+             + "<\/body>"
+             + "<\/html>"
+            $("#iframe").attr("src", value);
+        }
+    </script>
+
+</body>
+</html>
