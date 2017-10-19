@@ -1,4 +1,5 @@
 var ctx = require('./canvas.js').ctx;
+var inheritPrototype = require('./util.js').inheritPrototype;
 
 var defaultStyle = "#000000";
 
@@ -10,15 +11,19 @@ var shapeType = Object.freeze({
     Image: 4
 });
 
-function Shape(){
+function Shape(x, y){
     this.shapeType = null;
-    this.x = 0;
-    this.y = 0;
+    this.x = x;
+    this.y = y;
     this.strokeStyle = defaultStyle;
     this.fillStyle = defaultStyle;
+    this.clicked = false;
 }
 
 function Line(x1, y1, x2, y2){
+    var x = (x1+x2)/2;
+    var y = (y1+y2)/2;
+    Shape.call(this, x, y);
     this.shapeType = shapeType.Line;
     this.x1 = x1;
     this.y1 = y1;
@@ -27,7 +32,7 @@ function Line(x1, y1, x2, y2){
     this.strokeStyle = color || defaultStyle;
 }
 
-Line.prototype = Shpae.prototype;
+inheritPrototype(Line, Shape);
 
 Line.prototype.draw = function(){
     ctx.strokeStyle = this.strokeStyle;
@@ -39,6 +44,7 @@ Line.prototype.draw = function(){
 };
 
 function Rectangle(x, y, w, h, color){
+    Shape.call(this, x, y);
     this.shapeType = shapeType.Rectangle;
     this.x = x;
     this.y = y;
@@ -47,6 +53,8 @@ function Rectangle(x, y, w, h, color){
     this.strokeStyle = color || defaultStyle;
     this.fillStyle = color || defaultStyle;
 }
+
+inheritPrototype(Rectangle, Shape);
 
 Rectangle.prototype.draw = function(){
     ctx.strokeStyle = this.strokeStyle;
