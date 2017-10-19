@@ -4,6 +4,7 @@ var inheritPrototype = function(subClass, superClass){
     subClass.prototype = prototype;
 };
 
+
 module.exports = {
     inheritPrototype: inheritPrototype
 };

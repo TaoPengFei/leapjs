@@ -62,14 +62,11 @@
   JSEditor.setSize('auto', 400);
 
   var defaultCode = '' 
-  + 'canvas.width = 600;' + '\n'
-  + 'canvas.height = 300;' + '\n'
-  + '\n'
-  + 'line = new Line(10, 20, 30, 40, "red");' + '\n' 
-  + 'rect = new Rectangle(100, 100, 200, 200, "green");' + '\n' 
-  + '\n'
-  + 'line.draw();' + '\n'
-  + 'rect.draw();' + '\n';
+  + 'line = new Line(10, 20, 30, 40);' + '\r\n' 
+  + 'rect = new Rectangle(100, 100, 200, 200);' + '\r\n' 
+  + '\r\n'
+  + 'line.draw();' + '\r\n'
+  + 'rect.draw();' + '\r\n';
 
   JSEditor.setValue(defaultCode);
 
@@ -77,14 +74,14 @@
     var html = '';
     var js = JSEditor.getValue();
 
-    html += '<html>' + "\n";
-    html += '<body>' + "\n";
-    html += '<canvas id="canvas" style="border: 1px solid #d3d3d3;">' + "\n";
-    html += '<\/canvas>' + "\n";
-    html += '<script src="LLEG.js"><\/script>' + "\n";
-    html += '<script>' + js + '<\/script>' + "\n";
-    html += '<\/body>' + "\n";
-    html += '<\/html>' + "\n";
+    html += '<html>' + "\r\n";
+    html += '<body>' + "\r\n";
+    html += '<canvas id="canvas" width="600" height="400" style="border: 1px solid #d3d3d3;">' + "\r\n";
+    html += '<\/canvas>' + "\r\n";
+    html += '<script src="LLEG.js"><\/script>' + "\r\n";
+    html += '<script>' + js + '<\/script>' + "\r\n";
+    html += '<\/body>' + "\r\n";
+    html += '<\/html>' + "\r\n";
 
     return html;
   }
