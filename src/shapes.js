@@ -66,7 +66,9 @@ inheritPrototype(Polygon, Shape);
 
 Polygon.prototype._draw = function(){
     ctx.beginPath();
-    for(var i=0, p; i<this.points.length; i++){
+    var p = this.points[0];
+    ctx.moveTo(p.x, p.y);
+    for(var i=1; i<this.points.length; i++){
         p = this.points[i];
         ctx.lineTo(p.x, p.y);
     }
