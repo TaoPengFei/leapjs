@@ -1,17 +1,35 @@
 var ctx = require('./canvas.js').ctx;
 var inheritPrototype = require('./util.js').inheritPrototype;
 
-function Shape(x, y){
+function Point(x, y){
     this.x = x;
     this.y = y;
-    this.strokeStyle = "green";
-    this.fillStyle = "orange";
-    this.clicked = false;
 }
 
-Shape.prototype.stroke = null;
-Shape.prototype.fill = null;
-Shape.prototype.draw = null;
+function Shape(){
+    this.strokeStyle = "green";
+    this.fillStyle = "orange";
+}
+
+Shape.prototype._draw = null;
+
+Shape.prototype.stroke = function(){
+    ctx.save();
+    ctx.strokeStyle = this.strokeStyle;
+    this._draw();
+    ctx.stroke();
+    ctx.restore();
+};
+
+Shape.prototype.fill = function(){
+    ctx.save();
+    ctx.fillStyle = this.fillStyle;
+    this._draw();
+    ctx.fill();
+    ctx.restore();
+};
+
+Shape.prototype.draw = Shape.prototype.stroke;
 
 function Line(x1, y1, x2, y2){
     Shape.call(this, 0, 0);
@@ -23,41 +41,50 @@ function Line(x1, y1, x2, y2){
 
 inheritPrototype(Line, Shape);
 
-Line.prototype.draw = function(){
-    ctx.save();
-    ctx.strokeStyle = this.strokeStyle;
-    ctx.beginPath();
-    ctx.moveTo(this.x1+this.x, this.y1+this.y);
-    ctx.lineTo(this.x2+this.x, this.y2+this.y);
-    ctx.stroke();
-    ctx.closePath();
-    ctx.restore();
+Line.prototype._draw = function(){
+    ctx.moveTo(this.x1, this.y1);
+    ctx.lineTo(this.x2, this.y2);
 };
 
 Line.prototype.stroke = Line.prototype.draw;
 
+function Polygon(){
+    if(arguments.length < 6){
+        throw "not enough arguments";
+    }
+
+    this.points = [];
+    for(var i=0; i<arguments.length-1; i+=2){
+        var p = new Point(arguments[i], arguments[i+1]);
+        this.points.push(p);
+    }
+ 
+    Shape.call(this);
+}
+
+inheritPrototype(Polygon, Shape);
+
+Polygon.prototype._draw = function(){
+    ctx.beginPath();
+    for(var i=0, p; i<this.points.length; i++){
+        p = this.points[i];
+        ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
+};
+
 function Rectangle(x, y, w, h){
-    Shape.call(this, x, y);
+    Shape.call(this);
+    this.x = x;
+    this.y = y;
     this.w = w;
     this.h = h;
 }
 
 inheritPrototype(Rectangle, Shape);
 
-Rectangle.prototype.draw = function(){
-    ctx.save();
-    ctx.strokeStyle = this.strokeStyle;
-    ctx.strokeRect(this.x, this.y, this.w, this.h);
-    ctx.restore();
-};
-
-Rectangle.prototype.stroke = Rectangle.prototype.draw;
-
-Rectangle.prototype.fill = function(){
-    ctx.save();
-    ctx.fillStyle = this.fillStyle;
-    ctx.fillRect(this.x, this.y, this.w, this.h);
-    ctx.restore();
+Rectangle.prototype._draw = function(){
+    ctx.rect(this.x, this.y, this.w, this.h);
 };
 
 function Sprite(src, x, y, w, h){
@@ -79,5 +106,6 @@ Sprite.prototype.draw = function(){
 module.exports = {
     Line: Line,
     Rectangle: Rectangle,
+    Polygon: Polygon,
     Sprite: Sprite
 };

@@ -14,6 +14,7 @@ window.canvas = canvas;
 window.ctx = ctx;
 window.Line = shapes.Line;
 window.Rectangle = shapes.Rectangle;
+window.Polygon = shapes.Polygon;
 window.Sprite = shapes.Sprite;
 
 window.drawLine = drawLine;

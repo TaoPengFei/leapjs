@@ -24,42 +24,44 @@
   <style type="text/css">
     div.half {
       float: left;
-      width: 45%;
+      width: 50%;
     }
     iframe {
       height: 600px;
       width: 100%;
+      border: none;
     }
     .CodeMirror {
-      font-size: 16px;
+        font-family: Courier New;
+        font-size: 16px;
     }
   </style>
 </head>
 <body>
   <div class="half">
-    JS
     <textarea id="js"></textarea>
   </div>
-  <div class="half">
-    DISPLAY 
+  <div class="half" id="output">
     <button onclick="submit()">Run</button>
-    <iframe id="output" frameborder="0" src="frame.html"></iframe>
+    <iframe></iframe>
   </div>
   <script>
   var JSEditor = CodeMirror.fromTextArea(document.getElementById("js"), {
     lineNumbers: true,
+    lineWrapping: true,
     styleActiveLine: true,
     indentUnit: 4,
     //theme: "ambiance",
   
     mode: {name: "javascript", globalVars: true},
   
-    extraKeys: {"Ctrl-p": "autocomplete"},
+    extraKeys: {"Ctrl-Q": "autocomplete"},
     gutters: ["CodeMirror-lint-markers"],
     lint: true
   
   });
-  JSEditor.setSize('auto', 400);
+  
+  JSEditor.setSize('auto', 'auto');
 
   var defaultCode = '' 
   + 'line = new Line(10, 20, 30, 40);' + '\r\n' 
@@ -87,9 +89,14 @@
   }
 
   function submit(){
-    var iframe = document.querySelector('iframe#output');
+    var el = document.getElementsByTagName("iframe")[0];
+    el.parentNode.removeChild(el);
+
+    var iframe = document.createElement("iframe");
+    document.querySelector("div#output").appendChild(iframe);
 
     var iframe_doc = iframe.contentDocument;
+
     iframe_doc.open();
     iframe_doc.write(iframe_html());
     iframe_doc.close();
