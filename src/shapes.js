@@ -110,11 +110,14 @@ Rectangle.prototype._draw = function(){
 };
 
 function Text(text, x, y, font){
+    Shape.call(this);
     this.text = text;
-    this.x = x;
-    this.y = y;
+    this.x = x || 0;
+    this.y = y || 20;
     this.font = font || "20px Arial";
 }
+
+inheritPrototype(Text, Shape);
 
 Text.prototype.stroke = function(){
     ctx.font = this.font;
@@ -127,14 +130,16 @@ Text.prototype.fill = function(){
 }
 
 function Sprite(src, x, y, w, h){
+    Shape.call(this);
     this.img = new Image();
     this.img.src = src;
     this.x = x || 0;
     this.y = y || 0;
     this.w = w;
     this.h = h;
-
 }
+
+inheritPrototype(Sprite, Shape);
 
 Sprite.prototype.cut = function(sx, sy, sw, sh){
     this.sx = sx;
