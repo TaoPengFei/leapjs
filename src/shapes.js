@@ -1,5 +1,6 @@
 var ctx = require('./canvas.js').ctx;
 var inheritPrototype = require('./util.js').inheritPrototype;
+var Transform = require('./transform.js').Transform;
 
 function Point(x, y){
     this.x = x;
@@ -7,14 +8,16 @@ function Point(x, y){
 }
 
 function Shape(){
-    this.strokeStyle = "green";
-    this.fillStyle = "orange";
+    this.strokeStyle = "#00FFFF";
+    this.fillStyle = "rgba(0, 255, 255, 0.5)";
+    this.transform = new Transform();
 }
 
 Shape.prototype._draw = null;
 
 Shape.prototype.stroke = function(){
     ctx.save();
+    this.transform.transfor(ctx);
     ctx.strokeStyle = this.strokeStyle;
     this._draw();
     ctx.stroke();
@@ -23,6 +26,7 @@ Shape.prototype.stroke = function(){
 
 Shape.prototype.fill = function(){
     ctx.save();
+    this.transform.transfor(ctx);
     ctx.fillStyle = this.fillStyle;
     ctx.beginPath();
     this._draw();
@@ -33,7 +37,7 @@ Shape.prototype.fill = function(){
 Shape.prototype.draw = function(){
     this.fill();
     this.stroke();
-}
+};
 
 function Circle(x, y, r){
     Shape.call(this);
@@ -46,7 +50,7 @@ inheritPrototype(Circle, Shape);
 
 Circle.prototype._draw = function(){
     ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
-}
+};
 
 function Line(x1, y1, x2, y2){
     Shape.call(this);
@@ -99,14 +103,14 @@ function Rectangle(x, y, w, h){
     Shape.call(this);
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
+    this.width = w;
+    this.height = h;
 }
 
 inheritPrototype(Rectangle, Shape);
 
 Rectangle.prototype._draw = function(){
-    ctx.rect(this.x, this.y, this.w, this.h);
+    ctx.rect(this.x, this.y, this.width, this.height);
 };
 
 function Text(text, x, y, font){
@@ -121,13 +125,19 @@ inheritPrototype(Text, Shape);
 
 Text.prototype.stroke = function(){
     ctx.font = this.font;
+    ctx.save();
+    this.transform.transfor(ctx);
     ctx.strokeText(this.text, this.x, this.y);
-}
+    ctx.restore();
+};
 
 Text.prototype.fill = function(){
     ctx.font = this.font;
+    ctx.save();
+    this.transform.transfor(ctx);
     ctx.fillText(this.text, this.x, this.y);
-}
+    ctx.restore();
+};
 
 function Sprite(src, x, y, w, h){
     Shape.call(this);
@@ -135,53 +145,77 @@ function Sprite(src, x, y, w, h){
     this.img.src = src;
     this.x = x || 0;
     this.y = y || 0;
-    this.w = w;
-    this.h = h;
+    this.width = w;
+    this.height = h;
 }
 
 inheritPrototype(Sprite, Shape);
 
 Sprite.prototype.cut = function(sx, sy, sw, sh){
-    this.sx = sx;
-    this.sy = sy;
-    this.sw = sw;
-    this.sh = sh;
-    this.w = this.w || this.sw;
-    this.h = this.h || this.sh;
-}
+    this.sx = sx > 0 ? sx : 1;
+    this.sy = sy > 0 ? sx : 1;
+    this.swidth = sw;
+    this.sheight = sh;
+    this.width = this.width || this.swidth;
+    this.height = this.height || this.sheight;
+};
 
-Sprite.prototype.draw = function(){
-    if(this.sx && this.sy && this.sw & this.sh){
-        ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh,
-            this.x, this.y, this.w, this.h);
+Sprite.prototype._draw = function(){
+    if(this.sx && this.sy && this.swidth & this.sheight){
+        ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight,
+            this.x, this.y, this.width, this.height);
     }
-    else if(this.w && this.h)
-        ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+    else if(this.width && this.height)
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     else
         ctx.drawImage(this.img, this.x, this.y);
 };
 
+Sprite.prototype.draw = function(){
+    ctx.save();
+    this.transform.transfor(ctx);
+    this._draw();
+    ctx.restore();
+};
+
 function Animation(src, x, y, w, h){
     Sprite.call(this, src, x, y, w, h);
+    this.speed = 1;
 }
 
 inheritPrototype(Animation, Sprite);
 
-Animation.prototype.setFrame = function(sw, sh, nf, speed){
-    if(nf %1 != 0)
-        throw "LLEG: setFrame(w, h, f, s), f must be an integer";
-    this.nf = nf;// frame count
-    this.cf = 0; // current frame
+Animation.prototype.setFrame = function(sx, sy, sw, sh, c, r){
+    this.c = c;
+    this.r = r || 1;
+    this.cc = 0;  // current colume
+    this.cr = 0;  // current row
+    this.cut(sx, sy, sw, sh);
+};
+
+Animation.prototype.setSpeed = function(speed){
     this.speed = speed > 1 ? speed : 1;
-    this.cut(1, 1, sw, sh);
-}
+};
+
+Animation.prototype.updateFrame = function(){
+    this.cc++;
+    this.cr++;
+};
+
+Animation.prototype._draw = function(){
+    var sx = this.sx + this.swidth * (Math.floor(this.cc/this.speed) % this.c);
+    var sy = this.sy + this.sheight * (Math.floor(this.cr/this.c/this.speed) % this.r);
+    ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight,
+        this.x, this.y, this.width, this.height);
+};
 
 Animation.prototype.draw = function(){
-    var sx = this.sx + this.sw * Math.floor(this.cf/this.speed % this.nf);
-    ctx.drawImage(this.img, sx, this.sy, this.sw, this.sh,
-        this.x, this.y, this.w, this.h);
-    this.cf++;
-}
+    ctx.save();
+    this.transform.transfor(ctx);
+    this._draw();
+    this.updateFrame();
+    ctx.restore();
+};
 
 module.exports = {
     Line: Line,
