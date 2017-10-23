@@ -64,11 +64,17 @@
   JSEditor.setSize('auto', 'auto');
 
   var defaultCode = '' 
-  + 'line = new Line(10, 20, 30, 40);' + '\r\n' 
-  + 'rect = new Rectangle(100, 100, 200, 200);' + '\r\n' 
+  + 'var rect = new Rectangle(-100, -100, 200, 200);' + '\r\n' 
   + '\r\n'
-  + 'line.draw();' + '\r\n'
-  + 'rect.draw();' + '\r\n';
+  + 'rect.transform.translate(200, 200);' + '\r\n'
+  + 'var x = 0;' + '\r\n'
+  + '\r\n'
+  + '(function main(){' + '\r\n'
+  + '    canvas.clear();' + '\r\n'
+  + '    rect.transform.rotate(x++);' + '\r\n'
+  + '    rect.draw();' + '\r\n'
+  + '    requestAnimationFrame(main);' + '\r\n'
+  + '}() );' + '\r\n';
 
   JSEditor.setValue(defaultCode);
 
