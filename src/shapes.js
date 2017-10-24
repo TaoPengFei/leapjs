@@ -200,7 +200,7 @@ Sprite.prototype.draw = function(ctx){
     ctx = ctx || context;
     ctx.save();
     this.transform.transfor(ctx);
-    this._draw();
+    this._draw(ctx);
     ctx.restore();
 };
 
@@ -240,7 +240,7 @@ Animation.prototype.draw = function(ctx){
     ctx = ctx || context;
     ctx.save();
     this.transform.transfor(ctx);
-    this._draw();
+    this._draw(ctx);
     this.updateFrame();
     ctx.restore();
 };
