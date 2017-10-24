@@ -1,4 +1,4 @@
-var ctx = require('./canvas.js').ctx;
+var context = require('./canvas.js').ctx;
 var inheritPrototype = require('./util.js').inheritPrototype;
 var Transform = require('./transform.js').Transform;
 
@@ -15,28 +15,46 @@ function Shape(){
 
 Shape.prototype._draw = null;
 
-Shape.prototype.stroke = function(){
+Shape.prototype.stroke = function(ctx){
+    ctx = ctx || context;
     ctx.save();
     this.transform.transfor(ctx);
     ctx.strokeStyle = this.strokeStyle;
-    this._draw();
+    this._draw(ctx);
     ctx.stroke();
     ctx.restore();
 };
 
-Shape.prototype.fill = function(){
+Shape.prototype.fill = function(ctx){
+    ctx = ctx || context;
     ctx.save();
     this.transform.transfor(ctx);
     ctx.fillStyle = this.fillStyle;
     ctx.beginPath();
-    this._draw();
+    this._draw(ctx);
     ctx.fill();
     ctx.restore();
 };
 
-Shape.prototype.draw = function(){
-    this.fill();
-    this.stroke();
+Shape.prototype.draw = function(ctx){
+    this.fill(ctx);
+    this.stroke(ctx);
+};
+
+Shape.prototype.translate = function(x, y){
+    this.transform.translate(x, y);
+};
+
+Shape.prototype.scale = function(x, y){
+    this.transform.scale(x, y);
+};
+
+Shape.prototype.skew = function(x, y){
+    this.transform.skew(x, y);
+};
+
+Shape.prototype.rotate = function(degree){
+    this.transform.rotate(degree);
 };
 
 function Circle(x, y, r){
@@ -48,7 +66,8 @@ function Circle(x, y, r){
 
 inheritPrototype(Circle, Shape);
 
-Circle.prototype._draw = function(){
+Circle.prototype._draw = function(ctx){
+    ctx = ctx || context;
     ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
 };
 
@@ -62,7 +81,8 @@ function Line(x1, y1, x2, y2){
 
 inheritPrototype(Line, Shape);
 
-Line.prototype._draw = function(){
+Line.prototype._draw = function(ctx){
+    ctx = ctx || context;
     ctx.moveTo(this.x1, this.y1);
     ctx.lineTo(this.x2, this.y2);
 };
@@ -83,7 +103,8 @@ function Polygon(){
 
 inheritPrototype(Polygon, Shape);
 
-Polygon.prototype._draw = function(){
+Polygon.prototype._draw = function(ctx){
+    ctx = ctx || context;
     var p = this.points[0];
     ctx.moveTo(p.x, p.y);
     for(var i=1; i<this.points.length; i++){
@@ -109,7 +130,8 @@ function Rectangle(x, y, w, h){
 
 inheritPrototype(Rectangle, Shape);
 
-Rectangle.prototype._draw = function(){
+Rectangle.prototype._draw = function(ctx){
+    ctx = ctx || context;
     ctx.rect(this.x, this.y, this.width, this.height);
 };
 
@@ -123,7 +145,8 @@ function Text(text, x, y, font){
 
 inheritPrototype(Text, Shape);
 
-Text.prototype.stroke = function(){
+Text.prototype.stroke = function(ctx){
+    ctx = ctx || context;
     ctx.font = this.font;
     ctx.save();
     this.transform.transfor(ctx);
@@ -131,7 +154,8 @@ Text.prototype.stroke = function(){
     ctx.restore();
 };
 
-Text.prototype.fill = function(){
+Text.prototype.fill = function(ctx){
+    ctx = ctx || context;
     ctx.font = this.font;
     ctx.save();
     this.transform.transfor(ctx);
@@ -160,7 +184,8 @@ Sprite.prototype.cut = function(sx, sy, sw, sh){
     this.height = this.height || this.sheight;
 };
 
-Sprite.prototype._draw = function(){
+Sprite.prototype._draw = function(ctx){
+    ctx = ctx || context;
     if(this.sx && this.sy && this.swidth & this.sheight){
         ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight,
             this.x, this.y, this.width, this.height);
@@ -171,7 +196,8 @@ Sprite.prototype._draw = function(){
         ctx.drawImage(this.img, this.x, this.y);
 };
 
-Sprite.prototype.draw = function(){
+Sprite.prototype.draw = function(ctx){
+    ctx = ctx || context;
     ctx.save();
     this.transform.transfor(ctx);
     this._draw();
@@ -202,14 +228,16 @@ Animation.prototype.updateFrame = function(){
     this.cr++;
 };
 
-Animation.prototype._draw = function(){
+Animation.prototype._draw = function(ctx){
+    ctx = ctx || context;
     var sx = this.sx + this.swidth * (Math.floor(this.cc/this.speed) % this.c);
     var sy = this.sy + this.sheight * (Math.floor(this.cr/this.c/this.speed) % this.r);
     ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight,
         this.x, this.y, this.width, this.height);
 };
 
-Animation.prototype.draw = function(){
+Animation.prototype.draw = function(ctx){
+    ctx = ctx || context;
     ctx.save();
     this.transform.transfor(ctx);
     this._draw();
@@ -218,6 +246,7 @@ Animation.prototype.draw = function(){
 };
 
 module.exports = {
+    Shape: Shape,
     Line: Line,
     Rectangle: Rectangle,
     Polygon: Polygon,
