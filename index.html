@@ -45,69 +45,7 @@
     <button onclick="submit()">Run</button>
     <iframe></iframe>
   </div>
-  <script>
-  var JSEditor = CodeMirror.fromTextArea(document.getElementById("js"), {
-    lineNumbers: true,
-    lineWrapping: true,
-    styleActiveLine: true,
-    indentUnit: 4,
-    //theme: "ambiance",
-  
-    mode: {name: "javascript", globalVars: true},
-  
-    extraKeys: {"Ctrl-Q": "autocomplete"},
-    gutters: ["CodeMirror-lint-markers"],
-    lint: true
-  
-  });
-  
-  JSEditor.setSize('auto', 'auto');
-
-  var defaultCode = '' 
-  + 'var rect = new Rectangle(-100, -100, 200, 200);' + '\r\n' 
-  + '\r\n'
-  + 'rect.transform.translate(200, 200);' + '\r\n'
-  + 'var x = 0;' + '\r\n'
-  + '\r\n'
-  + '(function main(){' + '\r\n'
-  + '    canvas.clear();' + '\r\n'
-  + '    rect.transform.rotate(x++);' + '\r\n'
-  + '    rect.draw();' + '\r\n'
-  + '    requestAnimationFrame(main);' + '\r\n'
-  + '}() );' + '\r\n';
-
-  JSEditor.setValue(defaultCode);
-
-  function iframe_html(){
-    var html = '';
-    var js = JSEditor.getValue();
-
-    html += '<html>' + "\r\n";
-    html += '<body>' + "\r\n";
-    html += '<canvas id="canvas" width="600" height="400" style="border: 1px solid #d3d3d3;">' + "\r\n";
-    html += '<\/canvas>' + "\r\n";
-    html += '<script src="LLEG.js"><\/script>' + "\r\n";
-    html += '<script>' + js + '<\/script>' + "\r\n";
-    html += '<\/body>' + "\r\n";
-    html += '<\/html>' + "\r\n";
-
-    return html;
-  }
-
-  function submit(){
-    var el = document.getElementsByTagName("iframe")[0];
-    el.parentNode.removeChild(el);
-
-    var iframe = document.createElement("iframe");
-    document.querySelector("div#output").appendChild(iframe);
-
-    var iframe_doc = iframe.contentDocument;
-
-    iframe_doc.open();
-    iframe_doc.write(iframe_html());
-    iframe_doc.close();
-  }
-  
-  </script>
+  <script src="index.js"></script>
+ </script>
 </body>
 </html>
