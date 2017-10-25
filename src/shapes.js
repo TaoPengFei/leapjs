@@ -130,9 +130,9 @@ Rectangle.prototype._draw = function(ctx){
     ctx.rect(this.x, this.y, this.width, this.height);
 };
 
-function Text(text, x, y, font){
+function Text(src, x, y, font){
     Shape.call(this);
-    this.text = text;
+    this.src = src;
     this.x = x || 0;
     this.y = y || 20;
     this.font = font || "20px Arial";
@@ -142,19 +142,25 @@ inheritPrototype(Text, Shape);
 
 Text.prototype.stroke = function(ctx){
     ctx = ctx || context;
-    ctx.font = this.font;
+
     ctx.save();
+
+    ctx.font = this.font;
     this.transform.transfor(ctx);
-    ctx.strokeText(this.text, this.x, this.y);
+    ctx.strokeText(this.src, this.x, this.y);
+
     ctx.restore();
 };
 
 Text.prototype.fill = function(ctx){
     ctx = ctx || context;
-    ctx.font = this.font;
+
     ctx.save();
+
+    ctx.font = this.font;
     this.transform.transfor(ctx);
-    ctx.fillText(this.text, this.x, this.y);
+    ctx.fillText(this.src, this.x, this.y);
+
     ctx.restore();
 };
 
