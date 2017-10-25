@@ -31,22 +31,17 @@ function collide(shape1, shape2){
 
     var canvasData = ctx1.getImageData(0, 0, canvas.width, canvas.height);
 
-    for(var i=0; i<canvasData.data.length; i+=117){
-        if(canvasData.data[i] != 0){
-            return true;
-        }
-    }
-
-    for(var i=0; i<canvasData.data.length; i++){
-        if(canvasData.data[i] != 0){
-            return true;
+    for(var i=0; i<canvasData.data.length/4-1; i++){
+        if(canvasData.data[4*i+3] != 0){
+            return new shapes.Point(i%canvas.width, i/canvas.width);
         }
     }
 
     return false;
 }
 
-Shape.prototype.collide = function(other){
+Object.prototype.collide = function(other){
+    if(!this.draw || !other.draw) throw "LLEG: Object must have draw method";
     return collide(this, other);
 };
 

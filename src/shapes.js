@@ -2,11 +2,6 @@ var context = require('./canvas.js').ctx;
 var inheritPrototype = require('./util.js').inheritPrototype;
 var Transform = require('./transform.js').Transform;
 
-function Point(x, y){
-    this.x = x;
-    this.y = y;
-}
-
 function Shape(){
     this.strokeStyle = "#00FFFF";
     this.fillStyle = "rgba(0, 255, 255, 0.5)";
@@ -94,7 +89,7 @@ function Polygon(){
 
     this.points = [];
     for(var i=0; i<arguments.length-1; i+=2){
-        var p = new Point(arguments[i], arguments[i+1]);
+        var p = { x: arguments[i], y: arguments[i+1] };
         this.points.push(p);
     }
  
@@ -223,9 +218,11 @@ Animation.prototype.setSpeed = function(speed){
     this.speed = speed > 1 ? speed : 1;
 };
 
-Animation.prototype.updateFrame = function(){
-    this.cc++;
-    this.cr++;
+Animation.prototype.updateFrame = function(ctx){
+    if(ctx == context){
+        this.cr++;
+        this.cc++;
+    }
 };
 
 Animation.prototype._draw = function(ctx){
@@ -241,9 +238,16 @@ Animation.prototype.draw = function(ctx){
     ctx.save();
     this.transform.transfor(ctx);
     this._draw(ctx);
-    this.updateFrame();
     ctx.restore();
+    this.updateFrame(ctx);
 };
+
+function Point(x, y){
+    Circle.call(this, x, y, 2);
+}
+
+inheritPrototype(Point, Circle);
+Point.prototype.draw = Point.prototype.fill;
 
 module.exports = {
     Shape: Shape,
@@ -254,5 +258,6 @@ module.exports = {
     Circle: Circle,
     Text: Text,
     Sprite: Sprite,
-    Animation: Animation
+    Animation: Animation,
+    Point: Point
 };

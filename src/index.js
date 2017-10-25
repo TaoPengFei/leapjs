@@ -1,6 +1,6 @@
 var canvas = require('./canvas.js').canvas;
 var ctx = require('./canvas.js').ctx;
-var collide = require('./collision.js').collide;
+var collide = require('./collision.js');
 
 var shapes = require('./shapes.js');
 
@@ -15,5 +15,4 @@ window.Circle = shapes.Circle;
 window.Text = shapes.Text;
 window.Sprite = shapes.Sprite;
 window.Animation = shapes.Animation;
-
-window.collide = collide;
+window.Point = shapes.Point;
