@@ -4,7 +4,7 @@ var Transform = require('./transform.js').Transform;
 
 function Shape(){
     this.strokeStyle = "#00FFFF";
-    this.fillStyle = "rgba(0, 255, 255, 0.5)";
+    this.fillStyle = "rgba(0, 255, 255, 0.4)";
     this.transform = new Transform();
 }
 
@@ -244,6 +244,7 @@ Animation.prototype.draw = function(ctx){
 
 function Point(x, y){
     Circle.call(this, x, y, 2);
+    this.fillStyle = "red";
 }
 
 inheritPrototype(Point, Circle);
