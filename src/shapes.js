@@ -153,6 +153,7 @@ function Text(src, x, y, font){
     this.x = x || 0;
     this.y = y || 20;
     this.font = font || "20px Arial";
+    this.fillStyle = "orange";
 }
 
 inheritPrototype(Text, Shape);
@@ -176,6 +177,8 @@ Text.prototype.fill = function(ctx){
 
     ctx.restore();
 };
+
+Text.prototype.draw = Text.prototype.fill;
 
 function Sprite(src, x, y, w, h){
     Shape.call(this);
