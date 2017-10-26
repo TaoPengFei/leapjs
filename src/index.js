@@ -3,6 +3,7 @@ var ctx = require('./canvas.js').ctx;
 var collide = require('./collision.js');
 var Key = require('./keys.js').Key;
 var Mouse = require('./mouse.js').Mouse; // must after collide
+var Music = require('./music.js').Music;
 
 var shapes = require('./shapes.js');
 
@@ -21,3 +22,5 @@ window.Point = shapes.Point;
 
 window.Key = Key;
 window.Mouse = Mouse;
+
+window.Music = Music;
