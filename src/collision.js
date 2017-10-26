@@ -58,8 +58,6 @@ function pointOnShape(shape, p){
     return false;
 }
 
-
-
 Object.prototype.collide = function(other){
     if(!this.draw || !other.draw) throw "LLEG: Object must have draw method";
     return collide(this, other);
