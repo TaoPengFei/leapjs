@@ -27,7 +27,7 @@ Transform.prototype.rotate = function(degree){
     this.degree = degree;
 };
 
-Transform.prototype.transfor = function(ctx){
+Transform.prototype.updateCtx = function(ctx){
     ctx.transform(this.scaleX, this.skewX, this.skewY, this.scaleY,
             this.translateX, this.translateY);
     ctx.rotate(this.degree * Math.PI / 180);

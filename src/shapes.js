@@ -3,37 +3,60 @@ var inheritPrototype = require('./util.js').inheritPrototype;
 var Transform = require('./transform.js').Transform;
 
 function Shape(){
+    this.transform = new Transform();
+
     this.strokeStyle = "#00FFFF";
     this.fillStyle = "rgba(0, 255, 255, 0.4)";
-    this.transform = new Transform();
+
+    this.globalAlpha = 1;
 }
 
 Shape.prototype._draw = null;
 
+Shape.prototype.updateCtx = function(ctx){
+    ctx.save();
+    ctx.globalAlpha = this.globalAlpha;
+    ctx.strokeStyle = this.strokeStyle;
+    ctx.fillStyle = this.fillStyle;
+    this.transform.updateCtx(ctx);
+}
+
 Shape.prototype.stroke = function(ctx){
     ctx = ctx || context;
-    ctx.save();
-    this.transform.transfor(ctx);
-    ctx.strokeStyle = this.strokeStyle;
+    this.updateCtx(ctx);
+
+    ctx.beginPath();
     this._draw(ctx);
+    ctx.closePath();
     ctx.stroke();
+
     ctx.restore();
 };
 
 Shape.prototype.fill = function(ctx){
     ctx = ctx || context;
-    ctx.save();
-    this.transform.transfor(ctx);
-    ctx.fillStyle = this.fillStyle;
+    this.updateCtx(ctx);
+
     ctx.beginPath();
     this._draw(ctx);
     ctx.fill();
+    ctx.closePath();
+
     ctx.restore();
 };
 
 Shape.prototype.draw = function(ctx){
-    this.fill(ctx);
-    this.stroke(ctx);
+    ctx = ctx || context;
+    this.updateCtx(ctx);
+
+    ctx.beginPath();
+    this._draw(ctx);
+    ctx.closePath();
+
+    ctx.stroke();
+    ctx.fill();
+
+    ctx.restore();
 };
 
 Shape.prototype.translate = function(x, y){
@@ -62,7 +85,6 @@ function Circle(x, y, r){
 inheritPrototype(Circle, Shape);
 
 Circle.prototype._draw = function(ctx){
-    ctx = ctx || context;
     ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
 };
 
@@ -77,12 +99,12 @@ function Line(x1, y1, x2, y2){
 inheritPrototype(Line, Shape);
 
 Line.prototype._draw = function(ctx){
-    ctx = ctx || context;
     ctx.moveTo(this.x1, this.y1);
     ctx.lineTo(this.x2, this.y2);
 };
 
 function Polygon(){
+    Shape.call(this);
     if(arguments.length < 6){
         throw "Polygon should have at lease 3 points";
     }
@@ -92,21 +114,17 @@ function Polygon(){
         var p = { x: arguments[i], y: arguments[i+1] };
         this.points.push(p);
     }
- 
-    Shape.call(this);
 }
 
 inheritPrototype(Polygon, Shape);
 
 Polygon.prototype._draw = function(ctx){
-    ctx = ctx || context;
     var p = this.points[0];
     ctx.moveTo(p.x, p.y);
     for(var i=1; i<this.points.length; i++){
         p = this.points[i];
         ctx.lineTo(p.x, p.y);
     }
-    ctx.closePath();
 };
 
 function Triangle(x1, y1, x2, y2, x3, y3){
@@ -126,7 +144,6 @@ function Rectangle(x, y, w, h){
 inheritPrototype(Rectangle, Shape);
 
 Rectangle.prototype._draw = function(ctx){
-    ctx = ctx || context;
     ctx.rect(this.x, this.y, this.width, this.height);
 };
 
@@ -142,11 +159,9 @@ inheritPrototype(Text, Shape);
 
 Text.prototype.stroke = function(ctx){
     ctx = ctx || context;
-
-    ctx.save();
-
+    this.updateCtx(ctx);
     ctx.font = this.font;
-    this.transform.transfor(ctx);
+
     ctx.strokeText(this.src, this.x, this.y);
 
     ctx.restore();
@@ -154,11 +169,9 @@ Text.prototype.stroke = function(ctx){
 
 Text.prototype.fill = function(ctx){
     ctx = ctx || context;
-
-    ctx.save();
-
+    this.updateCtx(ctx);
     ctx.font = this.font;
-    this.transform.transfor(ctx);
+
     ctx.fillText(this.src, this.x, this.y);
 
     ctx.restore();
@@ -186,7 +199,6 @@ Sprite.prototype.cut = function(sx, sy, sw, sh){
 };
 
 Sprite.prototype._draw = function(ctx){
-    ctx = ctx || context;
     if(this.sx && this.sy && this.swidth & this.sheight){
         ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight,
             this.x, this.y, this.width, this.height);
@@ -197,13 +209,8 @@ Sprite.prototype._draw = function(ctx){
         ctx.drawImage(this.img, this.x, this.y);
 };
 
-Sprite.prototype.draw = function(ctx){
-    ctx = ctx || context;
-    ctx.save();
-    this.transform.transfor(ctx);
-    this._draw(ctx);
-    ctx.restore();
-};
+Sprite.prototype.fill = null;
+Sprite.prototype.stroke = null;
 
 function Animation(src, x, y, w, h){
     Sprite.call(this, src, x, y, w, h);
@@ -215,8 +222,7 @@ inheritPrototype(Animation, Sprite);
 Animation.prototype.setFrame = function(sx, sy, sw, sh, c, r){
     this.c = c;
     this.r = r || 1;
-    this.cc = 0;  // current colume
-    this.cr = 0;  // current row
+    this.cf = 0;  // current frame count
     this.cut(sx, sy, sw, sh);
 };
 
@@ -224,28 +230,13 @@ Animation.prototype.setSpeed = function(speed){
     this.speed = speed > 1 ? speed : 1;
 };
 
-Animation.prototype.updateFrame = function(ctx){
-    if(ctx == context){
-        this.cr++;
-        this.cc++;
-    }
-};
-
 Animation.prototype._draw = function(ctx){
-    ctx = ctx || context;
-    var sx = this.sx + this.swidth * (Math.floor(this.cc/this.speed) % this.c);
-    var sy = this.sy + this.sheight * (Math.floor(this.cr/this.c/this.speed) % this.r);
+    var sx = this.sx + this.swidth * (Math.floor(this.cf/this.speed) % this.c);
+    var sy = this.sy + this.sheight * (Math.floor(this.cf/this.c/this.speed) % this.r);
     ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight,
         this.x, this.y, this.width, this.height);
-};
 
-Animation.prototype.draw = function(ctx){
-    ctx = ctx || context;
-    ctx.save();
-    this.transform.transfor(ctx);
-    this._draw(ctx);
-    ctx.restore();
-    this.updateFrame(ctx);
+    if(ctx === context) this.cf++; // update frame count
 };
 
 function Point(x, y){
