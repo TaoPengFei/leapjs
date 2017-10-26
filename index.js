@@ -32,14 +32,10 @@ function iframe_html(){
 
     html += '<html>\n';
     html += '<body>\n';
-    html += '<canvas id="canvas" width="600" height="400" style="border: 1px solid #d3d3d3;">\n';
-    html += '<\/canvas>\n';
-    html += '<p id="xy"><\/p>\n';
     html += '<script src="LLEG.js"><\/script>\n';
     html += '<script>';
     html += js;
     html += '<\/script>\n';
-    html += '<script>document.onmousemove = function(){ document.getElementById("xy").innerHTML = "" + Mouse.x + ", " + Mouse.y; }<\/script>\n'; 
     html += '<\/body>\n';
     return html;
 }

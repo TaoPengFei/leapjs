@@ -1,9 +1,9 @@
 var canvas = require('./canvas.js').canvas;
+var p = require('./canvas.js').p;
 
 var Mouse = {
     x: 0,
-    y: 0,
-    click: null
+    y: 0
 };
 
 function windowToCanvas(canvas, x, y){
@@ -14,15 +14,46 @@ function windowToCanvas(canvas, x, y){
     };
 }
 
+function updateMouse(e){
+    var point = windowToCanvas(canvas, e.clientX, e.clientY);
+    Mouse.x = Math.floor(point.x);
+    Mouse.y = Math.floor(point.y);
+    p.innerHTML = "" + Mouse.x + ", " + Mouse.y; 
+}
+
 canvas.onmousemove = function(e){
-    var p = windowToCanvas(canvas, e.clientX, e.clientY);
-    Mouse.x = Math.floor(p.x);
-    Mouse.y = Math.floor(p.y);
+    e.preventDefault();
+    updateMouse(e);
+    if(Mouse.move) Mouse.move();
 };
 
-canvas.onclick = function(e){
-    if(Mouse.click)
-        Mouse.click();
+canvas.ontouchmove = function(e){
+    e.preventDefault();
+    updateMouse(e.touches.item(0));
+    if(Mouse.move) Mouse.move();
+};
+
+function up(e){ 
+    e.preventDefault();
+    if(Mouse.up) Mouse.up(); 
+}
+canvas.ontouchend = canvas.onmouseup = up;
+
+canvas.onmousedown = function(e){ 
+    e.preventDefault();
+    updateMouse(e);
+    if(Mouse.down) Mouse.down(); 
+};
+
+canvas.ontouchstart = function(e){ 
+    e.preventDefault();
+    updateMouse(e.touches.item(0));
+    if(Mouse.down) Mouse.down(); 
+};
+
+canvas.onclick = function(e){ 
+    e.preventDefault();
+    if(Mouse.click) Mouse.click(); 
 };
 
 module.exports = {

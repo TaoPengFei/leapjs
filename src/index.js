@@ -2,7 +2,7 @@ var canvas = require('./canvas.js').canvas;
 var ctx = require('./canvas.js').ctx;
 var collide = require('./collision.js');
 var Key = require('./keys.js').Key;
-var Mouse = require('./mouse.js').Mouse;
+var Mouse = require('./mouse.js').Mouse; // must after collide
 
 var shapes = require('./shapes.js');
 
