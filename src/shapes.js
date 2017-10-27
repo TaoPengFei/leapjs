@@ -7,6 +7,11 @@ var shapeList = new Array();
 function Shape(){
     this.transform = new Transform();
 
+    this.strokeStyle = "#00FFFF";
+    this.fillStyle = "rgba(0, 255, 255, 0.4)";
+
+    this.globalAlpha = 1;
+
     shapeList.push(this);
 }
 
@@ -14,9 +19,9 @@ Shape.prototype._draw = null;
 Shape.prototype.click = null;
 
 Shape.prototype.updateCtx = function(ctx){
-    ctx.globalAlpha = this.globalAlpha || ctx.globalAlpha;
-    ctx.strokeStyle = this.strokeStyle || ctx.strokeStyle;
-    ctx.fillStyle = this.fillStyle || ctx.fillStyle;
+    ctx.globalAlpha = this.globalAlpha;
+    ctx.strokeStyle = this.strokeStyle;
+    ctx.fillStyle = this.fillStyle;
     this.transform.updateCtx(ctx);
 }
 
