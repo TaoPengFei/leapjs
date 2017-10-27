@@ -24,6 +24,7 @@ document.onkeydown = function(e){
         key.down();
 };
 
+// keyboard2 will not file key press event
 document.onkeypress = function(e){
     var key = Key[e.key];
     if(key && key.press)

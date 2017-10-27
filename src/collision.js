@@ -21,11 +21,10 @@ function collide(shape1, shape2){
     ctx1.clearRect(0, 0, canvas.width, canvas.height);
     ctx2.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx1.save();
-
     shape1.draw(ctx1);
     shape2.draw(ctx2);
 
+    ctx1.save();
     ctx1.globalCompositeOperation = "source-in";
     ctx1.drawImage(ctx2.canvas, 0, 0);
     ctx1.restore();
@@ -41,15 +40,14 @@ function collide(shape1, shape2){
     return false;
 }
 
-function pointOnShape(shape, p){
-    ctx1.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx1.save();
-    shape.draw(ctx1);
-    ctx1.restore();
-
+function pointOnShape(p, shape){
     var x = p.x;
     var y = p.y;
+
+    ctx1.clearRect(x, y, 1, 1);
+
+    shape.draw(ctx1);
+
     var canvasData = ctx1.getImageData(x, y, 1, 1);
 
     if(canvasData.data[3] != 0)
@@ -66,7 +64,7 @@ Object.prototype.collide = function(other){
 Object.prototype.touched = function(){
     if(!this.draw) throw "LLEG: Object must have draw method";
 
-    return pointOnShape(this, Mouse);
+    return pointOnShape(Mouse, this);
 };
 
 module.exports = {};

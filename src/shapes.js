@@ -2,27 +2,28 @@ var context = require('./canvas.js').ctx;
 var inheritPrototype = require('./util.js').inheritPrototype;
 var Transform = require('./transform.js').Transform;
 
+var shapeList = new Array();
+
 function Shape(){
     this.transform = new Transform();
 
-    this.strokeStyle = "#00FFFF";
-    this.fillStyle = "rgba(0, 255, 255, 0.4)";
-
-    this.globalAlpha = 1;
+    shapeList.push(this);
 }
 
 Shape.prototype._draw = null;
+Shape.prototype.click = null;
 
 Shape.prototype.updateCtx = function(ctx){
-    ctx.save();
-    ctx.globalAlpha = this.globalAlpha;
-    ctx.strokeStyle = this.strokeStyle;
-    ctx.fillStyle = this.fillStyle;
+    ctx.globalAlpha = this.globalAlpha || ctx.globalAlpha;
+    ctx.strokeStyle = this.strokeStyle || ctx.strokeStyle;
+    ctx.fillStyle = this.fillStyle || ctx.fillStyle;
     this.transform.updateCtx(ctx);
 }
 
 Shape.prototype.stroke = function(ctx){
     ctx = ctx || context;
+    ctx.save();
+
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -35,6 +36,8 @@ Shape.prototype.stroke = function(ctx){
 
 Shape.prototype.fill = function(ctx){
     ctx = ctx || context;
+    ctx.save();
+
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -47,6 +50,8 @@ Shape.prototype.fill = function(ctx){
 
 Shape.prototype.draw = function(ctx){
     ctx = ctx || context;
+    ctx.save();
+
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -160,6 +165,8 @@ inheritPrototype(Text, Shape);
 
 Text.prototype.stroke = function(ctx){
     ctx = ctx || context;
+    ctx.save();
+
     this.updateCtx(ctx);
     ctx.font = this.font;
 
@@ -170,6 +177,8 @@ Text.prototype.stroke = function(ctx){
 
 Text.prototype.fill = function(ctx){
     ctx = ctx || context;
+    ctx.save();
+
     this.updateCtx(ctx);
     ctx.font = this.font;
 
@@ -251,14 +260,17 @@ inheritPrototype(Point, Circle);
 Point.prototype.draw = Point.prototype.fill;
 
 module.exports = {
+    shapeList: shapeList,
+
     Shape: Shape,
     Line: Line,
     Rectangle: Rectangle,
     Polygon: Polygon,
     Triangle: Triangle,
     Circle: Circle,
+    Point: Point,
     Text: Text,
+
     Sprite: Sprite,
-    Animation: Animation,
-    Point: Point
+    Animation: Animation
 };

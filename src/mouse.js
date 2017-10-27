@@ -1,10 +1,18 @@
 var canvas = require('./canvas.js').canvas;
+var keys = require('./keys.js').Key;
 var p = require('./canvas.js').p;
+var shapeList = require('./shapes.js').shapeList;
 
 var Mouse = {
     x: 0,
     y: 0
 };
+
+var TouchStart = {};
+TouchStart.init = function(){
+    TouchStart.x = Mouse.x;
+    TouchStart.y = Mouse.y;
+}
 
 function windowToCanvas(canvas, x, y){
     var box = canvas.getBoundingClientRect();
@@ -14,48 +22,72 @@ function windowToCanvas(canvas, x, y){
     };
 }
 
-function updateMouse(e){
+function updateEvent(e){
+    e.preventDefault();
+    // update e if it is on phone
+    if(e.touches) e = e.touches.item(0);
+
     var point = windowToCanvas(canvas, e.clientX, e.clientY);
     Mouse.x = Math.floor(point.x);
     Mouse.y = Math.floor(point.y);
     p.innerHTML = "" + Mouse.x + ", " + Mouse.y; 
 }
 
+canvas.onmousedown =  function(e){ 
+    updateEvent(e);
+    if(Mouse.down) Mouse.down(); 
+
+    // handle events of all shapes
+    // IMPORTANT
+    shapeList.map(function(shape){
+        if(shape.click && shape.touched())
+            shape.click();
+    });
+};
+
+canvas.ontouchstart = function(e){
+    canvas.onmousedown(e);
+    TouchStart.init();
+};
+
+
 canvas.onmousemove = function(e){
-    e.preventDefault();
-    updateMouse(e);
+    updateEvent(e);
     if(Mouse.move) Mouse.move();
 };
 
 canvas.ontouchmove = function(e){
-    e.preventDefault();
-    updateMouse(e.touches.item(0));
-    if(Mouse.move) Mouse.move();
+    canvas.onmousemove(e);
+    if(Mouse.x - TouchStart.x > 50 && Key.ArrowRight.down){
+        Key.ArrowRight.down();
+        TouchStart.init();
+    }
+    else if(TouchStart.x - Mouse.x > 50 && Key.ArrowLeft.down){
+        Key.ArrowLeft.down();
+        TouchStart.init();
+    }
+
+    if(TouchStart.y - Mouse.y > 50 && Key.ArrowUp.down){
+        Key.ArrowUp.down();
+        TouchStart.init();
+    }
+    else if(Mouse.y - TouchStart.y > 50 && Key.ArrowDown.down){
+        Key.ArrowDown.down();
+        TouchStart.init();
+    }
 };
 
-function up(e){ 
-    e.preventDefault();
-    if(Mouse.up) Mouse.up(); 
-}
-canvas.ontouchend = canvas.onmouseup = up;
-
-canvas.onmousedown = function(e){ 
-    e.preventDefault();
-    updateMouse(e);
-    if(Mouse.down) Mouse.down(); 
-};
-
-canvas.ontouchstart = function(e){ 
-    e.preventDefault();
-    updateMouse(e.touches.item(0));
-    if(Mouse.down) Mouse.down(); 
+canvas.ontouchend = canvas.onmouseup = function(e){
+    updateEvent(e);
+    if(Mouse.up) Mouse.up();
 };
 
 canvas.onclick = function(e){ 
-    e.preventDefault();
+    updateEvent(e);
     if(Mouse.click) Mouse.click(); 
 };
 
 module.exports = {
-    Mouse: Mouse
+    Mouse: Mouse,
+    Touch: Mouse
 };

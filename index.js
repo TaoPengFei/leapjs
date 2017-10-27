@@ -12,14 +12,16 @@ var JSEditor = CodeMirror.fromTextArea(document.getElementById("js"), {
 JSEditor.setSize('auto', 'auto');
 
 var dc = '';
-dc += 'var rect = new Rectangle(-100, -100, 200, 200);\n' ;
+dc += 'var rect = new Rectangle(100, 100, 200, 200);\n' ;
 dc += '\n';
-dc += 'rect.translate(200, 200);\n';
-dc += 'var x = 0;\n';
+dc += 'Key.ArrowUp.down = function(){rect.y -= 10;};\n';
+dc += 'Key.ArrowDown.down = function(){rect.y += 10;};\n';
+dc += 'Key.ArrowLeft.down = function(){rect.x -= 10;};\n';
+dc += 'Key.ArrowRight.down = function(){rect.x += 10;};\n';
+dc += '';
 dc += '\n';
 dc += '(function main(){\n';
 dc += '    canvas.clear();\n';
-dc += '    rect.rotate(x++);\n';
 dc += '    rect.draw();\n';
 dc += '    requestAnimationFrame(main);\n';
 dc += '}() );\n';
