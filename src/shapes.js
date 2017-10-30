@@ -89,9 +89,9 @@ Shape.prototype.rotate = function(degree){
 
 function Circle(x, y, r){
     Shape.call(this);
-    this.x = x;
-    this.y = y;
-    this.r = r;
+    this.x = x || 0;
+    this.y = y || 0;
+    this.r = r || 10;
 }
 
 inheritPrototype(Circle, Shape);
@@ -199,7 +199,7 @@ Text.prototype.draw = Text.prototype.fill;
 function Sprite(src, x, y, w, h){
     Shape.call(this);
     this.img = new Image();
-    this.img.src = src;
+    if(src) this.img.src = src;
     this.x = x || 0;
     this.y = y || 0;
     this.width = w;
@@ -208,13 +208,17 @@ function Sprite(src, x, y, w, h){
 
 inheritPrototype(Sprite, Shape);
 
-Sprite.prototype.cut = function(sx, sy, sw, sh){
+Sprite.prototype.url = function(src){
+    this.img.src = src;
+};
+
+Sprite.prototype.clip = function(sx, sy, sw, sh){
     this.sx = sx > 0 ? sx : 1;
     this.sy = sy > 0 ? sx : 1;
     this.swidth = sw;
     this.sheight = sh;
-    this.width = this.width || this.swidth;
-    this.height = this.height || this.sheight;
+    this.width = this.width || sw;
+    this.height = this.height || sh;
 };
 
 Sprite.prototype._draw = function(ctx){
