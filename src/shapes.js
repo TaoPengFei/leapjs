@@ -2,7 +2,7 @@ var context = require('./canvas.js').ctx;
 var inheritPrototype = require('./util.js').inheritPrototype;
 var Transform = require('./transform.js').Transform;
 
-var shapeList = new Array();
+var shapeList = [];
 
 function Shape(){
     this.transform = new Transform();
@@ -11,6 +11,7 @@ function Shape(){
     this.fillStyle = "rgba(0, 255, 255, 0.4)";
 
     this.globalAlpha = 1;
+    this.lineWidth = 1;
 
     shapeList.push(this);
 }
@@ -22,8 +23,9 @@ Shape.prototype.updateCtx = function(ctx){
     ctx.globalAlpha = this.globalAlpha;
     ctx.strokeStyle = this.strokeStyle;
     ctx.fillStyle = this.fillStyle;
+    ctx.lineWidth = this.lineWidth;
     this.transform.updateCtx(ctx);
-}
+};
 
 Shape.prototype.stroke = function(ctx){
     ctx = ctx || context;
