@@ -83,6 +83,10 @@ Shape.prototype.skew = function(x, y){
     this.transform.skew(x, y);
 };
 
+Shape.prototype.setAnchor = function(x, y){
+    this.transform.setAnchor(x, y);
+};
+
 Shape.prototype.rotate = function(degree){
     this.transform.rotate(degree);
 };

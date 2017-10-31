@@ -180,15 +180,19 @@ Shape.prototype.skew = function(x, y){
     this.transform.skew(x, y);
 };
 
+Shape.prototype.setAnchor = function(x, y){
+    this.transform.setAnchor(x, y);
+};
+
 Shape.prototype.rotate = function(degree){
     this.transform.rotate(degree);
 };
 
 function Circle(x, y, r){
     Shape.call(this);
-    this.x = x;
-    this.y = y;
-    this.r = r;
+    this.x = x || 0;
+    this.y = y || 0;
+    this.r = r || 10;
 }
 
 inheritPrototype(Circle, Shape);
@@ -654,6 +658,8 @@ module.exports = {
 /***/ (function(module, exports) {
 
 function Transform(){
+    this.anchorX = 0;
+    this.anchorY = 0;
     this.scaleX = 1;
     this.scaleY = 1;
     this.skewX = 0;
@@ -678,14 +684,25 @@ Transform.prototype.skew = function(x, y){
     this.skewY = y;
 };
 
+Transform.prototype.setAnchor = function(x, y){
+    this.anchorX = x;
+    this.anchorY = y;
+};
+
 Transform.prototype.rotate = function(degree){
     this.degree = degree;
 };
 
 Transform.prototype.updateCtx = function(ctx){
+    var degree = this.degree * Math.PI / 180;
+
+    ctx.translate(this.anchorX, this.anchorY);
+
+    ctx.rotate(degree);
     ctx.transform(this.scaleX, this.skewX, this.skewY, this.scaleY,
             this.translateX, this.translateY);
-    ctx.rotate(this.degree * Math.PI / 180);
+
+    ctx.translate(-this.anchorX, -this.anchorY);
 };
 
 module.exports = {
