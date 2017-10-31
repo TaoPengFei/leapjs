@@ -6,13 +6,6 @@ var shapeList = [];
 
 function Shape(){
     this.transform = new Transform();
-
-    this.strokeStyle = "#00FFFF";
-    this.fillStyle = "rgba(0, 255, 255, 0.4)";
-
-    this.globalAlpha = 1;
-    this.lineWidth = 1;
-
     shapeList.push(this);
 }
 
@@ -20,10 +13,10 @@ Shape.prototype._draw = null;
 Shape.prototype.click = null;
 
 Shape.prototype.updateCtx = function(ctx){
-    ctx.globalAlpha = this.globalAlpha;
-    ctx.strokeStyle = this.strokeStyle;
-    ctx.fillStyle = this.fillStyle;
-    ctx.lineWidth = this.lineWidth;
+    if('globalAlpha' in this) ctx.globalAlpha = this.globalAlpha;
+    if('strokeStyle' in this) ctx.strokeStyle = this.strokeStyle;
+    if('fillStyle' in this) ctx.fillStyle = this.fillStyle;
+    if('lineWidth' in this) ctx.lineWidth = this.lineWidth;
     this.transform.updateCtx(ctx);
 };
 
