@@ -12,7 +12,7 @@ var TouchStart = {};
 TouchStart.init = function(){
     TouchStart.x = Mouse.x;
     TouchStart.y = Mouse.y;
-}
+};
 
 function windowToCanvas(canvas, x, y){
     var box = canvas.getBoundingClientRect();
@@ -23,7 +23,7 @@ function windowToCanvas(canvas, x, y){
 }
 
 function updateEvent(e){
-    e.preventDefault();
+    // e.preventDefault();
     // update e if it is on phone
     if(e.touches) e = e.touches.item(0);
 
@@ -46,10 +46,10 @@ canvas.onmousedown =  function(e){
 };
 
 canvas.ontouchstart = function(e){
+    e.preventDefault();
     canvas.onmousedown(e);
     TouchStart.init();
 };
-
 
 canvas.onmousemove = function(e){
     updateEvent(e);
@@ -57,6 +57,7 @@ canvas.onmousemove = function(e){
 };
 
 canvas.ontouchmove = function(e){
+    e.preventDefault();
     canvas.onmousemove(e);
     if(Mouse.x - TouchStart.x > 50 && Key.ArrowRight.down){
         Key.ArrowRight.down();
@@ -78,12 +79,13 @@ canvas.ontouchmove = function(e){
 };
 
 canvas.ontouchend = canvas.onmouseup = function(e){
+    e.preventDefault();
     updateEvent(e);
     if(Mouse.up) Mouse.up();
 };
 
 canvas.onclick = function(e){ 
-    updateEvent(e);
+     updateEvent(e);
     if(Mouse.click) Mouse.click(); 
 };
 
