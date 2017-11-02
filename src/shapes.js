@@ -243,7 +243,7 @@ Animation.prototype.setFrame = function(sx, sy, sw, sh, c, r){
     this.c = c;
     this.r = r || 1;
     this.cf = 0;  // current frame count
-    this.cut(sx, sy, sw, sh);
+    this.clip(sx, sy, sw, sh);
 };
 
 Animation.prototype.setSpeed = function(speed){
