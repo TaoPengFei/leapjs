@@ -97,7 +97,7 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var context = __webpack_require__(0).ctx;
+var ctx = __webpack_require__(0).ctx;
 var inheritPrototype = __webpack_require__(6).inheritPrototype;
 var Transform = __webpack_require__(7).Transform;
 
@@ -105,6 +105,7 @@ var shapeList = [];
 
 function Shape(){
     this.transform = new Transform();
+    this.points = [];
     shapeList.push(this);
 }
 
@@ -119,42 +120,43 @@ Shape.prototype.updateCtx = function(ctx){
     this.transform.updateCtx(ctx);
 };
 
-Shape.prototype.stroke = function(ctx){
-    ctx = ctx || context;
+Shape.prototype.getPoints = function(){
+    return this.points;
+}
+
+Shape.prototype.stroke = function(){
     ctx.save();
 
     this.updateCtx(ctx);
 
     ctx.beginPath();
-    this._draw(ctx);
+    this._draw();
     ctx.closePath();
     ctx.stroke();
 
     ctx.restore();
 };
 
-Shape.prototype.fill = function(ctx){
-    ctx = ctx || context;
+Shape.prototype.fill = function(){
     ctx.save();
 
     this.updateCtx(ctx);
 
     ctx.beginPath();
-    this._draw(ctx);
+    this._draw();
     ctx.fill();
     ctx.closePath();
 
     ctx.restore();
 };
 
-Shape.prototype.draw = function(ctx){
-    ctx = ctx || context;
+Shape.prototype.draw = function(){
     ctx.save();
 
     this.updateCtx(ctx);
 
     ctx.beginPath();
-    this._draw(ctx);
+    this._draw();
     ctx.closePath();
 
     ctx.stroke();
@@ -192,9 +194,28 @@ function Circle(x, y, r){
 
 inheritPrototype(Circle, Shape);
 
-Circle.prototype._draw = function(ctx){
+Circle.prototype._draw = function(){
     ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
 };
+
+Circle.prototype.getPoints = function(){
+    var x = this.x;
+    var y = this.y;
+    var r = this.r;
+    this.points = [];
+    this.points.push({x: x,         y: y+r      });
+    this.points.push({x: x+0.5*r,   y: y+0.866*r});
+    this.points.push({x: x+0.866*r, y: y+0.5*r  });
+    this.points.push({x: x+r,       y: y        });
+    this.points.push({x: x+0.866*r, y: y-0.5*r  });
+    this.points.push({x: x+0.5*r,   y: y-0.866*r});
+    this.points.push({x: x,         y: y-r      });
+    this.points.push({x: x-0.5*r,   y: y-0.866*r});
+    this.points.push({x: x-0.866*r, y: y-0.5*r  });
+    this.points.push({x: x-r,       y: y        });
+    this.points.push({x: x-0.866*r, y: y+0.5*r  });
+    this.points.push({x: x-0.5*r,   y: y+0.866*r});
+}
 
 function Line(x1, y1, x2, y2){
     Shape.call(this);
@@ -206,10 +227,16 @@ function Line(x1, y1, x2, y2){
 
 inheritPrototype(Line, Shape);
 
-Line.prototype._draw = function(ctx){
+Line.prototype._draw = function(){
     ctx.moveTo(this.x1, this.y1);
     ctx.lineTo(this.x2, this.y2);
 };
+
+Line.prototype.getPoints = function(){
+    this.points = [];
+    this.points.push({x: this.x1, y: this.y1});
+    this.points.push({x: this.x2, y: this.y2});
+}
 
 function Polygon(){
     Shape.call(this);
@@ -226,7 +253,7 @@ function Polygon(){
 
 inheritPrototype(Polygon, Shape);
 
-Polygon.prototype._draw = function(ctx){
+Polygon.prototype._draw = function(){
     var p = this.points[0];
     ctx.moveTo(p.x, p.y);
     for(var i=1; i<this.points.length; i++){
@@ -251,9 +278,21 @@ function Rectangle(x, y, w, h){
 
 inheritPrototype(Rectangle, Shape);
 
-Rectangle.prototype._draw = function(ctx){
+Rectangle.prototype._draw = function(){
     ctx.rect(this.x, this.y, this.width, this.height);
 };
+
+Rectangle.prototype.getPoints = function(){
+    this.points = [];
+    var x = this.x;
+    var y = this.y;
+    var w = this.width;
+    var h = this.height;
+    this.points.push({x: x,     y: y});
+    this.points.push({x: x+w,   y: y});
+    this.points.push({x: x+w,   y: y+h});
+    this.points.push({x: x,     y: y+h});
+}
 
 function Text(src, x, y, font){
     Shape.call(this);
@@ -266,8 +305,7 @@ function Text(src, x, y, font){
 
 inheritPrototype(Text, Shape);
 
-Text.prototype.stroke = function(ctx){
-    ctx = ctx || context;
+Text.prototype.stroke = function(){
     ctx.save();
 
     this.updateCtx(ctx);
@@ -278,8 +316,7 @@ Text.prototype.stroke = function(ctx){
     ctx.restore();
 };
 
-Text.prototype.fill = function(ctx){
-    ctx = ctx || context;
+Text.prototype.fill = function(){
     ctx.save();
 
     this.updateCtx(ctx);
@@ -293,16 +330,12 @@ Text.prototype.fill = function(ctx){
 Text.prototype.draw = Text.prototype.fill;
 
 function Sprite(src, x, y, w, h){
-    Shape.call(this);
+    Rectangle.call(this, x, y, w, h);
     this.img = new Image();
     if(src) this.img.src = src;
-    this.x = x || 0;
-    this.y = y || 0;
-    this.width = w;
-    this.height = h;
 }
 
-inheritPrototype(Sprite, Shape);
+inheritPrototype(Sprite, Rectangle);
 
 Sprite.prototype.url = function(src){
     this.img.src = src;
@@ -317,7 +350,7 @@ Sprite.prototype.clip = function(sx, sy, sw, sh){
     this.height = this.height || sh;
 };
 
-Sprite.prototype._draw = function(ctx){
+Sprite.prototype._draw = function(){
     if(this.sx && this.sy && this.swidth & this.sheight){
         ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight,
             this.x, this.y, this.width, this.height);
@@ -349,13 +382,13 @@ Animation.prototype.setSpeed = function(speed){
     this.speed = speed > 1 ? speed : 1;
 };
 
-Animation.prototype._draw = function(ctx){
+Animation.prototype._draw = function(){
     var sx = this.sx + this.swidth * (Math.floor(this.cf/this.speed) % this.c);
     var sy = this.sy + this.sheight * (Math.floor(this.cf/this.c/this.speed) % this.r);
     ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight,
         this.x, this.y, this.width, this.height);
 
-    if(ctx === context) this.cf++; // update frame count
+    this.cf++; // update frame count
 };
 
 function Point(x, y){
@@ -570,79 +603,57 @@ var Mouse = __webpack_require__(2).Mouse;
 var Shape = shapes.Shape;
 var Rectangle = shapes.Rectangle;
 
-var canvas1 = document.createElement('canvas');
-var canvas2 = document.createElement('canvas');
+function pointsInPoints(ps1, ps2){
+    if(!ps1 || !ps2)
+        return false;
+    // quick check start
+    var min1 = ps1[0];
+    var max1 = ps1[0];
+    var min2 = ps2[0];
+    var max2 = ps2[0];
 
-canvas1.width = 1000;
-canvas1.height = 1000;
+    ps1.map(function(p){
+        if(p.x < min1.x) min1.x = p.x;
+        if(p.y < min1.y) min1.y = p.y;
+        if(p.x > max1.x) max1.x = p.x;
+        if(p.y > max1.y) max1.y = p.y;
+    })
+    ps2.map(function(p){
+        if(p.x < min2.x) min2.x = p.x;
+        if(p.y < min2.y) min2.y = p.y;
+        if(p.x > max2.x) max2.x = p.x;
+        if(p.y > max2.y) max2.y = p.y;
+    })
 
-canvas2.width = 1000;
-canvas2.height = 1000;
+    if(min1.x > max2.x || min1.y > max2.y || min2.x > max1.x || min2.y > max2.y)
+        return false;
+    // quick check end
 
-var ctx1 = canvas1.getContext("2d");
-var ctx2 = canvas2.getContext("2d");
+    if(!quickCheck(ps1, ps2))
+        return false;
 
-function drawIA(shape, ctx){
-    if(shape instanceof shapes.Sprite || shape instanceof shapes.Animation){
-        var rect = new Rectangle(shape.x, shape.y, shape.width, shape.height);
-        rect.transform = shape.transform;
-        rect.draw(ctx);
-    } else {
-        shape.draw(ctx);
-    }
-}
+    ctx.beginPath();
+    ctx.moveTo(ps2[0].x, ps2[0].y);
 
-function collide(shape1, shape2){
-    ctx1.clearRect(0, 0, canvas.width, canvas.height);
-    ctx2.clearRect(0, 0, canvas.width, canvas.height);
+    for(var i=1; i<ps2.length; i++)
+        ctx.lineTo(ps2[i].x, ps2[i].y);
+    ctx.closePath();
 
-    drawIA(shape1, ctx1);
-    drawIA(shape2, ctx2);
-
-    ctx1.save();
-    ctx1.globalCompositeOperation = "source-in";
-    ctx1.drawImage(ctx2.canvas, 0, 0);
-    ctx1.restore();
-
-    var canvasData = ctx1.getImageData(0, 0, canvas.width, canvas.height);
-
-    for(var i=0; i<canvasData.data.length/4-1; i++){
-        if(canvasData.data[4*i+3] != 0){
-            return new shapes.Point(i%canvas.width, i/canvas.width);
-        }
-    }
-
-    return false;
-}
-
-function pointOnShape(p, shape){
-    var x = p.x;
-    var y = p.y;
-
-    ctx1.clearRect(x, y, 1, 1);
-
-    drawIA(shape, ctx1);
-
-    var canvasData = ctx1.getImageData(x, y, 1, 1);
-
-    if(canvasData.data[3] != 0)
-        return true;
+    ps1.map(function(p){
+        if(ctx.isPointInPath(p.x, p.y))
+            return p;
+    })
 
     return false;
 }
 
-Object.prototype.collide = function(other){
-    if(!this.draw || !other.draw) throw "LLEG: Object must have draw method";
-    return collide(this, other);
+Shape.prototype.collide = function(shape){
+    return pointsInPoints(this.getPoints(), shape.getPoints());
 };
 
-Object.prototype.touched = function(){
-    if(!this.draw) throw "LLEG: Object must have draw method";
-
-    return pointOnShape(Mouse, this);
+Shape.prototype.touched = function(){
+    return pointsInPoints([Mouse], this.getPoints());
 };
-
-module.exports = {};
 
 
 /***/ }),

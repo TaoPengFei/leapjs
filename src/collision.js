@@ -6,76 +6,54 @@ var Mouse = require('./mouse.js').Mouse;
 var Shape = shapes.Shape;
 var Rectangle = shapes.Rectangle;
 
-var canvas1 = document.createElement('canvas');
-var canvas2 = document.createElement('canvas');
+function pointsInPoints(ps1, ps2){
+    if(!ps1 || !ps2)
+        return false;
+    // quick check start
+    var min1 = ps1[0];
+    var max1 = ps1[0];
+    var min2 = ps2[0];
+    var max2 = ps2[0];
 
-canvas1.width = 1000;
-canvas1.height = 1000;
+    ps1.map(function(p){
+        if(p.x < min1.x) min1.x = p.x;
+        if(p.y < min1.y) min1.y = p.y;
+        if(p.x > max1.x) max1.x = p.x;
+        if(p.y > max1.y) max1.y = p.y;
+    })
+    ps2.map(function(p){
+        if(p.x < min2.x) min2.x = p.x;
+        if(p.y < min2.y) min2.y = p.y;
+        if(p.x > max2.x) max2.x = p.x;
+        if(p.y > max2.y) max2.y = p.y;
+    })
 
-canvas2.width = 1000;
-canvas2.height = 1000;
+    if(min1.x > max2.x || min1.y > max2.y || min2.x > max1.x || min2.y > max2.y)
+        return false;
+    // quick check end
 
-var ctx1 = canvas1.getContext("2d");
-var ctx2 = canvas2.getContext("2d");
+    if(!quickCheck(ps1, ps2))
+        return false;
 
-function drawIA(shape, ctx){
-    if(shape instanceof shapes.Sprite || shape instanceof shapes.Animation){
-        var rect = new Rectangle(shape.x, shape.y, shape.width, shape.height);
-        rect.transform = shape.transform;
-        rect.draw(ctx);
-    } else {
-        shape.draw(ctx);
-    }
-}
+    ctx.beginPath();
+    ctx.moveTo(ps2[0].x, ps2[0].y);
 
-function collide(shape1, shape2){
-    ctx1.clearRect(0, 0, canvas.width, canvas.height);
-    ctx2.clearRect(0, 0, canvas.width, canvas.height);
+    for(var i=1; i<ps2.length; i++)
+        ctx.lineTo(ps2[i].x, ps2[i].y);
+    ctx.closePath();
 
-    drawIA(shape1, ctx1);
-    drawIA(shape2, ctx2);
-
-    ctx1.save();
-    ctx1.globalCompositeOperation = "source-in";
-    ctx1.drawImage(ctx2.canvas, 0, 0);
-    ctx1.restore();
-
-    var canvasData = ctx1.getImageData(0, 0, canvas.width, canvas.height);
-
-    for(var i=0; i<canvasData.data.length/4-1; i++){
-        if(canvasData.data[4*i+3] != 0){
-            return new shapes.Point(i%canvas.width, i/canvas.width);
-        }
-    }
-
-    return false;
-}
-
-function pointOnShape(p, shape){
-    var x = p.x;
-    var y = p.y;
-
-    ctx1.clearRect(x, y, 1, 1);
-
-    drawIA(shape, ctx1);
-
-    var canvasData = ctx1.getImageData(x, y, 1, 1);
-
-    if(canvasData.data[3] != 0)
-        return true;
+    ps1.map(function(p){
+        if(ctx.isPointInPath(p.x, p.y))
+            return p;
+    })
 
     return false;
 }
 
-Object.prototype.collide = function(other){
-    if(!this.draw || !other.draw) throw "LLEG: Object must have draw method";
-    return collide(this, other);
+Shape.prototype.collide = function(shape){
+    return pointsInPoints(this.getPoints(), shape.getPoints());
 };
 
-Object.prototype.touched = function(){
-    if(!this.draw) throw "LLEG: Object must have draw method";
-
-    return pointOnShape(Mouse, this);
+Shape.prototype.touched = function(){
+    return pointsInPoints([Mouse], this.getPoints());
 };
-
-module.exports = {};

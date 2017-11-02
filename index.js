@@ -9,24 +9,7 @@ var JSEditor = CodeMirror.fromTextArea(document.getElementById("js"), {
     lint: true
 });
 
-JSEditor.setSize('auto', 'auto');
-
-var dc = '';
-dc += 'var rect = new Rectangle(100, 100, 200, 200);\n' ;
-dc += '\n';
-dc += 'Key.ArrowUp.down = function(){rect.y -= 10;};\n';
-dc += 'Key.ArrowDown.down = function(){rect.y += 10;};\n';
-dc += 'Key.ArrowLeft.down = function(){rect.x -= 10;};\n';
-dc += 'Key.ArrowRight.down = function(){rect.x += 10;};\n';
-dc += '';
-dc += '\n';
-dc += '(function main(){\n';
-dc += '    canvas.clear();\n';
-dc += '    rect.draw();\n';
-dc += '    requestAnimationFrame(main);\n';
-dc += '}() );\n';
-
-JSEditor.setValue(dc); 
+JSEditor.setSize('auto', 600);
 
 function iframe_html(){
     var html = '';
@@ -54,7 +37,20 @@ function submit(){
     iframe_doc.open();
     iframe_doc.write(iframe_html());
     iframe_doc.close();
+
+    iframe.focus();
 }
 
-submit();
+function load(file){
+    $.ajax({
+        type: "get",
+        url: file,
+        dataType: "text",
+        success: function(content){
+            JSEditor.setValue(content); 
+            submit();
+        }
+    });
+}
 
+load('./examples/keyEvent.js');
