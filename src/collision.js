@@ -4,6 +4,7 @@ var ctx = require('./canvas.js').ctx;
 var Mouse = require('./mouse.js').Mouse;
 
 var Shape = shapes.Shape;
+var Rectangle = shapes.Rectangle;
 
 var canvas1 = document.createElement('canvas');
 var canvas2 = document.createElement('canvas');
@@ -17,12 +18,22 @@ canvas2.height = 1000;
 var ctx1 = canvas1.getContext("2d");
 var ctx2 = canvas2.getContext("2d");
 
+function drawIA(shape, ctx){
+    if(shape instanceof shapes.Sprite || shape instanceof shapes.Animation){
+        var rect = new Rectangle(shape.x, shape.y, shape.width, shape.height);
+        rect.transform = shape.transform;
+        rect.draw(ctx);
+    } else {
+        shape.draw(ctx);
+    }
+}
+
 function collide(shape1, shape2){
     ctx1.clearRect(0, 0, canvas.width, canvas.height);
     ctx2.clearRect(0, 0, canvas.width, canvas.height);
 
-    shape1.draw(ctx1);
-    shape2.draw(ctx2);
+    drawIA(shape1, ctx1);
+    drawIA(shape2, ctx2);
 
     ctx1.save();
     ctx1.globalCompositeOperation = "source-in";
@@ -46,7 +57,7 @@ function pointOnShape(p, shape){
 
     ctx1.clearRect(x, y, 1, 1);
 
-    shape.draw(ctx1);
+    drawIA(shape, ctx1);
 
     var canvasData = ctx1.getImageData(x, y, 1, 1);
 
