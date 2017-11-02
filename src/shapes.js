@@ -7,6 +7,7 @@ var shapeList = [];
 function Shape(){
     this.transform = new Transform();
     this.points = [];
+    this.globalAlpha = 1;
     shapeList.push(this);
 }
 
@@ -14,10 +15,10 @@ Shape.prototype._draw = null;
 Shape.prototype.click = null;
 
 Shape.prototype.updateCtx = function(ctx){
-    if('globalAlpha' in this) ctx.globalAlpha = this.globalAlpha;
-    if('strokeStyle' in this) ctx.strokeStyle = this.strokeStyle;
-    if('fillStyle' in this) ctx.fillStyle = this.fillStyle;
-    if('lineWidth' in this) ctx.lineWidth = this.lineWidth;
+    if(this.globalAlpha) ctx.globalAlpha = this.globalAlpha;
+    if(this.strokeStyle) ctx.strokeStyle = this.strokeStyle;
+    if(this.fillStyle) ctx.fillStyle = this.fillStyle;
+    if(this.lineWidth) ctx.lineWidth = this.lineWidth;
     this.transform.updateCtx(ctx);
 };
 
@@ -27,7 +28,6 @@ Shape.prototype.getPoints = function(){
 
 Shape.prototype.stroke = function(){
     ctx.save();
-
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -40,7 +40,6 @@ Shape.prototype.stroke = function(){
 
 Shape.prototype.fill = function(){
     ctx.save();
-
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -53,7 +52,6 @@ Shape.prototype.fill = function(){
 
 Shape.prototype.draw = function(){
     ctx.save();
-
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -88,9 +86,9 @@ Shape.prototype.rotate = function(degree){
 
 function Circle(x, y, r){
     Shape.call(this);
-    this.x = x || 0;
-    this.y = y || 0;
-    this.r = r || 10;
+    this.x = x || 20;
+    this.y = y || 20;
+    this.r = r || 20;
 }
 
 inheritPrototype(Circle, Shape);
@@ -116,6 +114,7 @@ Circle.prototype.getPoints = function(){
     this.points.push({x: x-r,       y: y        });
     this.points.push({x: x-0.866*r, y: y+0.5*r  });
     this.points.push({x: x-0.5*r,   y: y+0.866*r});
+    return this.points;
 }
 
 function Line(x1, y1, x2, y2){
@@ -137,6 +136,7 @@ Line.prototype.getPoints = function(){
     this.points = [];
     this.points.push({x: this.x1, y: this.y1});
     this.points.push({x: this.x2, y: this.y2});
+    return this.points;
 }
 
 function Polygon(){
@@ -185,14 +185,13 @@ Rectangle.prototype._draw = function(){
 
 Rectangle.prototype.getPoints = function(){
     this.points = [];
-    var x = this.x;
-    var y = this.y;
-    var w = this.width;
-    var h = this.height;
-    this.points.push({x: x,     y: y});
-    this.points.push({x: x+w,   y: y});
-    this.points.push({x: x+w,   y: y+h});
-    this.points.push({x: x,     y: y+h});
+
+    this.points.push({x: this.x, y: this.y});
+    this.points.push({x: this.x+this.width, y: this.y});
+    this.points.push({x: this.x+this.width, y: this.y+this.height});
+    this.points.push({x: this.x, y: this.y+this.height});
+
+    return this.points;
 }
 
 function Text(src, x, y, font){
@@ -208,7 +207,6 @@ inheritPrototype(Text, Shape);
 
 Text.prototype.stroke = function(){
     ctx.save();
-
     this.updateCtx(ctx);
     ctx.font = this.font;
 
@@ -219,7 +217,6 @@ Text.prototype.stroke = function(){
 
 Text.prototype.fill = function(){
     ctx.save();
-
     this.updateCtx(ctx);
     ctx.font = this.font;
 

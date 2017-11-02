@@ -73,14 +73,13 @@ var p = document.createElement('p');
 document.body.appendChild(canvas);
 document.body.appendChild(p);
 
-
-canvas.width = 400;
-canvas.height = 600;
+canvas.width = 350;
+canvas.height = 550;
 canvas.style = "border: 1px solid #d3d3d3;";
 
 var ctx = canvas.getContext("2d");
 ctx.strokeStyle = "#00FFFF";
-ctx.fillStyle = "rgba(0, 255, 255, 0.4)";
+ctx.fillStyle = "rgba(0, 255, 255, 0.5)";
 
 canvas.clear = function(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -106,6 +105,7 @@ var shapeList = [];
 function Shape(){
     this.transform = new Transform();
     this.points = [];
+    this.globalAlpha = 1;
     shapeList.push(this);
 }
 
@@ -113,10 +113,10 @@ Shape.prototype._draw = null;
 Shape.prototype.click = null;
 
 Shape.prototype.updateCtx = function(ctx){
-    if('globalAlpha' in this) ctx.globalAlpha = this.globalAlpha;
-    if('strokeStyle' in this) ctx.strokeStyle = this.strokeStyle;
-    if('fillStyle' in this) ctx.fillStyle = this.fillStyle;
-    if('lineWidth' in this) ctx.lineWidth = this.lineWidth;
+    if(this.globalAlpha) ctx.globalAlpha = this.globalAlpha;
+    if(this.strokeStyle) ctx.strokeStyle = this.strokeStyle;
+    if(this.fillStyle) ctx.fillStyle = this.fillStyle;
+    if(this.lineWidth) ctx.lineWidth = this.lineWidth;
     this.transform.updateCtx(ctx);
 };
 
@@ -126,7 +126,6 @@ Shape.prototype.getPoints = function(){
 
 Shape.prototype.stroke = function(){
     ctx.save();
-
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -139,7 +138,6 @@ Shape.prototype.stroke = function(){
 
 Shape.prototype.fill = function(){
     ctx.save();
-
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -152,7 +150,6 @@ Shape.prototype.fill = function(){
 
 Shape.prototype.draw = function(){
     ctx.save();
-
     this.updateCtx(ctx);
 
     ctx.beginPath();
@@ -187,9 +184,9 @@ Shape.prototype.rotate = function(degree){
 
 function Circle(x, y, r){
     Shape.call(this);
-    this.x = x || 0;
-    this.y = y || 0;
-    this.r = r || 10;
+    this.x = x || 20;
+    this.y = y || 20;
+    this.r = r || 20;
 }
 
 inheritPrototype(Circle, Shape);
@@ -215,6 +212,7 @@ Circle.prototype.getPoints = function(){
     this.points.push({x: x-r,       y: y        });
     this.points.push({x: x-0.866*r, y: y+0.5*r  });
     this.points.push({x: x-0.5*r,   y: y+0.866*r});
+    return this.points;
 }
 
 function Line(x1, y1, x2, y2){
@@ -236,6 +234,7 @@ Line.prototype.getPoints = function(){
     this.points = [];
     this.points.push({x: this.x1, y: this.y1});
     this.points.push({x: this.x2, y: this.y2});
+    return this.points;
 }
 
 function Polygon(){
@@ -284,14 +283,13 @@ Rectangle.prototype._draw = function(){
 
 Rectangle.prototype.getPoints = function(){
     this.points = [];
-    var x = this.x;
-    var y = this.y;
-    var w = this.width;
-    var h = this.height;
-    this.points.push({x: x,     y: y});
-    this.points.push({x: x+w,   y: y});
-    this.points.push({x: x+w,   y: y+h});
-    this.points.push({x: x,     y: y+h});
+
+    this.points.push({x: this.x, y: this.y});
+    this.points.push({x: this.x+this.width, y: this.y});
+    this.points.push({x: this.x+this.width, y: this.y+this.height});
+    this.points.push({x: this.x, y: this.y+this.height});
+
+    return this.points;
 }
 
 function Text(src, x, y, font){
@@ -307,7 +305,6 @@ inheritPrototype(Text, Shape);
 
 Text.prototype.stroke = function(){
     ctx.save();
-
     this.updateCtx(ctx);
     ctx.font = this.font;
 
@@ -318,7 +315,6 @@ Text.prototype.stroke = function(){
 
 Text.prototype.fill = function(){
     ctx.save();
-
     this.updateCtx(ctx);
     ctx.font = this.font;
 
@@ -524,8 +520,9 @@ module.exports = {
 var Key = {};
 
 var keyboard = "abcdefghijklmnopqrstuvwxyz1234567890";
-var keyboard2 = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
-"Enter", "Escape"];
+var keyboard2 = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter", "Escape"];
+
+var arrows = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Escape"];
 
 for(var i=0; i<keyboard.length; i++){
     Key[keyboard[i]] = {};
@@ -537,14 +534,18 @@ for(i=0; i<keyboard2.length; i++){
 
 document.onkeyup = function(e){
     var key = Key[e.key];
-    if(key && key.up)
+    if(key && key.up){
         key.up();
+    }
 };
 
 document.onkeydown = function(e){
     var key = Key[e.key];
     if(key && key.down)
         key.down();
+    if(arrows.contain(e.key) && key.press){
+        key.press();
+    }
 };
 
 // keyboard2 will not file key press event
@@ -596,7 +597,6 @@ window.Music = Music;
 /***/ (function(module, exports, __webpack_require__) {
 
 var shapes = __webpack_require__(1);
-var canvas = __webpack_require__(0).canvas;
 var ctx = __webpack_require__(0).ctx;
 var Mouse = __webpack_require__(2).Mouse;
 
@@ -604,45 +604,49 @@ var Shape = shapes.Shape;
 var Rectangle = shapes.Rectangle;
 
 function pointsInPoints(ps1, ps2){
-    if(!ps1 || !ps2)
-        return false;
+    if(ps1.length < 1) return false;
+    if(ps2.length < 3) return false;
     // quick check start
-    var min1 = ps1[0];
-    var max1 = ps1[0];
-    var min2 = ps2[0];
-    var max2 = ps2[0];
+    var r1 = {}, r2 = {};
+    r1.minX = r1.maxX = ps1[0].x;
+    r1.minY = r1.maxY = ps1[0].y;
+    r2.minX = r2.maxX = ps2[0].x;
+    r2.minY = r2.maxY = ps2[0].y;
 
     ps1.map(function(p){
-        if(p.x < min1.x) min1.x = p.x;
-        if(p.y < min1.y) min1.y = p.y;
-        if(p.x > max1.x) max1.x = p.x;
-        if(p.y > max1.y) max1.y = p.y;
-    })
+        r1.minX = r1.minX < p.x ? r1.minX : p.x;
+        r1.maxX = r1.maxX > p.x ? r1.maxX : p.x;
+        r1.minY = r1.minY < p.y ? r1.minY : p.y;
+        r1.maxY = r1.maxY > p.y ? r1.maxY : p.y;
+    });
+
     ps2.map(function(p){
-        if(p.x < min2.x) min2.x = p.x;
-        if(p.y < min2.y) min2.y = p.y;
-        if(p.x > max2.x) max2.x = p.x;
-        if(p.y > max2.y) max2.y = p.y;
+        r2.minX = r2.minX < p.x ? r2.minX : p.x;
+        r2.maxX = r2.maxX > p.x ? r2.maxX : p.x;
+        r2.minY = r2.minY < p.y ? r2.minY : p.y;
+        r2.maxY = r2.maxY > p.y ? r2.maxY : p.y;
     })
-
-    if(min1.x > max2.x || min1.y > max2.y || min2.x > max1.x || min2.y > max2.y)
+ 
+    if(r1.minX > r2.maxX || r1.minY > r2.maxY || r2.minX > r1.maxX || r2.minY > r1.maxY){
         return false;
+    }
     // quick check end
-
-    if(!quickCheck(ps1, ps2))
-        return false;
 
     ctx.beginPath();
     ctx.moveTo(ps2[0].x, ps2[0].y);
 
     for(var i=1; i<ps2.length; i++)
         ctx.lineTo(ps2[i].x, ps2[i].y);
+
     ctx.closePath();
 
-    ps1.map(function(p){
-        if(ctx.isPointInPath(p.x, p.y))
+    for(var i=0,p; i<ps1.length; i++){
+        p = ps1[i];
+        if(p.x > r2.minX && p.x < r2.maxX && 
+            p.y > r2.minY && p.y < r2.maxY && 
+                ctx.isPointInPath(p.x, p.y))
             return p;
-    })
+    }
 
     return false;
 }
@@ -666,6 +670,14 @@ var inheritPrototype = function(subClass, superClass){
     subClass.prototype = prototype;
 };
 
+Array.prototype.contain = function(obj){
+    var i = this.length;
+    while(i--){
+        if(this[i] === obj)
+            return true;
+    }
+    return false;
+}
 
 module.exports = {
     inheritPrototype: inheritPrototype
