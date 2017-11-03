@@ -194,13 +194,13 @@ Rectangle.prototype.getPoints = function(){
     return this.points;
 }
 
-function Text(src, x, y, font){
+function Text(src, x, y, fillStyle, font){
     Shape.call(this);
     this.src = src;
     this.x = x || 0;
     this.y = y || 20;
     this.font = font || "20px Arial";
-    this.fillStyle = "orange";
+    this.fillStyle = fillStyle || "orange";
 }
 
 inheritPrototype(Text, Shape);
@@ -226,6 +226,10 @@ Text.prototype.fill = function(){
 };
 
 Text.prototype.draw = Text.prototype.fill;
+
+String.prototype.draw = function(x, y, fillStyle, font){
+    new Text(this, x, y, fillStyle, font).draw();
+};
 
 function Sprite(src, x, y, w, h){
     Rectangle.call(this, x, y, w, h);
