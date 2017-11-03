@@ -16,6 +16,16 @@ canvas.clear = function(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
+ctx.drawPathByPoints = function(ps){
+    ctx.beginPath();
+    ctx.moveTo(ps[0].x, ps[0].y);
+
+    for(var i=1; i<ps.length; i++)
+        ctx.lineTo(ps[i].x, ps[i].y);
+
+    ctx.closePath();
+};
+
 module.exports = {
     canvas: canvas,
     ctx: ctx,
