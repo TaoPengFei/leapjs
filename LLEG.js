@@ -692,7 +692,6 @@ function shadowCollide(ps1, ps2, u){
         ps2min = ps2min < l ? ps2min : l;
         ps2max = ps2max > l ? ps2max : l;
     }
-    console.log(ps1min, ps1max, ps2min, ps2max);
 
     if(ps1min > ps2max || ps1max < ps2min) return false;
 
