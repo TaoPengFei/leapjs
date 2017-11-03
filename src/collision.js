@@ -47,7 +47,6 @@ function collide(shape1, shape2){
             p2 = ps1[i+1];
 
         u = getVerticalVector(p2, p1);
-        console.log(u);
         if(!shadowCollide(ps1, ps2, u)) return false;
     }
 
