@@ -716,7 +716,6 @@ function getVerticalVector(p1, p2){
 }
 
 function getRectShape(ps){
-
     var xs = ps.map(function(p){ return p.x });
     var ys = ps.map(function(p){ return p.y });
 
@@ -746,18 +745,65 @@ function pointInShape(p, shape){
     return false;
 }
 
-Shape.prototype.collide = function(shape){
-    return collide(this, shape);
+Shape.prototype.collide = function(other){
+    if(other instanceof Shape)
+        return collide(this, other);
+
+    // Object
+    for(key in other){
+        shape = other[key];
+        if(shape instanceof Shape && this.collide(shape))
+            return true;
+    }
+
+    return false;
 };
 
 Shape.prototype.touched = function(){
     return pointInShape(Mouse, this);
 };
 
+Object.prototype.collide = function(other){
+    for(key in this){
+        shape = this[key];
+        if(shape instanceof Shape && shape.collide(other))
+            return true;
+    }
+    return false;
+};
+
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports) {
+
+// requestAnimationFrame
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    
+            window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+            var id = window.setTimeout(function() {
+                callback(currTime + timeToCall);
+            }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    }
+    if (!window.cancelAnimationFrame) {
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+    }
+}());
 
 var inheritPrototype = function(subClass, superClass){
     var prototype = Object.create(superClass.prototype);
@@ -780,7 +826,7 @@ Array.prototype.max = function(){
 
 Array.prototype.min = function(){
     return Math.min.apply(null, this);
-}
+};
 
 module.exports = {
     inheritPrototype: inheritPrototype

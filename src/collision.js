@@ -83,7 +83,6 @@ function getVerticalVector(p1, p2){
 }
 
 function getRectShape(ps){
-
     var xs = ps.map(function(p){ return p.x });
     var ys = ps.map(function(p){ return p.y });
 
@@ -113,10 +112,29 @@ function pointInShape(p, shape){
     return false;
 }
 
-Shape.prototype.collide = function(shape){
-    return collide(this, shape);
+Shape.prototype.collide = function(other){
+    if(other instanceof Shape)
+        return collide(this, other);
+
+    // Object
+    for(key in other){
+        shape = other[key];
+        if(shape instanceof Shape && this.collide(shape))
+            return true;
+    }
+
+    return false;
 };
 
 Shape.prototype.touched = function(){
     return pointInShape(Mouse, this);
+};
+
+Object.prototype.collide = function(other){
+    for(key in this){
+        shape = this[key];
+        if(shape instanceof Shape && shape.collide(other))
+            return true;
+    }
+    return false;
 };
