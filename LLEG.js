@@ -405,6 +405,13 @@ function Point(x, y){
 inheritPrototype(Point, Circle);
 Point.prototype.draw = Point.prototype.fill;
 
+Object.prototype.draw = function(){
+    for(key in this){
+        shape = this[key];
+        if(shape instanceof Shape) shape.draw();
+    }
+}
+
 module.exports = {
     shapeList: shapeList,
 
