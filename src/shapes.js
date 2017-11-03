@@ -175,6 +175,8 @@ function Rectangle(x, y, w, h){
     this.y = y;
     this.width = w;
     this.height = h;
+    this.collideW = 1;
+    this.collideH = 1;
 }
 
 inheritPrototype(Rectangle, Shape);
@@ -183,13 +185,23 @@ Rectangle.prototype._draw = function(){
     ctx.rect(this.x, this.y, this.width, this.height);
 };
 
+Rectangle.prototype.setCollisionScale = function(w, h){
+    this.collideW = w;
+    this.collideH = h;
+}
+
 Rectangle.prototype.getPoints = function(){
     this.points = [];
 
-    this.points.push({x: this.x, y: this.y});
-    this.points.push({x: this.x+this.width, y: this.y});
-    this.points.push({x: this.x+this.width, y: this.y+this.height});
-    this.points.push({x: this.x, y: this.y+this.height});
+    var minX = this.x + this.width/2*(1-this.collideW);
+    var maxX = this.x + this.width/2*(1+this.collideW);
+    var minY = this.y + this.height/2*(1-this.collideH);
+    var maxY = this.y + this.height/2*(1+this.collideH);
+
+    this.points.push({x: minX, y: minY});
+    this.points.push({x: minX, y: maxY});
+    this.points.push({x: maxX, y: maxY});
+    this.points.push({x: maxX, y: minY});
 
     return this.points;
 }
@@ -242,6 +254,8 @@ inheritPrototype(Sprite, Rectangle);
 Sprite.prototype.url = function(src){
     this.img.src = src;
 };
+
+
 
 Sprite.prototype.clip = function(sx, sy, sw, sh){
     this.sx = sx > 0 ? sx : 1;
