@@ -12,7 +12,7 @@ var circle = new Circle(0, 0, 20);
 var boom = new Circle(0, 0, 10);
 var boom2 = new Circle(canvas.width, canvas.height, 10);
 
-var gameOver_text = new Text("Game Over", 100, 160, "30px Arial");
+var gameOver_text = new Text("Game Over", 100, 160, null, "30px Arial");
 var retry_text = new Text("Retry", 150, 380); 
 retry_text.fillStyle = "white";
 var retry_btn = new Rectangle(122, 350, 100, 50);

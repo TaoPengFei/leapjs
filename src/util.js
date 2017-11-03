@@ -1,3 +1,5 @@
+var clone = require('clone');
+
 // requestAnimationFrame
 (function() {
     var lastTime = 0;
@@ -48,6 +50,10 @@ Array.prototype.max = function(){
 Array.prototype.min = function(){
     return Math.min.apply(null, this);
 };
+
+Object.prototype.clone = function(){
+    return clone(this, false);
+}
 
 module.exports = {
     inheritPrototype: inheritPrototype

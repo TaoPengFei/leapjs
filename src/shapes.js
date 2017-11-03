@@ -24,7 +24,7 @@ Shape.prototype.updateCtx = function(ctx){
 
 Shape.prototype.getPoints = function(){
     return this.points;
-}
+};
 
 Shape.prototype.stroke = function(){
     ctx.save();

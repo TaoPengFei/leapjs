@@ -5,5 +5,8 @@ module.exports = {
   output: {
     filename: 'LLEG.js',
     path: __dirname
+  },
+  module: {
+    noParse: [/clone/]
   }
 };
