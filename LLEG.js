@@ -353,9 +353,9 @@ function Sprite(src, x, y, w, h){
     Rectangle.call(this, x, y, w, h);
     this.img = new Image();
     this.img.src = src;
-    Rss.count++;
+    Rss.add();
     this.img.onload = function(){
-        Rss.load++;
+        Rss.load();
     }
 }
 
@@ -364,7 +364,6 @@ inheritPrototype(Sprite, Rectangle);
 Sprite.prototype.url = function(src){
     this.img.src = src;
 };
-
 
 
 Sprite.prototype.clip = function(sx, sy, sw, sh){
@@ -462,16 +461,43 @@ function loadRssAndRun(func){
     check();
 }
 
+function add(){
+    count++;
+}
+
+function load(){
+    loaded++;
+}
+
+function isLoaded(){
+    return loaded >= count;
+}
+
+var n=0;
+
 function check(){
-    if(loaded >= count)
+    if(isLoaded())
         main();
-    else
-        requestAnimationFrame(check);
+    else {
+        canvas.clear();
+        "LeapLearner".draw(canvas.width/2-110, 200, null, "40px Arial");
+        var msg = "loading";
+        for(var i=0; i<n%6; i++)
+            msg += '.';
+        var r1 = new Rectangle(50, canvas.height-200, canvas.width-100, 10);
+        var r2 = new Rectangle(50, canvas.height-200, (canvas.width-100)*loaded/count, 10);
+        r2.fillStyle = "orange";
+        r1.fill();
+        r2.fill();
+        msg.draw(canvas.width/2-40,  canvas.height-220);
+        n++;
+        setTimeout(check, 500);
+    }
 }
 
 module.exports = {
-    count: count,
-    loaded: loaded,
+    add: add,
+    load: load,
     loadRssAndRun: loadRssAndRun
 }
 

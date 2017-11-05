@@ -245,9 +245,9 @@ function Sprite(src, x, y, w, h){
     Rectangle.call(this, x, y, w, h);
     this.img = new Image();
     this.img.src = src;
-    Rss.count++;
+    Rss.add();
     this.img.onload = function(){
-        Rss.load++;
+        Rss.load();
     }
 }
 
@@ -256,7 +256,6 @@ inheritPrototype(Sprite, Rectangle);
 Sprite.prototype.url = function(src){
     this.img.src = src;
 };
-
 
 
 Sprite.prototype.clip = function(sx, sy, sw, sh){
