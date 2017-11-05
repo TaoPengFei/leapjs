@@ -75,7 +75,7 @@ function GameStart(){
   spike1.x = 600;
   spike2.x = 600;
   bgm.play();
-  requestAnimationFrame(GameLoop);
+  GameLoop();
 }
 
 function GameLoop(){  
@@ -102,7 +102,7 @@ function GameLoop(){
     if(hiscore < score) hiscore = score;
     ("HI:" + hiscore).draw(300, 30, "white");
 
-  	requestAnimationFrame(GameLoop);
+  	nextFrame(GameLoop);
   }
 }
 

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -107,9 +107,9 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(0).ctx;
-var inheritPrototype = __webpack_require__(7).inheritPrototype;
+var inheritPrototype = __webpack_require__(2).inheritPrototype;
 var Transform = __webpack_require__(9).Transform;
-var Rss = __webpack_require__(2);
+var Rss = __webpack_require__(3);
 
 var shapeList = [];
 
@@ -450,6 +450,78 @@ module.exports = {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var clone = __webpack_require__(8);
+
+// requestAnimationFrame
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    
+            window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    }
+    if (!window.cancelAnimationFrame) {
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+    }
+}());
+
+// void run multi frame
+var frame_id;
+var nextFrame = function(func){
+    if(frame_id) window.cancelAnimationFrame(frame_id);
+    frame_id = window.requestAnimationFrame(func);
+};
+
+var inheritPrototype = function(subClass, superClass){
+    var prototype = Object.create(superClass.prototype);
+    prototype.constructor = subClass;
+    subClass.prototype = prototype;
+};
+
+Array.prototype.contain = function(obj){
+    var i = this.length;
+    while(i--){
+        if(this[i] === obj)
+            return true;
+    }
+    return false;
+};
+
+Array.prototype.max = function(){
+    return Math.max.apply(null, this);
+};
+
+Array.prototype.min = function(){
+    return Math.min.apply(null, this);
+};
+
+Object.prototype.clone = function(){
+    return clone(this, false);
+}
+
+module.exports = {
+    inheritPrototype: inheritPrototype,
+    nextFrame: nextFrame
+};
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 var count = 0;
@@ -503,11 +575,11 @@ module.exports = {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var canvas = __webpack_require__(0).canvas;
-var keys = __webpack_require__(4).Key;
+var keys = __webpack_require__(5).Key;
 var p = __webpack_require__(0).p;
 var shapeList = __webpack_require__(1).shapeList;
 
@@ -604,7 +676,7 @@ module.exports = {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 var Key = {};
@@ -651,17 +723,18 @@ module.exports = {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var canvas = __webpack_require__(0).canvas;
 var ctx = __webpack_require__(0).ctx;
-var collide = __webpack_require__(6);
-var Key = __webpack_require__(4).Key;
-var Mouse = __webpack_require__(3).Mouse; // must after collide
+var collide = __webpack_require__(7);
+var Key = __webpack_require__(5).Key;
+var Mouse = __webpack_require__(4).Mouse; // must after collide
 
 var shapes = __webpack_require__(1);
-var Rss = __webpack_require__(2);
+var Rss = __webpack_require__(3);
+var Util = __webpack_require__(2);
 
 window.canvas = canvas;
 window.ctx = ctx;
@@ -679,12 +752,12 @@ window.Point = shapes.Point;
 window.Key = Key;
 window.Mouse = Mouse;
 
-window.nextFrame = window.requestAnimationFrame;
+window.nextFrame = Util.nextFrame;
 window.loadRssAndRun = Rss.loadRssAndRun;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // detect collision using shadows
@@ -693,7 +766,7 @@ window.loadRssAndRun = Rss.loadRssAndRun;
 // rect: {minX, maxX, minY, maxY}
 var shapes = __webpack_require__(1);
 var ctx = __webpack_require__(0).ctx;
-var Mouse = __webpack_require__(3).Mouse;
+var Mouse = __webpack_require__(4).Mouse;
 
 var Shape = shapes.Shape;
 
@@ -850,72 +923,6 @@ Object.prototype.collide = function(other){
         }
     }
     return false;
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var clone = __webpack_require__(8);
-
-// requestAnimationFrame
-(function() {
-    var lastTime = 0;
-    var vendors = ['webkit', 'moz'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    
-            window[vendors[x] + 'CancelRequestAnimationFrame'];
-    }
-
-    if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-            var id = window.setTimeout(function() {
-                callback(currTime + timeToCall);
-            }, timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
-    if (!window.cancelAnimationFrame) {
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-    }
-}());
-
-var inheritPrototype = function(subClass, superClass){
-    var prototype = Object.create(superClass.prototype);
-    prototype.constructor = subClass;
-    subClass.prototype = prototype;
-};
-
-Array.prototype.contain = function(obj){
-    var i = this.length;
-    while(i--){
-        if(this[i] === obj)
-            return true;
-    }
-    return false;
-};
-
-Array.prototype.max = function(){
-    return Math.max.apply(null, this);
-};
-
-Array.prototype.min = function(){
-    return Math.min.apply(null, this);
-};
-
-Object.prototype.clone = function(){
-    return clone(this, false);
-}
-
-module.exports = {
-    inheritPrototype: inheritPrototype
 };
 
 

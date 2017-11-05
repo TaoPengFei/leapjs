@@ -14,9 +14,7 @@ var clone = require('clone');
         window.requestAnimationFrame = function(callback, element) {
             var currTime = new Date().getTime();
             var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-            var id = window.setTimeout(function() {
-                callback(currTime + timeToCall);
-            }, timeToCall);
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
             lastTime = currTime + timeToCall;
             return id;
         };
@@ -27,6 +25,13 @@ var clone = require('clone');
         };
     }
 }());
+
+// void run multi frame
+var frame_id;
+var nextFrame = function(func){
+    if(frame_id) window.cancelAnimationFrame(frame_id);
+    frame_id = window.requestAnimationFrame(func);
+};
 
 var inheritPrototype = function(subClass, superClass){
     var prototype = Object.create(superClass.prototype);
@@ -56,5 +61,6 @@ Object.prototype.clone = function(){
 }
 
 module.exports = {
-    inheritPrototype: inheritPrototype
+    inheritPrototype: inheritPrototype,
+    nextFrame: nextFrame
 };
