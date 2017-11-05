@@ -60,7 +60,11 @@ Object.prototype.clone = function(){
     return clone(this, false);
 }
 
+// handle shape click event;
+var shapeList = [];
+
 module.exports = {
     inheritPrototype: inheritPrototype,
-    nextFrame: nextFrame
+    nextFrame: nextFrame,
+    shapeList: shapeList
 };

@@ -1,7 +1,7 @@
 var canvas = require('./canvas.js').canvas;
 var keys = require('./keys.js').Key;
 var p = require('./canvas.js').p;
-var shapeList = require('./shapes.js').shapeList;
+var shapeList = require('./util.js').shapeList;
 
 var Mouse = {
     x: 0,
@@ -37,12 +37,15 @@ canvas.onmousedown =  function(e){
     updateEvent(e);
     if(Mouse.down) Mouse.down(); 
 
-    // handle events of all shapes
+    // handle events of all shapes, LIFO
     // IMPORTANT
-    shapeList.map(function(shape){
+    var i = shapeList.length;
+    while(i--){
+        var shape = shapeList[i];
         if(shape.click && shape.touched())
             shape.click();
-    });
+        break;
+    }
 };
 
 canvas.ontouchstart = function(e){

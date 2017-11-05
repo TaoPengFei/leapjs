@@ -65,7 +65,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var shapeList = __webpack_require__(1).shapeList;
 
 var canvas = document.createElement('canvas');
 var p = document.createElement('p');
@@ -82,6 +84,7 @@ ctx.strokeStyle = "#00FFFF";
 ctx.fillStyle = "rgba(0, 255, 255, 0.5)";
 
 canvas.clear = function(){
+    shapeList = []; // clear all event
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
@@ -106,18 +109,92 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var clone = __webpack_require__(7);
+
+// requestAnimationFrame
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    
+            window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    }
+    if (!window.cancelAnimationFrame) {
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+    }
+}());
+
+// void run multi frame
+var frame_id;
+var nextFrame = function(func){
+    if(frame_id) window.cancelAnimationFrame(frame_id);
+    frame_id = window.requestAnimationFrame(func);
+};
+
+var inheritPrototype = function(subClass, superClass){
+    var prototype = Object.create(superClass.prototype);
+    prototype.constructor = subClass;
+    subClass.prototype = prototype;
+};
+
+Array.prototype.contain = function(obj){
+    var i = this.length;
+    while(i--){
+        if(this[i] === obj)
+            return true;
+    }
+    return false;
+};
+
+Array.prototype.max = function(){
+    return Math.max.apply(null, this);
+};
+
+Array.prototype.min = function(){
+    return Math.min.apply(null, this);
+};
+
+Object.prototype.clone = function(){
+    return clone(this, false);
+}
+
+// handle shape click event;
+var shapeList = [];
+
+module.exports = {
+    inheritPrototype: inheritPrototype,
+    nextFrame: nextFrame,
+    shapeList: shapeList
+};
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var ctx = __webpack_require__(0).ctx;
-var inheritPrototype = __webpack_require__(2).inheritPrototype;
+var inheritPrototype = __webpack_require__(1).inheritPrototype;
 var Transform = __webpack_require__(9).Transform;
 var Rss = __webpack_require__(3);
-
-var shapeList = [];
+var shapeList = __webpack_require__(1).shapeList;
 
 function Shape(){
     this.transform = new Transform();
     this.points = [];
     this.globalAlpha = 1;
-    shapeList.push(this);
 }
 
 Shape.prototype._draw = null;
@@ -136,6 +213,8 @@ Shape.prototype.getPoints = function(){
 };
 
 Shape.prototype.stroke = function(){
+    if(this.click) shapeList.push(this); // use for handle click event
+
     ctx.save();
     this.updateCtx(ctx);
 
@@ -148,6 +227,8 @@ Shape.prototype.stroke = function(){
 };
 
 Shape.prototype.fill = function(){
+    if(this.click) shapeList.push(this); // use for handle click event
+
     ctx.save();
     this.updateCtx(ctx);
 
@@ -160,6 +241,8 @@ Shape.prototype.fill = function(){
 };
 
 Shape.prototype.draw = function(){
+    if(this.click) shapeList.push(this); // use for handle click event
+
     ctx.save();
     this.updateCtx(ctx);
 
@@ -167,8 +250,8 @@ Shape.prototype.draw = function(){
     this._draw();
     ctx.closePath();
 
-    ctx.stroke();
     ctx.fill();
+    ctx.stroke();
 
     ctx.restore();
 };
@@ -432,8 +515,6 @@ Object.prototype.draw = function(){
 }
 
 module.exports = {
-    shapeList: shapeList,
-
     Shape: Shape,
     Line: Line,
     Rectangle: Rectangle,
@@ -445,78 +526,6 @@ module.exports = {
 
     Sprite: Sprite,
     Animation: Animation
-};
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var clone = __webpack_require__(8);
-
-// requestAnimationFrame
-(function() {
-    var lastTime = 0;
-    var vendors = ['webkit', 'moz'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    
-            window[vendors[x] + 'CancelRequestAnimationFrame'];
-    }
-
-    if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
-    if (!window.cancelAnimationFrame) {
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-    }
-}());
-
-// void run multi frame
-var frame_id;
-var nextFrame = function(func){
-    if(frame_id) window.cancelAnimationFrame(frame_id);
-    frame_id = window.requestAnimationFrame(func);
-};
-
-var inheritPrototype = function(subClass, superClass){
-    var prototype = Object.create(superClass.prototype);
-    prototype.constructor = subClass;
-    subClass.prototype = prototype;
-};
-
-Array.prototype.contain = function(obj){
-    var i = this.length;
-    while(i--){
-        if(this[i] === obj)
-            return true;
-    }
-    return false;
-};
-
-Array.prototype.max = function(){
-    return Math.max.apply(null, this);
-};
-
-Array.prototype.min = function(){
-    return Math.min.apply(null, this);
-};
-
-Object.prototype.clone = function(){
-    return clone(this, false);
-}
-
-module.exports = {
-    inheritPrototype: inheritPrototype,
-    nextFrame: nextFrame
 };
 
 
@@ -617,12 +626,15 @@ canvas.onmousedown =  function(e){
     updateEvent(e);
     if(Mouse.down) Mouse.down(); 
 
-    // handle events of all shapes
+    // handle events of all shapes, LIFO
     // IMPORTANT
-    shapeList.map(function(shape){
+    var i = shapeList.length;
+    while(i--){
+        var shape = shapeList[i];
         if(shape.click && shape.touched())
             shape.click();
-    });
+        break;
+    }
 };
 
 canvas.ontouchstart = function(e){
@@ -728,15 +740,15 @@ module.exports = {
 
 var canvas = __webpack_require__(0).canvas;
 var ctx = __webpack_require__(0).ctx;
-var collide = __webpack_require__(7);
+var collide = __webpack_require__(8);
 var Key = __webpack_require__(5).Key;
 var Mouse = __webpack_require__(4).Mouse; // must after collide
 
-var shapes = __webpack_require__(1);
+var shapes = __webpack_require__(2);
 var Rss = __webpack_require__(3);
 
 var Color = __webpack_require__(10);
-var Util = __webpack_require__(2);
+var Util = __webpack_require__(1);
 
 window.canvas = canvas;
 window.ctx = ctx;
@@ -763,176 +775,6 @@ window.RGBA = Color.RGBA;
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// detect collision using shadows
-// p: Point, {x, y}
-// ps: Points, Array
-// rect: {minX, maxX, minY, maxY}
-var shapes = __webpack_require__(1);
-var ctx = __webpack_require__(0).ctx;
-var Mouse = __webpack_require__(4).Mouse;
-
-var Shape = shapes.Shape;
-
-function collide(shape1, shape2){
-    var ps1 = shape1.getPoints();
-    var ps2 = shape2.getPoints();
-
-    if(ps1.length < 2) return false;
-    if(ps2.length < 2) return false;
-
-    // quick check start
-    var r1 = {}, r2 = {}, i, j;
-    r1 = getRectShape(ps1);
-    r2 = getRectShape(ps2);
-
-    if(r1.minX > r2.maxX || r1.minY > r2.maxY || 
-        r2.minX > r1.maxX || r2.minY > r1.maxY)
-        return false;
-    // quick check end
-
-    // possible rect
-    var collideRect = getCollideRect(r1, r2);
-
-    // if point inside shapes, return point
-    ctx.drawPathByPoints(ps2);
-    for(i=0; i<ps1.length; i++){
-        p = ps1[i];
-        if(pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) 
-            return p;
-    }
-
-    ctx.drawPathByPoints(ps1);
-    for(i=0; i<ps2.length; i++){
-        p = ps2[i];
-        if(pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) 
-            return p;
-    }
-    // points check end
-
-    // lines check
-    for(i=0; i<ps1.length-1; i++){ // bcz we had checked the points, ignore the last line
-        var p1 = ps1[i], p2 = ps1[i+1];
-        for(var j=0; j<ps2.length-1; j++){
-            var p3 = ps2[j], p4 = ps2[j+1];
-
-            var p = lineCollideLine(p1, p2, p3, p4);
-            if(p) return p;
-        }
-    }
-
-    return false;
-}
-
-function getCollideRect(r1, r2){
-    return {
-        minX : r2.minX > r2.minX ? r1.minX : r2.minX,
-        minY : r1.minY > r2.minY ? r1.minY : r2.minY,
-        maxX : r1.maxX < r2.maxX ? r1.maxX : r2.maxX,
-        maxY : r1.maxY < r2.maxY ? r1.maxY : r2.maxY
-    };
-}
-
-function lineCollideLine(p1, p2, p3, p4){
-    var x1=p1.x, x2=p2.x, x3=p3.x, x4=p4.x,
-        y1=p1.y, y2=p2.y, y3=p3.y, y4=p4.y;
-
-    // quick check
-    if(    Math.min(x1, x2) > Math.max(x3, x4) 
-        || Math.min(y1, y2) > Math.max(y3, y4)
-            || Math.max(x1, x2) < Math.min(x3, x4)
-            || Math.max(y1, y2) < Math.min(y3, y4))
-        return false;
-
-    // same slope rate
-    if((y1 - y2)*(x3 - x4) == (x1 - x2)*(y3 - y4)) 
-        return false;
-
-    // cross lines?
-    var line1 = x1*(y3-y2) + x2*(y1-y3) + x3*(y2-y1),
-        line2 = x1*(y4-y2) + x2*(y1-y4) + x4*(y2-y1);
-
-    if((line1*line2 >=0) && !(line1 == 0 && line2 == 0))
-        return false;
-
-    // get collide point
-    var b1 = (y2-y1)*x1 + (x1-x2)*y1,
-        b2 = (y4-y4)*x3 + (x3-x4)*y3,
-        D = (x2-x1)*(y4-y3) - (x4-x3)*(y2-y1),
-        D1 = b2*(x2-x1) - b1*(x4-x3),
-        D2 = b2*(y2-y1) - b1*(y4-y3);
-
-    return {
-        x: D1/D,
-        y: D2/D
-    }
-}
-
-function getRectShape(ps){
-    var xs = ps.map(function(p){ return p.x });
-    var ys = ps.map(function(p){ return p.y });
-
-    return {
-        minX: xs.min(), maxX: xs.max(),
-        minY: ys.min(), maxY: ys.max()
-    };
-}
-
-function pointInRect(p, r){
-    return r.minX <= p.x && p.x <= r.maxX 
-        && r.minY <= p.y && p.y <= r.maxY;
-}
-
-function pointInShape(p, shape){
-    var ps = shape.getPoints();
-    if(ps.length < 3) return false;
-
-    var rect = getRectShape(ps);
-    if(!pointInRect(p, rect))
-        return false;
-
-    ctx.drawPathByPoints(ps);
-    if(ctx.isPointInPath(p.x, p.y))
-        return p;
-
-    return false;
-}
-
-Shape.prototype.collide = function(other){
-    if(other instanceof Shape)
-        return collide(this, other);
-
-    // Object
-    for(var key in other){
-        shape = other[key];
-        if(shape instanceof Shape){
-            var p = this.collide(shape);
-            if(p) return p;
-        }
-    }
-
-    return false;
-};
-
-Shape.prototype.touched = function(){
-    return pointInShape(Mouse, this);
-};
-
-Object.prototype.collide = function(other){
-    for(var key in this){
-        var shape = this[key];
-        if(shape instanceof Shape){
-            var p = shape.collide(other);
-            if(p) return p;
-        }
-    }
-    return false;
-};
-
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports) {
 
 var clone = (function() {
@@ -1186,6 +1028,176 @@ return clone;
 if (typeof module === 'object' && module.exports) {
   module.exports = clone;
 }
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// detect collision using shadows
+// p: Point, {x, y}
+// ps: Points, Array
+// rect: {minX, maxX, minY, maxY}
+var shapes = __webpack_require__(2);
+var ctx = __webpack_require__(0).ctx;
+var Mouse = __webpack_require__(4).Mouse;
+
+var Shape = shapes.Shape;
+
+function collide(shape1, shape2){
+    var ps1 = shape1.getPoints();
+    var ps2 = shape2.getPoints();
+
+    if(ps1.length < 2) return false;
+    if(ps2.length < 2) return false;
+
+    // quick check start
+    var r1 = {}, r2 = {}, i, j;
+    r1 = getRectShape(ps1);
+    r2 = getRectShape(ps2);
+
+    if(r1.minX > r2.maxX || r1.minY > r2.maxY || 
+        r2.minX > r1.maxX || r2.minY > r1.maxY)
+        return false;
+    // quick check end
+
+    // possible rect
+    var collideRect = getCollideRect(r1, r2);
+
+    // if point inside shapes, return point
+    ctx.drawPathByPoints(ps2);
+    for(i=0; i<ps1.length; i++){
+        p = ps1[i];
+        if(pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) 
+            return p;
+    }
+
+    ctx.drawPathByPoints(ps1);
+    for(i=0; i<ps2.length; i++){
+        p = ps2[i];
+        if(pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) 
+            return p;
+    }
+    // points check end
+
+    // lines check
+    for(i=0; i<ps1.length-1; i++){ // bcz we had checked the points, ignore the last line
+        var p1 = ps1[i], p2 = ps1[i+1];
+        for(var j=0; j<ps2.length-1; j++){
+            var p3 = ps2[j], p4 = ps2[j+1];
+
+            var p = lineCollideLine(p1, p2, p3, p4);
+            if(p) return p;
+        }
+    }
+
+    return false;
+}
+
+function getCollideRect(r1, r2){
+    return {
+        minX : r2.minX > r2.minX ? r1.minX : r2.minX,
+        minY : r1.minY > r2.minY ? r1.minY : r2.minY,
+        maxX : r1.maxX < r2.maxX ? r1.maxX : r2.maxX,
+        maxY : r1.maxY < r2.maxY ? r1.maxY : r2.maxY
+    };
+}
+
+function lineCollideLine(p1, p2, p3, p4){
+    var x1=p1.x, x2=p2.x, x3=p3.x, x4=p4.x,
+        y1=p1.y, y2=p2.y, y3=p3.y, y4=p4.y;
+
+    // quick check
+    if(    Math.min(x1, x2) > Math.max(x3, x4) 
+        || Math.min(y1, y2) > Math.max(y3, y4)
+            || Math.max(x1, x2) < Math.min(x3, x4)
+            || Math.max(y1, y2) < Math.min(y3, y4))
+        return false;
+
+    // same slope rate
+    if((y1 - y2)*(x3 - x4) == (x1 - x2)*(y3 - y4)) 
+        return false;
+
+    // cross lines?
+    var line1 = x1*(y3-y2) + x2*(y1-y3) + x3*(y2-y1),
+        line2 = x1*(y4-y2) + x2*(y1-y4) + x4*(y2-y1);
+
+    if((line1*line2 >=0) && !(line1 == 0 && line2 == 0))
+        return false;
+
+    // get collide point
+    var b1 = (y2-y1)*x1 + (x1-x2)*y1,
+        b2 = (y4-y4)*x3 + (x3-x4)*y3,
+        D = (x2-x1)*(y4-y3) - (x4-x3)*(y2-y1),
+        D1 = b2*(x2-x1) - b1*(x4-x3),
+        D2 = b2*(y2-y1) - b1*(y4-y3);
+
+    return {
+        x: D1/D,
+        y: D2/D
+    }
+}
+
+function getRectShape(ps){
+    var xs = ps.map(function(p){ return p.x });
+    var ys = ps.map(function(p){ return p.y });
+
+    return {
+        minX: xs.min(), maxX: xs.max(),
+        minY: ys.min(), maxY: ys.max()
+    };
+}
+
+function pointInRect(p, r){
+    return r.minX <= p.x && p.x <= r.maxX 
+        && r.minY <= p.y && p.y <= r.maxY;
+}
+
+function pointInShape(p, shape){
+    var ps = shape.getPoints();
+    if(ps.length < 3) return false;
+
+    var rect = getRectShape(ps);
+    if(!pointInRect(p, rect))
+        return false;
+
+    ctx.drawPathByPoints(ps);
+    if(ctx.isPointInPath(p.x, p.y))
+        return p;
+
+    return false;
+}
+
+Shape.prototype.collide = function(other){
+    if(other instanceof Shape)
+        return collide(this, other);
+
+    // Object
+    for(var key in other){
+        shape = other[key];
+        if(shape instanceof Shape){
+            var p = this.collide(shape);
+            if(p) return p;
+        }
+    }
+
+    return false;
+};
+
+Shape.prototype.touched = function(){
+    return pointInShape(Mouse, this);
+};
+
+Object.prototype.collide = function(other){
+    for(var key in this){
+        var shape = this[key];
+        if(shape instanceof Shape){
+            var p = shape.collide(other);
+            if(p) return p;
+        }
+    }
+    return false;
+};
 
 
 /***/ }),
