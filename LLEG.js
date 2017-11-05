@@ -206,23 +206,20 @@ Circle.prototype._draw = function(){
 };
 
 Circle.prototype.getPoints = function(){
-    var x = this.x;
-    var y = this.y;
-    var r = this.r;
-    this.points = [];
-    this.points.push({x: x,         y: y+r      });
-    this.points.push({x: x+0.5*r,   y: y+0.866*r});
-    this.points.push({x: x+0.866*r, y: y+0.5*r  });
-    this.points.push({x: x+r,       y: y        });
-    this.points.push({x: x+0.866*r, y: y-0.5*r  });
-    this.points.push({x: x+0.5*r,   y: y-0.866*r});
-    this.points.push({x: x,         y: y-r      });
-    this.points.push({x: x-0.5*r,   y: y-0.866*r});
-    this.points.push({x: x-0.866*r, y: y-0.5*r  });
-    this.points.push({x: x-r,       y: y        });
-    this.points.push({x: x-0.866*r, y: y+0.5*r  });
-    this.points.push({x: x-0.5*r,   y: y+0.866*r});
-    return this.points;
+    var x = this.x, y = this.y, r = this.r, points = [];
+    points.push({x: x,         y: y+r      });
+    points.push({x: x+0.5*r,   y: y+0.866*r});
+    points.push({x: x+0.866*r, y: y+0.5*r  });
+    points.push({x: x+r,       y: y        });
+    points.push({x: x+0.866*r, y: y-0.5*r  });
+    points.push({x: x+0.5*r,   y: y-0.866*r});
+    points.push({x: x,         y: y-r      });
+    points.push({x: x-0.5*r,   y: y-0.866*r});
+    points.push({x: x-0.866*r, y: y-0.5*r  });
+    points.push({x: x-r,       y: y        });
+    points.push({x: x-0.866*r, y: y+0.5*r  });
+    points.push({x: x-0.5*r,   y: y+0.866*r});
+    return points;
 }
 
 function Line(x1, y1, x2, y2){
@@ -649,67 +646,87 @@ function collide(shape1, shape2){
     var r1 = {}, r2 = {}, i, j;
     r1 = getRectShape(ps1);
     r2 = getRectShape(ps2);
- 
+
     if(r1.minX > r2.maxX || r1.minY > r2.maxY || 
         r2.minX > r1.maxX || r2.minY > r1.maxY)
         return false;
     // quick check end
-    
+
+    // possible rect
+    var collideRect = getCollideRect(r1, r2);
+
     // if point inside shapes, return point
     ctx.drawPathByPoints(ps2);
     for(i=0; i<ps1.length; i++){
         p = ps1[i];
-        if(pointInRect(p, r2) && ctx.isPointInPath(p.x, p.y)) return p;
+        if(pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) 
+            return p;
     }
 
     ctx.drawPathByPoints(ps1);
     for(i=0; i<ps2.length; i++){
         p = ps2[i];
-        if(pointInRect(p, r1) && ctx.isPointInPath(p.x, p.y)) return p;
+        if(pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) 
+            return p;
     }
-    // point check end
+    // points check end
 
-    // vector shadow
-    var u;
-    for(i=0; i<ps1.length; i++){
-        p1 = ps1[i];
-        if(i+1 == ps1.length) 
-            p2 = ps1[0];
-        else 
-            p2 = ps1[i+1];
+    // lines check
+    for(i=0; i<ps1.length-1; i++){ // bcz we had checked the points, ignore the last line
+        var p1 = ps1[i], p2 = ps1[i+1];
+        for(var j=0; j<ps2.length-1; j++){
+            var p3 = ps2[j], p4 = ps2[j+1];
 
-        u = getVerticalVector(p2, p1);
-        if(!shadowCollide(ps1, ps2, u)) return false;
+            var p = lineCollideLine(p1, p2, p3, p4);
+            if(p) return p;
+        }
     }
 
-    for(i=0; i<ps2.length; i++){
-        p1 = ps2[i];
-        if(i==ps2.length-1) 
-            p2 = ps2[0];
-        else 
-            p2 = ps2[i+1];
-
-        u = getVerticalVector(p1, p2);
-        if(!shadowCollide(ps1, ps2, u)) return false;
-    }
-    // vector end
-    return true;
+    return false;
 }
 
-function shadowCollide(ps1, ps2, u){
-    var s1 = ps1.map(function(p){ return p.x*u.x + p.y*u.y; });
-    var s2 = ps2.map(function(p){ return p.x*u.x + p.y*u.y; });
-
-    if(s1.min() > s2.max() || s1.max() < s2.min()) return false;
-
-    return true;
-}
-
-function getVerticalVector(p1, p2){
+function getCollideRect(r1, r2){
     return {
-        x: p1.y-p2.y, 
-        y: p2.x-p1.x
+        minX : r2.minX > r2.minX ? r1.minX : r2.minX,
+        minY : r1.minY > r2.minY ? r1.minY : r2.minY,
+        maxX : r1.maxX < r2.maxX ? r1.maxX : r2.maxX,
+        maxY : r1.maxY < r2.maxY ? r1.maxY : r2.maxY
     };
+}
+
+function lineCollideLine(p1, p2, p3, p4){
+    var x1=p1.x, x2=p2.x, x3=p3.x, x4=p4.x,
+        y1=p1.y, y2=p2.y, y3=p3.y, y4=p4.y;
+
+    // quick check
+    if(    Math.min(x1, x2) > Math.max(x3, x4) 
+        || Math.min(y1, y2) > Math.max(y3, y4)
+            || Math.max(x1, x2) < Math.min(x3, x4)
+            || Math.max(y1, y2) < Math.min(y3, y4))
+        return false;
+
+    // same slope rate
+    if((y1 - y2)*(x3 - x4) == (x1 - x2)*(y3 - y4)) 
+        return false;
+
+    // cross lines?
+    var line1 = x1*(y3-y2) + x2*(y1-y3) + x3*(y2-y1),
+        line2 = x1*(y4-y2) + x2*(y1-y4) + x4*(y2-y1);
+
+    if((line1*line2 >=0) && !(line1 == 0 && line2 == 0))
+        return false;
+
+    // get collide point
+    var b1 = (y2-y1)*x1 + (x1-x2)*y1,
+        b2 = (y4-y4)*x3 + (x3-x4)*y3,
+        D = (x2-x1)*(y4-y3) - (x4-x3)*(y2-y1),
+        D1 = b2*(x2-x1) - b1*(x4-x3),
+        D2 = b2*(y2-y1) - b1*(y4-y3);
+
+    return {
+        x: D1/D,
+        y: D2/D
+    }
 }
 
 function getRectShape(ps){
@@ -723,8 +740,8 @@ function getRectShape(ps){
 }
 
 function pointInRect(p, r){
-    return r.minX < p.x && p.x < r.maxX 
-        && r.minY < p.y && p.y < r.maxY;
+    return r.minX <= p.x && p.x <= r.maxX 
+        && r.minY <= p.y && p.y <= r.maxY;
 }
 
 function pointInShape(p, shape){

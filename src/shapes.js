@@ -98,23 +98,20 @@ Circle.prototype._draw = function(){
 };
 
 Circle.prototype.getPoints = function(){
-    var x = this.x;
-    var y = this.y;
-    var r = this.r;
-    this.points = [];
-    this.points.push({x: x,         y: y+r      });
-    this.points.push({x: x+0.5*r,   y: y+0.866*r});
-    this.points.push({x: x+0.866*r, y: y+0.5*r  });
-    this.points.push({x: x+r,       y: y        });
-    this.points.push({x: x+0.866*r, y: y-0.5*r  });
-    this.points.push({x: x+0.5*r,   y: y-0.866*r});
-    this.points.push({x: x,         y: y-r      });
-    this.points.push({x: x-0.5*r,   y: y-0.866*r});
-    this.points.push({x: x-0.866*r, y: y-0.5*r  });
-    this.points.push({x: x-r,       y: y        });
-    this.points.push({x: x-0.866*r, y: y+0.5*r  });
-    this.points.push({x: x-0.5*r,   y: y+0.866*r});
-    return this.points;
+    var x = this.x, y = this.y, r = this.r, points = [];
+    points.push({x: x,         y: y+r      });
+    points.push({x: x+0.5*r,   y: y+0.866*r});
+    points.push({x: x+0.866*r, y: y+0.5*r  });
+    points.push({x: x+r,       y: y        });
+    points.push({x: x+0.866*r, y: y-0.5*r  });
+    points.push({x: x+0.5*r,   y: y-0.866*r});
+    points.push({x: x,         y: y-r      });
+    points.push({x: x-0.5*r,   y: y-0.866*r});
+    points.push({x: x-0.866*r, y: y-0.5*r  });
+    points.push({x: x-r,       y: y        });
+    points.push({x: x-0.866*r, y: y+0.5*r  });
+    points.push({x: x-0.5*r,   y: y+0.866*r});
+    return points;
 }
 
 function Line(x1, y1, x2, y2){
