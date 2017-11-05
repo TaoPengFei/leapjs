@@ -6,6 +6,8 @@ var Mouse = require('./mouse.js').Mouse; // must after collide
 
 var shapes = require('./shapes.js');
 var Rss = require('./resource.js');
+
+var Color = require('./colors.js');
 var Util = require('./util.js');
 
 window.canvas = canvas;
@@ -26,3 +28,6 @@ window.Mouse = Mouse;
 
 window.nextFrame = Util.nextFrame;
 window.loadRssAndRun = Rss.loadRssAndRun;
+
+window.RGB = Color.RGB;
+window.RGBA = Color.RGBA;

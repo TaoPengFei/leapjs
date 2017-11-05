@@ -734,6 +734,8 @@ var Mouse = __webpack_require__(4).Mouse; // must after collide
 
 var shapes = __webpack_require__(1);
 var Rss = __webpack_require__(3);
+
+var Color = __webpack_require__(10);
 var Util = __webpack_require__(2);
 
 window.canvas = canvas;
@@ -754,6 +756,9 @@ window.Mouse = Mouse;
 
 window.nextFrame = Util.nextFrame;
 window.loadRssAndRun = Rss.loadRssAndRun;
+
+window.RGB = Color.RGB;
+window.RGBA = Color.RGBA;
 
 
 /***/ }),
@@ -1238,6 +1243,24 @@ Transform.prototype.updateCtx = function(ctx){
 module.exports = {
     Transform: Transform
 };
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+function RGB(r, g, b){
+    return "rgb(" + Math.floor(r) + ","  + Math.floor(g) + "," + Math.floor(b) + ")" 
+}
+
+function RGBA(r, g, b, a){
+    return "rgba(" + Math.floor(r) + ","  + Math.floor(g) + "," + Math.floor(b) + "," + a + ")";
+}
+
+module.exports = {
+    RGB: RGB,
+    RGBA: RGBA
+}
 
 
 /***/ })
