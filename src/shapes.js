@@ -1,6 +1,7 @@
 var ctx = require('./canvas.js').ctx;
 var inheritPrototype = require('./util.js').inheritPrototype;
 var Transform = require('./transform.js').Transform;
+var Rss = require('./resource.js');
 
 var shapeList = [];
 
@@ -243,7 +244,11 @@ String.prototype.draw = function(x, y, fillStyle, font){
 function Sprite(src, x, y, w, h){
     Rectangle.call(this, x, y, w, h);
     this.img = new Image();
-    if(src) this.img.src = src;
+    this.img.src = src;
+    Rss.count++;
+    this.img.onload = function(){
+        Rss.load++;
+    }
 }
 
 inheritPrototype(Sprite, Rectangle);

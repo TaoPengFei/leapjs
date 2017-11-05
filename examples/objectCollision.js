@@ -9,20 +9,15 @@ Mouse.move = function(){
     circle.a.y = Mouse.y;
     circle.b.x = Mouse.x+20;
     circle.b.y = Mouse.y+100;
-    if(circle.collide(rect)){
-        circle.a.fillStyle = "red";
-        circle.b.fillStyle = "green";
-    }
-    else
-    {
-        circle.a.fillStyle = "green";
-        circle.b.fillStyle = "red";
-    }
 };
 
 (function main(){
     canvas.clear();
     rect.draw();
     circle.draw();
+	var p = rect.collide(circle);
+    if(p){
+    	new Point(p.x, p.y).draw();
+    }
     requestAnimationFrame(main);
 }());

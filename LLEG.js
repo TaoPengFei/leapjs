@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -107,8 +107,9 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(0).ctx;
-var inheritPrototype = __webpack_require__(6).inheritPrototype;
-var Transform = __webpack_require__(8).Transform;
+var inheritPrototype = __webpack_require__(7).inheritPrototype;
+var Transform = __webpack_require__(9).Transform;
+var Rss = __webpack_require__(2);
 
 var shapeList = [];
 
@@ -351,7 +352,11 @@ String.prototype.draw = function(x, y, fillStyle, font){
 function Sprite(src, x, y, w, h){
     Rectangle.call(this, x, y, w, h);
     this.img = new Image();
-    if(src) this.img.src = src;
+    this.img.src = src;
+    Rss.count++;
+    this.img.onload = function(){
+        Rss.load++;
+    }
 }
 
 inheritPrototype(Sprite, Rectangle);
@@ -446,10 +451,37 @@ module.exports = {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+var count = 0;
+var loaded = 0;
+var main;
+
+function loadRssAndRun(func){
+    main = func;
+    check();
+}
+
+function check(){
+    if(loaded >= count)
+        main();
+    else
+        requestAnimationFrame(check);
+}
+
+module.exports = {
+    count: count,
+    loaded: loaded,
+    loadRssAndRun: loadRssAndRun
+}
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var canvas = __webpack_require__(0).canvas;
-var keys = __webpack_require__(3).Key;
+var keys = __webpack_require__(4).Key;
 var p = __webpack_require__(0).p;
 var shapeList = __webpack_require__(1).shapeList;
 
@@ -546,7 +578,7 @@ module.exports = {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 var Key = {};
@@ -593,16 +625,17 @@ module.exports = {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var canvas = __webpack_require__(0).canvas;
 var ctx = __webpack_require__(0).ctx;
-var collide = __webpack_require__(5);
-var Key = __webpack_require__(3).Key;
-var Mouse = __webpack_require__(2).Mouse; // must after collide
+var collide = __webpack_require__(6);
+var Key = __webpack_require__(4).Key;
+var Mouse = __webpack_require__(3).Mouse; // must after collide
 
 var shapes = __webpack_require__(1);
+var Rss = __webpack_require__(2);
 
 window.canvas = canvas;
 window.ctx = ctx;
@@ -620,9 +653,12 @@ window.Point = shapes.Point;
 window.Key = Key;
 window.Mouse = Mouse;
 
+window.nextFrame = window.requestAnimationFrame;
+window.loadRssAndRun = Rss.loadRssAndRun;
+
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // detect collision using shadows
@@ -631,7 +667,7 @@ window.Mouse = Mouse;
 // rect: {minX, maxX, minY, maxY}
 var shapes = __webpack_require__(1);
 var ctx = __webpack_require__(0).ctx;
-var Mouse = __webpack_require__(2).Mouse;
+var Mouse = __webpack_require__(3).Mouse;
 
 var Shape = shapes.Shape;
 
@@ -764,10 +800,12 @@ Shape.prototype.collide = function(other){
         return collide(this, other);
 
     // Object
-    for(key in other){
+    for(var key in other){
         shape = other[key];
-        if(shape instanceof Shape && this.collide(shape))
-            return true;
+        if(shape instanceof Shape){
+            var p = this.collide(shape);
+            if(p) return p;
+        }
     }
 
     return false;
@@ -778,20 +816,22 @@ Shape.prototype.touched = function(){
 };
 
 Object.prototype.collide = function(other){
-    for(key in this){
-        shape = this[key];
-        if(shape instanceof Shape && shape.collide(other))
-            return true;
+    for(var key in this){
+        var shape = this[key];
+        if(shape instanceof Shape){
+            var p = shape.collide(other);
+            if(p) return p;
+        }
     }
     return false;
 };
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var clone = __webpack_require__(7);
+var clone = __webpack_require__(8);
 
 // requestAnimationFrame
 (function() {
@@ -854,7 +894,7 @@ module.exports = {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 var clone = (function() {
@@ -1111,7 +1151,7 @@ if (typeof module === 'object' && module.exports) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 function Transform(){

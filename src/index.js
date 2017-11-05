@@ -5,6 +5,7 @@ var Key = require('./keys.js').Key;
 var Mouse = require('./mouse.js').Mouse; // must after collide
 
 var shapes = require('./shapes.js');
+var Rss = require('./resource.js');
 
 window.canvas = canvas;
 window.ctx = ctx;
@@ -21,3 +22,6 @@ window.Point = shapes.Point;
 
 window.Key = Key;
 window.Mouse = Mouse;
+
+window.nextFrame = window.requestAnimationFrame;
+window.loadRssAndRun = Rss.loadRssAndRun;

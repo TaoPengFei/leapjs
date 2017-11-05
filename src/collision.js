@@ -137,10 +137,12 @@ Shape.prototype.collide = function(other){
         return collide(this, other);
 
     // Object
-    for(key in other){
+    for(var key in other){
         shape = other[key];
-        if(shape instanceof Shape && this.collide(shape))
-            return true;
+        if(shape instanceof Shape){
+            var p = this.collide(shape);
+            if(p) return p;
+        }
     }
 
     return false;
@@ -151,10 +153,12 @@ Shape.prototype.touched = function(){
 };
 
 Object.prototype.collide = function(other){
-    for(key in this){
-        shape = this[key];
-        if(shape instanceof Shape && shape.collide(other))
-            return true;
+    for(var key in this){
+        var shape = this[key];
+        if(shape instanceof Shape){
+            var p = shape.collide(other);
+            if(p) return p;
+        }
     }
     return false;
 };

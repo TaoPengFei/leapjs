@@ -114,4 +114,4 @@ function isGameOver(){
   return false;
 }
 
-GameStart();
+loadRssAndRun(GameStart);
