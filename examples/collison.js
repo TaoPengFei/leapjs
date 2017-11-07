@@ -14,5 +14,5 @@ Mouse.move = function(){
     if(p){
         new Point(p.x, p.y).draw();
     }
-    requestAnimationFrame(main);
+    nextFrame(main);
 }());

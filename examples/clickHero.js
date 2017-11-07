@@ -51,7 +51,7 @@ function GameStart(){
     circle.init();
     score = 0;
     bgm.play();
-    requestAnimationFrame(GameLoop);
+    nextFrame(GameLoop);
 }
 
 function GameLoop(){
@@ -67,9 +67,9 @@ function GameLoop(){
   ("HI: " + hiscore).draw(canvas.width-100);
 
   if(iSGameOver())
-      requestAnimationFrame(GameOver);
+      nextFrame(GameOver);
   else
-      requestAnimationFrame(GameLoop);
+      nextFrame(GameLoop);
 }
 
 function iSGameOver(){
@@ -78,8 +78,8 @@ function iSGameOver(){
 
 function GameOver(){
     var retry_btn = new Rectangle(122, 350, 100, 50);
-    retry_btn.fill();
     retry_btn.click = GameStart;
+    retry_btn.fill();
       
     "Game Over".draw(100, 160, null, "30px Arial");
     "Retry".draw(150, 380, "white"); 

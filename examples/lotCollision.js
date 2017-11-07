@@ -31,5 +31,5 @@ for(var i=0; i<count; i++){
     for(var i=0; i<cs.length; i++)
         cs[i].update();
     cs.draw();
-    requestAnimationFrame(main);
+    nextFrame(main);
 })();

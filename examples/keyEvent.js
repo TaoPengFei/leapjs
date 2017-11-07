@@ -8,5 +8,5 @@ Key.ArrowRight.down = function(){rect.x += 10;};
 (function main(){
     canvas.clear();
     rect.draw();
-    requestAnimationFrame(main);
+    nextFrame(main);
 }() );
