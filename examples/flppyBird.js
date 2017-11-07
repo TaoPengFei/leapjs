@@ -6,7 +6,6 @@ var bird = new Animation(url+"animations/bird.png", 80, 20, 56, 42);
 bird.setFrame(0, 0, 112, 84, 8, 1); // shiftX, shiftY, frameX, frameY, columns, rows
 bird.setAnchor(100, 0);			
 bird.scale(-1, 1);		// These two lines are used to flip bird
-bird.setSpeed(4);		// Animation frame speed
 bird.setCollisionScale(0.4, 0.4);	// the actual collision scale
 
 var spike1 = new Sprite(url+"images/spike3.png", 500, 300, 80, 170);

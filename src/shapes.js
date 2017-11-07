@@ -287,7 +287,7 @@ Sprite.prototype.stroke = null;
 
 function Animation(src, x, y, w, h){
     Sprite.call(this, src, x, y, w, h);
-    this.speed = 1;
+    this.speed = 10;
 }
 
 inheritPrototype(Animation, Sprite);
@@ -300,12 +300,14 @@ Animation.prototype.setFrame = function(sx, sy, sw, sh, c, r){
 };
 
 Animation.prototype.setSpeed = function(speed){
-    this.speed = speed > 1 ? speed : 1;
+    this.speed = speed;
+    if(this.speed < 1) this.speed = 1;
+    if(this.speed > 60) this.speed = 60;
 };
 
 Animation.prototype._draw = function(){
-    var sx = this.sx + this.swidth * (Math.floor(this.cf/this.speed) % this.c);
-    var sy = this.sy + this.sheight * (Math.floor(this.cf/this.c/this.speed) % this.r);
+    var sx = this.sx + this.swidth * (Math.floor(this.cf * this.speed/60) % this.c);
+    var sy = this.sy + this.sheight * (Math.floor(this.cf * this.speed/60 / this.c) % this.r);
     ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight,
         this.x, this.y, this.width, this.height);
 

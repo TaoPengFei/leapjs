@@ -42,9 +42,10 @@ canvas.onmousedown =  function(e){
     var i = shapeList.length;
     while(i--){
         var shape = shapeList[i];
-        if(shape.click && shape.touched())
+        if(shape.click && shape.touched()){
             shape.click();
-        break;
+            break;
+        }
     }
 };
 

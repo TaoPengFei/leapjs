@@ -53,4 +53,4 @@ function load(file){
     });
 }
 
-load('./examples/keyEvent.js');
+load('./examples/animation.js');
