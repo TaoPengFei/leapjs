@@ -4,7 +4,7 @@ var urls = [ "40-C.mp3", "42-D.mp3", "44-E.mp3", "45-F.mp3", "47-G.mp3", "49-A.m
 
 var Key = Rectangle;
 Key.prototype.click = function(){
-    //this.audio.currentTime = 0;
+    this.audio.currentTime = 0;
     this.audio.play();
 };
 
