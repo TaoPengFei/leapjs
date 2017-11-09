@@ -82,16 +82,13 @@ function lineCollideLine(p1, p2, p3, p4){
     if((y1 - y2)*(x3 - x4) == (x1 - x2)*(y3 - y4)) 
         return false;
 
-    // cross lines?
-    var line1 = x1*(y3-y2) + x2*(y1-y3) + x3*(y2-y1),
-        line2 = x1*(y4-y2) + x2*(y1-y4) + x4*(y2-y1);
-
-    if((line1*line2 >=0) && !(line1 == 0 && line2 == 0))
+    if(cross(p3, p2, p3, p4) * cross(p3, p4, p3, p1) < 0 ||
+       cross(p1, p4, p1, p2) * cross(p1, p2, p1, p3) < 0)
         return false;
 
     // get collide point
     var b1 = (y2-y1)*x1 + (x1-x2)*y1,
-        b2 = (y4-y4)*x3 + (x3-x4)*y3,
+        b2 = (y4-y3)*x3 + (x3-x4)*y3,
         D = (x2-x1)*(y4-y3) - (x4-x3)*(y2-y1),
         D1 = b2*(x2-x1) - b1*(x4-x3),
         D2 = b2*(y2-y1) - b1*(y4-y3);
@@ -100,6 +97,10 @@ function lineCollideLine(p1, p2, p3, p4){
         x: D1/D,
         y: D2/D
     }
+}
+
+function cross(p1, p2, p3, p4){
+    return (p2.x - p1.x)*(p4.y - p3.y) - (p2.y - p1.y)*(p4.x - p3.x);
 }
 
 function getRectShape(ps){

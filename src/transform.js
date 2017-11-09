@@ -10,6 +10,12 @@ function Transform(){
     this.degree = 0;
 }
 
+Transform.prototype.transformed = function(){
+    return this.scaleX != 1 || this.scaleY != 1 
+        || this.skewX || this.skewY 
+        || this.translateX || this.translateY || this.degree;
+};
+
 Transform.prototype.scale = function(x, y){
     this.scaleX = x;
     this.scaleY = y;
@@ -44,6 +50,32 @@ Transform.prototype.updateCtx = function(ctx){
             this.translateX, this.translateY);
 
     ctx.translate(-this.anchorX, -this.anchorY);
+};
+
+Transform.prototype.getRealPoint = function(p){
+    var x = p.x, y = p.y;
+
+    x -= this.anchorX;
+    y -= this.anchorY;
+
+    var degree = this.degree * Math.PI / 180;
+    var sin = Math.sin(degree);
+    var cos = Math.cos(degree);
+
+    var newX = x*cos - y*sin;
+    var newY = y*cos + x*sin;
+    x = newX;
+    y = newY;
+
+    newX = this.scaleX * x + this.skewX * y + this.translateX;
+    newY = this.skewY * x + this.scaleY * y + this.translateY;
+    x = newX;
+    y = newY;
+
+    x += this.anchorX;
+    y += this.anchorY;
+
+    return {x: x, y: y};
 };
 
 module.exports = {

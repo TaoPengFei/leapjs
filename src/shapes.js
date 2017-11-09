@@ -21,8 +21,18 @@ Shape.prototype.updateCtx = function(ctx){
     this.transform.updateCtx(ctx);
 };
 
+Shape.prototype._getPoints = function(){
+    return this.points.clone();
+};
+
 Shape.prototype.getPoints = function(){
-    return this.points;
+    var points = this._getPoints();
+    if(this.transform.transformed()){
+        for(var i=0; i<points.length; i++){
+            points[i] = this.transform.getRealPoint(points[i]);
+        }
+    };
+    return points;
 };
 
 Shape.prototype.stroke = function(){
@@ -102,7 +112,7 @@ Circle.prototype._draw = function(){
     ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
 };
 
-Circle.prototype.getPoints = function(){
+Circle.prototype._getPoints = function(){
     var x = this.x, y = this.y, r = this.r, points = [];
     points.push({x: x,         y: y+r      });
     points.push({x: x+0.5*r,   y: y+0.866*r});
@@ -134,11 +144,11 @@ Line.prototype._draw = function(){
     ctx.lineTo(this.x2, this.y2);
 };
 
-Line.prototype.getPoints = function(){
-    this.points = [];
-    this.points.push({x: this.x1, y: this.y1});
-    this.points.push({x: this.x2, y: this.y2});
-    return this.points;
+Line.prototype._getPoints = function(){
+    var points = [];
+    points.push({x: this.x1, y: this.y1});
+    points.push({x: this.x2, y: this.y2});
+    return points;
 }
 
 function Polygon(){
@@ -192,20 +202,20 @@ Rectangle.prototype.setCollisionScale = function(w, h){
     this.collideH = h;
 }
 
-Rectangle.prototype.getPoints = function(){
-    this.points = [];
+Rectangle.prototype._getPoints = function(){
+    var points = [];
 
     var minX = this.x + this.width/2*(1-this.collideW);
     var maxX = this.x + this.width/2*(1+this.collideW);
     var minY = this.y + this.height/2*(1-this.collideH);
     var maxY = this.y + this.height/2*(1+this.collideH);
 
-    this.points.push({x: minX, y: minY});
-    this.points.push({x: minX, y: maxY});
-    this.points.push({x: maxX, y: maxY});
-    this.points.push({x: maxX, y: minY});
+    points.push({x: minX, y: minY});
+    points.push({x: minX, y: maxY});
+    points.push({x: maxX, y: maxY});
+    points.push({x: maxX, y: minY});
 
-    return this.points;
+    return points;
 }
 
 function Text(src, x, y, fillStyle, font){
