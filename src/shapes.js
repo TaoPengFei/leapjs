@@ -1,8 +1,8 @@
 var ctx = require('./canvas.js').ctx;
+var clickShapes = require('./util.js').clickShapes;
 var inheritPrototype = require('./util.js').inheritPrototype;
 var Transform = require('./transform.js').Transform;
 var Rss = require('./resource.js');
-var shapeList = require('./util.js').shapeList;
 
 function Shape(){
     this.transform = new Transform();
@@ -26,7 +26,7 @@ Shape.prototype.getPoints = function(){
 };
 
 Shape.prototype.stroke = function(){
-    if(this.click) shapeList.push(this); // use for handle click event
+    if(this.click) clickShapes.add(this); // use for handle click event
 
     ctx.save();
     this.updateCtx(ctx);
@@ -40,7 +40,7 @@ Shape.prototype.stroke = function(){
 };
 
 Shape.prototype.fill = function(){
-    if(this.click) shapeList.push(this); // use for handle click event
+    if(this.click) clickShapes.add(this); // use for handle click event
 
     ctx.save();
     this.updateCtx(ctx);
@@ -54,7 +54,7 @@ Shape.prototype.fill = function(){
 };
 
 Shape.prototype.draw = function(){
-    if(this.click) shapeList.push(this); // use for handle click event
+    if(this.click) clickShapes.add(this); // use for handle click event
 
     ctx.save();
     this.updateCtx(ctx);

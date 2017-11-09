@@ -1,7 +1,6 @@
-var shapeList = require('./util.js').shapeList;
-
 var canvas = document.createElement('canvas');
 var p = document.createElement('p');
+var clickShapes = require('./util.js').clickShapes;
 
 document.body.appendChild(canvas);
 document.body.appendChild(p);
@@ -15,7 +14,7 @@ ctx.strokeStyle = "#00FFFF";
 ctx.fillStyle = "rgba(0, 255, 255, 0.5)";
 
 canvas.clear = function(){
-    shapeList = []; // clear all event
+    clickShapes.clear();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 

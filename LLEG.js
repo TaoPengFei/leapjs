@@ -67,10 +67,9 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shapeList = __webpack_require__(1).shapeList;
-
 var canvas = document.createElement('canvas');
 var p = document.createElement('p');
+var clickShapes = __webpack_require__(1).clickShapes;
 
 document.body.appendChild(canvas);
 document.body.appendChild(p);
@@ -84,7 +83,7 @@ ctx.strokeStyle = "#00FFFF";
 ctx.fillStyle = "rgba(0, 255, 255, 0.5)";
 
 canvas.clear = function(){
-    shapeList = []; // clear all event
+    clickShapes.clear();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
@@ -169,15 +168,32 @@ Array.prototype.min = function(){
 
 Object.prototype.clone = function(){
     return clone(this, false);
-}
+};
 
 // handle shape click event;
-var shapeList = [];
+var clickShapes = (function(){
+    var shapes = [];
+    
+    return {
+        clear: function(){
+            shapes = [];
+        },
+        add: function(shape){
+            shapes.push(shape);
+        },
+        getLength: function(){
+            return shapes.length;
+        },
+        get: function(i){
+            return shapes[i];
+        }
+    }
+}());
 
 module.exports = {
     inheritPrototype: inheritPrototype,
     nextFrame: nextFrame,
-    shapeList: shapeList
+    clickShapes: clickShapes
 };
 
 
@@ -186,10 +202,10 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(0).ctx;
+var clickShapes = __webpack_require__(1).clickShapes;
 var inheritPrototype = __webpack_require__(1).inheritPrototype;
 var Transform = __webpack_require__(9).Transform;
 var Rss = __webpack_require__(3);
-var shapeList = __webpack_require__(1).shapeList;
 
 function Shape(){
     this.transform = new Transform();
@@ -213,7 +229,7 @@ Shape.prototype.getPoints = function(){
 };
 
 Shape.prototype.stroke = function(){
-    if(this.click) shapeList.push(this); // use for handle click event
+    if(this.click) clickShapes.add(this); // use for handle click event
 
     ctx.save();
     this.updateCtx(ctx);
@@ -227,7 +243,7 @@ Shape.prototype.stroke = function(){
 };
 
 Shape.prototype.fill = function(){
-    if(this.click) shapeList.push(this); // use for handle click event
+    if(this.click) clickShapes.add(this); // use for handle click event
 
     ctx.save();
     this.updateCtx(ctx);
@@ -241,7 +257,7 @@ Shape.prototype.fill = function(){
 };
 
 Shape.prototype.draw = function(){
-    if(this.click) shapeList.push(this); // use for handle click event
+    if(this.click) clickShapes.add(this); // use for handle click event
 
     ctx.save();
     this.updateCtx(ctx);
@@ -590,9 +606,9 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var canvas = __webpack_require__(0).canvas;
-var keys = __webpack_require__(5).Key;
 var p = __webpack_require__(0).p;
-var shapeList = __webpack_require__(1).shapeList;
+var keys = __webpack_require__(5).Key;
+var clickShapes = __webpack_require__(1).clickShapes;
 
 var Mouse = {
     x: 0,
@@ -630,14 +646,14 @@ canvas.onmousedown =  function(e){
 
     // handle events of all shapes, LIFO
     // IMPORTANT
-    var i = shapeList.length;
+    var i = clickShapes.getLength();
     while(i--){
-        var shape = shapeList[i];
-        if(shape.click && shape.touched()){
-            shape.click();
+        var shape = clickShapes.get(i);
+        if(shape.touched())
             break;
-        }
     }
+    if(i>=0 && shape.click)
+        shape.click();
 };
 
 canvas.ontouchstart = function(e){
@@ -685,8 +701,7 @@ canvas.onclick = function(e){
 };
 
 module.exports = {
-    Mouse: Mouse,
-    Touch: Mouse
+    Mouse: Mouse
 };
 
 

@@ -43,6 +43,7 @@ circle.click = function(){
     
     ripple = circle.clone();
     ripple.update = blowUp;
+    ripple.click = null;
 
     circle.init();
 };

@@ -58,13 +58,30 @@ Array.prototype.min = function(){
 
 Object.prototype.clone = function(){
     return clone(this, false);
-}
+};
 
 // handle shape click event;
-var shapeList = [];
+var clickShapes = (function(){
+    var shapes = [];
+    
+    return {
+        clear: function(){
+            shapes = [];
+        },
+        add: function(shape){
+            shapes.push(shape);
+        },
+        getLength: function(){
+            return shapes.length;
+        },
+        get: function(i){
+            return shapes[i];
+        }
+    }
+}());
 
 module.exports = {
     inheritPrototype: inheritPrototype,
     nextFrame: nextFrame,
-    shapeList: shapeList
+    clickShapes: clickShapes
 };

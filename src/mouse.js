@@ -1,7 +1,7 @@
 var canvas = require('./canvas.js').canvas;
-var keys = require('./keys.js').Key;
 var p = require('./canvas.js').p;
-var shapeList = require('./util.js').shapeList;
+var keys = require('./keys.js').Key;
+var clickShapes = require('./util.js').clickShapes;
 
 var Mouse = {
     x: 0,
@@ -39,14 +39,14 @@ canvas.onmousedown =  function(e){
 
     // handle events of all shapes, LIFO
     // IMPORTANT
-    var i = shapeList.length;
+    var i = clickShapes.getLength();
     while(i--){
-        var shape = shapeList[i];
-        if(shape.click && shape.touched()){
-            shape.click();
+        var shape = clickShapes.get(i);
+        if(shape.touched())
             break;
-        }
     }
+    if(i>=0 && shape.click)
+        shape.click();
 };
 
 canvas.ontouchstart = function(e){
@@ -94,6 +94,5 @@ canvas.onclick = function(e){
 };
 
 module.exports = {
-    Mouse: Mouse,
-    Touch: Mouse
+    Mouse: Mouse
 };
