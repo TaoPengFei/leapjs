@@ -271,7 +271,6 @@ Sprite.prototype.url = function(src){
     this.img.src = src;
 };
 
-
 Sprite.prototype.clip = function(sx, sy, sw, sh){
     this.sx = sx > 0 ? sx : 1;
     this.sy = sy > 0 ? sx : 1;
@@ -331,13 +330,6 @@ function Point(x, y){
 
 inheritPrototype(Point, Circle);
 Point.prototype.draw = Point.prototype.fill;
-
-Object.prototype.draw = function(){
-    for(key in this){
-        shape = this[key];
-        if(shape instanceof Shape) shape.draw();
-    }
-}
 
 module.exports = {
     Shape: Shape,

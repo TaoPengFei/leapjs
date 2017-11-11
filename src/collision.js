@@ -152,14 +152,3 @@ Shape.prototype.collide = function(other){
 Shape.prototype.touched = function(){
     return pointInShape(Mouse, this);
 };
-
-Object.prototype.collide = function(other){
-    for(var key in this){
-        var shape = this[key];
-        if(shape instanceof Shape){
-            var p = shape.collide(other);
-            if(p) return p;
-        }
-    }
-    return false;
-};

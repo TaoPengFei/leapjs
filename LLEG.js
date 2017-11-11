@@ -474,7 +474,6 @@ Sprite.prototype.url = function(src){
     this.img.src = src;
 };
 
-
 Sprite.prototype.clip = function(sx, sy, sw, sh){
     this.sx = sx > 0 ? sx : 1;
     this.sy = sy > 0 ? sx : 1;
@@ -534,13 +533,6 @@ function Point(x, y){
 
 inheritPrototype(Point, Circle);
 Point.prototype.draw = Point.prototype.fill;
-
-Object.prototype.draw = function(){
-    for(key in this){
-        shape = this[key];
-        if(shape instanceof Shape) shape.draw();
-    }
-}
 
 module.exports = {
     Shape: Shape,
@@ -895,6 +887,10 @@ function clone(parent, circular, depth, prototype, includeNonEnumerable) {
       child = new nativeMap();
     } else if (_instanceof(parent, nativeSet)) {
       child = new nativeSet();
+    } else if (_instanceof(parent, Image)) {
+      child = new Image();
+      child.src = parent.src;
+      return child;
     } else if (_instanceof(parent, nativePromise)) {
       child = new nativePromise(function (resolve, reject) {
         parent.then(function(value) {
@@ -1215,17 +1211,6 @@ Shape.prototype.collide = function(other){
 
 Shape.prototype.touched = function(){
     return pointInShape(Mouse, this);
-};
-
-Object.prototype.collide = function(other){
-    for(var key in this){
-        var shape = this[key];
-        if(shape instanceof Shape){
-            var p = shape.collide(other);
-            if(p) return p;
-        }
-    }
-    return false;
 };
 
 
