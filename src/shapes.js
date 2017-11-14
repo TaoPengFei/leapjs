@@ -18,6 +18,8 @@ Shape.prototype.updateCtx = function(ctx){
     if(this.strokeStyle) ctx.strokeStyle = this.strokeStyle;
     if(this.fillStyle) ctx.fillStyle = this.fillStyle;
     if(this.lineWidth) ctx.lineWidth = this.lineWidth;
+    if(this.globalCompositeOperation) 
+        ctx.globalCompositeOperation = this.globalCompositeOperation;
     this.transform.updateCtx(ctx);
 };
 
@@ -260,16 +262,24 @@ function Sprite(src, x, y, w, h){
     this.img = new Image();
     this.img.src = src;
     Rss.add();
-    this.img.onload = function(){
-        Rss.load();
-    }
+    this.img.onload = function(){ Rss.load(); }
 }
 
 inheritPrototype(Sprite, Rectangle);
 
-Sprite.prototype.url = function(src){
-    this.img.src = src;
-};
+Object.defineProperty(Sprite.prototype, 'src', {
+    get: function() { return this.img.src; },
+    set: function(src) { this.img.src = src; }
+});
+
+Object.defineProperty(Sprite.prototype, 'onload', {
+    set: function(callback) { 
+        this.img.onload = function(){
+            Rss.load();
+            callback();
+        };
+    }
+});
 
 Sprite.prototype.clip = function(sx, sy, sw, sh){
     this.sx = sx > 0 ? sx : 1;
