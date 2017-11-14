@@ -4,7 +4,7 @@
 
 打开网址：[http://ide.leaplearner.com/lmumov/1](http://ide.leaplearner.com/lmumov/1)，或者扫描一下二维码体验项目
 
-![](clicker.png)
+![](./images/clicker.png)
 
 ### 开发环境
 
@@ -19,7 +19,7 @@
 - `JavaScript`区域，这里是代码区域，也是我们输入代码的地方，是最重要的地方
 - `Output`区域，这里是展示区域，用于展示输出效果
 
-![ide](.\ide.png)
+![ide](./images/ide.png)
 
 `Share`: 点击后生成链接和二维码，可以通过手机扫描获取到项目展示信息。
 
@@ -41,7 +41,7 @@
 
 我们将左上角的坐标定义为`(0,0)`，把水平轴为`x轴`，把垂直坐标定义为`y轴`。平面上的任意一个点，在`x轴`上的投影称之为该点的`x坐标`，同样，在`y轴`上的投影即`y坐标`。因此，整个坐标系看起来像是这个样子的。
 
-![pos_xy](pos_xy.png)
+![pos_xy](./images/pos_xy.png)
 
 只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。
 

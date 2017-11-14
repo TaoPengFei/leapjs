@@ -1,4 +1,4 @@
-![logo](.\logo.png)
+![logo](.\images\logo.png)
 
 
 
@@ -44,7 +44,7 @@
 * JavaScript区域，这里是代码区域，也是我们输入代码的地方，是最重要的地方
 * Output区域，这里是展示区域，用于展示输出效果
 
-![ide](.\ide.png)
+![ide](.\images\ide.png)
 
 #### 功能说明
 
@@ -80,7 +80,7 @@
 
 点击运行，如果能够在`output`窗口看到如下画面，方框处即为我们的画布。当鼠标在画布范围内移动时，即可看到画布左下角实时显示当前坐标值。
 
-![ide](.\ide.png)
+![ide](.\images\ide.png)
 
 在`<body>`中我们插入了以下内容，即引用我们的画布基本功能，在其他开发环境下，添加以下代码也可以实现同意的效果。
 
@@ -115,7 +115,7 @@
 
 我们将左上角的坐标定义为`(0,0)`，把水平轴为`x轴`，把垂直坐标定义为`y轴`。平面上的任意一个点，在`x轴`上的投影称之为该点的`x坐标`，同样，在`y轴`上的投影即`y坐标`。因此，整个坐标系看起来像是这个样子的。
 
-![pos_xy](.\pos_xy.png)
+![pos_xy](.\images\pos_xy.png)
 
 只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。
 
@@ -133,13 +133,13 @@
 
 在这个项目中，我们可以摆放障碍物的位置，来调整游戏的难度。而障碍物的位置，就是由坐标来决定的。
 
-![runner](.\runner.png)
+![runner](.\images\runner.png)
 
 ### 矩形
 
 长方形和正方形，统称为矩形，在数学描述中，矩形是如下的图形：相邻的两边相互垂直，而不相邻的两边平行且长度相等。
 
-![rectangle](.\rectangle.png)
+![rectangle](.\images\rectangle.png)
 
 要在画布上准确的描述一个矩形的位置和大小，我们需要以下属性
 
@@ -163,7 +163,7 @@ rect.draw();
 
 第二行，我们执行了`rect`的一个方法`draw()`，将这个矩形画在了画布上，点击`Run`就可以看到一下效果：
 
-![rect](.\rect.png)
+![rect](.\images\rect.png)
 
 图中这个浅蓝色的方块就是我们的`rect`矩形。
 
@@ -217,7 +217,7 @@ rect.y = 210;
 rect.draw();
 ```
 
-![stroke](stroke.png)
+![stroke](./images/stroke.png)
 
 矩形除了以上属性外，还有一些属性值和方法，所有矩形相关的属性和方法都列在下方。
 
@@ -266,7 +266,7 @@ circle.draw();
 
 和矩形一样，圆是一个封闭的图形。对圆而言，确定圆心和圆的半径，即可确定圆的位置和大小。
 
-![circle](.\circle.png)
+![circle](.\images\circle.png)
 
 #### 属性值
 
@@ -440,7 +440,7 @@ line.draw();
 
 最终效果图如下，仔细观察`output`中线条的粗细程度。
 
-![line](line.png)
+![line](./images/line.png)
 
 
 
@@ -504,7 +504,7 @@ rect.fillStyle = "red";
 rect.fill()
 ```
 
-![style1](style1.png)
+![style1](./images/style1.png)
 
 ##### 实例：颜色指示板
 
@@ -528,7 +528,7 @@ for(var i=0; i<colors.length; i++){
 
 展示效果
 
-![color_const](.\color_const.png)
+![color_const](.\images\color_const.png)
 
 ### RGB值
 
@@ -550,7 +550,7 @@ rect.strokeStyle = RGB(150, 100, 0);
 rect.stroke();
 ```
 
-![storke](style2.png)
+![storke](./images/style2.png)
 
 RGB的另外一种写法是“#FFFFFF"，在这里，FFFFFF是一个16进制的数字，每两位代表了一种颜色的高低。`FF`代表了255，在16进制中，F代表了15，因此FF的计算方式是
 
@@ -591,7 +591,7 @@ parseInt('15', 16)	//=> 22
 
 下面列举了一些比较受欢迎的RGB值
 
-![favourite_rgp](.\favourite_rgp.png)
+![favourite_rgp](.\images\favourite_rgp.png)
 
 ### 透明度
 
@@ -630,7 +630,7 @@ circle.fill();
 
 显示效果
 
-![alpha](.\alpha.png)
+![alpha](.\images\alpha.png)
 
 思考：绘制图形时，顺序不一样，产生的图形是否会不一致，为什么？
 
@@ -673,7 +673,7 @@ Mouse.move = function(){
 
 展示效果，但鼠标在画布上移动时，便会随机的绘制出各种图案来，步步生花。
 
-![rgba](./rgba.png)
+![rgba](./images/rgba.png)
 
 ### 渐变色
 
@@ -693,7 +693,7 @@ rect.draw();
 
 渐变色效果
 
-![rgba](./gradient.png)
+![rgba](./images/gradient.png)
 
 addColorStop是在图像的特定位置创建出制定的颜色，中间的变化则由计算机自动完成。
 
@@ -733,7 +733,7 @@ for(var i=0; i<180; i+=1){
 
 一条漂亮的彩虹出来啦
 
-![rgba](rainbow.png)
+![rgba](./images/rainbow.png)
 
 ## 四、语法基础I
 
@@ -1130,7 +1130,7 @@ setInterval(loop, 1000);
 
 执行代码，我们可以看到每隔一秒，就会输出一个新的矩形，不停的重叠起来。如果，我们将原来的图形清除，是不是就会有一种图形动起来的感觉了！
 
-![setInterval_1](.\setInterval_1.png)
+![setInterval_1](.\images\setInterval_1.png)
 
 ##### 实例：动画
 
@@ -1225,7 +1225,7 @@ loadRssAndRun(main);
 
 下面是一张食人花的图，它一共有7个动作，从第一张图到最后一张图，我们发现食人花做了一个张开又合上的动作。下面我们就来看怎么让食人花动起来。
 
-![ani](.\ani.png)
+![ani](.\images\ani.png)
 
 #### 定义
 
@@ -1410,7 +1410,7 @@ Mouse.click = function(){
 
 点击画布，就会在画布上留下一个圆圈。
 
-![click](.\click.png)
+![click](.\images\click.png)
 
 #### 移动事件
 
@@ -1955,7 +1955,7 @@ polygon.draw();
 
 要明确旋转的位置，我们需要明确旋转的中心点和方向。默认情况下，我们将原点`(0, 0)`设置为旋转的中心点。将顺时针方向的角度规定为正方向。
 
-![degree](degree.png)
+![degree](./images/degree.png)
 
 ##### 实例：旋转的矩形
 
@@ -1969,7 +1969,7 @@ rect.draw();
 
 可以看到，矩形以原点为中心旋转了10°。
 
-![rotate](rotate.png)
+![rotate](./images/rotate.png)
 
 那么，我们能不能让矩形以矩形的中心点进行旋转呢，当然可以啦，我们只要把矩形的旋转点设置在矩形的中心就可以了。
 
@@ -1988,7 +1988,7 @@ rect.draw();
 
 Bingo! 矩形按照我们的想法旋转起来了。
 
-![rotate2](rotate2.png)
+![rotate2](./images/rotate2.png)
 
 大家可以想一想，如果旋转度数为负数会是怎么样的呢，旋转读数超过360度呢，又会是怎么样的，快来试一试吧。
 
@@ -2085,7 +2085,7 @@ item.draw();
 
 效果如下：
 
-![skew](.\skew.png)
+![skew](.\images\skew.png)
 
 实例
 
@@ -2384,12 +2384,9 @@ for(var i=0; i<count; i++){
 ##### 实例：重力小球
 
 在地球上，重力无所不再，牛顿发现了其中的规律并总结为定律，后人称之为牛顿第二定律。
-
-```latex
-v = v + a * dt;
-s = s + v * dt;
-```
-
+$$
+s = s + v · dt \\v = v + a · dt
+$$
 如果我们固定每次变化的间隔，那么公式可以简化为
 
 ```latex
@@ -2640,7 +2637,7 @@ tri.draw();
 
 就得到我们想要的三角形了。
 
-![math](math.png)
+![math](./images/math.png)
 
 #### 方法
 
@@ -2700,6 +2697,6 @@ time.draw();
 
 每次运行时，都会依据你当前的时间来显示
 
-![date](date.png)
+![date](./images/date.png)
 
 ## 
