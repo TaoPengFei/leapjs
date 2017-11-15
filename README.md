@@ -1,8 +1,17 @@
 # LeapLearner Canvas Engine
 by Vic Wang
 
-## 项目地址
+## Install
+$ npm install
+$ npm run build
+$ npm start
+
+## Website
 http://xrdpnx.coding.me/lleg
 
-## 项目文档
+## Readme
 http://xrdpnx.coding.me/lleg/doc/LLEG.md
+
+## Test
+$ npm start
+// then open localhost/test.html in your browser
