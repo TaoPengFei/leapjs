@@ -2,9 +2,9 @@
 by Vic Wang
 
 ## Install
-$ npm install
-$ npm run build
-$ npm start
+npm install
+npm run build
+npm start
 
 ## Website
 http://xrdpnx.coding.me/lleg
@@ -13,5 +13,5 @@ http://xrdpnx.coding.me/lleg
 http://xrdpnx.coding.me/lleg/doc/LLEG.md
 
 ## Test
-$ npm start
-// then open localhost/test.html in your browser
+npm start
+// then open http://localhost/test.html in your browser
