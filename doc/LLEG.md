@@ -654,12 +654,11 @@ var rect.fillStyle = "rgba(255, 255, 0, 0,5)";
 var circle = new Circle();
 
 function randomInt(n){
-  return Math.floor(Math.random() * n);
+    return Math.floor(Math.random() * n);
 }
 
 function randomRGBA(){
-  var rgba = RGBA(rand) randomInt(255) + "," + randomInt(255)+ "," + randomInt(255) + "," + Math.random() + ")";
-  return rgba;
+    return RGBA(randomInt(255), randomInt(255), randomInt(255), Math.random())
 }
 
 Mouse.move = function(){
