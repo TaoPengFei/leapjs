@@ -1,5 +1,4 @@
-canvas.width = 350;
-canvas.height = 500;
+canvas.resize(350, 500);
 var url = "http://llcs-1252287760.cossh.myqcloud.com/";
 var sky = new Sprite(url+"bgs/bg.png", 0, 0, 800, 550);
 var crab = new Animation(url+"animations/crab.png", 120, 430, 90, 60);

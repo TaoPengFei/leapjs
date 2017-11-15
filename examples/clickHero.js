@@ -1,6 +1,4 @@
-canvas.width = 350;
-canvas.height = 500;
-
+canvas.resize(350, 500);
 var circle = new Circle(0, 0, 20);
 var ripple = circle.clone();
 

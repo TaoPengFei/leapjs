@@ -1,5 +1,4 @@
-canvas.width = 600;
-canvas.height = 400;
+canvas.resize(600, 400);
 var grd = ctx.createLinearGradient(0,0,100,10);
 grd.addColorStop(0,"lightblue");
 grd.addColorStop(1/8,"red");
