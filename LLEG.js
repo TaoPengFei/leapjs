@@ -897,6 +897,10 @@ function clone(parent, circular, depth, prototype, includeNonEnumerable) {
       child = new nativeMap();
     } else if (_instanceof(parent, nativeSet)) {
       child = new nativeSet();
+    } else if (_instanceof(parent, Image)) {
+      child = new Image();
+      child.src = parent.src;
+      return child;
     } else if (_instanceof(parent, nativePromise)) {
       child = new nativePromise(function (resolve, reject) {
         parent.then(function(value) {
