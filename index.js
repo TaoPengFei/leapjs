@@ -16,7 +16,7 @@ function iframe_html(){
     var js = JSEditor.getValue();
 
     html += '<html>\n';
-    html += '<body>\n';
+    html += '<body style="margin:0">\n';
     html += '<script src="LLEG.js"><\/script>\n';
     html += '<script>';
     html += js;

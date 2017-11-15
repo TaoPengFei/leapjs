@@ -1,3 +1,4 @@
+canvas.resize(350, 500);
 var r = 20;
 var cs = [];
 var count = 80;
