@@ -72,11 +72,11 @@ var p = document.createElement('p');
 var clickShapes = __webpack_require__(1).clickShapes;
 
 document.body.appendChild(canvas);
-document.body.appendChild(p);
+// document.body.appendChild(p);
 
-canvas.width = 350;
-canvas.height = 550;
-canvas.style = "border: 1px solid #d3d3d3;";
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+// canvas.style = "border: 1px solid #d3d3d3;";
 
 var ctx = canvas.getContext("2d");
 ctx.strokeStyle = "#00FFFF";
@@ -236,7 +236,7 @@ Shape.prototype.getPoints = function(){
         for(var i=0; i<points.length; i++){
             points[i] = this.transform.getRealPoint(points[i]);
         }
-    };
+    }
     return points;
 };
 
@@ -332,7 +332,7 @@ Circle.prototype._getPoints = function(){
     points.push({x: x-0.866*r, y: y+0.5*r  });
     points.push({x: x-0.5*r,   y: y+0.866*r});
     return points;
-}
+};
 
 function Line(x1, y1, x2, y2){
     Shape.call(this);
@@ -354,7 +354,7 @@ Line.prototype._getPoints = function(){
     points.push({x: this.x1, y: this.y1});
     points.push({x: this.x2, y: this.y2});
     return points;
-}
+};
 
 function Polygon(){
     Shape.call(this);
@@ -405,7 +405,7 @@ Rectangle.prototype._draw = function(){
 Rectangle.prototype.setCollisionScale = function(w, h){
     this.collideW = w;
     this.collideH = h;
-}
+};
 
 Rectangle.prototype._getPoints = function(){
     var points = [];
@@ -421,7 +421,7 @@ Rectangle.prototype._getPoints = function(){
     points.push({x: maxX, y: minY});
 
     return points;
-}
+};
 
 function Text(src, x, y, fillStyle, font){
     Shape.call(this);
@@ -465,7 +465,7 @@ function Sprite(src, x, y, w, h){
     this.img = new Image();
     this.img.src = src;
     Rss.add();
-    this.img.onload = function(){ Rss.load(); }
+    this.img.onload = function(){ Rss.load(); };
 }
 
 inheritPrototype(Sprite, Rectangle);
@@ -897,10 +897,6 @@ function clone(parent, circular, depth, prototype, includeNonEnumerable) {
       child = new nativeMap();
     } else if (_instanceof(parent, nativeSet)) {
       child = new nativeSet();
-    } else if (_instanceof(parent, Image)) {
-      child = new Image();
-      child.src = parent.src;
-      return child;
     } else if (_instanceof(parent, nativePromise)) {
       child = new nativePromise(function (resolve, reject) {
         parent.then(function(value) {
@@ -1099,6 +1095,7 @@ function collide(shape1, shape2){
     var collideRect = getCollideRect(r1, r2);
 
     // if point inside shapes, return point
+    var p;
     ctx.drawPathByPoints(ps2);
     for(i=0; i<ps1.length; i++){
         p = ps1[i];
@@ -1117,10 +1114,10 @@ function collide(shape1, shape2){
     // lines check
     for(i=0; i<ps1.length-1; i++){ // bcz we had checked the points, ignore the last line
         var p1 = ps1[i], p2 = ps1[i+1];
-        for(var j=0; j<ps2.length-1; j++){
+        for(j=0; j<ps2.length-1; j++){
             var p3 = ps2[j], p4 = ps2[j+1];
 
-            var p = lineCollideLine(p1, p2, p3, p4);
+            p = lineCollideLine(p1, p2, p3, p4);
             if(p) return p;
         }
     }
@@ -1142,10 +1139,10 @@ function lineCollideLine(p1, p2, p3, p4){
         y1=p1.y, y2=p2.y, y3=p3.y, y4=p4.y;
 
     // quick check
-    if(    Math.min(x1, x2) > Math.max(x3, x4) 
-        || Math.min(y1, y2) > Math.max(y3, y4)
-            || Math.max(x1, x2) < Math.min(x3, x4)
-            || Math.max(y1, y2) < Math.min(y3, y4))
+    if(Math.min(x1, x2) > Math.max(x3, x4) || 
+            Math.min(y1, y2) > Math.max(y3, y4) || 
+            Math.max(x1, x2) < Math.min(x3, x4) || 
+            Math.max(y1, y2) < Math.min(y3, y4))
         return false;
 
     // same slope rate
@@ -1166,7 +1163,7 @@ function lineCollideLine(p1, p2, p3, p4){
     return {
         x: D1/D,
         y: D2/D
-    }
+    };
 }
 
 function cross(p1, p2, p3, p4){
@@ -1174,8 +1171,8 @@ function cross(p1, p2, p3, p4){
 }
 
 function getRectShape(ps){
-    var xs = ps.map(function(p){ return p.x });
-    var ys = ps.map(function(p){ return p.y });
+    var xs = ps.map(function(p){ return p.x; });
+    var ys = ps.map(function(p){ return p.y; });
 
     return {
         minX: xs.min(), maxX: xs.max(),
@@ -1184,8 +1181,8 @@ function getRectShape(ps){
 }
 
 function pointInRect(p, r){
-    return r.minX <= p.x && p.x <= r.maxX 
-        && r.minY <= p.y && p.y <= r.maxY;
+    return r.minX <= p.x && p.x <= r.maxX && 
+        r.minY <= p.y && p.y <= r.maxY;
 }
 
 function pointInShape(p, shape){

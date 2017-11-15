@@ -3,11 +3,11 @@ var p = document.createElement('p');
 var clickShapes = require('./util.js').clickShapes;
 
 document.body.appendChild(canvas);
-document.body.appendChild(p);
+// document.body.appendChild(p);
 
-canvas.width = 350;
-canvas.height = 550;
-canvas.style = "border: 1px solid #d3d3d3;";
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+// canvas.style = "border: 1px solid #d3d3d3;";
 
 var ctx = canvas.getContext("2d");
 ctx.strokeStyle = "#00FFFF";

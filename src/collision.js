@@ -29,6 +29,7 @@ function collide(shape1, shape2){
     var collideRect = getCollideRect(r1, r2);
 
     // if point inside shapes, return point
+    var p;
     ctx.drawPathByPoints(ps2);
     for(i=0; i<ps1.length; i++){
         p = ps1[i];
@@ -47,10 +48,10 @@ function collide(shape1, shape2){
     // lines check
     for(i=0; i<ps1.length-1; i++){ // bcz we had checked the points, ignore the last line
         var p1 = ps1[i], p2 = ps1[i+1];
-        for(var j=0; j<ps2.length-1; j++){
+        for(j=0; j<ps2.length-1; j++){
             var p3 = ps2[j], p4 = ps2[j+1];
 
-            var p = lineCollideLine(p1, p2, p3, p4);
+            p = lineCollideLine(p1, p2, p3, p4);
             if(p) return p;
         }
     }
@@ -72,10 +73,10 @@ function lineCollideLine(p1, p2, p3, p4){
         y1=p1.y, y2=p2.y, y3=p3.y, y4=p4.y;
 
     // quick check
-    if(    Math.min(x1, x2) > Math.max(x3, x4) 
-        || Math.min(y1, y2) > Math.max(y3, y4)
-            || Math.max(x1, x2) < Math.min(x3, x4)
-            || Math.max(y1, y2) < Math.min(y3, y4))
+    if(Math.min(x1, x2) > Math.max(x3, x4) || 
+            Math.min(y1, y2) > Math.max(y3, y4) || 
+            Math.max(x1, x2) < Math.min(x3, x4) || 
+            Math.max(y1, y2) < Math.min(y3, y4))
         return false;
 
     // same slope rate
@@ -96,7 +97,7 @@ function lineCollideLine(p1, p2, p3, p4){
     return {
         x: D1/D,
         y: D2/D
-    }
+    };
 }
 
 function cross(p1, p2, p3, p4){
@@ -104,8 +105,8 @@ function cross(p1, p2, p3, p4){
 }
 
 function getRectShape(ps){
-    var xs = ps.map(function(p){ return p.x });
-    var ys = ps.map(function(p){ return p.y });
+    var xs = ps.map(function(p){ return p.x; });
+    var ys = ps.map(function(p){ return p.y; });
 
     return {
         minX: xs.min(), maxX: xs.max(),
@@ -114,8 +115,8 @@ function getRectShape(ps){
 }
 
 function pointInRect(p, r){
-    return r.minX <= p.x && p.x <= r.maxX 
-        && r.minY <= p.y && p.y <= r.maxY;
+    return r.minX <= p.x && p.x <= r.maxX && 
+        r.minY <= p.y && p.y <= r.maxY;
 }
 
 function pointInShape(p, shape){

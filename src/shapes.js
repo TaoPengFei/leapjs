@@ -33,7 +33,7 @@ Shape.prototype.getPoints = function(){
         for(var i=0; i<points.length; i++){
             points[i] = this.transform.getRealPoint(points[i]);
         }
-    };
+    }
     return points;
 };
 
@@ -129,7 +129,7 @@ Circle.prototype._getPoints = function(){
     points.push({x: x-0.866*r, y: y+0.5*r  });
     points.push({x: x-0.5*r,   y: y+0.866*r});
     return points;
-}
+};
 
 function Line(x1, y1, x2, y2){
     Shape.call(this);
@@ -151,7 +151,7 @@ Line.prototype._getPoints = function(){
     points.push({x: this.x1, y: this.y1});
     points.push({x: this.x2, y: this.y2});
     return points;
-}
+};
 
 function Polygon(){
     Shape.call(this);
@@ -202,7 +202,7 @@ Rectangle.prototype._draw = function(){
 Rectangle.prototype.setCollisionScale = function(w, h){
     this.collideW = w;
     this.collideH = h;
-}
+};
 
 Rectangle.prototype._getPoints = function(){
     var points = [];
@@ -218,7 +218,7 @@ Rectangle.prototype._getPoints = function(){
     points.push({x: maxX, y: minY});
 
     return points;
-}
+};
 
 function Text(src, x, y, fillStyle, font){
     Shape.call(this);
@@ -262,7 +262,7 @@ function Sprite(src, x, y, w, h){
     this.img = new Image();
     this.img.src = src;
     Rss.add();
-    this.img.onload = function(){ Rss.load(); }
+    this.img.onload = function(){ Rss.load(); };
 }
 
 inheritPrototype(Sprite, Rectangle);
