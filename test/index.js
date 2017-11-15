@@ -1,9 +1,8 @@
-var assert = require('assert');
+var assert = chai.assert;
 
 describe('Mocha', function(){
-    describe('Ready', function(){
-        it('mocha should be ready to go', function(){
-            assert.ok(true);
-        })
+    it('mocha should be ready to go', function(){
+        assert.isOk(true);
+        assert.isNotOk(false);
     })
 })
