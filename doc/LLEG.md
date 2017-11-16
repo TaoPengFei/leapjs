@@ -34,76 +34,21 @@
 
 ## 一、开发环境
 
-本课程可以在任意浏览器环境下进行，这里以[立乐IDE(http://ide.leaplearner.com)](http://ide.leaplearner.com)为例进行配置。
+本课程可以在任意浏览器环境下进行，需要引入https://code.leaplearner.com/libs/LLEG.min.js。
 
 ### IDE介绍
 
-下面是立乐IDE的一个截图，可以看见分成了3个区域，从左到右分别是：
-
-* html区域，描述网页内容的
-* JavaScript区域，这里是代码区域，也是我们输入代码的地方，是最重要的地方
-* Output区域，这里是展示区域，用于展示输出效果
+下面是立乐IDE的一个截图，可以看见分成了2个区域，左边是展示区域，右边是代码输入区域。我们在代码输入区域将代码输入完成后，如果一切正常，点击运行按钮就可以看到运行结果了。
 
 ![ide](.\images\ide.png)
 
 #### 功能说明
 
-`Share`: 点击后生成链接和二维码，可以通过手机扫描获取到项目展示信息。
+`分享`: 点击后生成链接和二维码，可以通过手机扫描获取到项目展示信息。
 
-`Run`: 点击后执行JavaScript代码。每次点击`Run`都会重新开始执行。
+`运行`: 点击后执行JavaScript代码。每次点击`运行`都会重新开始执行。
 
-`Auto-run`: 勾选后，只要修改代码便会自动执行代码。
-
-`↗`：点击后在打开一个新页签，展示项目。
-
-`console`：控制台，在激活状态下，会将日志信息和报错信息输出到这里。
-
-`css`: 用于配置网页的样式，在本书中暂不涉及。
-
-### 配置说明
-
-点击`Projects`->`New`新建一个项目，并将`html`页签替换为以下内容
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <title>立乐教育</title>
-</head>
-<body>
-  <script src="http://cs.leaplearner.com/lleg/LLEG.min.js"></script>
-</body>
-</html>
-```
-
-点击运行，如果能够在`output`窗口看到如下画面，方框处即为我们的画布。当鼠标在画布范围内移动时，即可看到画布左下角实时显示当前坐标值。
-
-![ide](.\images\ide.png)
-
-在`<body>`中我们插入了以下内容，即引用我们的画布基本功能，在其他开发环境下，添加以下代码也可以实现同意的效果。
-
-```html
-<script src="http://cs.leaplearner.com/lleg/LLEG.min.js"></script>
-```
-
-如果在其他环境下开发，需要为开发的JavaScript代码提供一个容器，最简单的方式就是在`<body>`元素下再添加一个`<script>`选项，你可以将你的代码写在`<script>`内。
-
-```html
-<body>
-  <script src="http://cs.leaplearner.com/lleg/LLEG.min.js"></script>
-  <script>
-    // write your code here.
-  </script>
-</body>
-```
-
-以下这一行是为了项目能够兼容手机屏幕而设置的。当项目在手机上打开时，界面会根据手机屏幕进行调整。
-
-```html
-<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-```
+`文件`: 用于操作文件，可以新建一个文件，或者打开、保存已有的文件。
 
 ## 二、基本图形
 
@@ -111,15 +56,19 @@
 
 ### 坐标简介
 
+#### 坐标系统
+
 为了定义空间的位置，数学家们发明了坐标的概念，在此至上发展出了庞大的几何学科。在计算机图形中，坐标系统更是不可或缺。
 
 我们将左上角的坐标定义为`(0,0)`，把水平轴为`x轴`，把垂直坐标定义为`y轴`。平面上的任意一个点，在`x轴`上的投影称之为该点的`x坐标`，同样，在`y轴`上的投影即`y坐标`。因此，整个坐标系看起来像是这个样子的。
 
 ![pos_xy](.\images\pos_xy.png)
 
-只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。
+#### 屏幕坐标
 
+只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。比如点（250，150）在坐标轴上的位置，我们就可以很容易找出来了。
 
+![](./images/axis.png)
 
 > 小知识：笛卡尔坐标系和网页坐标系
 >
@@ -767,20 +716,20 @@ welcome('Vic')
 
 JavaScript 语言的每一个值，都属于某一种数据类型。JavaScript 的数据类型，共有六种。
 
-* Number:  数值
+* Number: 数值
 * String: 字符串
-* Boolean：布尔值
-* undefined：表示未定义或者不存在
-* null：表示空值
-* Object：对象
+* Boolean: 布尔值
+* undefined: 表示未定义或者不存在
+* null: 表示空值
+* Object: 对象
 
 通常，我们将数值、字符串、布尔值成为原始类型，它们无法再进行分割了。而对象往往是由多个原始类型的值组成的，可以看作是一个存放各种值的容器。至于undefined和null，一般将它们当作是两个特殊的值。
 
 对象又可以分成三个子类型
 
-* Object：狭义的对象
-* Array：数组
-* Function：函数
+* Object: 狭义的对象
+* Array: 数组
+* Function: 函数
 
 这里需要明确的是，JavaScript的所有数据，都可以视为广义的对象。不仅数组和函数属于对象，就连原始类型的数据（数值、字符串、布尔值）也可以用对象方式调用。为了避免混淆，此后除非特别声明，本教程的”对象“都特指狭义的对象。
 
