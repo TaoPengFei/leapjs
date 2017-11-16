@@ -712,8 +712,14 @@ canvas.onmousedown =  function(e){
         shape.click();
 };
 
+var preventDefault = false;
+canvas.preventDefaultEvent = function(){
+    preventDefault = true;
+}
+
 canvas.ontouchstart = function(e){
-    e.preventDefault();
+    if(preventDefault)
+        e.preventDefault();
     canvas.onmousedown(e);
     TouchStart.init();
 };
@@ -724,7 +730,8 @@ canvas.onmousemove = function(e){
 };
 
 canvas.ontouchmove = function(e){
-    e.preventDefault();
+    if(preventDefault)
+        e.preventDefault();
     canvas.onmousemove(e);
     if(Mouse.x - TouchStart.x > 50 && Key.ArrowRight.down){
         Key.ArrowRight.down();
@@ -746,7 +753,8 @@ canvas.ontouchmove = function(e){
 };
 
 canvas.ontouchend = canvas.onmouseup = function(e){
-    e.preventDefault();
+    if(preventDefault)
+        e.preventDefault();
     updateEvent(e);
     if(Mouse.up) Mouse.up();
 };
@@ -942,9 +950,9 @@ function clone(parent, circular, depth, prototype, includeNonEnumerable) {
     } else if (_instanceof(parent, nativeSet)) {
       child = new nativeSet();
     } else if (_instanceof(parent, Image)) {
-      child = new Image();
-      child.src = parent.src;
-      return child;
+        child = new Image();
+        child.src = parent.src;
+        return child;
     } else if (_instanceof(parent, nativePromise)) {
       child = new nativePromise(function (resolve, reject) {
         parent.then(function(value) {
