@@ -479,6 +479,8 @@ for(var i=0; i<colors.length; i++){
 
 ![color_const](.\images\color_const.png)
 
+
+
 ### RGB值
 
 如果用放大镜看显示器的屏幕，会发现屏幕的每个点都是由3个颜色组成，分别是
