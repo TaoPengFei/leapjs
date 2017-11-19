@@ -1,6 +1,6 @@
-const canvas = require('./canvas.js').canvas
-const Key = require('./keys.js').Key
-const clickShapes = require('./util.js').clickShapes
+import { canvas } from './canvas'
+import { Key } from './keys'
+import { clickShapes } from './util'
 
 let Mouse = {
   x: 0,
@@ -41,18 +41,20 @@ canvas.onmousedown = function (e) {
   let shape
   while (i--) {
     shape = clickShapes.get(i)
-    if (shape.touched()) { break }
+    if (shape.touched() && shape.click) {
+      shape.click()
+      break
+    }
   }
-  if (i >= 0 && shape.click) { shape.click() }
 }
 
-let preventDefault = false
+let _preventDefault = false
 canvas.preventDefaultEvent = function () {
-  preventDefault = true
+  _preventDefault = true
 }
 
 canvas.ontouchstart = function (e) {
-  if (preventDefault) { e.preventDefault() }
+  if (_preventDefault) { e.preventDefault() }
   canvas.onmousedown(e)
   TouchStart.init()
 }
@@ -63,7 +65,7 @@ canvas.onmousemove = function (e) {
 }
 
 canvas.ontouchmove = function (e) {
-  if (preventDefault) { e.preventDefault() }
+  if (_preventDefault) { e.preventDefault() }
   canvas.onmousemove(e)
   if (Mouse.x - TouchStart.x > 50 && Key.ArrowRight.down) {
     Key.ArrowRight.down()
@@ -83,7 +85,7 @@ canvas.ontouchmove = function (e) {
 }
 
 canvas.ontouchend = canvas.onmouseup = function (e) {
-  if (preventDefault) { e.preventDefault() }
+  if (_preventDefault) { e.preventDefault() }
   updateEvent(e)
   if (Mouse.up) Mouse.up()
 }
@@ -93,6 +95,4 @@ canvas.onclick = function (e) {
   if (Mouse.click) Mouse.click()
 }
 
-module.exports = {
-  Mouse: Mouse
-}
+export { Mouse }

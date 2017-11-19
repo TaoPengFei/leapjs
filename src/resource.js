@@ -1,45 +1,42 @@
-var count = 0
-var loaded = 0
-var main
+import { canvas } from './canvas'
+import { Text, Rectangle } from './shapes'
+
+let count = 0
+let loaded = 0
+let main
 
 function loadRssAndRun (func) {
   main = func
   check()
 }
 
-function add () {
-  count++
-}
+let Rss = {}
+Rss.add = function () { count++ }
+Rss.load = function () { loaded++ }
+Rss.isLoaded = function () { return loaded >= count }
 
-function load () {
-  loaded++
-}
-
-function isLoaded () {
-  return loaded >= count
-}
-
-var n = 0
+let n = 0
 
 function check () {
-  if (isLoaded()) { main() } else {
+  if (Rss.isLoaded()) { main() } else {
     canvas.clear()
-    'LeapLearner'.draw(canvas.width / 2 - 110, 200, null, '40px Arial')
-    var msg = 'loading'
-    for (var i = 0; i < n % 6; i++) { msg += '.' }
-    var r1 = new Rectangle(50, canvas.height - 200, canvas.width - 100, 10)
-    var r2 = new Rectangle(50, canvas.height - 200, (canvas.width - 100) * loaded / count, 10)
-    r2.fillStyle = 'orange'
-    r1.fill()
-    r2.fill()
+
+    let LL = new Text('LeapLearner', canvas.width / 2 - 110, 200, undefined, '40px Arial')
+    LL.draw()
+
+    let msg = 'loading'
+    for (let i = 0; i < n % 6; i++) { msg += '.' }
     msg.draw(canvas.width / 2 - 40, canvas.height - 220)
+
+    new Rectangle(50, canvas.height - 200, canvas.width - 100, 10).fill()
+
+    let r2 = new Rectangle(50, canvas.height - 200, (canvas.width - 100) * loaded / count, 10)
+    r2.fillStyle = 'orange'
+    r2.fill()
+
     n++
-    setTimeout(check, 500)
+    setTimeout(check, 100)
   }
 }
 
-module.exports = {
-  add: add,
-  load: load,
-  loadRssAndRun: loadRssAndRun
-}
+export { Rss, loadRssAndRun }

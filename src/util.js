@@ -1,5 +1,3 @@
-var clone = require('clone');
-
 // requestAnimationFrame
 (function () {
   var lastTime = 0
@@ -35,28 +33,8 @@ var nextFrame = function (func) {
   frameId = window.requestAnimationFrame(func)
 }
 
-Array.prototype.contain = function (obj) {
-  var i = this.length
-  while (i--) {
-    if (this[i] === obj) { return true }
-  }
-  return false
-}
-
-Array.prototype.max = function () {
-  return Math.max.apply(null, this)
-}
-
-Array.prototype.min = function () {
-  return Math.min.apply(null, this)
-}
-
-Object.prototype.clone = function () {
-  return clone(this, false)
-}
-
 String.prototype.draw = function (x, y, fillStyle, font) {
-  new Text(this, x, y, fillStyle, font).draw()
+  new window.Text(this, x, y, fillStyle, font).draw()
 }
 
 // handle shape click event;
@@ -71,7 +49,4 @@ var clickShapes = (function () {
   }
 }())
 
-module.exports = {
-  nextFrame: nextFrame,
-  clickShapes: clickShapes
-}
+export { nextFrame, clickShapes }

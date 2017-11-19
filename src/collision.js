@@ -2,7 +2,7 @@
 // p: Point, {x, y}
 // ps: Points, Array
 // rect: {minX, maxX, minY, maxY}
-const ctx = require('./canvas.js').ctx
+import { ctx } from './canvas'
 
 function collide (shape1, shape2) {
   const ps1 = shape1.points
@@ -14,8 +14,6 @@ function collide (shape1, shape2) {
   // quick check start
   let r1 = {}
   let r2 = {}
-  let i
-  let j
   r1 = getRectShape(ps1)
   r2 = getRectShape(ps2)
 
@@ -28,29 +26,28 @@ function collide (shape1, shape2) {
   let collideRect = getCollideRect(r1, r2)
 
   // if point inside shapes, return point
-  let p
   ctx.drawPathByPoints(ps2)
-  for (i = 0; i < ps1.length; i++) {
-    p = ps1[i]
+  for (let i = 0; i < ps1.length; i++) {
+    let p = ps1[i]
     if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) { return p }
   }
 
   ctx.drawPathByPoints(ps1)
-  for (i = 0; i < ps2.length; i++) {
-    p = ps2[i]
+  for (let i = 0; i < ps2.length; i++) {
+    let p = ps2[i]
     if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) { return p }
   }
   // points check end
 
   // lines check
-  for (i = 0; i < ps1.length - 1; i++) { // bcz we had checked the points, ignore the last line
+  for (let i = 0; i < ps1.length - 1; i++) { // bcz we had checked the points, ignore the last line
     let p1 = ps1[i]
     let p2 = ps1[i + 1]
-    for (j = 0; j < ps2.length - 1; j++) {
+    for (let j = 0; j < ps2.length - 1; j++) {
       let p3 = ps2[j]
       let p4 = ps2[j + 1]
 
-      p = lineCollideLine(p1, p2, p3, p4)
+      let p = lineCollideLine(p1, p2, p3, p4)
       if (p) return p
     }
   }
@@ -80,7 +77,7 @@ function lineCollideLine (p1, p2, p3, p4) {
 
   // quick check
   if (Math.min(x1, x2) > Math.max(x3, x4) ||
-    Math.min(y1, y2) > Math.max(y3, y4) ||
+      Math.min(y1, y2) > Math.max(y3, y4) ||
       Math.max(x1, x2) < Math.min(x3, x4) ||
       Math.max(y1, y2) < Math.min(y3, y4)) { return false }
 
@@ -107,15 +104,18 @@ function cross (p1, p2, p3, p4) {
   return (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x)
 }
 
+function max (a, b) { return Math.max(a, b) }
+function min (a, b) { return Math.min(a, b) }
+
 function getRectShape (ps) {
   let xs = ps.map(p => p.x)
   let ys = ps.map(p => p.y)
 
   return {
-    minX: xs.min(),
-    maxX: xs.max(),
-    minY: ys.min(),
-    maxY: ys.max()
+    minX: xs.reduce(min),
+    maxX: xs.reduce(max),
+    minY: ys.reduce(min),
+    maxY: ys.reduce(max)
   }
 }
 
@@ -137,7 +137,4 @@ function pointInShape (p, shape) {
   return false
 }
 
-module.exports = {
-  collide: collide,
-  pointInShape: pointInShape
-}
+export { collide, pointInShape }

@@ -1,6 +1,6 @@
-var div = document.createElement('div')
-var canvas = document.createElement('canvas')
-var clickShapes = require('./util.js').clickShapes
+let div = document.createElement('div')
+let canvas = document.createElement('canvas')
+const clickShapes = require('./util.js').clickShapes
 
 div.style = 'display:flex;' +
     'display:-webkit-flex;' +
@@ -12,9 +12,8 @@ canvas.style = 'border: 1px solid #d3d3d3;'
 
 div.appendChild(canvas)
 document.body.appendChild(div)
-// document.body.appendChild(p);
 
-var ctx = canvas.getContext('2d')
+let ctx = canvas.getContext('2d')
 
 canvas.resize = function (width, height) {
   canvas.width = width || window.innerWidth - 5
@@ -63,12 +62,9 @@ ctx.drawPathByPoints = function (ps) {
   ctx.beginPath()
   ctx.moveTo(ps[0].x, ps[0].y)
 
-  for (var i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
+  for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
 
   ctx.closePath()
 }
 
-module.exports = {
-  canvas: canvas,
-  ctx: ctx
-}
+export { canvas, ctx }

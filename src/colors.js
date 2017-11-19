@@ -6,7 +6,4 @@ function RGBA (r, g, b, a) {
   return 'rgba(' + Math.floor(r) + ',' + Math.floor(g) + ',' + Math.floor(b) + ',' + a + ')'
 }
 
-module.exports = {
-  RGB: RGB,
-  RGBA: RGBA
-}
+export { RGB, RGBA }

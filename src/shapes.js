@@ -1,10 +1,10 @@
-const ctx = require('./canvas.js').ctx
-const clickShapes = require('./util.js').clickShapes
-const Mouse = require('./mouse.js').Mouse
-const Transform = require('./transform.js').Transform
-const Rss = require('./resource.js')
-const collide = require('./collision.js').collide
-const pointInShape = require('./collision.js').pointInShape
+import { ctx } from './canvas'
+import { clickShapes } from './util'
+import { Mouse } from './mouse'
+import { Transform } from './transform'
+import { Rss } from './resource'
+import { collide, pointInShape } from './collision'
+const clone = require('clone')
 
 class Shape {
   constructor () {
@@ -82,6 +82,10 @@ class Shape {
     } else {
       return false
     }
+  }
+
+  clone () {
+    return clone(this, false)
   }
 
   _updatePoints () {}
@@ -233,29 +237,28 @@ Text.prototype.draw = Text.prototype.fill
 class Sprite extends Rectangle {
   constructor (src, x, y, w, h) {
     super(x, y, w, h)
+    this.collideW = 0.8
+    this.collideH = 0.8
+
     this.img = new window.Image()
     this.img.src = src
-    Rss.add()
     this.img.onload = function () {
       Rss.load()
     }
+
+    Rss.add()
   }
-}
 
-Object.defineProperty(Sprite.prototype, 'src', {
-  get: function () { return this.img.src },
-  set: function (src) { this.img.src = src }
-})
+  get src () { return this.img.src }
+  set src (src) { this.img.src = src }
 
-Object.defineProperty(Sprite.prototype, 'onload', {
-  get: function () { return this.img.onload },
-  set: function (callback) {
+  set onload (callback) {
     this.img.onload = function () {
       Rss.load()
       callback()
     }
   }
-})
+}
 
 Sprite.prototype.clip = function (sx, sy, sw, sh) {
   this.sx = sx > 0 ? sx : 1
@@ -313,17 +316,6 @@ class Point extends Circle {
 }
 
 Point.prototype.draw = Point.prototype.fill
+const Triangle = Polygon
 
-module.exports = {
-  Shape: Shape,
-  Line: Line,
-  Rectangle: Rectangle,
-  Polygon: Polygon,
-  Triangle: Polygon,
-  Circle: Circle,
-  Point: Point,
-  Text: Text,
-
-  Sprite: Sprite,
-  Animation: Animation
-}
+export { Shape, Line, Rectangle, Polygon, Triangle, Circle, Point, Text, Sprite, Animation }
