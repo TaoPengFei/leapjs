@@ -11,11 +11,11 @@ var clone = require('clone');
   }
 
   if (!window.requestAnimationFrame) {
-    window.requestAnimationFrame = function (callback, element) {
+    window.requestAnimationFrame = function (func, element) {
       var currTime = new Date().getTime()
       var timeToCall = Math.max(0, 16.7 - (currTime - lastTime))
       var id = window.setTimeout(function () {
-        callback(currTime + timeToCall)
+        func(currTime + timeToCall)
       }, timeToCall)
       lastTime = currTime + timeToCall
       return id
@@ -55,28 +55,23 @@ Object.prototype.clone = function () {
   return clone(this, false)
 }
 
+String.prototype.draw = function (x, y, fillStyle, font) {
+  new Text(this, x, y, fillStyle, font).draw()
+}
+
 // handle shape click event;
 var clickShapes = (function () {
   var shapes = []
 
   return {
-    clear: function () {
-      shapes = []
-    },
-    add: function (shape) {
-      shapes.push(shape)
-    },
-    getLength: function () {
-      return shapes.length
-    },
-    get: function (i) {
-      return shapes[i]
-    }
+    clear: function () { shapes = [] },
+    add: function (shape) { shapes.push(shape) },
+    getLength: function () { return shapes.length },
+    get: function (i) { return shapes[i] }
   }
 }())
 
 module.exports = {
-  Image: Image,
   nextFrame: nextFrame,
   clickShapes: clickShapes
 }

@@ -2,11 +2,7 @@
 // p: Point, {x, y}
 // ps: Points, Array
 // rect: {minX, maxX, minY, maxY}
-const shapes = require('./shapes.js')
 const ctx = require('./canvas.js').ctx
-const Mouse = require('./mouse.js').Mouse
-
-const Shape = shapes.Shape
 
 function collide (shape1, shape2) {
   const ps1 = shape1.points
@@ -141,21 +137,7 @@ function pointInShape (p, shape) {
   return false
 }
 
-Shape.prototype.collide = function (other) {
-  if (other instanceof Shape) { return collide(this, other) }
-
-  // Object
-  for (let key in other) {
-    let shape = other[key]
-    if (shape instanceof Shape) {
-      let p = this.collide(shape)
-      if (p) return p
-    }
-  }
-
-  return false
-}
-
-Shape.prototype.touched = function () {
-  return pointInShape(Mouse, this)
+module.exports = {
+  collide: collide,
+  pointInShape: pointInShape
 }

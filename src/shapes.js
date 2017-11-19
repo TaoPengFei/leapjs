@@ -1,8 +1,10 @@
 const ctx = require('./canvas.js').ctx
 const clickShapes = require('./util.js').clickShapes
+const Mouse = require('./mouse.js').Mouse
 const Transform = require('./transform.js').Transform
 const Rss = require('./resource.js')
-const Image = require('./util.js').Image
+const collide = require('./collision.js').collide
+const pointInShape = require('./collision.js').pointInShape
 
 class Shape {
   constructor () {
@@ -48,6 +50,7 @@ class Shape {
     ctx.restore()
   }
 
+  _draw () {}
   draw () {
     if (this.click) clickShapes.add(this) // use for handle click event
 
@@ -64,28 +67,22 @@ class Shape {
     ctx.restore()
   }
 
-  translate (x, y) {
-    this.transform.translate(x, y)
-  }
+  translate (x, y) { this.transform.translate(x, y) }
+  scale (x, y) { this.transform.scale(x, y) }
+  skew (x, y) { this.transform.skew(x, y) }
+  setAnchor (x, y) { this.transform.setAnchor(x, y) }
+  rotate (degree) { this.transform.rotate(degree) }
 
-  scale (x, y) {
-    this.transform.scale(x, y)
-  }
-
-  skew (x, y) {
-    this.transform.skew(x, y)
-  }
-
-  setAnchor (x, y) {
-    this.transform.setAnchor(x, y)
-  }
-
-  rotate (degree) {
-    this.transform.rotate(degree)
-  }
-
-  _draw () {}
   click () {}
+  touched () { return pointInShape(Mouse, this) }
+
+  collide (other) {
+    if (other instanceof Shape) {
+      return collide(this, other)
+    } else {
+      return false
+    }
+  }
 
   _updatePoints () {}
 
@@ -236,7 +233,7 @@ Text.prototype.draw = Text.prototype.fill
 class Sprite extends Rectangle {
   constructor (src, x, y, w, h) {
     super(x, y, w, h)
-    this.img = new Image()
+    this.img = new window.Image()
     this.img.src = src
     Rss.add()
     this.img.onload = function () {

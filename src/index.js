@@ -31,7 +31,3 @@ window.loadRssAndRun = Rss.loadRssAndRun
 
 window.RGB = Color.RGB
 window.RGBA = Color.RGBA
-
-String.prototype.draw = function (x, y, fillStyle, font) {
-  new shapes.Text(this, x, y, fillStyle, font).draw()
-}
