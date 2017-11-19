@@ -30,31 +30,31 @@ A："red" 	B：'red'  	C：'green'  	D：'yellow"
 
 ### 变量
 
-经过下面的代码后，a的值是多少。
+经过下面的代码运算后，a的值是多少。
 
 ```javascript
-var a = 1;
+var a = 2;
 ```
 
-A：B：C：D：
+A：1	B：2	C：3	D：0
 
-
-
-```javascript
-var a = 12;
-a = a + 10;
-```
-
-A：B：C：D：
-
-
+经过下面的代码运算后，a的值是多少。
 
 ```javascript
 var a = 12;
-a = a + 10;
+a = 10;
 ```
 
+A：10 	B：12	C：22	D：0
 
+经过下面的代码运算后，a的值是多少。
+
+```javascript
+var a = 12 + 10;
+var b = 12;
+```
+
+A：B：C：D：
 
 ### 图片
 
@@ -81,7 +81,15 @@ A：B：C：D：
 
 `Ctrl+X`的使用方式是什么
 
-A：B：C：D：
+A：在键盘上依次点击C、t、r、l、+、X
+
+B：按住Ctrl键不放，然后点击X键
+
+C：同时按住Ctrl键和X键
+
+D：先点击Ctrl键，再点击X键
+
+
 
 复制和粘贴的快捷键是什么
 

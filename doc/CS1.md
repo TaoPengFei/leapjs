@@ -36,7 +36,7 @@ Learning Coding with LeapLearner
 
 ### 编程的应用
 
-#### 说一说
+**说一说**
 
 * 说出你知道的编程能够应用的地方
 
@@ -50,7 +50,7 @@ Learning Coding with LeapLearner
 
 ![pos_xy](.\images\pos_xy.png)
 
-#### 说一说
+**说一说**
 
 * 指出原点的位置
 * 指出x轴和y轴
@@ -66,18 +66,18 @@ Learning Coding with LeapLearner
 >
 > 和数学上常见的笛卡尔坐标系不同的是，网页坐标系的y轴正方向朝下。这是因为人类阅读习惯于从左到右，从上到下，在浏览器的定位系统中，根据这个习惯来定义坐标的位置，使得在网页设计时更为合理。
 
-#### 说一说
+**说一说**
 
 * 指出一个点，说出这个点的坐标
 * 说出一个坐标，让其他人来指出这个坐标的位置
 
-### 挑战：跑酷游戏
+#### 挑战：跑酷游戏
 
 立乐项目组开发了一个跑酷游戏，明天就要上线了，但是还剩最后一点工作没有完成，就是摆放障碍物的位置。我们需要你来帮忙摆放障碍物的位置，来完成这个项目。在这里，障碍物的位置，就是由坐标来决定的，修改代码中各个障碍物的位置，完成这个项目吧。
 
 ![runner](.\images\runner.png)
 
-#### 试一试
+**试一试**
 
 * 创作你的跑酷游戏。
 * 挑战别人的作品，看能不能打破他的最高分。
@@ -98,13 +98,13 @@ circle.draw();
 
 第二行，我们是有那个了circle的方法draw，将圆画在屏幕上。
 
-#### 试一试
+**试一试**
 
 * 修改圆的x坐标，y坐标，重新运行，看看会有什么变化。
 * 修改圆的半径，重新运行，看看会有什么变化。
 * 画一个圆，尽可能大的占满屏幕，但又不超出屏幕。做完后，你有什么发现呢。这个最大的圆和画布的关系是什么。
 
-### 挑战：完成一个雪人
+#### 挑战：雪人
 
 第一步，让我们思考下雪人是什么样子的。是不是下面这个样子的，它的身体、它的头部，还有它的眼睛，都是圆圆的，所以我们就可以用圆来模拟雪人。
 
@@ -113,82 +113,115 @@ circle.draw();
 首先，让我们用圆来画出雪人的身体。我们需要把雪人的身体摆在合适的位置，对照坐标轴，为雪人的身体选择一个最合适的位置。
 
 ```javascript
-var body = new Circle(200, 400, 100);
+var body = new Circle(200, 250, 100);
 body.draw();
 ```
+
+![cs1_snowman1](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman1.png)
 
 运行，看雪人的身体是不是出现在屏幕上了。但是呢，雪人的身体是白色的，我们要把它改成白色的。在第一行代码后面加入一行代码，将雪人的颜色修改成为白色。
 
 ```javascript
-var body = new Circle(200, 400, 100);
+var body = new Circle(200, 250, 100);
 body.fillStyle = "white";
 body.draw();
 ```
+
+![cs1_snowman2](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman2.png)
 
 快看，我们成功的用代码画出了一个白色的雪人身体。接下来，让我们把雪人的头画上去，雪人的头也是一个圆，同样，我们也要将雪人脑袋的颜色改成白色。
 
 ```javascript
-var head = new Circle(200, 280, 60);
+var head = new Circle(200, 130, 60);
 head.fillStyle = "white";
 head.draw();
 ```
+
+![cs1_snowman3](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman3.png)
 
 再次运行，看雪人的头是不是出现了。接下来，就是雪人的眼睛了，这里我们让雪人的眼睛变成黑色。你可以选择喜欢其他你喜欢的颜色，
 
 ```javascript
-var body = new Circle(200, 400, 100);
+var body = new Circle(200, 250, 100);
 body.fillStyle = "white";
 body.draw();
 
-var head = new Circle(200, 280, 60);
+var head = new Circle(200, 130, 60);
 head.fillStyle = "white";
 head.draw();
 
-var eye = new Circle(180, 270, 10);
+var eye = new Circle(180, 120, 10);
 eye.fillStyle = "black";
 eye.draw()
 
-var eye = new Circle(220, 270, 10);
+var eye = new Circle(220, 120, 10);
 eye.fillStyle = "black";
 eye.draw()
 ```
 
+![cs1_snowman4](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman4.png)
+
 我的雪人完成了，接下来就到你了。
 
-#### 试一试
+**试一试**
 
 * 修改雪人的位置，让雪人出现在各个位置。
 * 修改雪人的颜色，创造出一个‘美丽’的雪人。
 * 在一张画布上再画出1个不一样的雪人来。
 
-除了白色（white），黑色（black）外，还有很多丰富多彩的颜色，比如红色（red），橙色（orange），黄色（yellow），绿色（green）等等。大家可以尽情的发挥你们的想象力，创造出不一样的雪人出来。
+除了白色(white)，黑色(black)外，还有很多丰富多彩的颜色，比如红色(red)，橙色(orange)，黄色(yellow)，绿色(green)等等。大家可以尽情的发挥你们的想象力，创造出不一样的雪人出来。
 
-### 挑战：章鱼保罗
+#### 挑战：章鱼保罗
 
-每画一个圆都要写好多代码，有没有简单的办法呢，当然了，我们可以定义一个函数来帮我们完成这些事情。
+每画一个圆都要写好多代码，有没有简单的办法呢，当然了，我们可以定义一个方法`drawXY`来帮我们完成这些事情，我们将在后面的课程中学习函数的相关知识，在这里，我们只需要把`drawXY`赋值给`c.draw`就可以了。
 
 ```javascript
-function drawCircle(x, y, r, color){
-    var c = new Circle(x, y, r);
-  	c.fillStyle = color;
-  	c.fill();
+function drawXY(x, y){
+    this.x = x;
+    this.y = y;
+    this.fill();
 }
+
+var c = new Circle();
+c.draw = drawXY;
 ```
 
-这样，我们只要用drawCircle就能够直接画出一个圆来了，下面我们就用这个函数来画出我们的保罗啦。
+这样，我们只要用`c.draw(x, y, r)`就能够直接画出一个圆来了，下面我们就用这个函数来画出我们的保罗啦。
+
+首先，让我们把保罗的身体画出来，我的保罗是一只粉红色的，那么我就将它的颜色设置为pink。很快，我们就可以看到一个粉红色的圆出现在画布上了。
 
 ```javascript
-drawCircle(300, 200, 100, 'pink'); // body
-drawCircle(330, 200, 15, 'black'); // eye
-drawCircle(270, 200, 15, 'black'); // eye
+c.fillStyle = 'pink';
+c.r = 100;
+c.draw(200, 200); // body
+```
 
-drawCircle(300, 250, 5, 'red');  // mouse
+![cs1_paul1](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_paul1.png)
 
-drawCircle(204, 289, 30, 'pink'); // foot
-drawCircle(255, 320, 30, 'pink'); // foot
-drawCircle(315, 329, 30, 'pink'); // foot
-drawCircle(364, 309, 30, 'pink'); // foot
-drawCircle(410, 276, 30, 'pink'); // foot
+接下来，让我们把保罗的脚们画上去，脚比身体要小很多，所以我要把半径减小。我的保罗有5只脚，让我们依次画出它们来。
+
+```javascript
+c.r = 30;  // foot
+c.draw(104, 289); // foot 1
+c.draw(155, 320); // foot 2
+c.draw(215, 329); // foot 3
+c.draw(264, 309); // foot 4
+c.draw(310, 276); // foot 5
+```
+
+![cs1_paul2](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_paul2.png)
+
+保罗出现了，不过好像它背对着我们，让我们来想个办法让它转过来。在上面加个眼睛和嘴巴。
+
+```javascript
+c.fillStyle = 'black';
+c.r = 15;
+c.draw(160, 200); // eye
+c.draw(200, 200); // eye
+
+c.fillStyle = 'red';
+c.r = 5;
+c.draw(200, 250);  // mouse
 ```
 
 看，我们的小章鱼保罗出现了，快来分享你们的作品吧。
@@ -197,25 +230,68 @@ drawCircle(410, 276, 30, 'pink'); // foot
 
 
 
-#### 试一试
+**试一试**
 
 * 创作你的章鱼。
 * 给你的小章鱼取个名字，说说为什么。
 
-### 画更多的图形
+### 矩形
 
 除了圆以外，我们还可以使用更多的图形，创造出来更多丰富的图形出来。
 
-#### 矩形
+我们把类似下面的图形叫做矩形，它包括了正方形和长方形。在生活中有许许多多的图形都是矩形。
 
-矩形，包括正方形和长方形
+![rect](./images/rectangle.png)
+
+在画布上画出一个矩形，我们需要使用以下的代码。
 
 ```javascript
 var rect = new Rectangle(100, 100, 200, 50);
 rect.draw();
 ```
 
-#### 线条
+#### 挑战：车辆
+
+`drawXY`函数可以让图形可以直接使用`draw(x, y)`，我们将在后面的单元中学习相关的知识。
+
+```javascript
+function drawXY(x, y){
+    this.x = x;
+    this.y = y;
+    this.fill();
+}
+
+var bus = new Rectangle(50, 50, 300, 150);
+
+var glass = new Rectangle(0, 0, 50, 50);
+glass.draw = drawXY;
+
+var wheel = new Circle(100, 100, 30);
+wheel.draw = drawXY;
+
+bus.fillStyle = "green";
+bus.draw();
+
+glass.fillStyle = "white";
+glass.draw(80, 80);
+glass.draw(140, 80);
+glass.draw(200, 80);
+glass.draw(260, 80);
+
+wheel.fillStyle = "black";
+wheel.draw(120, 200);
+wheel.draw(280, 200);
+```
+
+![cs1_bus](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_bus.png)
+
+**说一说**
+
+*　生活中有那些东西是矩形
+
+* 使用矩形和圆形来创作你的作品
+
+### 线条
 
 线条，是由2个不同的点决定的。
 
@@ -224,10 +300,24 @@ var line = new Line(100, 100, 200, 200);
 line.draw();
 ```
 
-#### 试一试
+#### 挑战雪人的手臂
 
-* 帮你的雪人加上手臂
-* 使用矩形来创作
+让我们回到雪人，让我们为雪人加上手臂。
+
+```javascript
+var leftHand = new Line(80, 150, 150, 220);
+leftHand.draw();
+
+var rightHand = new Line(320, 150, 250, 220);
+rightHand.draw();
+```
+
+![cs1_snowman5](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman5.png)
+
+**试一试**
+
+* 帮你的雪人加上手臂，还有手指
+* 使用矩形、圆、线条来创作你的作品
 
 ## 颜色
 
@@ -253,7 +343,7 @@ circle.draw();
 circle.fillStyle = 'green';
 ```
 
-#### 试一试
+**试一试**
 
 * 列出所有你知道的颜色名称
 * 试试你知道的颜色
@@ -268,11 +358,37 @@ TODO: 这里需要一个项目
 
 * [颜色列表](http://www.w3school.com.cn/tags/html_ref_colornames.asp)
 
+### 绘制和填充
+
+在下面的代码中，我们绘制了3个圆。观察这3个圆，发现他们相同的地方和不同的地方。
+
+```javascript
+var c = new Circle(100, 100, 50);
+c.fillStyle = "lightgreen";
+c.strokeStyle = "red";
+
+c.stroke();
+
+c.x = 250;
+c.fill();
+
+c.x = 400;
+c.draw();
+```
+
+![cs1_fillAndstroke1](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_fillAndstroke2.png)
+
+按照不同的方法，同样的大小，我们画出来的圆也是不一样的。
+
+当设置颜色时，我们也有不同的方式来设置颜色。
+
+fillStyle是图形的填充颜色，strokeStyle是图形的变长颜色，利用这个特性，同样的图形，也可以组合出不同的变化。
+
 ## 变量
 
 ### 介绍变量
 
-
+变量，就像是计算机里的一个个盒子，存放着各种各样的东西
 
 ### 小测验：变量
 
@@ -283,6 +399,12 @@ TODO: 这里需要一个项目
 TODO：使用变量来绘制雪人
 
 通过修改变量，让雪人整体移动。
+
+### 改变变量
+
+一旦我们使用变量来绘制雪人，我们就可以很方便的修改雪人的位置了，只要修改我们定义的x和y值，就能一次性的修改所有图形的位置。
+
+
 
 ## 图片
 
@@ -320,7 +442,7 @@ TODO：使用变量来绘制雪人
 
 ### 制作动画
 
-### 挑战：日出
+#### 挑战：日出
 
 我们知道，每天早上太阳都会从东边升起来。让我们来做一个日出的动画。
 
@@ -346,9 +468,11 @@ var draw = function(){
 setInterval(draw, 100);
 ```
 
-### 挑战：云朵
+#### 挑战：云朵
 
 在上面添加一个云朵，并让云朵动起来。
+
+#### 任务：让车子动起来
 
 ## 音效
 
