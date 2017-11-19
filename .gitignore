@@ -3,3 +3,4 @@ package-lock.json
 doc/*.pdf
 doc/*.docx
 doc/*.html
+.eslintrc.js
