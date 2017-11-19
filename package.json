@@ -1,5 +1,5 @@
 {
-  "name": "LLEG",
+  "name": "lleg",
   "version": "1.0.0",
   "description": "A 2D Game Engine Base on h5 Canvas",
   "main": "src/index.js",
@@ -25,5 +25,14 @@
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
     "webpack": "^3.8.1"
+  },
+  "directories": {
+    "doc": "doc",
+    "example": "examples",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.coding.net:xrdpnx/lleg.git"
   }
 }
