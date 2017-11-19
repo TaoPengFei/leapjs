@@ -7,6 +7,9 @@ module.exports = {
     path: __dirname
   },
   module: {
-    noParse: [/clone/]
+    noParse: [/clone/],
+    rules: [
+      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+    ]
   }
 };
