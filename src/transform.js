@@ -53,6 +53,9 @@ Transform.prototype.updateCtx = function(ctx){
 };
 
 Transform.prototype.getRealPoint = function(p){
+    if(!this.transformed())
+        return p;
+
     var x = p.x, y = p.y;
 
     x -= this.anchorX;

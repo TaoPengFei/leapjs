@@ -67,17 +67,15 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var div = document.createElement('div');
 var canvas = document.createElement('canvas');
 var p = document.createElement('p');
 var clickShapes = __webpack_require__(1).clickShapes;
 
-div.style = "display:flex;"
-    + "display:-webkit-flex;"
-    + "justify-content:center;" 
-    + "align-items:center;"
-    + "align-items:center;"
-    + "height:100%";
+div.style = "display:flex;" + "display:-webkit-flex;" + "justify-content:center;" + "align-items:center;" + "align-items:center;" + "height:100%";
 canvas.style = "border: 1px solid #d3d3d3;";
 
 div.appendChild(canvas);
@@ -86,7 +84,7 @@ document.body.appendChild(div);
 
 var ctx = canvas.getContext("2d");
 
-canvas.resize = function(width, height){
+canvas.resize = function (width, height) {
     canvas.width = width || window.innerWidth - 5;
     canvas.height = height || window.innerHeight - 5;
     ctx.strokeStyle = "#00FFFF";
@@ -95,20 +93,19 @@ canvas.resize = function(width, height){
 
 canvas.resize();
 
-canvas.clear = function(){
+canvas.clear = function () {
     clickShapes.clear();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
-canvas.showAxis = function(){
+canvas.showAxis = function () {
     ctx.save();
     ctx.strokeStyle = "black";
-    for(var i=0; i<canvas.width; i+=10){
-        if(i%100 == 0){
-            i.toString().draw(i+1, 15, null, "15px Arial");
+    for (var i = 0; i < canvas.width; i += 10) {
+        if (i % 100 == 0) {
+            i.toString().draw(i + 1, 15, undefined, "15px Arial");
             ctx.lineWidth = 0.4;
-        }
-        else ctx.lineWidth = 0.1;
+        } else ctx.lineWidth = 0.1;
         ctx.beginPath();
         ctx.moveTo(i, 0);
         ctx.lineTo(i, canvas.height);
@@ -116,12 +113,11 @@ canvas.showAxis = function(){
         ctx.stroke();
     }
 
-    for(var i=0; i<canvas.height; i+=10){
-        if(i%100 == 0){
-            i.toString().draw(1, i-1, null, "15px Arial");
+    for (var i = 0; i < canvas.height; i += 10) {
+        if (i % 100 == 0) {
+            i.toString().draw(1, i - 1, undefined, "15px Arial");
             ctx.lineWidth = 0.3;
-        }
-        else ctx.lineWidth = 0.1;
+        } else ctx.lineWidth = 0.1;
         ctx.beginPath();
         ctx.moveTo(0, i);
         ctx.lineTo(canvas.width, i);
@@ -129,16 +125,15 @@ canvas.showAxis = function(){
         ctx.stroke();
     }
     ctx.restore();
-}
+};
 
-ctx.drawPathByPoints = function(ps){
+ctx.drawPathByPoints = function (ps) {
     ctx.beginPath();
     ctx.moveTo(ps[0].x, ps[0].y);
 
-    for(var i=1; i<ps.length; i++)
+    for (var i = 1; i < ps.length; i++) {
         ctx.lineTo(ps[i].x, ps[i].y);
-
-    ctx.closePath();
+    }ctx.closePath();
 };
 
 module.exports = {
@@ -147,504 +142,594 @@ module.exports = {
     p: p
 };
 
-
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var clone = __webpack_require__(7);
 
 // requestAnimationFrame
-(function() {
-    var lastTime = 0;
-    var vendors = ['webkit', 'moz'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    
-            window[vendors[x] + 'CancelRequestAnimationFrame'];
-    }
+(function () {
+  var lastTime = 0;
+  var vendors = ['webkit', 'moz'];
+  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+  }
 
-    if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
-    if (!window.cancelAnimationFrame) {
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-    }
-}());
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback, element) {
+      var currTime = new Date().getTime();
+      var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+      var id = window.setTimeout(function () {
+        callback(currTime + timeToCall);
+      }, timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+  if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (id) {
+      clearTimeout(id);
+    };
+  }
+})();
 
 // void run multi frame
-var frame_id;
-var nextFrame = function(func){
-    if(frame_id) window.cancelAnimationFrame(frame_id);
-    frame_id = window.requestAnimationFrame(func);
+var frameId;
+var nextFrame = function nextFrame(func) {
+  if (frameId) window.cancelAnimationFrame(frameId);
+  frameId = window.requestAnimationFrame(func);
 };
 
-var inheritPrototype = function(subClass, superClass){
-    var prototype = Object.create(superClass.prototype);
-    prototype.constructor = subClass;
-    subClass.prototype = prototype;
-};
-
-Array.prototype.contain = function(obj){
-    var i = this.length;
-    while(i--){
-        if(this[i] === obj)
-            return true;
+Array.prototype.contain = function (obj) {
+  var i = this.length;
+  while (i--) {
+    if (this[i] === obj) {
+      return true;
     }
-    return false;
+  }
+  return false;
 };
 
-Array.prototype.max = function(){
-    return Math.max.apply(null, this);
+Array.prototype.max = function () {
+  return Math.max.apply(null, this);
 };
 
-Array.prototype.min = function(){
-    return Math.min.apply(null, this);
+Array.prototype.min = function () {
+  return Math.min.apply(null, this);
 };
 
-Object.prototype.clone = function(){
-    return clone(this, false);
+Object.prototype.clone = function () {
+  return clone(this, false);
 };
 
 // handle shape click event;
-var clickShapes = (function(){
-    var shapes = [];
-    
-    return {
-        clear: function(){
-            shapes = [];
-        },
-        add: function(shape){
-            shapes.push(shape);
-        },
-        getLength: function(){
-            return shapes.length;
-        },
-        get: function(i){
-            return shapes[i];
-        }
+var clickShapes = function () {
+  var shapes = [];
+
+  return {
+    clear: function clear() {
+      shapes = [];
+    },
+    add: function add(shape) {
+      shapes.push(shape);
+    },
+    getLength: function getLength() {
+      return shapes.length;
+    },
+    get: function get(i) {
+      return shapes[i];
     }
-}());
+  };
+}();
 
 module.exports = {
-    inheritPrototype: inheritPrototype,
-    nextFrame: nextFrame,
-    clickShapes: clickShapes
+  Image: Image,
+  nextFrame: nextFrame,
+  clickShapes: clickShapes
 };
-
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var ctx = __webpack_require__(0).ctx;
 var clickShapes = __webpack_require__(1).clickShapes;
-var inheritPrototype = __webpack_require__(1).inheritPrototype;
 var Transform = __webpack_require__(9).Transform;
 var Rss = __webpack_require__(3);
+var Image = __webpack_require__(1).Image;
 
-function Shape(){
+var Shape = function () {
+  function Shape() {
+    _classCallCheck(this, Shape);
+
     this.transform = new Transform();
-    this.points = [];
+    this._points = [];
     this.globalAlpha = 1;
-}
+  }
 
-Shape.prototype._draw = null;
-Shape.prototype.click = null;
-
-Shape.prototype.updateCtx = function(ctx){
-    if(this.globalAlpha) ctx.globalAlpha = this.globalAlpha;
-    if(this.strokeStyle) ctx.strokeStyle = this.strokeStyle;
-    if(this.fillStyle) ctx.fillStyle = this.fillStyle;
-    if(this.lineWidth) ctx.lineWidth = this.lineWidth;
-    if(this.globalCompositeOperation) 
-        ctx.globalCompositeOperation = this.globalCompositeOperation;
-    this.transform.updateCtx(ctx);
-};
-
-Shape.prototype._getPoints = function(){
-    return this.points.clone();
-};
-
-Shape.prototype.getPoints = function(){
-    var points = this._getPoints();
-    if(this.transform.transformed()){
-        for(var i=0; i<points.length; i++){
-            points[i] = this.transform.getRealPoint(points[i]);
-        }
+  _createClass(Shape, [{
+    key: 'updateCtx',
+    value: function updateCtx(ctx) {
+      if (this.globalAlpha) ctx.globalAlpha = this.globalAlpha;
+      if (this.strokeStyle) ctx.strokeStyle = this.strokeStyle;
+      if (this.fillStyle) ctx.fillStyle = this.fillStyle;
+      if (this.lineWidth) ctx.lineWidth = this.lineWidth;
+      if (this.globalCompositeOperation) ctx.globalCompositeOperation = this.globalCompositeOperation;
+      this.transform.updateCtx(ctx);
     }
-    return points;
+  }, {
+    key: 'stroke',
+    value: function stroke() {
+      if (this.click) clickShapes.add(this); // use for handle click event
+
+      ctx.save();
+      this.updateCtx(ctx);
+
+      ctx.beginPath();
+      this._draw();
+      ctx.closePath();
+      ctx.stroke();
+
+      ctx.restore();
+    }
+  }, {
+    key: 'fill',
+    value: function fill() {
+      if (this.click) clickShapes.add(this); // use for handle click event
+
+      ctx.save();
+      this.updateCtx(ctx);
+
+      ctx.beginPath();
+      this._draw();
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.restore();
+    }
+  }, {
+    key: 'draw',
+    value: function draw() {
+      if (this.click) clickShapes.add(this); // use for handle click event
+
+      ctx.save();
+      this.updateCtx(ctx);
+
+      ctx.beginPath();
+      this._draw();
+      ctx.closePath();
+
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.restore();
+    }
+  }, {
+    key: 'translate',
+    value: function translate(x, y) {
+      this.transform.translate(x, y);
+    }
+  }, {
+    key: 'scale',
+    value: function scale(x, y) {
+      this.transform.scale(x, y);
+    }
+  }, {
+    key: 'skew',
+    value: function skew(x, y) {
+      this.transform.skew(x, y);
+    }
+  }, {
+    key: 'setAnchor',
+    value: function setAnchor(x, y) {
+      this.transform.setAnchor(x, y);
+    }
+  }, {
+    key: 'rotate',
+    value: function rotate(degree) {
+      this.transform.rotate(degree);
+    }
+  }, {
+    key: '_draw',
+    value: function _draw() {}
+  }, {
+    key: 'click',
+    value: function click() {}
+  }, {
+    key: '_updatePoints',
+    value: function _updatePoints() {}
+  }, {
+    key: 'points',
+    get: function get() {
+      var _this = this;
+
+      this._updatePoints();
+      return this._points.map(function (p) {
+        return _this.transform.getRealPoint(p);
+      });
+    }
+  }]);
+
+  return Shape;
+}();
+
+var Circle = function (_Shape) {
+  _inherits(Circle, _Shape);
+
+  function Circle() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 50;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 50;
+    var r = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 20;
+
+    _classCallCheck(this, Circle);
+
+    var _this2 = _possibleConstructorReturn(this, (Circle.__proto__ || Object.getPrototypeOf(Circle)).call(this));
+
+    _this2.x = x;
+    _this2.y = y;
+    _this2.r = r;
+    return _this2;
+  }
+
+  return Circle;
+}(Shape);
+
+Circle.prototype._draw = function () {
+  ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
 };
 
-Shape.prototype.stroke = function(){
-    if(this.click) clickShapes.add(this); // use for handle click event
-
-    ctx.save();
-    this.updateCtx(ctx);
-
-    ctx.beginPath();
-    this._draw();
-    ctx.closePath();
-    ctx.stroke();
-
-    ctx.restore();
+Circle.prototype._updatePoints = function () {
+  this._points = [];
+  var n = 8;
+  var degree = Math.PI * 2 / n;
+  for (var i = 0; i < n; i++) {
+    this._points.push({
+      x: this.x + this.r * Math.sin(degree * i),
+      y: this.y + this.r * Math.cos(degree * i)
+    });
+  }
 };
 
-Shape.prototype.fill = function(){
-    if(this.click) clickShapes.add(this); // use for handle click event
+var Line = function (_Shape2) {
+  _inherits(Line, _Shape2);
 
-    ctx.save();
-    this.updateCtx(ctx);
+  function Line(x1, y1, x2, y2) {
+    _classCallCheck(this, Line);
 
-    ctx.beginPath();
-    this._draw();
-    ctx.fill();
-    ctx.closePath();
+    var _this3 = _possibleConstructorReturn(this, (Line.__proto__ || Object.getPrototypeOf(Line)).call(this));
 
-    ctx.restore();
+    _this3.x1 = x1;
+    _this3.y1 = y1;
+    _this3.x2 = x2;
+    _this3.y2 = y2;
+    return _this3;
+  }
+
+  return Line;
+}(Shape);
+
+Line.prototype._draw = function () {
+  ctx.moveTo(this.x1, this.y1);
+  ctx.lineTo(this.x2, this.y2);
 };
 
-Shape.prototype.draw = function(){
-    if(this.click) clickShapes.add(this); // use for handle click event
-
-    ctx.save();
-    this.updateCtx(ctx);
-
-    ctx.beginPath();
-    this._draw();
-    ctx.closePath();
-
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.restore();
+Line.prototype._updatePoints = function () {
+  this._points = [];
+  this._points.push({ x: this.x1, y: this.y1 });
+  this._points.push({ x: this.x2, y: this.y2 });
 };
 
-Shape.prototype.translate = function(x, y){
-    this.transform.translate(x, y);
-};
+var Polygon = function (_Shape3) {
+  _inherits(Polygon, _Shape3);
 
-Shape.prototype.scale = function(x, y){
-    this.transform.scale(x, y);
-};
+  function Polygon() {
+    _classCallCheck(this, Polygon);
 
-Shape.prototype.skew = function(x, y){
-    this.transform.skew(x, y);
-};
+    var _this4 = _possibleConstructorReturn(this, (Polygon.__proto__ || Object.getPrototypeOf(Polygon)).call(this));
 
-Shape.prototype.setAnchor = function(x, y){
-    this.transform.setAnchor(x, y);
-};
-
-Shape.prototype.rotate = function(degree){
-    this.transform.rotate(degree);
-};
-
-function Circle(x, y, r){
-    Shape.call(this);
-    this.x = x || 20;
-    this.y = y || 20;
-    this.r = r || 20;
-}
-
-inheritPrototype(Circle, Shape);
-
-Circle.prototype._draw = function(){
-    ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
-};
-
-Circle.prototype._getPoints = function(){
-    var x = this.x, y = this.y, r = this.r, points = [];
-    points.push({x: x,         y: y+r      });
-    points.push({x: x+0.5*r,   y: y+0.866*r});
-    points.push({x: x+0.866*r, y: y+0.5*r  });
-    points.push({x: x+r,       y: y        });
-    points.push({x: x+0.866*r, y: y-0.5*r  });
-    points.push({x: x+0.5*r,   y: y-0.866*r});
-    points.push({x: x,         y: y-r      });
-    points.push({x: x-0.5*r,   y: y-0.866*r});
-    points.push({x: x-0.866*r, y: y-0.5*r  });
-    points.push({x: x-r,       y: y        });
-    points.push({x: x-0.866*r, y: y+0.5*r  });
-    points.push({x: x-0.5*r,   y: y+0.866*r});
-    return points;
-};
-
-function Line(x1, y1, x2, y2){
-    Shape.call(this);
-    this.x1 = x1;
-    this.y1 = y1;
-    this.x2 = x2;
-    this.y2 = y2;
-}
-
-inheritPrototype(Line, Shape);
-
-Line.prototype._draw = function(){
-    ctx.moveTo(this.x1, this.y1);
-    ctx.lineTo(this.x2, this.y2);
-};
-
-Line.prototype._getPoints = function(){
-    var points = [];
-    points.push({x: this.x1, y: this.y1});
-    points.push({x: this.x2, y: this.y2});
-    return points;
-};
-
-function Polygon(){
-    Shape.call(this);
-    if(arguments.length < 6){
-        throw "Polygon should have at lease 3 points";
+    if (arguments.length < 6) {
+      throw String('Polygon should have at lease 3 points');
     }
 
-    this.points = [];
-    for(var i=0; i<arguments.length-1; i+=2){
-        var p = { x: arguments[i], y: arguments[i+1] };
-        this.points.push(p);
+    _this4._points = [];
+    for (var i = 0; i < arguments.length - 1; i += 2) {
+      var p = { x: arguments[i], y: arguments[i + 1] };
+      _this4._points.push(p);
     }
-}
+    return _this4;
+  }
 
-inheritPrototype(Polygon, Shape);
+  return Polygon;
+}(Shape);
 
-Polygon.prototype._draw = function(){
-    var p = this.points[0];
-    ctx.moveTo(p.x, p.y);
-    for(var i=1; i<this.points.length; i++){
-        p = this.points[i];
-        ctx.lineTo(p.x, p.y);
-    }
+Polygon.prototype._draw = function () {
+  var p = this._points[0];
+  ctx.moveTo(p.x, p.y);
+  for (var i = 1; i < this._points.length; i++) {
+    p = this._points[i];
+    ctx.lineTo(p.x, p.y);
+  }
 };
 
-function Triangle(x1, y1, x2, y2, x3, y3){
-    Polygon.call(this, x1, y1, x2, y2, x3, y3);
-}
+var Rectangle = function (_Shape4) {
+  _inherits(Rectangle, _Shape4);
 
-inheritPrototype(Triangle, Polygon);
+  function Rectangle(x, y, w, h) {
+    _classCallCheck(this, Rectangle);
 
-function Rectangle(x, y, w, h){
-    Shape.call(this);
-    this.x = x;
-    this.y = y;
-    this.width = w;
-    this.height = h;
-    this.collideW = 1;
-    this.collideH = 1;
-}
+    var _this5 = _possibleConstructorReturn(this, (Rectangle.__proto__ || Object.getPrototypeOf(Rectangle)).call(this));
 
-inheritPrototype(Rectangle, Shape);
+    _this5.x = x;
+    _this5.y = y;
+    _this5.width = w;
+    _this5.height = h;
+    _this5.collideW = 1;
+    _this5.collideH = 1;
+    return _this5;
+  }
 
-Rectangle.prototype._draw = function(){
-    ctx.rect(this.x, this.y, this.width, this.height);
+  return Rectangle;
+}(Shape);
+
+Rectangle.prototype._draw = function () {
+  ctx.rect(this.x, this.y, this.width, this.height);
 };
 
-Rectangle.prototype.setCollisionScale = function(w, h){
-    this.collideW = w;
-    this.collideH = h;
+Rectangle.prototype.setCollisionScale = function (w, h) {
+  this.collideW = w;
+  this.collideH = h;
 };
 
-Rectangle.prototype._getPoints = function(){
-    var points = [];
+Rectangle.prototype._updatePoints = function () {
+  this._points = [];
 
-    var minX = this.x + this.width/2*(1-this.collideW);
-    var maxX = this.x + this.width/2*(1+this.collideW);
-    var minY = this.y + this.height/2*(1-this.collideH);
-    var maxY = this.y + this.height/2*(1+this.collideH);
+  var minX = this.x + this.width / 2 * (1 - this.collideW);
+  var maxX = this.x + this.width / 2 * (1 + this.collideW);
+  var minY = this.y + this.height / 2 * (1 - this.collideH);
+  var maxY = this.y + this.height / 2 * (1 + this.collideH);
 
-    points.push({x: minX, y: minY});
-    points.push({x: minX, y: maxY});
-    points.push({x: maxX, y: maxY});
-    points.push({x: maxX, y: minY});
-
-    return points;
+  this._points.push({ x: minX, y: minY });
+  this._points.push({ x: minX, y: maxY });
+  this._points.push({ x: maxX, y: maxY });
+  this._points.push({ x: maxX, y: minY });
 };
 
-function Text(src, x, y, fillStyle, font){
-    Shape.call(this);
-    this.src = src;
-    this.x = x || 0;
-    this.y = y || 20;
-    this.font = font || "20px Arial";
-    this.fillStyle = fillStyle || "orange";
-}
+var Text = function (_Shape5) {
+  _inherits(Text, _Shape5);
 
-inheritPrototype(Text, Shape);
+  function Text() {
+    var src = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var x = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 20;
+    var fillStyle = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'orange';
+    var font = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '20px Arial';
 
-Text.prototype.stroke = function(){
-    ctx.save();
-    this.updateCtx(ctx);
-    ctx.font = this.font;
+    _classCallCheck(this, Text);
 
-    ctx.strokeText(this.src, this.x, this.y);
+    var _this6 = _possibleConstructorReturn(this, (Text.__proto__ || Object.getPrototypeOf(Text)).call(this));
 
-    ctx.restore();
+    _this6.src = src;
+    _this6.x = x;
+    _this6.y = y;
+    _this6.font = font;
+    _this6.fillStyle = fillStyle;
+    return _this6;
+  }
+
+  return Text;
+}(Shape);
+
+Text.prototype.stroke = function () {
+  ctx.save();
+  this.updateCtx(ctx);
+  ctx.font = this.font;
+
+  ctx.strokeText(this.src, this.x, this.y);
+
+  ctx.restore();
 };
 
-Text.prototype.fill = function(){
-    ctx.save();
-    this.updateCtx(ctx);
-    ctx.font = this.font;
+Text.prototype.fill = function () {
+  ctx.save();
+  this.updateCtx(ctx);
+  ctx.font = this.font;
 
-    ctx.fillText(this.src, this.x, this.y);
+  ctx.fillText(this.src, this.x, this.y);
 
-    ctx.restore();
+  ctx.restore();
 };
 
 Text.prototype.draw = Text.prototype.fill;
 
-String.prototype.draw = function(x, y, fillStyle, font){
-    new Text(this, x, y, fillStyle, font).draw();
-};
+var Sprite = function (_Rectangle) {
+  _inherits(Sprite, _Rectangle);
 
-function Sprite(src, x, y, w, h){
-    Rectangle.call(this, x, y, w, h);
-    this.img = new Image();
-    this.img.src = src;
+  function Sprite(src, x, y, w, h) {
+    _classCallCheck(this, Sprite);
+
+    var _this7 = _possibleConstructorReturn(this, (Sprite.__proto__ || Object.getPrototypeOf(Sprite)).call(this, x, y, w, h));
+
+    _this7.img = new Image();
+    _this7.img.src = src;
     Rss.add();
-    this.img.onload = function(){ Rss.load(); };
-}
+    _this7.img.onload = function () {
+      Rss.load();
+    };
+    return _this7;
+  }
 
-inheritPrototype(Sprite, Rectangle);
+  return Sprite;
+}(Rectangle);
 
 Object.defineProperty(Sprite.prototype, 'src', {
-    get: function() { return this.img.src; },
-    set: function(src) { this.img.src = src; }
+  get: function get() {
+    return this.img.src;
+  },
+  set: function set(src) {
+    this.img.src = src;
+  }
 });
 
 Object.defineProperty(Sprite.prototype, 'onload', {
-    set: function(callback) { 
-        this.img.onload = function(){
-            Rss.load();
-            callback();
-        };
-    }
+  get: function get() {
+    return this.img.onload;
+  },
+  set: function set(callback) {
+    this.img.onload = function () {
+      Rss.load();
+      callback();
+    };
+  }
 });
 
-Sprite.prototype.clip = function(sx, sy, sw, sh){
-    this.sx = sx > 0 ? sx : 1;
-    this.sy = sy > 0 ? sx : 1;
-    this.swidth = sw;
-    this.sheight = sh;
-    this.width = this.width || sw;
-    this.height = this.height || sh;
+Sprite.prototype.clip = function (sx, sy, sw, sh) {
+  this.sx = sx > 0 ? sx : 1;
+  this.sy = sy > 0 ? sx : 1;
+  this.swidth = sw;
+  this.sheight = sh;
+  this.width = this.width || sw;
+  this.height = this.height || sh;
 };
 
-Sprite.prototype._draw = function(){
-    if(this.sx && this.sy && this.swidth & this.sheight){
-        ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight,
-            this.x, this.y, this.width, this.height);
-    }
-    else if(this.width && this.height)
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    else
-        ctx.drawImage(this.img, this.x, this.y);
+Sprite.prototype._draw = function () {
+  if (this.sx && this.sy && this.swidth & this.sheight) {
+    ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
+  } else if (this.width && this.height) {
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  } else {
+    ctx.drawImage(this.img, this.x, this.y);
+  }
 };
 
 Sprite.prototype.fill = null;
 Sprite.prototype.stroke = null;
 
-function Animation(src, x, y, w, h){
-    Sprite.call(this, src, x, y, w, h);
-    this.speed = 10;
-}
+var Animation = function (_Sprite) {
+  _inherits(Animation, _Sprite);
 
-inheritPrototype(Animation, Sprite);
+  function Animation(src, x, y, w, h) {
+    _classCallCheck(this, Animation);
 
-Animation.prototype.setFrame = function(sx, sy, sw, sh, c, r){
-    this.c = c;
-    this.r = r || 1;
-    this.cf = 0;  // current frame count
-    this.clip(sx, sy, sw, sh);
+    var _this8 = _possibleConstructorReturn(this, (Animation.__proto__ || Object.getPrototypeOf(Animation)).call(this, src, x, y, w, h));
+
+    _this8.speed = 10;
+    return _this8;
+  }
+
+  return Animation;
+}(Sprite);
+
+Animation.prototype.setFrame = function (sx, sy, sw, sh, c, r) {
+  this.c = c;
+  this.r = r || 1;
+  this.cf = 0; // current frame count
+  this.clip(sx, sy, sw, sh);
 };
 
-Animation.prototype.setSpeed = function(speed){
-    this.speed = speed;
-    if(this.speed < 1) this.speed = 1;
-    if(this.speed > 60) this.speed = 60;
+Animation.prototype.setSpeed = function (speed) {
+  this.speed = speed;
+  if (this.speed < 1) this.speed = 1;
+  if (this.speed > 60) this.speed = 60;
 };
 
-Animation.prototype._draw = function(){
-    var sx = this.sx + this.swidth * (Math.floor(this.cf * this.speed/60) % this.c);
-    var sy = this.sy + this.sheight * (Math.floor(this.cf * this.speed/60 / this.c) % this.r);
-    ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight,
-        this.x, this.y, this.width, this.height);
+Animation.prototype._draw = function () {
+  var sx = this.sx + this.swidth * (Math.floor(this.cf * this.speed / 60) % this.c);
+  var sy = this.sy + this.sheight * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r);
+  ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
 
-    this.cf++; // update frame count
+  this.cf++; // update frame count
 };
 
-function Point(x, y){
-    Circle.call(this, x, y, 2);
-    this.fillStyle = "red";
-}
+var Point = function (_Circle) {
+  _inherits(Point, _Circle);
 
-inheritPrototype(Point, Circle);
+  function Point(x, y) {
+    _classCallCheck(this, Point);
+
+    var _this9 = _possibleConstructorReturn(this, (Point.__proto__ || Object.getPrototypeOf(Point)).call(this, x, y, 2));
+
+    _this9.fillStyle = 'red';
+    return _this9;
+  }
+
+  return Point;
+}(Circle);
+
 Point.prototype.draw = Point.prototype.fill;
 
 module.exports = {
-    Shape: Shape,
-    Line: Line,
-    Rectangle: Rectangle,
-    Polygon: Polygon,
-    Triangle: Triangle,
-    Circle: Circle,
-    Point: Point,
-    Text: Text,
+  Shape: Shape,
+  Line: Line,
+  Rectangle: Rectangle,
+  Polygon: Polygon,
+  Triangle: Polygon,
+  Circle: Circle,
+  Point: Point,
+  Text: Text,
 
-    Sprite: Sprite,
-    Animation: Animation
+  Sprite: Sprite,
+  Animation: Animation
 };
-
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 var count = 0;
 var loaded = 0;
 var main;
 
-function loadRssAndRun(func){
+function loadRssAndRun(func) {
     main = func;
     check();
 }
 
-function add(){
+function add() {
     count++;
 }
 
-function load(){
+function load() {
     loaded++;
 }
 
-function isLoaded(){
+function isLoaded() {
     return loaded >= count;
 }
 
-var n=0;
+var n = 0;
 
-function check(){
-    if(isLoaded())
-        main();
-    else {
+function check() {
+    if (isLoaded()) main();else {
         canvas.clear();
-        "LeapLearner".draw(canvas.width/2-110, 200, null, "40px Arial");
+        "LeapLearner".draw(canvas.width / 2 - 110, 200, null, "40px Arial");
         var msg = "loading";
-        for(var i=0; i<n%6; i++)
+        for (var i = 0; i < n % 6; i++) {
             msg += '.';
-        var r1 = new Rectangle(50, canvas.height-200, canvas.width-100, 10);
-        var r2 = new Rectangle(50, canvas.height-200, (canvas.width-100)*loaded/count, 10);
+        }var r1 = new Rectangle(50, canvas.height - 200, canvas.width - 100, 10);
+        var r2 = new Rectangle(50, canvas.height - 200, (canvas.width - 100) * loaded / count, 10);
         r2.fillStyle = "orange";
         r1.fill();
         r2.fill();
-        msg.draw(canvas.width/2-40,  canvas.height-220);
+        msg.draw(canvas.width / 2 - 40, canvas.height - 220);
         n++;
         setTimeout(check, 500);
     }
@@ -654,12 +739,14 @@ module.exports = {
     add: add,
     load: load,
     loadRssAndRun: loadRssAndRun
-}
-
+};
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 var canvas = __webpack_require__(0).canvas;
 var p = __webpack_require__(0).p;
@@ -672,153 +759,152 @@ var Mouse = {
 };
 
 var TouchStart = {};
-TouchStart.init = function(){
+TouchStart.init = function () {
     TouchStart.x = Mouse.x;
     TouchStart.y = Mouse.y;
 };
 
-function windowToCanvas(canvas, x, y){
+function windowToCanvas(canvas, x, y) {
     var box = canvas.getBoundingClientRect();
     return {
-        x: x - box.left* (canvas.width/box.width),
-        y: y - box.top * (canvas.height/box.height)
+        x: x - box.left * (canvas.width / box.width),
+        y: y - box.top * (canvas.height / box.height)
     };
 }
 
-function updateEvent(e){
+function updateEvent(e) {
     // e.preventDefault();
     // update e if it is on phone
-    if(e.touches) e = e.touches.item(0);
+    if (e.touches) e = e.touches.item(0);
 
     var point = windowToCanvas(canvas, e.clientX, e.clientY);
     Mouse.x = Math.floor(point.x);
     Mouse.y = Math.floor(point.y);
-    p.innerHTML = "" + Mouse.x + ", " + Mouse.y; 
+    p.innerHTML = "" + Mouse.x + ", " + Mouse.y;
 }
 
-canvas.onmousedown =  function(e){ 
+canvas.onmousedown = function (e) {
     updateEvent(e);
-    if(Mouse.down) Mouse.down(); 
+    if (Mouse.down) Mouse.down();
 
     // handle events of all shapes, LIFO
     // IMPORTANT
     var i = clickShapes.getLength();
-    while(i--){
+    while (i--) {
         var shape = clickShapes.get(i);
-        if(shape.touched())
-            break;
+        if (shape.touched()) break;
     }
-    if(i>=0 && shape.click)
-        shape.click();
+    if (i >= 0 && shape.click) shape.click();
 };
 
 var preventDefault = false;
-canvas.preventDefaultEvent = function(){
+canvas.preventDefaultEvent = function () {
     preventDefault = true;
-}
+};
 
-canvas.ontouchstart = function(e){
-    if(preventDefault)
-        e.preventDefault();
+canvas.ontouchstart = function (e) {
+    if (preventDefault) e.preventDefault();
     canvas.onmousedown(e);
     TouchStart.init();
 };
 
-canvas.onmousemove = function(e){
+canvas.onmousemove = function (e) {
     updateEvent(e);
-    if(Mouse.move) Mouse.move();
+    if (Mouse.move) Mouse.move();
 };
 
-canvas.ontouchmove = function(e){
-    if(preventDefault)
-        e.preventDefault();
+canvas.ontouchmove = function (e) {
+    if (preventDefault) e.preventDefault();
     canvas.onmousemove(e);
-    if(Mouse.x - TouchStart.x > 50 && Key.ArrowRight.down){
+    if (Mouse.x - TouchStart.x > 50 && Key.ArrowRight.down) {
         Key.ArrowRight.down();
         TouchStart.init();
-    }
-    else if(TouchStart.x - Mouse.x > 50 && Key.ArrowLeft.down){
+    } else if (TouchStart.x - Mouse.x > 50 && Key.ArrowLeft.down) {
         Key.ArrowLeft.down();
         TouchStart.init();
     }
 
-    if(TouchStart.y - Mouse.y > 50 && Key.ArrowUp.down){
+    if (TouchStart.y - Mouse.y > 50 && Key.ArrowUp.down) {
         Key.ArrowUp.down();
         TouchStart.init();
-    }
-    else if(Mouse.y - TouchStart.y > 50 && Key.ArrowDown.down){
+    } else if (Mouse.y - TouchStart.y > 50 && Key.ArrowDown.down) {
         Key.ArrowDown.down();
         TouchStart.init();
     }
 };
 
-canvas.ontouchend = canvas.onmouseup = function(e){
-    if(preventDefault)
-        e.preventDefault();
+canvas.ontouchend = canvas.onmouseup = function (e) {
+    if (preventDefault) e.preventDefault();
     updateEvent(e);
-    if(Mouse.up) Mouse.up();
+    if (Mouse.up) Mouse.up();
 };
 
-canvas.onclick = function(e){ 
-     updateEvent(e);
-    if(Mouse.click) Mouse.click(); 
+canvas.onclick = function (e) {
+    updateEvent(e);
+    if (Mouse.click) Mouse.click();
 };
 
 module.exports = {
     Mouse: Mouse
 };
 
-
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 var Key = {};
 
-var keyboard = "abcdefghijklmnopqrstuvwxyz1234567890";
-var keyboard2 = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter", "Escape"];
+var keyboard = 'abcdefghijklmnopqrstuvwxyz1234567890';
+var keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape'];
 
-var arrows = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Escape"];
+var arrows = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape'];
 
-for(var i=0; i<keyboard.length; i++){
-    Key[keyboard[i]] = {};
+for (var i = 0; i < keyboard.length; i++) {
+  Key[keyboard[i]] = {};
 }
 
-for(i=0; i<keyboard2.length; i++){
-    Key[keyboard2[i]] = {};
+for (i = 0; i < keyboard2.length; i++) {
+  Key[keyboard2[i]] = {};
 }
 
-document.onkeyup = function(e){
-    var key = Key[e.key];
-    if(key && key.up){
-        key.up();
-    }
+document.onkeyup = function (e) {
+  var key = Key[e.key];
+  if (key && key.up) {
+    key.up();
+  }
 };
 
-document.onkeydown = function(e){
-    var key = Key[e.key];
-    if(key && key.down)
-        key.down();
-    if(arrows.contain(e.key) && key.press){
-        key.press();
-    }
+document.onkeydown = function (e) {
+  var key = Key[e.key];
+  if (key && key.down) {
+    key.down();
+  }
+  if (arrows.contain(e.key) && key.press) {
+    key.press();
+  }
 };
 
 // keyboard2 will not file key press event
-document.onkeypress = function(e){
-    var key = Key[e.key];
-    if(key && key.press)
-        key.press();
+document.onkeypress = function (e) {
+  var key = Key[e.key];
+  if (key && key.press) {
+    key.press();
+  }
 };
 
 module.exports = {
-    Key: Key
+  Key: Key
 };
-
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 var canvas = __webpack_require__(0).canvas;
 var ctx = __webpack_require__(0).ctx;
@@ -854,6 +940,9 @@ window.loadRssAndRun = Rss.loadRssAndRun;
 window.RGB = Color.RGB;
 window.RGBA = Color.RGBA;
 
+String.prototype.draw = function (x, y, fillStyle, font) {
+  new shapes.Text(this, x, y, fillStyle, font).draw();
+};
 
 /***/ }),
 /* 7 */
@@ -950,9 +1039,9 @@ function clone(parent, circular, depth, prototype, includeNonEnumerable) {
     } else if (_instanceof(parent, nativeSet)) {
       child = new nativeSet();
     } else if (_instanceof(parent, Image)) {
-        child = new Image();
-        child.src = parent.src;
-        return child;
+      child = new Image();
+      child.src = parent.src;
+      return child;
     } else if (_instanceof(parent, nativePromise)) {
       child = new nativePromise(function (resolve, reject) {
         parent.then(function(value) {
@@ -1120,6 +1209,9 @@ if (typeof module === 'object' && module.exports) {
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 // detect collision using shadows
 // p: Point, {x, y}
 // ps: Points, Array
@@ -1130,158 +1222,182 @@ var Mouse = __webpack_require__(4).Mouse;
 
 var Shape = shapes.Shape;
 
-function collide(shape1, shape2){
-    var ps1 = shape1.getPoints();
-    var ps2 = shape2.getPoints();
+function collide(shape1, shape2) {
+  var ps1 = shape1.points;
+  var ps2 = shape2.points;
 
-    if(ps1.length < 2) return false;
-    if(ps2.length < 2) return false;
+  if (ps1.length < 2) return false;
+  if (ps2.length < 2) return false;
 
-    // quick check start
-    var r1 = {}, r2 = {}, i, j;
-    r1 = getRectShape(ps1);
-    r2 = getRectShape(ps2);
+  // quick check start
+  var r1 = {};
+  var r2 = {};
+  var i = void 0;
+  var j = void 0;
+  r1 = getRectShape(ps1);
+  r2 = getRectShape(ps2);
 
-    if(r1.minX > r2.maxX || r1.minY > r2.maxY || 
-        r2.minX > r1.maxX || r2.minY > r1.maxY)
-        return false;
-    // quick check end
-
-    // possible rect
-    var collideRect = getCollideRect(r1, r2);
-
-    // if point inside shapes, return point
-    var p;
-    ctx.drawPathByPoints(ps2);
-    for(i=0; i<ps1.length; i++){
-        p = ps1[i];
-        if(pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) 
-            return p;
-    }
-
-    ctx.drawPathByPoints(ps1);
-    for(i=0; i<ps2.length; i++){
-        p = ps2[i];
-        if(pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) 
-            return p;
-    }
-    // points check end
-
-    // lines check
-    for(i=0; i<ps1.length-1; i++){ // bcz we had checked the points, ignore the last line
-        var p1 = ps1[i], p2 = ps1[i+1];
-        for(j=0; j<ps2.length-1; j++){
-            var p3 = ps2[j], p4 = ps2[j+1];
-
-            p = lineCollideLine(p1, p2, p3, p4);
-            if(p) return p;
-        }
-    }
-
+  if (r1.minX > r2.maxX || r1.minY > r2.maxY || r2.minX > r1.maxX || r2.minY > r1.maxY) {
     return false;
-}
+  }
+  // quick check end
 
-function getCollideRect(r1, r2){
-    return {
-        minX : r2.minX > r2.minX ? r1.minX : r2.minX,
-        minY : r1.minY > r2.minY ? r1.minY : r2.minY,
-        maxX : r1.maxX < r2.maxX ? r1.maxX : r2.maxX,
-        maxY : r1.maxY < r2.maxY ? r1.maxY : r2.maxY
-    };
-}
+  // possible rect
+  var collideRect = getCollideRect(r1, r2);
 
-function lineCollideLine(p1, p2, p3, p4){
-    var x1=p1.x, x2=p2.x, x3=p3.x, x4=p4.x,
-        y1=p1.y, y2=p2.y, y3=p3.y, y4=p4.y;
-
-    // quick check
-    if(Math.min(x1, x2) > Math.max(x3, x4) || 
-            Math.min(y1, y2) > Math.max(y3, y4) || 
-            Math.max(x1, x2) < Math.min(x3, x4) || 
-            Math.max(y1, y2) < Math.min(y3, y4))
-        return false;
-
-    // same slope rate
-    if((y1 - y2)*(x3 - x4) == (x1 - x2)*(y3 - y4)) 
-        return false;
-
-    if(cross(p3, p2, p3, p4) * cross(p3, p4, p3, p1) < 0 ||
-       cross(p1, p4, p1, p2) * cross(p1, p2, p1, p3) < 0)
-        return false;
-
-    // get collide point
-    var b1 = (y2-y1)*x1 + (x1-x2)*y1,
-        b2 = (y4-y3)*x3 + (x3-x4)*y3,
-        D = (x2-x1)*(y4-y3) - (x4-x3)*(y2-y1),
-        D1 = b2*(x2-x1) - b1*(x4-x3),
-        D2 = b2*(y2-y1) - b1*(y4-y3);
-
-    return {
-        x: D1/D,
-        y: D2/D
-    };
-}
-
-function cross(p1, p2, p3, p4){
-    return (p2.x - p1.x)*(p4.y - p3.y) - (p2.y - p1.y)*(p4.x - p3.x);
-}
-
-function getRectShape(ps){
-    var xs = ps.map(function(p){ return p.x; });
-    var ys = ps.map(function(p){ return p.y; });
-
-    return {
-        minX: xs.min(), maxX: xs.max(),
-        minY: ys.min(), maxY: ys.max()
-    };
-}
-
-function pointInRect(p, r){
-    return r.minX <= p.x && p.x <= r.maxX && 
-        r.minY <= p.y && p.y <= r.maxY;
-}
-
-function pointInShape(p, shape){
-    var ps = shape.getPoints();
-    if(ps.length < 3) return false;
-
-    var rect = getRectShape(ps);
-    if(!pointInRect(p, rect))
-        return false;
-
-    ctx.drawPathByPoints(ps);
-    if(ctx.isPointInPath(p.x, p.y))
-        return p;
-
-    return false;
-}
-
-Shape.prototype.collide = function(other){
-    if(other instanceof Shape)
-        return collide(this, other);
-
-    // Object
-    for(var key in other){
-        shape = other[key];
-        if(shape instanceof Shape){
-            var p = this.collide(shape);
-            if(p) return p;
-        }
+  // if point inside shapes, return point
+  var p = void 0;
+  ctx.drawPathByPoints(ps2);
+  for (i = 0; i < ps1.length; i++) {
+    p = ps1[i];
+    if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) {
+      return p;
     }
+  }
 
+  ctx.drawPathByPoints(ps1);
+  for (i = 0; i < ps2.length; i++) {
+    p = ps2[i];
+    if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) {
+      return p;
+    }
+  }
+  // points check end
+
+  // lines check
+  for (i = 0; i < ps1.length - 1; i++) {
+    // bcz we had checked the points, ignore the last line
+    var p1 = ps1[i];
+    var p2 = ps1[i + 1];
+    for (j = 0; j < ps2.length - 1; j++) {
+      var p3 = ps2[j];
+      var p4 = ps2[j + 1];
+
+      p = lineCollideLine(p1, p2, p3, p4);
+      if (p) return p;
+    }
+  }
+
+  return false;
+}
+
+function getCollideRect(r1, r2) {
+  return {
+    minX: r1.minX > r2.minX ? r1.minX : r2.minX,
+    minY: r1.minY > r2.minY ? r1.minY : r2.minY,
+    maxX: r1.maxX < r2.maxX ? r1.maxX : r2.maxX,
+    maxY: r1.maxY < r2.maxY ? r1.maxY : r2.maxY
+  };
+}
+
+function lineCollideLine(p1, p2, p3, p4) {
+  var x1 = p1.x;
+  var x2 = p2.x;
+  var x3 = p3.x;
+  var x4 = p4.x;
+
+  var y1 = p1.y;
+  var y2 = p2.y;
+  var y3 = p3.y;
+  var y4 = p4.y;
+
+  // quick check
+  if (Math.min(x1, x2) > Math.max(x3, x4) || Math.min(y1, y2) > Math.max(y3, y4) || Math.max(x1, x2) < Math.min(x3, x4) || Math.max(y1, y2) < Math.min(y3, y4)) {
     return false;
+  }
+
+  // same slope rate
+  if ((y1 - y2) * (x3 - x4) === (x1 - x2) * (y3 - y4)) {
+    return false;
+  }
+
+  if (cross(p3, p2, p3, p4) * cross(p3, p4, p3, p1) < 0 || cross(p1, p4, p1, p2) * cross(p1, p2, p1, p3) < 0) {
+    return false;
+  }
+
+  // get collide point
+  var b1 = (y2 - y1) * x1 + (x1 - x2) * y1;
+  var b2 = (y4 - y3) * x3 + (x3 - x4) * y3;
+  var D = (x2 - x1) * (y4 - y3) - (x4 - x3) * (y2 - y1);
+  var D1 = b2 * (x2 - x1) - b1 * (x4 - x3);
+  var D2 = b2 * (y2 - y1) - b1 * (y4 - y3);
+
+  return {
+    x: D1 / D,
+    y: D2 / D
+  };
+}
+
+function cross(p1, p2, p3, p4) {
+  return (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x);
+}
+
+function getRectShape(ps) {
+  var xs = ps.map(function (p) {
+    return p.x;
+  });
+  var ys = ps.map(function (p) {
+    return p.y;
+  });
+
+  return {
+    minX: xs.min(),
+    maxX: xs.max(),
+    minY: ys.min(),
+    maxY: ys.max()
+  };
+}
+
+function pointInRect(p, r) {
+  return r.minX <= p.x && p.x <= r.maxX && r.minY <= p.y && p.y <= r.maxY;
+}
+
+function pointInShape(p, shape) {
+  var ps = shape.points;
+  if (ps.length < 3) return false;
+
+  var rect = getRectShape(ps);
+  if (!pointInRect(p, rect)) {
+    return false;
+  }
+
+  ctx.drawPathByPoints(ps);
+  if (ctx.isPointInPath(p.x, p.y)) {
+    return p;
+  }
+
+  return false;
+}
+
+Shape.prototype.collide = function (other) {
+  if (other instanceof Shape) {
+    return collide(this, other);
+  }
+
+  // Object
+  for (var key in other) {
+    var shape = other[key];
+    if (shape instanceof Shape) {
+      var p = this.collide(shape);
+      if (p) return p;
+    }
+  }
+
+  return false;
 };
 
-Shape.prototype.touched = function(){
-    return pointInShape(Mouse, this);
+Shape.prototype.touched = function () {
+  return pointInShape(Mouse, this);
 };
-
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function Transform(){
+"use strict";
+
+
+function Transform() {
     this.anchorX = 0;
     this.anchorY = 0;
     this.scaleX = 1;
@@ -1293,50 +1409,50 @@ function Transform(){
     this.degree = 0;
 }
 
-Transform.prototype.transformed = function(){
-    return this.scaleX != 1 || this.scaleY != 1 
-        || this.skewX || this.skewY 
-        || this.translateX || this.translateY || this.degree;
+Transform.prototype.transformed = function () {
+    return this.scaleX != 1 || this.scaleY != 1 || this.skewX || this.skewY || this.translateX || this.translateY || this.degree;
 };
 
-Transform.prototype.scale = function(x, y){
+Transform.prototype.scale = function (x, y) {
     this.scaleX = x;
     this.scaleY = y;
 };
 
-Transform.prototype.translate = function(x, y){
+Transform.prototype.translate = function (x, y) {
     this.translateX = x;
     this.translateY = y;
 };
 
-Transform.prototype.skew = function(x, y){
+Transform.prototype.skew = function (x, y) {
     this.skewX = x;
     this.skewY = y;
 };
 
-Transform.prototype.setAnchor = function(x, y){
+Transform.prototype.setAnchor = function (x, y) {
     this.anchorX = x;
     this.anchorY = y;
 };
 
-Transform.prototype.rotate = function(degree){
+Transform.prototype.rotate = function (degree) {
     this.degree = degree;
 };
 
-Transform.prototype.updateCtx = function(ctx){
+Transform.prototype.updateCtx = function (ctx) {
     var degree = this.degree * Math.PI / 180;
 
     ctx.translate(this.anchorX, this.anchorY);
 
     ctx.rotate(degree);
-    ctx.transform(this.scaleX, this.skewX, this.skewY, this.scaleY,
-            this.translateX, this.translateY);
+    ctx.transform(this.scaleX, this.skewX, this.skewY, this.scaleY, this.translateX, this.translateY);
 
     ctx.translate(-this.anchorX, -this.anchorY);
 };
 
-Transform.prototype.getRealPoint = function(p){
-    var x = p.x, y = p.y;
+Transform.prototype.getRealPoint = function (p) {
+    if (!this.transformed()) return p;
+
+    var x = p.x,
+        y = p.y;
 
     x -= this.anchorX;
     y -= this.anchorY;
@@ -1345,8 +1461,8 @@ Transform.prototype.getRealPoint = function(p){
     var sin = Math.sin(degree);
     var cos = Math.cos(degree);
 
-    var newX = x*cos - y*sin;
-    var newY = y*cos + x*sin;
+    var newX = x * cos - y * sin;
+    var newY = y * cos + x * sin;
     x = newX;
     y = newY;
 
@@ -1358,31 +1474,32 @@ Transform.prototype.getRealPoint = function(p){
     x += this.anchorX;
     y += this.anchorY;
 
-    return {x: x, y: y};
+    return { x: x, y: y };
 };
 
 module.exports = {
     Transform: Transform
 };
 
-
 /***/ }),
 /* 10 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function RGB(r, g, b){
-    return "rgb(" + Math.floor(r) + ","  + Math.floor(g) + "," + Math.floor(b) + ")" 
+"use strict";
+
+
+function RGB(r, g, b) {
+    return "rgb(" + Math.floor(r) + "," + Math.floor(g) + "," + Math.floor(b) + ")";
 }
 
-function RGBA(r, g, b, a){
-    return "rgba(" + Math.floor(r) + ","  + Math.floor(g) + "," + Math.floor(b) + "," + a + ")";
+function RGBA(r, g, b, a) {
+    return "rgba(" + Math.floor(r) + "," + Math.floor(g) + "," + Math.floor(b) + "," + a + ")";
 }
 
 module.exports = {
     RGB: RGB,
     RGBA: RGBA
-}
-
+};
 
 /***/ })
 /******/ ]);

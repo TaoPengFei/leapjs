@@ -36,7 +36,7 @@ canvas.showAxis = function(){
     ctx.strokeStyle = "black";
     for(var i=0; i<canvas.width; i+=10){
         if(i%100 == 0){
-            i.toString().draw(i+1, 15, null, "15px Arial");
+            i.toString().draw(i+1, 15, undefined, "15px Arial");
             ctx.lineWidth = 0.4;
         }
         else ctx.lineWidth = 0.1;
@@ -49,7 +49,7 @@ canvas.showAxis = function(){
 
     for(var i=0; i<canvas.height; i+=10){
         if(i%100 == 0){
-            i.toString().draw(1, i-1, null, "15px Arial");
+            i.toString().draw(1, i-1, undefined, "15px Arial");
             ctx.lineWidth = 0.3;
         }
         else ctx.lineWidth = 0.1;
