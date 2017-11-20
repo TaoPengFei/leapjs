@@ -117,7 +117,7 @@ var body = new Circle(200, 250, 100);
 body.draw();
 ```
 
-![cs1_snowman1](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman1.png)
+![cs1_snowman1](.\images\cs1_snowman1.png)
 
 运行，看雪人的身体是不是出现在屏幕上了。但是呢，雪人的身体是白色的，我们要把它改成白色的。在第一行代码后面加入一行代码，将雪人的颜色修改成为白色。
 
@@ -127,7 +127,7 @@ body.fillStyle = "white";
 body.draw();
 ```
 
-![cs1_snowman2](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman2.png)
+![cs1_snowman2](.\images\cs1_snowman2.png)
 
 快看，我们成功的用代码画出了一个白色的雪人身体。接下来，让我们把雪人的头画上去，雪人的头也是一个圆，同样，我们也要将雪人脑袋的颜色改成白色。
 
@@ -137,7 +137,7 @@ head.fillStyle = "white";
 head.draw();
 ```
 
-![cs1_snowman3](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman3.png)
+![cs1_snowman3](.\images\cs1_snowman3.png)
 
 再次运行，看雪人的头是不是出现了。接下来，就是雪人的眼睛了，这里我们让雪人的眼睛变成黑色。你可以选择喜欢其他你喜欢的颜色，
 
@@ -159,7 +159,7 @@ eye.fillStyle = "black";
 eye.draw()
 ```
 
-![cs1_snowman4](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman4.png)
+![cs1_snowman4](.\images\cs1_snowman4.png)
 
 我的雪人完成了，接下来就到你了。
 
@@ -196,7 +196,7 @@ c.r = 100;
 c.draw(200, 200); // body
 ```
 
-![cs1_paul1](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_paul1.png)
+![cs1_paul1](.\images\cs1_paul1.png)
 
 接下来，让我们把保罗的脚们画上去，脚比身体要小很多，所以我要把半径减小。我的保罗有5只脚，让我们依次画出它们来。
 
@@ -209,7 +209,7 @@ c.draw(264, 309); // foot 4
 c.draw(310, 276); // foot 5
 ```
 
-![cs1_paul2](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_paul2.png)
+![cs1_paul2](.\images\cs1_paul2.png)
 
 保罗出现了，不过好像它背对着我们，让我们来想个办法让它转过来。在上面加个眼睛和嘴巴。
 
@@ -283,13 +283,13 @@ wheel.draw(120, 200);
 wheel.draw(280, 200);
 ```
 
-![cs1_bus](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_bus.png)
+![cs1_bus](.\images\cs1_bus.png)
 
 **说一说**
 
 *　生活中有那些东西是矩形
 
-* 使用矩形和圆形来创作你的作品
+*　使用矩形和圆形来创作你的作品
 
 ### 线条
 
@@ -312,7 +312,7 @@ var rightHand = new Line(320, 150, 250, 220);
 rightHand.draw();
 ```
 
-![cs1_snowman5](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_snowman5.png)
+![cs1_snowman5](.\images\cs1_snowman5.png)
 
 **试一试**
 
@@ -376,7 +376,7 @@ c.x = 400;
 c.draw();
 ```
 
-![cs1_fillAndstroke1](C:\Users\Administrator\Desktop\lleg\doc\images\cs1_fillAndstroke2.png)
+![cs1_fillAndstroke1](.\images\cs1_fillAndstroke2.png)
 
 按照不同的方法，同样的大小，我们画出来的圆也是不一样的。
 

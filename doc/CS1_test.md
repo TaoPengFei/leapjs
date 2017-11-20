@@ -76,13 +76,13 @@ CS1级考核标准及样题
 
 1. 查看下面的坐标轴，写出图中红点的坐标值。
 
-![test1_point1](C:\Users\Administrator\Desktop\lleg\doc\images\test1_point1.png)
+![test1_point1](.\images\test1_point1.png)
 
 
 
 2. 请在下面的坐标轴中标出点（150，100）的位置
 
-![test1_point2](C:\Users\Administrator\Desktop\lleg\doc\images\test1_point2.png)
+![test1_point2](.\images\test1_point2.png)
 
 ### 计算机图形
 
