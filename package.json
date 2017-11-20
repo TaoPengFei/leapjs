@@ -40,6 +40,11 @@
     "type": "git",
     "url": "git@git.coding.net:xrdpnx/lleg.git"
   },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
   "eslintConfig": {
     "env": {
       "es6": true,
