@@ -1,7 +1,7 @@
 let Key = {}
 
 const keyboard = 'abcdefghijklmnopqrstuvwxyz1234567890'
-const keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape']
+const keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', 'Space']
 
 const arrows = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape']
 
