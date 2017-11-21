@@ -242,6 +242,7 @@ class Sprite extends Rectangle {
 
     this.img = new window.Image()
     this.img.src = src
+    this.img.setAttribute('crossOrigin', 'anonymous')
     this.img.onload = function () {
       Rss.load()
     }

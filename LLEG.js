@@ -753,6 +753,7 @@ var Sprite = function (_Rectangle) {
 
     _this7.img = new window.Image();
     _this7.img.src = src;
+    _this7.img.setAttribute('crossOrigin', 'anonymous');
     _this7.img.onload = function () {
       _resource.Rss.load();
     };
