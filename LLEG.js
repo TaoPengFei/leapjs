@@ -225,10 +225,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 var Key = {};
 
-var keyboard = 'abcdefghijklmnopqrstuvwxyz1234567890';
-var keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape'];
-
-var arrows = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape'];
+var keyboard = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=,./<>?|\\;:\'"';
+var keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', ' ', 'Tab', 'Shift', 'Control', 'Alt'];
+var noPressKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape', 'Tab', 'Shift', 'Control', 'Alt'];
 
 for (var i = 0; i < keyboard.length; i++) {
   Key[keyboard[i]] = {};
@@ -250,7 +249,7 @@ document.onkeydown = function (e) {
   if (key && key.down) {
     key.down();
   }
-  if (arrows.hasOwnProperty(e.key) && key.press) {
+  if (noPressKeys.includes(e.key) && key.press) {
     key.press();
   }
 };
