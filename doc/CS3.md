@@ -107,7 +107,16 @@ var triangle = new Triangle(x1, y1, x2, y2, x3, y3);
 
 ### 字符串
 
-将字符串显示在画布上
+首先，我们先学会将字符串输出在画布上，只要在字符串后使用draw方法，就可以在画布上显示出来。
+
+```javascript
+var s = "Hello, I'm Vic";
+s.draw();
+```
+
+输入结果
+
+![string1](./images/string1.png)
 
 字符串连接运算符
 
@@ -118,7 +127,7 @@ var s = "Hello" + "World";
 s.draw();
 ```
 
-我们可以在屏幕上看到s是
+我们可以在屏幕上显示出来"HelloWorld"，我们成功的将字符串拼接在一起了。
 
 #### 空格
 
