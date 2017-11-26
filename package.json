@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo visit /test.html in the browser",
-    "build": "webpack --config webpack.config.prod.js --optimize-minimize", 
+    "build": "webpack --config webpack.config.prod.js --optimize-minimize",
     "start": "python -m SimpleHTTPServer"
   },
   "keywords": [
