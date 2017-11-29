@@ -20,7 +20,96 @@ Learning Coding with LeapLearner
 
 #### 案例：彩虹
 
+> 彩虹的7种颜色RGB值：
+>
+> ```
+> 赤色 【RGB】255, 0, 0 
+> 橙色 【RGB】 255, 165, 0 
+> 黄色 【RGB】255, 255, 0 
+> 绿色 【RGB】0, 255, 0 
+> 青色 【RGB】0, 127, 255 
+> 蓝色 【RGB】0, 0, 255 
+> 紫色 【RGB】139, 0, 255 
+> ```
+
+
+
+```javascript
+canvas.width = 400;
+canvas.height = 300;
+
+var circle = new Circle(200,400,350);
+
+//红色 【RGB】255, 0, 0 
+circle.fillStyle = RGB(255,0,0);
+circle.fill();
+
+//橙色 【RGB】 255, 165, 0 
+circle.r -= 15;
+circle.fillStyle = RGB(255,165,0);
+circle.fill();
+
+//黄色 【RGB】255, 255, 0 
+circle.r -= 15;
+circle.fillStyle = RGB(255,255,0);
+circle.fill();
+
+//绿色 【RGB】0, 255, 0 
+circle.r -= 15;
+circle.fillStyle = RGB(0,255,0);
+circle.fill();
+
+//青色 【RGB】0, 127, 255 
+circle.r -= 15;
+circle.fillStyle = RGB(0,127,255);
+circle.fill();
+
+//蓝色 【RGB】0, 0, 255 
+circle.r -= 15;
+circle.fillStyle = RGB(0,0,255);
+circle.fill();
+
+//紫色 【RGB】139, 0, 255
+circle.r -= 15;
+circle.fillStyle = RGB(139,0,255);
+circle.fill();
+
+//白色 【RGB】255, 255, 255
+circle.r -= 15;
+circle.fillStyle = RGB(255,255,255);
+circle.fill();
+```
+
+
+
 #### 案例：实现渐变效果
+
+```javascript
+canvas.width = 500;
+canvas.height = 300;
+
+var line = new Line(0,0,0,300);
+var r = 0;
+var g = 0;
+var b = 255;
+
+function Loop() {
+    if (line.x1 < 500) {
+        line.x1 += 1;
+        line.x2 += 1;
+        r += 0.5;
+        g += 0.3;
+        b -= 0.4;
+        line.strokeStyle = RGB(r,g,b);
+    }
+    line.draw();
+    nextFrame(Loop);
+}
+
+Loop();
+```
+
+
 
 ## 事件与交互
 
@@ -28,9 +117,15 @@ Learning Coding with LeapLearner
 
 #### 案例：涟漪效果
 
+
+
 点击事件
 
 #### 案例：换颜色
+
+
+
+
 
 #### 案例：井字游戏
 
@@ -42,13 +137,133 @@ Learning Coding with LeapLearner
 
 完成一个移动的任务，来复习坐标系。
 
-挑战：送小红回家
+#### 挑战：送小红回家
+
+坐标系的变换：translate，setAnchor，rotate
+
+#### 案例：地月系
+
+```javascript
+canvas.width = 500;
+canvas.height = 500;
+
+var earth = new Circle(250,250,40);
+var moon = new Circle(400,250,10);
+var universe = new Sprite('http://otde8iv1i.bkt.clouddn.com/bg_space1.jpg',0,0,500,500);
+var moon_angle = 0;
+
+earth.fillStyle = "lightblue";
+moon.fillStyle = "grey";
+
+function Loop() {
+    moon_angle += 1;
+    moon.setAnchor(250,250);
+    moon.rotate(moon_angle);
+    universe.draw();
+    earth.draw();
+    moon.draw();
+    nextFrame(Loop);
+}
+
+Loop();
+
+```
+
+#### 案例：地-月-日
+
+```javascript
+canvas.width = 500;
+canvas.height = 500;
+
+var earth = new Circle(400,250,20);
+var moon = new Circle(450,250,5);
+var sun = new Circle(250,250,40);
+var circle = new Circle(250,250,150);
+var universe = new Sprite('http://otde8iv1i.bkt.clouddn.com/bg_space1.jpg',0,0,500,500);
+var moon_angle = 0;
+var earth_angle = 0;
+
+earth.fillStyle = "lightblue";
+moon.fillStyle = "grey";
+sun.fillStyle = "red";
+
+function Loop() {
+    
+    //地球绕着太阳转
+    earth_angle += 0.2;
+    earth.setAnchor(sun.x,sun.y);
+    earth.rotate(earth_angle);
+    
+    //月亮绕着地球转
+    moon_angle += 1;
+    moon.x = earth.center().x + 50;
+    moon.y = earth.center().y;
+    moon.setAnchor(earth.center().x,earth.center().y);
+    moon.rotate(moon_angle);
+    
+    //画出元素
+    universe.draw();
+    circle.stroke();
+    sun.draw();
+    earth.draw();
+    moon.draw();
+    
+    nextFrame(Loop);
+}
+
+function center() {
+    var xa,ya;
+    xa = (this.points[0].x + this.points[4].x)/2;
+    ya = (this.points[0].y + this.points[4].y)/2;
+    return {
+        x: xa,
+        y: ya
+    };
+}
+earth.center = center;
+
+Loop();
+```
+
+
 
 ### 矩形
 
 矩形的属性：x, y, width, height, fillStyle,strokeStyle
 
 #### 案例：压力游戏（变化的矩形）
+
+```javascript
+canvas.width = 500;
+canvas.height = 500;
+var rect = new Rectangle(150,150,200,200);
+function Loop() {
+    canvas.clear();
+    rect.fillStyle = RGB(rect.width-200,rect.height,0);
+    if (rect.width > 200) {
+        rect.width -= 1;
+        rect.x += 0.5;
+    }
+    if (rect.height < 200) {
+        rect.height += 1;
+        rect.y -= 1;
+    }
+    rect.draw();
+    nextFrame(Loop);
+}
+function clickAction() {
+    if (rect.height > 20) {
+        rect.height -= 20;
+        rect.y += 20;
+        rect.width += 20;
+        rect.x -= 10;
+    }
+}
+Mouse.click = clickAction;
+Loop();
+```
+
+
 
 矩形的方法：draw, fill, stroke, translate
 
@@ -180,4 +395,8 @@ tab键的用法
 快速选中
 
 
+
+
+
+if语句：算盘"三下五除二"
 
