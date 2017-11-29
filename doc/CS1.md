@@ -94,9 +94,9 @@ var circle = new Circle(100, 100, 50);
 circle.draw();
 ```
 
-第一行，我们定义了一个圆，名字叫做circle。它是一个Circle的实例，括号里有3个参数，从左到右依次是圆的x、y值，还有半径r。
+第一行，我们定义了一个圆，名字叫做`circle`。它是一个Circle的实例，括号里有3个参数，从左到右依次是圆的x、y值，还有半径r。
 
-第二行，我们是有那个了circle的方法draw，将圆画在屏幕上。
+第二行，我们是有那个了`circle`的方法`draw`，将圆画在屏幕上。
 
 **试一试**
 
@@ -350,9 +350,79 @@ circle.fillStyle = 'green';
 
 ### 常见颜色
 
-让我们来认识这些颜色，
+让我们来认识这些颜色：红色、橙色、黄色、绿色、青色、蓝色、紫色。
 
-TODO: 这里需要一个项目
+#### 挑战: 填色游戏
+
+通过设计七彩调色板，点击调色板来点亮彩色灯泡。
+
+将七彩颜色写入colArr[]数组，点击`运行`后，点击调色板，灯泡会变成调色板的颜色。
+
+```javascript
+var colArr = [];//写入颜色前的colArr[]数组
+var colArr = ["red","orange","yellow","green","cyan","blue","purple"];//写入颜色后的colArr[]数组
+```
+
+
+
+![colorLight](.\images\colorLight.png)
+
+````javascript
+附录全代码：
+// Let us code the future
+var colArr = ["red", "orange", "yellow", "green", "cyan", "blue", "purple"]; //调色板
+var circle1 = new Circle(100, 100, 100);
+var circle2 = new Circle(100, 285, 10);
+var rect1 = new Rectangle(50, 130, 100, 100);
+var rect2 = new Rectangle(50, 235, 100, 50);
+var colButton = new Rectangle(200, 200, 50, 50);
+var colButton1 = new Rectangle(250, 200, 50, 50);
+var colButton2 = new Rectangle(300, 200, 50, 50);
+var colButton3 = new Rectangle(350, 200, 50, 50);
+var colButton4 = new Rectangle(400, 200, 50, 50);
+var colButton5 = new Rectangle(450, 200, 50, 50);
+var colButton6 = new Rectangle(500, 200, 50, 50);
+circle1.fillStyle = "grey";
+rect1.fillStyle = "grey";
+rect2.fillStyle = "black";
+circle2.fillStyle = "black";
+colButton.fillStyle = colArr[0]; //调色板1
+colButton1.fillStyle = colArr[1]; //调色板2
+colButton2.fillStyle = colArr[2]; //调色板3
+colButton3.fillStyle = colArr[3]; //调色板4
+colButton4.fillStyle = colArr[4]; //调色板5
+colButton5.fillStyle = colArr[5]; //调色板6
+colButton6.fillStyle = colArr[6]; //调色板7
+draw();
+
+Rectangle.prototype.click = turnCol;
+rect2.click = null;
+
+function turnCol() {
+    if (this.fillStyle != null) {
+        console.log(this.fillStyle);
+        circle1.fillStyle = this.fillStyle;
+        rect1.fillStyle = this.fillStyle;
+        draw();
+    }
+}
+
+function draw() {
+    rect2.fill();
+    circle2.fill();
+    rect1.fill();
+    circle1.fill();
+    colButton.fill();
+    colButton1.fill();
+    colButton2.fill();
+    colButton3.fill();
+    colButton4.fill();
+    colButton5.fill();
+    colButton6.fill();
+}
+````
+
+
 
 **参考颜色列表**
 
@@ -555,6 +625,20 @@ Ctrl + C / V;
 ### 复制和粘贴
 
 使用复制和粘贴快捷键
+
+Copy: Ctrl+C
+
+Paste: Ctrl+V
+
+Tips: 学生常混淆快捷键，将复制按成粘贴，所以以键盘方位的可视化助其操作
+
+Susie小故事时间：
+
+为什么复制是Ctrl+C而不是V呢？小朋友们猜一猜。
+
+因为当初设计键盘的人为了让人们不会记错复制和粘贴的快捷键，特地按先复制后粘贴的顺序设计的C键和V键。
+
+问小朋友班级人数；这个故事很少有人知道，你现在是你们班里30个人里唯一知道这个小故事的人了，真棒！
 
 ## 鼠标练习
 

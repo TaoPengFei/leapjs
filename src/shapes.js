@@ -241,6 +241,7 @@ class Sprite extends Rectangle {
     this.collideH = 0.8
 
     this.img = new window.Image()
+    this.img.crossOrigin = 'anonymous'
     this.img.src = src
     this.img.onload = function () {
       Rss.load()
