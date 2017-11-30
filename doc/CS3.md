@@ -299,7 +299,28 @@ var triangle = new Triangle(x1, y1, x2, y2, x3, y3);
 
 三角形是多边形的一种特殊情况，即只有3条边的多边形。因此除了定义上，三角形和多边形具有一样的属性和方法。
 
-实例
+**实例：山峰**
+
+```javascript
+var sky = new Rectangle(50, 100, 400, 300);
+var sun = new Circle(290, 300, 30);
+sun.fillStyle = "orange";
+
+var moutain1 = new Triangle(200, 200, 50, 400, 300, 400); 
+moutain1.fillStyle = "#666655";
+
+var moutain2 = new Triangle(350, 250, 250, 400, 450, 400); 
+moutain2.fillStyle = "#667755";
+
+sky.fill();
+sun.fill();
+moutain1.fill();
+moutain2.fill();
+```
+
+最后我们的作品就出来了，可以打印出来挂在墙上哦
+
+![](./images/cs3_moutains.png)
 
 ## 代码结构
 
@@ -553,7 +574,7 @@ var myFavouriteBook = 'Javascript';
 
 ## 二维码
 
-TODO：这里需要一个将字符串转为二维码的项目。在这之前，使用以https://cli.im/text为例进行说明。
+二维码项目地址：https://code.leaplearner.com/show.html?v=3657
 
 在生活中，我们经常看到很多的二维码。有各种各样不同的功能，只要用手机扫一扫，就用很简便的使用它们。
 
