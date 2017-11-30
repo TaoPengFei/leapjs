@@ -37,10 +37,10 @@ canvas.onmousedown = function (e) {
 
   // handle events of all shapes, LIFO
   // IMPORTANT
-  let i = clickShapes.getLength()
-  let shape
-  while (i--) {
-    shape = clickShapes.get(i)
+  const array = Array.from(clickShapes);
+  let i = array.length;
+  while(i--){
+    let shape = array[i]
     if (shape.touched() && shape.click) {
       shape.click()
       break

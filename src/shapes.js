@@ -13,26 +13,17 @@ class Shape {
     this.globalAlpha = 1
   }
 
-  updateCtx (ctx) {
-    if (this.globalAlpha) ctx.globalAlpha = this.globalAlpha
-    if (this.strokeStyle) ctx.strokeStyle = this.strokeStyle
-    if (this.fillStyle) ctx.fillStyle = this.fillStyle
-    if (this.lineWidth) ctx.lineWidth = this.lineWidth
-    if (this.globalCompositeOperation) ctx.globalCompositeOperation = this.globalCompositeOperation
-    this.transform.updateCtx(ctx)
-  }
-
   stroke () {
     if (this.click) clickShapes.add(this) // use for handle click event
 
     ctx.save()
-    this.updateCtx(ctx)
-
+    ctx.update(this)
     ctx.beginPath()
+
     this._draw()
-    ctx.closePath()
     ctx.stroke()
 
+    ctx.closePath()
     ctx.restore()
   }
 
@@ -40,13 +31,13 @@ class Shape {
     if (this.click) clickShapes.add(this) // use for handle click event
 
     ctx.save()
-    this.updateCtx(ctx)
-
+    ctx.update(this)
     ctx.beginPath()
+
     this._draw()
     ctx.fill()
-    ctx.closePath()
 
+    ctx.closePath()
     ctx.restore()
   }
 
@@ -55,15 +46,14 @@ class Shape {
     if (this.click) clickShapes.add(this) // use for handle click event
 
     ctx.save()
-    this.updateCtx(ctx)
-
+    ctx.update(this)
     ctx.beginPath()
-    this._draw()
-    ctx.closePath()
 
+    this._draw()
     ctx.fill()
     ctx.stroke()
 
+    ctx.closePath()
     ctx.restore()
   }
 
@@ -72,6 +62,8 @@ class Shape {
   skew (x, y) { this.transform.skew(x, y) }
   setAnchor (x, y) { this.transform.setAnchor(x, y) }
   rotate (degree) { this.transform.rotate(degree) }
+
+  getRealPoint (p) { return this.transform.getRealPoint(p) }
 
   click () {}
   touched () { return pointInShape(Mouse, this) }
@@ -84,9 +76,7 @@ class Shape {
     }
   }
 
-  clone () {
-    return clone(this, false)
-  }
+  clone () { return clone(this, false) }
 
   _updatePoints () {}
 
@@ -201,38 +191,68 @@ Rectangle.prototype._updatePoints = function () {
   this._points.push({x: maxX, y: minY})
 }
 
-class Text extends Shape {
-  constructor (src = '', x = 0, y = 20, fillStyle = 'orange', font = '20px Arial') {
-    super()
-    this.src = src
-    this.x = x
-    this.y = y
-    this.font = font
-    this.fillStyle = fillStyle
+class Text extends Rectangle {
+  constructor (src = '', x = 0, y = 0, size=20, font = 'Arial') {
+    super(x, y, 1, size)
+    this._src = src
+    this.height = size
+    this._font = font
+    this.fillStyle = "orange"
+    this._updateWidth()
+  }
+
+  _updateWidth () {
+    ctx.save()
+    ctx.font = this.height + 'px ' + this._font
+    this.width = ctx.measureText(this._src).width
+    ctx.restore() 
+  }
+
+  get src () { return this._src }
+  set src (src) {
+    this._src = src
+    this._updateWidth()
+  }
+
+  get size () { return this.height }
+  set size (size) {
+    this.height = size
+    this._updateWidth()
+  }
+
+  get font () { return this._font }
+  set font ( font ) {
+    this._font = font
+    this._updateWidth()
+  }
+
+  stroke () {
+    if (this.click) clickShapes.add(this)
+    ctx.save()
+    ctx.update(this)
+    ctx.font = this.size + 'px ' + this.font
+
+    ctx.strokeText(this.src, this.x, this.y+this.height)
+
+    ctx.restore()
+  }
+
+  fill () {
+    if (this.click) clickShapes.add(this)
+    ctx.save()
+    ctx.update(this)
+
+    ctx.font = this.size + 'px ' + this.font
+
+    ctx.fillText(this.src, this.x, this.y+this.height)
+
+    ctx.restore()
+  }
+
+  draw () {
+    this.fill()
   }
 }
-
-Text.prototype.stroke = function () {
-  ctx.save()
-  this.updateCtx(ctx)
-  ctx.font = this.font
-
-  ctx.strokeText(this.src, this.x, this.y)
-
-  ctx.restore()
-}
-
-Text.prototype.fill = function () {
-  ctx.save()
-  this.updateCtx(ctx)
-  ctx.font = this.font
-
-  ctx.fillText(this.src, this.x, this.y)
-
-  ctx.restore()
-}
-
-Text.prototype.draw = Text.prototype.fill
 
 class Sprite extends Rectangle {
   constructor (src, x, y, w, h) {

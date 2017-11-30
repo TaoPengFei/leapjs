@@ -102,9 +102,14 @@ canvas.clear = function () {
 canvas.showAxis = function () {
   ctx.save();
   ctx.strokeStyle = 'black';
+  var txt = new Text("", 1, 1, 15);
+  txt.fillStyle = "orange";
+
   for (var i = 0; i < canvas.width; i += 10) {
     if (i % 100 === 0) {
-      i.toString().draw(i + 1, 15, undefined, '15px Arial');
+      txt.src = i.toString();
+      txt.x = i + 1;
+      txt.draw();
       ctx.lineWidth = 0.4;
     } else ctx.lineWidth = 0.1;
     ctx.beginPath();
@@ -114,9 +119,12 @@ canvas.showAxis = function () {
     ctx.stroke();
   }
 
+  txt.x = 1;
   for (var _i = 0; _i < canvas.height; _i += 10) {
     if (_i % 100 === 0) {
-      _i.toString().draw(1, _i - 1, undefined, '15px Arial');
+      txt.src = _i.toString();
+      txt.y = _i + 1;
+      if (_i > 0) txt.draw();
       ctx.lineWidth = 0.3;
     } else ctx.lineWidth = 0.1;
     ctx.beginPath();
@@ -137,6 +145,37 @@ ctx.drawPathByPoints = function (ps) {
   }
 
   ctx.closePath();
+};
+
+ctx.update = function (shape) {
+  if (shape.fillStyle) ctx.fillStyle = shape.fillStyle;
+  if (shape.strokeStyle) ctx.strokeStyle = shape.strokeStyle;
+
+  if (shape.shadowColor) ctx.shadowColor = shape.shadowColor;
+  if (shape.shadowBlur) ctx.shadowBlur = shape.shadowBlur;
+  if (shape.shadowOffsetX) ctx.shadowOffsetX = shape.shadowOffsetX;
+  if (shape.shadowOffsetY) ctx.shadowOffsetY = shape.shadowOffsetY;
+
+  if (shape.lineCap) ctx.lineCap = shape.lineCap;
+  if (shape.lineJoin) ctx.lineJoin = shape.lineJoin;
+  if (shape.lineWidth) ctx.lineWidth = shape.lineWidth;
+  if (shape.miterLimit) ctx.miterLimit = shape.miterLimit;
+
+  if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha;
+  if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation;
+
+  if (shape.transform.transformed()) ctx.updateTransform(shape.transform);
+};
+
+ctx.updateTransform = function (transform) {
+  var degree = transform.degree * Math.PI / 180;
+
+  ctx.translate(transform.anchorX, transform.anchorY);
+
+  ctx.rotate(degree);
+  ctx.transform(transform.scaleX, transform.skewX, transform.skewY, transform.scaleY, transform.translateX, transform.translateY);
+
+  ctx.translate(-transform.anchorX, -transform.anchorY);
 };
 
 exports.canvas = canvas;
@@ -186,29 +225,9 @@ var nextFrame = function nextFrame(func) {
   frameId = window.requestAnimationFrame(func);
 };
 
-String.prototype.draw = function (x, y, fillStyle, font) {
-  new window.Text(this, x, y, fillStyle, font).draw();
-};
-
 // handle shape click event;
-var clickShapes = function () {
-  var shapes = [];
-
-  return {
-    clear: function clear() {
-      shapes = [];
-    },
-    add: function add(shape) {
-      shapes.push(shape);
-    },
-    getLength: function getLength() {
-      return shapes.length;
-    },
-    get: function get(i) {
-      return shapes[i];
-    }
-  };
-}();
+var clickShapes = new Set();
+window.clickShapes = clickShapes;
 
 exports.nextFrame = nextFrame;
 exports.clickShapes = clickShapes;
@@ -317,10 +336,10 @@ _canvas.canvas.onmousedown = function (e) {
 
   // handle events of all shapes, LIFO
   // IMPORTANT
-  var i = _util.clickShapes.getLength();
-  var shape = void 0;
+  var array = Array.from(_util.clickShapes);
+  var i = array.length;
   while (i--) {
-    shape = _util.clickShapes.get(i);
+    var shape = array[i];
     if (shape.touched() && shape.click) {
       shape.click();
       break;
@@ -427,28 +446,18 @@ var Shape = function () {
   }
 
   _createClass(Shape, [{
-    key: 'updateCtx',
-    value: function updateCtx(ctx) {
-      if (this.globalAlpha) ctx.globalAlpha = this.globalAlpha;
-      if (this.strokeStyle) ctx.strokeStyle = this.strokeStyle;
-      if (this.fillStyle) ctx.fillStyle = this.fillStyle;
-      if (this.lineWidth) ctx.lineWidth = this.lineWidth;
-      if (this.globalCompositeOperation) ctx.globalCompositeOperation = this.globalCompositeOperation;
-      this.transform.updateCtx(ctx);
-    }
-  }, {
     key: 'stroke',
     value: function stroke() {
       if (this.click) _util.clickShapes.add(this); // use for handle click event
 
       _canvas.ctx.save();
-      this.updateCtx(_canvas.ctx);
-
+      _canvas.ctx.update(this);
       _canvas.ctx.beginPath();
+
       this._draw();
-      _canvas.ctx.closePath();
       _canvas.ctx.stroke();
 
+      _canvas.ctx.closePath();
       _canvas.ctx.restore();
     }
   }, {
@@ -457,13 +466,13 @@ var Shape = function () {
       if (this.click) _util.clickShapes.add(this); // use for handle click event
 
       _canvas.ctx.save();
-      this.updateCtx(_canvas.ctx);
-
+      _canvas.ctx.update(this);
       _canvas.ctx.beginPath();
+
       this._draw();
       _canvas.ctx.fill();
-      _canvas.ctx.closePath();
 
+      _canvas.ctx.closePath();
       _canvas.ctx.restore();
     }
   }, {
@@ -475,15 +484,14 @@ var Shape = function () {
       if (this.click) _util.clickShapes.add(this); // use for handle click event
 
       _canvas.ctx.save();
-      this.updateCtx(_canvas.ctx);
-
+      _canvas.ctx.update(this);
       _canvas.ctx.beginPath();
-      this._draw();
-      _canvas.ctx.closePath();
 
+      this._draw();
       _canvas.ctx.fill();
       _canvas.ctx.stroke();
 
+      _canvas.ctx.closePath();
       _canvas.ctx.restore();
     }
   }, {
@@ -510,6 +518,11 @@ var Shape = function () {
     key: 'rotate',
     value: function rotate(degree) {
       this.transform.rotate(degree);
+    }
+  }, {
+    key: 'getRealPoint',
+    value: function getRealPoint(p) {
+      return this.transform.getRealPoint(p);
     }
   }, {
     key: 'click',
@@ -692,55 +705,100 @@ Rectangle.prototype._updatePoints = function () {
   this._points.push({ x: maxX, y: minY });
 };
 
-var Text = function (_Shape5) {
-  _inherits(Text, _Shape5);
+var Text = function (_Rectangle) {
+  _inherits(Text, _Rectangle);
 
   function Text() {
     var src = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var x = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 20;
-    var fillStyle = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'orange';
-    var font = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '20px Arial';
+    var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var size = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 20;
+    var font = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'Arial';
 
     _classCallCheck(this, Text);
 
-    var _this6 = _possibleConstructorReturn(this, (Text.__proto__ || Object.getPrototypeOf(Text)).call(this));
+    var _this6 = _possibleConstructorReturn(this, (Text.__proto__ || Object.getPrototypeOf(Text)).call(this, x, y, 1, size));
 
-    _this6.src = src;
-    _this6.x = x;
-    _this6.y = y;
-    _this6.font = font;
-    _this6.fillStyle = fillStyle;
+    _this6._src = src;
+    _this6.height = size;
+    _this6._font = font;
+    _this6.fillStyle = "orange";
+    _this6._updateWidth();
     return _this6;
   }
 
+  _createClass(Text, [{
+    key: '_updateWidth',
+    value: function _updateWidth() {
+      _canvas.ctx.save();
+      _canvas.ctx.font = this.height + 'px ' + this._font;
+      this.width = _canvas.ctx.measureText(this._src).width;
+      _canvas.ctx.restore();
+    }
+  }, {
+    key: 'stroke',
+    value: function stroke() {
+      if (this.click) _util.clickShapes.add(this);
+      _canvas.ctx.save();
+      _canvas.ctx.update(this);
+      _canvas.ctx.font = this.size + 'px ' + this.font;
+
+      _canvas.ctx.strokeText(this.src, this.x, this.y + this.height);
+
+      _canvas.ctx.restore();
+    }
+  }, {
+    key: 'fill',
+    value: function fill() {
+      if (this.click) _util.clickShapes.add(this);
+      _canvas.ctx.save();
+      _canvas.ctx.update(this);
+
+      _canvas.ctx.font = this.size + 'px ' + this.font;
+
+      _canvas.ctx.fillText(this.src, this.x, this.y + this.height);
+
+      _canvas.ctx.restore();
+    }
+  }, {
+    key: 'draw',
+    value: function draw() {
+      this.fill();
+    }
+  }, {
+    key: 'src',
+    get: function get() {
+      return this._src;
+    },
+    set: function set(src) {
+      this._src = src;
+      this._updateWidth();
+    }
+  }, {
+    key: 'size',
+    get: function get() {
+      return this.height;
+    },
+    set: function set(size) {
+      this.height = size;
+      this._updateWidth();
+    }
+  }, {
+    key: 'font',
+    get: function get() {
+      return this._font;
+    },
+    set: function set(font) {
+      this._font = font;
+      this._updateWidth();
+    }
+  }]);
+
   return Text;
-}(Shape);
+}(Rectangle);
 
-Text.prototype.stroke = function () {
-  _canvas.ctx.save();
-  this.updateCtx(_canvas.ctx);
-  _canvas.ctx.font = this.font;
-
-  _canvas.ctx.strokeText(this.src, this.x, this.y);
-
-  _canvas.ctx.restore();
-};
-
-Text.prototype.fill = function () {
-  _canvas.ctx.save();
-  this.updateCtx(_canvas.ctx);
-  _canvas.ctx.font = this.font;
-
-  _canvas.ctx.fillText(this.src, this.x, this.y);
-
-  _canvas.ctx.restore();
-};
-
-Text.prototype.draw = Text.prototype.fill;
-
-var Sprite = function (_Rectangle) {
-  _inherits(Sprite, _Rectangle);
+var Sprite = function (_Rectangle2) {
+  _inherits(Sprite, _Rectangle2);
 
   function Sprite(src, x, y, w, h) {
     _classCallCheck(this, Sprite);
@@ -877,7 +935,7 @@ exports.Animation = Animation;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.loadRssAndRun = exports.Rss = undefined;
 
@@ -890,47 +948,46 @@ var loaded = 0;
 var main = void 0;
 
 function loadRssAndRun(func) {
-  main = func;
-  check();
+    main = func;
+    check();
 }
 
 var Rss = {};
 Rss.add = function () {
-  count++;
+    count++;
 };
 Rss.load = function () {
-  loaded++;
+    loaded++;
 };
 Rss.isLoaded = function () {
-  return loaded >= count;
+    return loaded >= count;
 };
 
 var n = 0;
 
 function check() {
-  if (Rss.isLoaded()) {
-    main();
-  } else {
-    _canvas.canvas.clear();
+    if (Rss.isLoaded()) {
+        main();
+    } else {
+        _canvas.canvas.clear();
 
-    var LL = new _shapes.Text('LeapLearner', _canvas.canvas.width / 2 - 110, 200, undefined, '40px Arial');
-    LL.draw();
+        new _shapes.Text('LeapLearner', _canvas.canvas.width / 2 - 110, 200, 40).draw();
 
-    var msg = 'loading';
-    for (var i = 0; i < n % 6; i++) {
-      msg += '.';
+        var msg = 'loading';
+        for (var i = 0; i < n % 6; i++) {
+            msg += '.';
+        }
+        new _shapes.Text(msg, _canvas.canvas.width / 2 - 40, _canvas.canvas.height - 240).draw();
+
+        new _shapes.Rectangle(50, _canvas.canvas.height - 200, _canvas.canvas.width - 100, 10).fill();
+
+        var r2 = new _shapes.Rectangle(50, _canvas.canvas.height - 200, (_canvas.canvas.width - 100) * loaded / count, 10);
+        r2.fillStyle = 'orange';
+        r2.fill();
+
+        n++;
+        setTimeout(check, 100);
     }
-    msg.draw(_canvas.canvas.width / 2 - 40, _canvas.canvas.height - 220);
-
-    new _shapes.Rectangle(50, _canvas.canvas.height - 200, _canvas.canvas.width - 100, 10).fill();
-
-    var r2 = new _shapes.Rectangle(50, _canvas.canvas.height - 200, (_canvas.canvas.width - 100) * loaded / count, 10);
-    r2.fillStyle = 'orange';
-    r2.fill();
-
-    n++;
-    setTimeout(check, 100);
-  }
 }
 
 exports.Rss = Rss;
@@ -1042,18 +1099,6 @@ var Transform = function () {
     key: "rotate",
     value: function rotate(degree) {
       this.degree = degree;
-    }
-  }, {
-    key: "updateCtx",
-    value: function updateCtx(ctx) {
-      var degree = this.degree * Math.PI / 180;
-
-      ctx.translate(this.anchorX, this.anchorY);
-
-      ctx.rotate(degree);
-      ctx.transform(this.scaleX, this.skewX, this.skewY, this.scaleY, this.translateX, this.translateY);
-
-      ctx.translate(-this.anchorX, -this.anchorY);
     }
   }, {
     key: "getRealPoint",

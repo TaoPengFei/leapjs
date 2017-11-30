@@ -33,20 +33,8 @@ var nextFrame = function (func) {
   frameId = window.requestAnimationFrame(func)
 }
 
-String.prototype.draw = function (x, y, fillStyle, font) {
-  new window.Text(this, x, y, fillStyle, font).draw()
-}
-
 // handle shape click event;
-var clickShapes = (function () {
-  var shapes = []
-
-  return {
-    clear: function () { shapes = [] },
-    add: function (shape) { shapes.push(shape) },
-    getLength: function () { return shapes.length },
-    get: function (i) { return shapes[i] }
-  }
-}())
+var clickShapes = new Set();
+window.clickShapes = clickShapes;
 
 export { nextFrame, clickShapes }

@@ -32,9 +32,14 @@ canvas.clear = function () {
 canvas.showAxis = function () {
   ctx.save()
   ctx.strokeStyle = 'black'
+  let txt = new Text("", 1, 1, 15)
+  txt.fillStyle = "orange"
+
   for (let i = 0; i < canvas.width; i += 10) {
     if (i % 100 === 0) {
-      i.toString().draw(i + 1, 15, undefined, '15px Arial')
+      txt.src = i.toString()
+      txt.x = i+1
+      txt.draw()
       ctx.lineWidth = 0.4
     } else ctx.lineWidth = 0.1
     ctx.beginPath()
@@ -44,9 +49,12 @@ canvas.showAxis = function () {
     ctx.stroke()
   }
 
+  txt.x = 1;
   for (let i = 0; i < canvas.height; i += 10) {
     if (i % 100 === 0) {
-      i.toString().draw(1, i - 1, undefined, '15px Arial')
+      txt.src = i.toString()
+      txt.y = i+1
+      if(i > 0) txt.draw()
       ctx.lineWidth = 0.3
     } else ctx.lineWidth = 0.1
     ctx.beginPath()
@@ -65,6 +73,41 @@ ctx.drawPathByPoints = function (ps) {
   for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
 
   ctx.closePath()
+}
+
+ctx.update = function (shape) {
+  if (shape.fillStyle) ctx.fillStyle = shape.fillStyle
+  if (shape.strokeStyle) ctx.strokeStyle = shape.strokeStyle
+
+  if (shape.shadowColor) ctx.shadowColor = shape.shadowColor
+  if (shape.shadowBlur) ctx.shadowBlur = shape.shadowBlur
+  if (shape.shadowOffsetX) ctx.shadowOffsetX = shape.shadowOffsetX
+  if (shape.shadowOffsetY) ctx.shadowOffsetY = shape.shadowOffsetY
+
+  if (shape.lineCap) ctx.lineCap = shape.lineCap
+  if (shape.lineJoin) ctx.lineJoin = shape.lineJoin
+  if (shape.lineWidth) ctx.lineWidth = shape.lineWidth
+  if (shape.miterLimit) ctx.miterLimit = shape.miterLimit
+
+  if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha
+  if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation
+
+  if (shape.transform.transformed()) ctx.updateTransform(shape.transform)
+}
+
+ctx.updateTransform = function (transform) {
+  let degree = transform.degree * Math.PI / 180
+
+  ctx.translate(transform.anchorX, transform.anchorY)
+
+  ctx.rotate(degree)
+  ctx.transform(
+    transform.scaleX, transform.skewX, 
+    transform.skewY, transform.scaleY,
+    transform.translateX, transform.translateY
+    )
+
+  ctx.translate(-transform.anchorX, -transform.anchorY)
 }
 
 export { canvas, ctx }
