@@ -41,18 +41,6 @@ class Transform {
     this.degree = degree
   }
 
-  updateCtx (ctx) {
-    let degree = this.degree * Math.PI / 180
-
-    ctx.translate(this.anchorX, this.anchorY)
-
-    ctx.rotate(degree)
-    ctx.transform(this.scaleX, this.skewX, this.skewY, this.scaleY,
-      this.translateX, this.translateY)
-
-    ctx.translate(-this.anchorX, -this.anchorY)
-  }
-
   getRealPoint (p) {
     if (!this.transformed()) { return p }
 

@@ -21,12 +21,11 @@ function check () {
   if (Rss.isLoaded()) { main() } else {
     canvas.clear()
 
-    let LL = new Text('LeapLearner', canvas.width / 2 - 110, 200, undefined, '40px Arial')
-    LL.draw()
+    new Text('LeapLearner', canvas.width / 2 - 110, 200, 40).draw()
 
     let msg = 'loading'
     for (let i = 0; i < n % 6; i++) { msg += '.' }
-    msg.draw(canvas.width / 2 - 40, canvas.height - 220)
+    new Text(msg, canvas.width / 2 - 40, canvas.height - 240).draw()
 
     new Rectangle(50, canvas.height - 200, canvas.width - 100, 10).fill()
 

@@ -5,9 +5,9 @@ var ground = new Sprite(url+"bgs/ground.png", 0, 430, 600, 150);
 
 var bird = new Animation(url+"animations/bird.png", 80, 20, 56, 42);
 bird.setFrame(0, 0, 112, 84, 8, 1); // shiftX, shiftY, frameX, frameY, columns, rows
-bird.setAnchor(100, 0);			
-bird.scale(-1, 1);		// These two lines are used to flip bird
-bird.setCollisionScale(0.4, 0.4);	// the actual collision scale
+bird.setAnchor(100, 0);     
+bird.scale(-1, 1);    // These two lines are used to flip bird
+bird.setCollisionScale(0.4, 0.4); // the actual collision scale
 
 var spike1 = new Sprite(url+"images/spike3.png", 500, 300, 80, 170);
 var spike2 = new Sprite(url+"images/spike3.png", 500, 0, 80, 170);
@@ -27,8 +27,8 @@ var score = 0;
 var hiscore = 0;
 
 spike1.update = function(){
-  this.x += -6;  						// Moving speed
-  if(this.x + this.width < 0){			// If spike move out canvas
+  this.x += -6;             // Moving speed
+  if(this.x + this.width < 0){      // If spike move out canvas
     this.x = canvas.width;
     this.y = 200 + 200 * Math.random(); // Spike in the buttom
     score++; 
@@ -41,11 +41,11 @@ spike2.update = function(){
 };
 
 bird.update = function(){
-  this.yspeed += 0.5; 				// Gravity
+  this.yspeed += 0.5;         // Gravity
   this.y += this.yspeed;
 };
 
-function moveAndDraw(speed){	// scene comes with same scene
+function moveAndDraw(speed){  // scene comes with same scene
   this.translate(0, 0);
   this.x -= speed;
   if(this.x<-this.width) this.x = 0; // move out from canvas
@@ -62,7 +62,7 @@ Mouse.down = function(){
     GameStart();
   }
   else {
-    bird.yspeed = -10;			// Bird jump speed
+    bird.yspeed = -10;      // Bird jump speed
     sound.currentTime = 0;
     sound.play();
   }
@@ -78,10 +78,15 @@ function GameStart(){
   GameLoop();
 }
 
+var scoreMsg = new Text();
+scoreMsg.fillStyle = "white";
+var hiScoreMsg = new Text("", 300, 0);
+hiScoreMsg.fillStyle = "white";
+
 function GameLoop(){  
   if(isGameOver()){
-    "Game Over TT".draw(110, 200);
-    "Try Again".draw(130, 240);
+    new Text("Game Over TT", 110, 200).draw();
+    new Text("Try Again", 130, 240).draw();
     collideSound.play();
   } else {
     canvas.clear();
@@ -95,14 +100,16 @@ function GameLoop(){
     spike1.draw();
     spike2.draw();
 
-    ground.moveAndDraw(6);		// On top of spikes, keep same speed with spikes
+    ground.moveAndDraw(6);    // On top of spikes, keep same speed with spikes
     bird.draw();
+      
+    scoreMsg.src = "score:" + score;
+    scoreMsg.draw();
+    
+    hiScoreMsg.src = "HI:" + hiscore;
+    hiScoreMsg.draw();
 
-    ("score:" + score).draw(10, 30, "white");
-    if(hiscore < score) hiscore = score;
-    ("HI:" + hiscore).draw(300, 30, "white");
-
-  	nextFrame(GameLoop);
+    nextFrame(GameLoop);
   }
 }
 

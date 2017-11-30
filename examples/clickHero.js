@@ -56,6 +56,9 @@ function GameStart(){
     nextFrame(GameLoop);
 }
 
+var scoreMsg = new Text();
+var hiscoreMsg = new Text("", canvas.width-100, 0);
+
 function GameLoop(){
   canvas.clear();
   
@@ -64,9 +67,12 @@ function GameLoop(){
   
   circle.update();
   circle.fill();
-    
-  ("Score: " + score).draw();
-  ("HI: " + hiscore).draw(canvas.width-100);
+  
+  scoreMsg.src = "Score: " + score;
+  scoreMsg.draw();
+   
+  hiscoreMsg.src = "HI: " + hiscore;
+  hiscoreMsg.draw();
 
   if(iSGameOver())
       nextFrame(GameOver);
@@ -78,13 +84,10 @@ function iSGameOver(){
     return circle.y > canvas.height;
 }
 
+var retry = new Text("RETRY", 100, 250, 50);
 function GameOver(){
-    var retry_btn = new Rectangle(122, 350, 100, 50);
-    retry_btn.click = GameStart;
-    retry_btn.fill();
-      
-    "Game Over".draw(100, 160, null, "30px Arial");
-    "Retry".draw(150, 380, "white"); 
+    retry.click = GameStart;
+    retry.fill();
 }
 
 GameStart();
