@@ -2356,35 +2356,45 @@ y = y + yspeed;
 
 这就是重力公式在画布上的表示，我们可以写出以下代码来实现重力效果。
 
-
-
 ##### 实例：一个颠球小游戏的实现
 
 ```javascript
-var ball = new Circle(200, 0, 20);
+canvas.resize(300, 500);
+
+var ball = new Circle(200, 200, 30);
 var g = 0.5;
 
 ball.yspeed = 0;
+score = 0;
+scoreMsg = new Text("0");
 
 ball.click = function(){
-    this.yspeed = -10;
+    this.yspeed = -20;
+    score++;
+    scoreMsg.src = score;
 };
 
 ball.update = function(){
   this.yspeed += g;
   this.y += this.yspeed;
-  if(this.y > 500) this.y = 500;
+  if(this.y > 450) {
+      this.y = 450;
+      score = 0;
+  }
 };
 
 function loop(){
   canvas.clear();
   ball.update();
   ball.draw();
+  scoreMsg.draw();
   requestAnimationFrame(loop);
 }
 
 loop();
 ```
+
+
 
 ##### 实例：Flappy Bird
 
