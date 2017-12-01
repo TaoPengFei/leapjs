@@ -32,7 +32,7 @@ Learning Coding with LeapLearner
 
 ### 重要性
 
-网络的普及，使得人们被一分为二：告诉电脑该怎么做的人，以及被电脑告知该怎么做的人。 
+网络的普及，使得人们被一分为二：告诉电脑该怎么做的人，以及被电脑告知该怎么做的人。我们通过编程与计算机交流。 
 
 ### 编程的应用
 
@@ -358,6 +358,8 @@ circle.fillStyle = 'green';
 
 将七彩颜色写入colArr[]数组，点击`运行`后，点击调色板，灯泡会变成调色板的颜色。
 
+**注意**：老师请不要告诉学生colArr是个数组，只需引导她将颜色写在[ ]里即可。
+
 ```javascript
 var colArr = [];//写入颜色前的colArr[]数组
 var colArr = ["red","orange","yellow","green","cyan","blue","purple"];//写入颜色后的colArr[]数组
@@ -458,21 +460,57 @@ fillStyle是图形的填充颜色，strokeStyle是图形的变长颜色，利用
 
 ### 介绍变量
 
-变量，就像是计算机里的一个个盒子，存放着各种各样的东西
+变量，就像是计算机里的一个个盒子，可以存放着各种各样的东西。
 
 ### 小测验：变量
 
+通过之前的课程，我们学会了画圆的方法，那让我们把圆心的横方向位置（X坐标）用计算机里的盒子——变量来表示吧。
+
+画出了圆后，改变一下变量circleX的数字大小让你的圆形左右移动吧。
+
+```javascript
+var circleX = 80;
+var circle = new Circle(circleX, 80, 70);
+circle.draw();
+```
+
 ### 更多的变量
+
+既然圆的左右位置我们可以通过变量进行改变，那圆的上下位置是不是也可以呢？
+
+让我们定义一个变量circleY来试一试你的圆形有没有上下移动吧。
+
+```javascript
+var circleX = 80;
+var circleY = 80;
+var circle = new Circle(circleX, circleY, 70);
+circle.draw();
+```
 
 ### 挑战：用变量来绘制雪人
 
-TODO：使用变量来绘制雪人
+让学生找出之前的雪人项目，将xy坐标用变量来表示。通过修改变量，让雪人整体移动。
 
-通过修改变量，让雪人整体移动。
+```javascript
+var snowX = 220;
+var snowY = 250;
 
-### 改变变量
+var body = new Circle(snowX, snowY, 100);
+body.fillStyle = "white";
+body.draw();
 
-一旦我们使用变量来绘制雪人，我们就可以很方便的修改雪人的位置了，只要修改我们定义的x和y值，就能一次性的修改所有图形的位置。
+var head = new Circle(snowX, snowY-120, 60);
+head.fillStyle = "white";
+head.draw();
+
+var eye = new Circle(snowX-20, snowY-130, 10);
+eye.fillStyle = "black";
+eye.draw()
+
+var eye = new Circle(snowX+20, snowY-130, 10);
+eye.fillStyle = "black";
+eye.draw()
+```
 
 
 
@@ -486,6 +524,15 @@ TODO：使用变量来绘制雪人
 
 如何在画布上绘制出一张图片。
 
+注意：图片链接一定要写在英文的引号里
+
+```javascript
+var sprite = new Sprite('http://static.leaplearner.com/image/image.png', 53, 363, 40, 40);
+sprite.draw();
+```
+
+![cacti](.\images\cacti.png)
+
 ### 图片的顺序
 
 使用图片时，后面的图片会盖住前面的图片
@@ -496,7 +543,9 @@ TODO：使用变量来绘制雪人
 
 ### 放大和缩小
 
-动物可不是一样大小，我们要让动物变的和他们
+通过修改图片的宽度和高度来完成放大和缩小。
+
+动物可不是一样大小，我们要让动物变的和他们实际体型一样。（也就说小猫是不可能比大象的图片大的哟）
 
 ### 挑战：动物园II
 
