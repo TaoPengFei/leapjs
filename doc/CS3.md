@@ -37,40 +37,33 @@ Learning Coding with LeapLearner
 和其他图形类似，点的位置可以在坐标轴上，用x坐标和y坐标确定出来。
 
 ```javascript
-var p = new Point(100, 100);
+canvas.showAxis(); // 显示坐标轴
+var p = new Point(150, 50);
 p.draw();
 ```
+
+在点的参数中，第一个坐标`150`是x坐标，也就是横坐标，在水平方向上，找到150的位置，它位于100和200的中间。第二个坐标50是y坐标，也就是纵坐标，在垂直方向上，找到50的位置，它位于0和100的中间。这两个坐标确定了点的位置，最后我们用`draw`方法把点绘制在画布上，就得到了下面的结果。
+
+![point](./images/cs3_point.png)
 
 点的颜色可以通过点的`fillStyle`属性来设置，通过设置不同的样式，画出来的点可以有不一样的颜色。
 
 ```javascript
+canvas.showAxis(); // 显示坐标轴
+var p = new Point(150, 50);
 p.fillStyle = "green";
 p.draw();
 ```
+
+通过修改点的颜色，我们就在同样的位置画出了一个绿色的的点。
+
+![point2](./images/cs3_point2.png)
 
 **练习**
 
 * 在坐标轴上画出以下点的位置：（100，100）
 * 在坐标轴上读取点的位置
 * 如果点从100，100均匀移动到了200，200，它是怎么移动的呢
-
-**实例：连点成线**
-
-在下面的例子中，我们用点来模拟一条线段。在这里，我们定义了一个line函数，line函数是从(x1,y1)画到(x1+100, y1)。我们使用了一个循环来绘制这100个点，
-
-```javascript
-var p = new Point();
-
-function line(x1, y1){
-  for(var i=0; i<100; i++){
-    p.x = i + x1;
-  	p.y = y1;
-  	p.draw();
-  }
-}
-
-line(100, 100);
-```
 
 **实例：点点点**
 
@@ -103,6 +96,10 @@ Mouse.click = function(){
 };
 ```
 
+运行项目，在画布上点击鼠标，看看会不会留下痕迹。
+
+![](./images/cs3_points3.png)
+
 **实例：点点点II**
 
 在上面的例子中，我们希望能够简单的按下鼠标就可以画出来，而不是一直要点击鼠标。我们可以把click事件修改为move事件，来试一试。
@@ -110,18 +107,27 @@ Mouse.click = function(){
 ```javascript
 var p = new Point(100, 100);
 
-Mouse.click = function(){
+Mouse.move = function(){
     p.x = Mouse.x;
     p.y = Mouse.y;
     p.draw();
 };
 ```
 
+点击运行，然后将鼠标在画布上移动，就会留下各种个样的轨迹。如果不满意当前的图像，重新运行就可以清空屏幕上的图像了。
+
+![](./images/cs3_points4.png)
+
 看起来好像达到我们的要求了，美中不足的时只要鼠标移动，就会自动在画布上留下很多我们不希望看到的点。
 
-我们可以这么设计，如果我按住鼠标，就留下痕迹，如果我松开鼠标，就不留下痕迹。
+**想一想：**
 
-为了达到这个要求，我们先定义一个变量clicked，如果这个变量的值为true，那么移动鼠标时就留下痕迹，反之，则不留下痕迹。
+* 画画、写字和点点点有什么不一样的地方呢
+* 如何避免一直留下痕迹
+
+为了模拟画笔的动作，我们可以这么设计，如果我按住鼠标，就留下痕迹，如果我松开鼠标，就不留下痕迹。
+
+为了达到这个要求，我们先定义一个变量`clicked`，如果这个变量的值为`true`，那么移动鼠标时就留下痕迹，反之，则不留下痕迹。
 
 ```javascript
 var clicked = false;
@@ -135,7 +141,26 @@ Mouse.move = function(){
 }
 ```
 
-接下来，但我们按下鼠标的时候，让这个值变为true，不要忘了，当松开鼠标的时候，让这个值变回为false
+接下来，但我们按下鼠标的时候，让这个值变为`true`，当松开鼠标的时候，让这个值变回为`false`。
+
+```javascript
+Mouse.down = function(){ clicked = true; };
+Mouse.up = function(){ clicked = false; };
+```
+
+如果`clicked`是`true`，才开始画画。
+
+```javascript
+Mouse.move = function(){
+    if(clicked){
+      p.x = Mouse.x;
+      p.y = Mouse.y;
+      p.draw();
+    }
+}
+```
+
+我们把代码合在一起了，快看看你的的代码是不是和下面的代码一样。
 
 ```javascript
 var p = new Point();
@@ -153,6 +178,14 @@ Mouse.move = function(){
     }
 }
 ```
+
+画笔已经就位，我们来用它写首诗试一试，写的慢，可以写出连续的笔划，写的快，笔划就会变成一个个点，也是别有一番意境呢。
+
+![points4](./images/cs3_point4.png)
+
+**比一比**
+
+* 看看谁写的字更好看
 
 **实例：点点点III**
 
@@ -198,7 +231,39 @@ rect.click = function(){
 }
 ```
 
-好了，接下来，我们可以添加更多的颜色上去了。
+运行项目，先用鼠标画出一条红色的线条，再点击绿色矩形，就可以用鼠标画出一条绿色的线条了。
+
+![point5](./images/cs3_point5.png)
+
+好了，接下来，我们可以添加更多的颜色上去了，快动手试一试吧。
+
+**试一试**
+
+* 完成点点点项目
+* 为点点点项目添加更多的颜色
+
+**实例：连点成线**
+
+在下面的例子中，我们用点来模拟一条线段。在这里，我们定义了一个main函数，main函数每一次都会在点的右下方画出一个新的点出来。
+
+```javascript
+var p = new Point(50, 50);
+
+function main(){
+    p.x += 2;
+    p.y += 1;
+    p.draw();
+    nextFrame(main);
+}
+
+main();
+```
+
+我们就可以利用点在画布上画出一条不断延长的线了。
+
+![](images/cs3_point_line.png)
+
+当然了，我们有更好的办法可以画出线条来。下面我们就来学学怎么用Line来定义线条。
 
 ### 线段
 
@@ -208,7 +273,7 @@ rect.click = function(){
 var line = new Line(x1, y1, x2, y2)
 ```
 
-定义后，我们就获得了line这个对象，通过修改line的属性，我们就可以改变线条的位置、样式以及它的宽度。
+定义后，我们就获得了`line`这个对象，通过修改line的属性，我们就可以改变线条的位置、样式以及它的宽度。
 
 线条有比较多的属性值，修改线条的位置是一件非常容易出错的事情，要特别的小心。
 
@@ -239,6 +304,10 @@ line.draw();
 
 注意的是，和其他图形不一样的是，线条是没有面积的，因此是没有`fill`方法的。
 
+**例子：用线条来绘制五角星**
+
+
+
 ### 多边形
 
 ```javascript
@@ -253,11 +322,11 @@ polygon.draw();
 我们先在纸上画出一个凸五边形，找出五边形5个点的坐标，依次将他们赋值给我们的多边形，在画布上画出来后，就可以看到一个五边形了。注意，我们找的点一点要按照按照顺时针或者逆时针的顺序输入。
 
 ```javascript
-var polygon = new Polygon(278, 100, // 1
-                          132, 193,	// 2
-                          155, 341, // 3
-                          353, 335, // 4
-                          426, 201  // 5
+var polygon = new Polygon(200, 100,  // 1
+                          105, 169,  // 2
+                          141, 281,	 // 3
+                          259, 281,	 // 4
+                          295, 169   // 5
                          );
 polygon.strokeStyle = "red";
 polygon.stroke();
@@ -272,13 +341,15 @@ polygon.stroke();
 同样的五个点，如果按照不同的顺序来，会画出不一样的图形来。接下来我们试着将点的顺序改变一下，按照1、3、5、2、4的顺序来画出这个五边形，观察下结果。
 
 ```javascript
-var polygon = new Polygon(268, 105,  // 1
-                          123, 341,	 // 3
-                          426, 201,  // 5
-                          132, 193,  // 2	
-                          353, 335	 // 4
-                         )
-polygon.draw();
+var polygon = new Polygon(200, 100,  // 1
+                          141, 281,	 // 3
+                          295, 169,  // 5
+                          105, 169,  // 2	
+                          259, 281	 // 4
+                         );
+
+polygon.fillStyle = 'yellow';
+polygon.fill();
 ```
 
 五边形变成了一个五角星了！
@@ -321,12 +392,6 @@ moutain2.fill();
 最后我们的作品就出来了，可以打印出来挂在墙上哦
 
 ![](./images/cs3_moutains.png)
-
-## 代码结构
-
-### 代码执行顺序
-
-
 
 ## 变量
 
@@ -488,6 +553,48 @@ s.draw();
 
 **例子：记录坐标**
 
+我们在绘制图形的时候，总是要设定很多的坐标值，坐标多了就容易混淆，我们就来做一个项目，可以记录画布上的坐标值。
+
+第一步，创建一个Point对象和Text对象
+
+```javascript
+var p = new Point();
+var text = new Text();
+```
+
+增加一个鼠标点击事件，当鼠标点击的时候，显示点的位置和文字。
+
+```javascript
+Mouse.click = function(){
+	// draw point
+  	// write text
+}
+```
+
+接下来，在点击的时候，在鼠标的位置把点还有字符串显示出来。字符串是有x坐标和y坐标构成的，为了区分他们，我们在他们中间加上个逗号
+
+```javascript
+text.src = Mouse.x + ", " + Mouse.y;
+```
+
+除了让点的位置等于鼠标的位置外，记的让文字的位置也和鼠标的位置一样。
+
+```javascript
+p.x = Mouse.x;
+p.y = Mouse.y;
+text.x = Mouse.x;
+text.y = Mouse.y;
+```
+
+使用draw方法将点和文字绘制到画布上。
+
+```javascript
+p.draw();
+text.draw();
+```
+
+最后，附上完整的代码。
+
 ```javascript
 var p = new Point();
 var text = new Text();
@@ -504,7 +611,9 @@ Mouse.click = function(){
 }
 ```
 
+运行项目，点击画布上任意一个位置，就会留下坐标值了。是不是可以方面的记录每个点的坐标值了。
 
+![](./images/cs3_string.png)
 
 #### 空格
 
