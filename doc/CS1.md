@@ -535,7 +535,28 @@ sprite.draw();
 
 ### 图片的顺序
 
-使用图片时，后面的图片会盖住前面的图片
+插入图片时，后的图片会盖住前面的图片。
+
+试一下将frogBacGro.draw();这一行代码加在snake.draw();后面图片会发生什么吧。
+
+```javascript
+// Let us code the future
+var frogBacGro = new Sprite('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg',0,0,650,332);//background
+var tiger = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_tiger.png',145,230,95,103);
+var fox = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_fox.png',240,230,95,103);
+var eagle = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_eagle.png',335,230,95,103);
+var snake = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png',430,230,95,103);
+
+frogBacGro.onload = function() {
+   frogBacGro.draw();
+   tiger.draw();
+   fox.draw();
+   eagle.draw();
+   snake.draw();
+};
+```
+
+![ImageOrder](.\images\ImageOrder.png)
 
 ### 挑战：动物园I
 
@@ -557,7 +578,7 @@ sprite.draw();
 
 ### 什么是动画
 
-动画原理
+每一个画面称为一帧，下一帧的内容总比前一帧有稍微的变化。这样，就产生了运动的错觉：每一帧都很短并且很快被另一个帧所代替，这样就产生了运动。
 
 ### 制作动画
 
@@ -567,7 +588,12 @@ sprite.draw();
 
 第一步，让我们先画一片海。
 
+第二步，让我们再画出一片天空。
+
+第三步，画出我们的太阳。
+
 ```javascript
+// Let us code the future
 var sky = new Rectangle(0, 0, 350, 400);
 
 var sea = new Rectangle(0, 400, 350, 150);
@@ -579,12 +605,14 @@ sun.fillStyle = "red";
 var draw = function(){
     sky.draw();
     sun.y = sun.y - 1;
-    
+    if(sun.y<=34){
+       clearInterval(n);
+    }
   	sun.draw();
   	sea.draw();
 };
 
-setInterval(draw, 100);
+var n = setInterval(draw, 100);
 ```
 
 #### 挑战：云朵
@@ -697,9 +725,27 @@ Susie小故事时间：
 
 ### 点击和双击
 
-区分左键点击和右键点击
+为了使学生能区分左键点击和右键点击，使其复制下列代码并点击运行后，鼠标点击output区域。
+
+```javascript
+document.onmousedown = function(event) {
+    var oEvent = event; //IE浏览器直接使用event或者window.event得到事件本身。IE下鼠标的 左键是1 ，  右键是2   ff和chrome下 鼠标左键是0  右键是2
+    if (oEvent.button == 0) {
+        alert('鼠标左键');
+    }
+    if (oEvent.button == 2) {
+        alert('鼠标右键');
+    }
+};
+```
+
+![leftClick](.\images\leftClick.png)
+
+![right](.\images\rightClick.png)
 
 ### 选中
+
+To do
 
 使用鼠标选中物体
 
