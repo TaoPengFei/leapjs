@@ -417,7 +417,7 @@ exports.Mouse = Mouse;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Animation = exports.Sprite = exports.Text = exports.Point = exports.Circle = exports.Triangle = exports.Polygon = exports.Rectangle = exports.Line = exports.Shape = undefined;
+exports.Ellipse = exports.Animation = exports.Sprite = exports.Text = exports.Point = exports.Circle = exports.Triangle = exports.Polygon = exports.Rectangle = exports.Line = exports.Shape = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -941,7 +941,20 @@ var Ellipse = function (_Shape5) {
   _createClass(Ellipse, [{
     key: '_draw',
     value: function _draw() {
-      _canvas.ctx.ellipse(x, y, radiusX, radiusY, 0, 0, Math.PI * 2);
+      _canvas.ctx.ellipse(this.x, this.y, this.rX, this.rY, 0, 0, Math.PI * 2);
+    }
+  }, {
+    key: '_updatePoints',
+    value: function _updatePoints() {
+      this._points = [];
+      var n = 8;
+      var degree = Math.PI * 2 / n;
+      for (var i = 0; i < n; i++) {
+        this._points.push({
+          x: this.x + this.rX * Math.sin(degree * i), // ? to be confirmed
+          y: this.y + this.rY * Math.cos(degree * i) // ? to be confirmed
+        });
+      }
     }
   }]);
 
@@ -961,6 +974,7 @@ exports.Point = Point;
 exports.Text = Text;
 exports.Sprite = Sprite;
 exports.Animation = Animation;
+exports.Ellipse = Ellipse;
 
 /***/ }),
 /* 5 */
@@ -1061,6 +1075,7 @@ window.Text = _shapes.Text;
 window.Sprite = _shapes.Sprite;
 window.Animation = _shapes.Animation;
 window.Point = _shapes.Point;
+window.Ellipse = _shapes.Ellipse;
 
 window.Key = _keys.Key;
 window.Mouse = _mouse.Mouse;

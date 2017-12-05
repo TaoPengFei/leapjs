@@ -350,11 +350,23 @@ class Ellipse extends Shape {
   }
   
   _draw () {
-    ctx.ellipse(x, y, radiusX, radiusY, 0, 0, Math.PI * 2)
+    ctx.ellipse(this.x, this.y, this.rX, this.rY, 0, 0, Math.PI * 2)
+  }
+
+ _updatePoints () {
+    this._points = []
+    let n = 8
+    let degree = Math.PI * 2 / n
+    for (let i = 0; i < n; i++) {
+    this._points.push({
+      x: this.x + this.rX * Math.sin(degree * i), // ? to be confirmed
+      y: this.y + this.rY * Math.cos(degree * i)  // ? to be confirmed
+      })
+    }
   }
 }
 
 Point.prototype.draw = Point.prototype.fill
 const Triangle = Polygon
 
-export { Shape, Line, Rectangle, Polygon, Triangle, Circle, Point, Text, Sprite, Animation }
+export { Shape, Line, Rectangle, Polygon, Triangle, Circle, Point, Text, Sprite, Animation, Ellipse }
