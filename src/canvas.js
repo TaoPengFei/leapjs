@@ -1,23 +1,18 @@
-let div = document.createElement('div')
 let canvas = document.createElement('canvas')
+let p = document.createElement('p')
 const clickShapes = require('./util.js').clickShapes
 
-div.style = 'display:flex;' +
-    'display:-webkit-flex;' +
-    'justify-content:center;' +
-    'align-items:center;' +
-    'align-items:center;' +
-    'height:100%'
 canvas.style = 'border: 1px solid #d3d3d3;'
+p.style = "color: orange;"
 
-div.appendChild(canvas)
-document.body.appendChild(div)
+document.body.appendChild(canvas)
+document.body.appendChild(p)
 
 let ctx = canvas.getContext('2d')
 
 canvas.resize = function (width, height) {
-  canvas.width = width || window.innerWidth - 5
-  canvas.height = height || window.innerHeight - 5
+  canvas.width = width || window.innerWidth - 2  // borders size
+  canvas.height = height || window.innerHeight - 60 // p, height
   ctx.strokeStyle = '#00FFFF'
   ctx.fillStyle = 'rgba(0, 255, 255, 0.5)'
 }
@@ -110,4 +105,4 @@ ctx.updateTransform = function (transform) {
   ctx.translate(-transform.anchorX, -transform.anchorY)
 }
 
-export { canvas, ctx }
+export { canvas, ctx, p }

@@ -1,4 +1,4 @@
-var url = "http://llcs-1252287760.cossh.myqcloud.com/";
+var url = "https://llcs-1252287760.cossh.myqcloud.com/";
 
 var width = 60;
 var height = 60;

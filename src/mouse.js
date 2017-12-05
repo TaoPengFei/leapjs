@@ -1,4 +1,4 @@
-import { canvas } from './canvas'
+import { canvas, p } from './canvas'
 import { Key } from './keys'
 import { clickShapes } from './util'
 
@@ -29,6 +29,8 @@ function updateEvent (e) {
   let point = windowToCanvas(canvas, e.clientX, e.clientY)
   Mouse.x = Math.floor(point.x)
   Mouse.y = Math.floor(point.y)
+
+  p.innerHTML = `x: ${Mouse.x}, y: ${Mouse.y}`
 }
 
 canvas.onmousedown = function (e) {
