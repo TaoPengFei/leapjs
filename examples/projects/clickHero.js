@@ -1,5 +1,7 @@
 canvas.resize(350, 500);
 var circle = new Circle(0, 0, 20);
+
+circle.globalAlpha = 1;
 var ripple = circle.clone();
 
 var bgm = new Audio();
