@@ -87,6 +87,8 @@ ctx.update = function (shape) {
   if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha
   if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation
 
+  if (shape.lineDash) ctx.setLineDash( shape.lineDash )
+
   if (shape.transform.transformed()) ctx.updateTransform(shape.transform)
 }
 

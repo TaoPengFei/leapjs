@@ -84,6 +84,10 @@ class Shape {
     this._updatePoints()
     return this._points.map(p => this.transform.getRealPoint(p))
   }
+
+  setLineDash ( arr ) {
+    this.lineDash = arr
+  }
 }
 
 class Circle extends Shape {
@@ -333,6 +337,20 @@ class Point extends Circle {
   constructor (x, y) {
     super(x, y, 2)
     this.fillStyle = 'red'
+  }
+}
+
+class Ellipse extends Shape {
+  constructor (x, y, rX, rY) {
+    super ()
+    this.x = x;
+    this.y = y;
+    this.rX = rX;
+    this.rY = rY;
+  }
+  
+  _draw () {
+    ctx.ellipse(x, y, radiusX, radiusY, 0, 0, Math.PI * 2)
   }
 }
 

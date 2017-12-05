@@ -164,6 +164,8 @@ ctx.update = function (shape) {
   if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha;
   if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation;
 
+  if (shape.lineDash) ctx.setLineDash(shape.lineDash);
+
   if (shape.transform.transformed()) ctx.updateTransform(shape.transform);
 };
 
@@ -553,6 +555,11 @@ var Shape = function () {
     key: '_updatePoints',
     value: function _updatePoints() {}
   }, {
+    key: 'setLineDash',
+    value: function setLineDash(arr) {
+      this.lineDash = arr;
+    }
+  }, {
     key: 'points',
     get: function get() {
       var _this = this;
@@ -915,6 +922,31 @@ var Point = function (_Circle) {
 
   return Point;
 }(Circle);
+
+var Ellipse = function (_Shape5) {
+  _inherits(Ellipse, _Shape5);
+
+  function Ellipse(x, y, rX, rY) {
+    _classCallCheck(this, Ellipse);
+
+    var _this10 = _possibleConstructorReturn(this, (Ellipse.__proto__ || Object.getPrototypeOf(Ellipse)).call(this));
+
+    _this10.x = x;
+    _this10.y = y;
+    _this10.rX = rX;
+    _this10.rY = rY;
+    return _this10;
+  }
+
+  _createClass(Ellipse, [{
+    key: '_draw',
+    value: function _draw() {
+      _canvas.ctx.ellipse(x, y, radiusX, radiusY, 0, 0, Math.PI * 2);
+    }
+  }]);
+
+  return Ellipse;
+}(Shape);
 
 Point.prototype.draw = Point.prototype.fill;
 var Triangle = Polygon;
