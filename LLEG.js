@@ -457,12 +457,12 @@ var Shape = function () {
 
       _canvas.ctx.save();
       _canvas.ctx.update(this);
+
       _canvas.ctx.beginPath();
-
-      this._draw();
-      _canvas.ctx.stroke();
-
+      this._path();
       _canvas.ctx.closePath();
+
+      _canvas.ctx.stroke();
       _canvas.ctx.restore();
     }
   }, {
@@ -472,17 +472,17 @@ var Shape = function () {
 
       _canvas.ctx.save();
       _canvas.ctx.update(this);
+
       _canvas.ctx.beginPath();
-
-      this._draw();
-      _canvas.ctx.fill();
-
+      this._path();
       _canvas.ctx.closePath();
+
+      _canvas.ctx.fill();
       _canvas.ctx.restore();
     }
   }, {
-    key: '_draw',
-    value: function _draw() {}
+    key: '_path',
+    value: function _path() {}
   }, {
     key: 'draw',
     value: function draw() {
@@ -490,13 +490,14 @@ var Shape = function () {
 
       _canvas.ctx.save();
       _canvas.ctx.update(this);
-      _canvas.ctx.beginPath();
 
-      this._draw();
+      _canvas.ctx.beginPath();
+      this._path();
+      _canvas.ctx.closePath();
+
       _canvas.ctx.fill();
       _canvas.ctx.stroke();
 
-      _canvas.ctx.closePath();
       _canvas.ctx.restore();
     }
   }, {
@@ -593,8 +594,8 @@ var Circle = function (_Shape) {
   }
 
   _createClass(Circle, [{
-    key: '_draw',
-    value: function _draw() {
+    key: '_path',
+    value: function _path() {
       _canvas.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
     }
   }, {
@@ -639,8 +640,8 @@ var Line = function (_Shape2) {
   }
 
   _createClass(Line, [{
-    key: '_draw',
-    value: function _draw() {
+    key: '_path',
+    value: function _path() {
       _canvas.ctx.moveTo(this.x1, this.y1);
       _canvas.ctx.lineTo(this.x2, this.y2);
     }
@@ -697,8 +698,8 @@ var Polygon = function (_Shape3) {
   }
 
   _createClass(Polygon, [{
-    key: '_draw',
-    value: function _draw() {
+    key: '_path',
+    value: function _path() {
       var p = this._points[0];
       _canvas.ctx.moveTo(p.x, p.y);
       for (var i = 1; i < this._points.length; i++) {
@@ -715,7 +716,7 @@ var Polygon = function (_Shape3) {
       }return x / this._points.length;
     },
     set: function set(x) {
-      deltaX = x - this.x;
+      var deltaX = x - this.x;
       for (var i = 0; i < this._points.length; i++) {
         this._points[i].x += deltaX;
       }
@@ -729,7 +730,7 @@ var Polygon = function (_Shape3) {
       }return y / this._points.length;
     },
     set: function set(y) {
-      deltaY = y - this.y;
+      var deltaY = y - this.y;
       for (var i = 0; i < this._points.length; i++) {
         this._points[i].y += deltaY;
       }
@@ -757,8 +758,8 @@ var Rectangle = function (_Shape4) {
   }
 
   _createClass(Rectangle, [{
-    key: '_draw',
-    value: function _draw() {
+    key: '_path',
+    value: function _path() {
       _canvas.ctx.rect(this.x, this.y, this.w, this.h);
     }
   }, {
@@ -946,7 +947,7 @@ Sprite.prototype.clip = function (sx, sy, sw, sh) {
   this.h = this.h || sh;
 };
 
-Sprite.prototype._draw = function () {
+Sprite.prototype._path = function () {
   if (this.sx && this.sy && this.sw & this.sh) {
     _canvas.ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h);
   } else if (this.w && this.h) {
@@ -987,7 +988,7 @@ Animation.prototype.setSpeed = function (speed) {
   if (this.speed > 60) this.speed = 60;
 };
 
-Animation.prototype._draw = function () {
+Animation.prototype._path = function () {
   var sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c);
   var sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r);
   _canvas.ctx.drawImage(this.img, sx, sy, this.sw, this.sh, this.x, this.y, this.w, this.h);
@@ -1026,8 +1027,8 @@ var Ellipse = function (_Shape5) {
   }
 
   _createClass(Ellipse, [{
-    key: '_draw',
-    value: function _draw() {
+    key: '_path',
+    value: function _path() {
       _canvas.ctx.ellipse(this.x, this.y, this.rX, this.rY, 0, 0, Math.PI * 2);
     }
   }, {

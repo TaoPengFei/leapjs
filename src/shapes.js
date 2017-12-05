@@ -18,12 +18,12 @@ class Shape {
 
     ctx.save()
     ctx.update(this)
+
     ctx.beginPath()
-
-    this._draw()
-    ctx.stroke()
-
+    this._path()
     ctx.closePath()
+
+    ctx.stroke()
     ctx.restore()
   }
 
@@ -32,28 +32,29 @@ class Shape {
 
     ctx.save()
     ctx.update(this)
+
     ctx.beginPath()
-
-    this._draw()
-    ctx.fill()
-
+    this._path()
     ctx.closePath()
+
+    ctx.fill()
     ctx.restore()
   }
 
-  _draw () {}
+  _path () {}
   draw () {
     if (this.click) clickShapes.add(this) // use for handle click event
 
     ctx.save()
     ctx.update(this)
-    ctx.beginPath()
 
-    this._draw()
+    ctx.beginPath()
+    this._path()
+    ctx.closePath()
+
     ctx.fill()
     ctx.stroke()
-
-    ctx.closePath()
+    
     ctx.restore()
   }
 
@@ -101,7 +102,7 @@ class Circle extends Shape {
   get radius () { return this.r }
   set radius (r) { this.r = r }
 
-  _draw () {
+  _path () {
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI)
   }
 
@@ -127,7 +128,7 @@ class Line extends Shape {
     this.y2 = y2
   }
 
-  _draw () {
+  _path () {
     ctx.moveTo(this.x1, this.y1)
     ctx.lineTo(this.x2, this.y2)
   }
@@ -167,7 +168,7 @@ class Polygon extends Shape {
     }
   }
 
-  _draw () {
+  _path () {
     let p = this._points[0]
     ctx.moveTo(p.x, p.y)
     for (let i = 1; i < this._points.length; i++) {
@@ -183,7 +184,7 @@ class Polygon extends Shape {
     return x/this._points.length
   }
   set x (x) {
-    deltaX = x - this.x
+    let deltaX = x - this.x
     for(let i=0; i<this._points.length; i++)
       this._points[i].x += deltaX 
   }
@@ -195,7 +196,7 @@ class Polygon extends Shape {
     return y/this._points.length
   }
   set y (y) {
-    deltaY = y - this.y
+    let deltaY = y - this.y
     for(let i=0; i<this._points.length; i++)
       this._points[i].y += deltaY 
   }
@@ -218,7 +219,7 @@ class Rectangle extends Shape {
   get height () { return this.h }
   set height (h) { this.h = h }
 
-  _draw () {
+  _path () {
     ctx.rect(this.x, this.y, this.w, this.h)
   }
 
@@ -340,7 +341,7 @@ Sprite.prototype.clip = function (sx, sy, sw, sh) {
   this.h = this.h || sh
 }
 
-Sprite.prototype._draw = function () {
+Sprite.prototype._path = function () {
   if (this.sx && this.sy && this.sw & this.sh) {
     ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh,
       this.x, this.y, this.w, this.h)
@@ -374,7 +375,7 @@ Animation.prototype.setSpeed = function (speed) {
   if (this.speed > 60) this.speed = 60
 }
 
-Animation.prototype._draw = function () {
+Animation.prototype._path = function () {
   let sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c)
   let sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r)
   ctx.drawImage(this.img, sx, sy, this.sw, this.sh,
@@ -399,7 +400,7 @@ class Ellipse extends Shape {
     this.rY = rY;
   }
   
-  _draw () {
+  _path () {
     ctx.ellipse(this.x, this.y, this.rX, this.rY, 0, 0, Math.PI * 2)
   }
 
