@@ -23,71 +23,79 @@
 
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
-  <style type="text/css">
-    div.half {
-      float: left;
-      width: 50%;
-    }
-    iframe {
-      height: 95%;
-      width: 100%;
-      border: none;
-    }
-    .CodeMirror {
-        font-family: Courier New;
-        font-size: 16px;
-    }
-  </style>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <div class="half">
-    <textarea id="js"></textarea>
-    Basic
-    <button onclick="load('./examples/shapes/showAxis.js')">Show Axis</button>
-    <button onclick="load('./examples/shapes/rectangle.js')">Rectangle</button>
-    <button onclick="load('./examples/shapes/ellipse.js')">Ellipse</button>
-    <button onclick="load('./examples/shapes/snowman.js')">Snowman</button>
-    <button onclick="load('./examples/shapes/snowman2.js')">Snowman2</button>
-    <button onclick="load('./examples/shapes/moveLine.js')">moveLine</button>
-    <button onclick="load('./examples/shapes/movePolygon.js')">movePolygon</button>
-    <br>Colors
-    <button onclick="load('./examples/styles/hsl.js')">HSL</button>
-    <button onclick="load('./examples/styles/const.js')">const</button>
-    <button onclick="load('./examples/styles/alpha.js')">Alpha</button>
-    <button onclick="load('./examples/styles/randomColor.js')">Random Color</button>
-    <button onclick="load('./examples/styles/gradient.js')">Gradient</button>
-    <button onclick="load('./examples/styles/rainbow.js')">Rainbow</button>
-    <br>Event
-    <button onclick="load('./examples/events/preventDefault.js')">Prevent Default</button>
-    <button onclick="load('./examples/events/draw.js')">Point Draw</button>
-    <button onclick="load('./examples/events/keyEvent.js')">Key Event</button>
-    <button onclick="load('./examples/events/piano.js')">Piano</button>
-    <br>Animation
-    <button onclick="load('./examples/animations/setInterval.js')">SetInterval</button>
-    <button onclick="load('./examples/animations/sunrise.js')">Sunrise</button>
-    <button onclick="load('./examples/animations/animation.js')">Animation</button>
-    <br>Clone
-    <button onclick="load('./examples/clone.js')">Clone</button>
-    <br>Collision
-    <button onclick="load('./examples/collision/rectCollision.js')">Rect</button>
-    <button onclick="load('./examples/collision/collision.js')">Collision</button>
-    <button onclick="load('./examples/collision/polygonCollision.js')">Polygon</button>
-    <button onclick="load('./examples/collision/lotCollision.js')">Lot Collision</button>
-    <br>Physics
-    <button onclick="load('./examples/physics/moveTo.js')">MoveTo</button>
-    <button onclick="load('./examples/physics/gravity.js')">Gravity</button>
-    <button onclick="load('./examples/physics/gravityAndCollision.js')">G&C</button>
-    <br>Projects:
-    <button onclick="load('./examples/projects/fantasticSpot.js')">Fantastic Spot</button>
-    <button onclick="load('./examples/projects/drops.js')">Drops</button>
-    <button onclick="load('./examples/projects/clickHero.js')">Click Hero</button>
-    <button onclick="load('./examples/projects/flppyBird.js')">Flappy Bird</button>
+  <div id="sidebar">
+    <h1>LeapLearner Canvas Engine</h1>
+    <p> <a href='./test.html'>Mocha Test</a> </p>
+    <h2>Basic</h2>
+    <ol>
+      <li><a href='./examples/shapes/showAxis.js'>Show Axis</a></li>
+      <li><a href='./examples/shapes/rectangle.js'>Rectangle</a></li>
+      <li><a href='./examples/shapes/ellipse.js'>Ellipse</a></li>
+      <li><a href='./examples/shapes/snowman.js'>Snowman</a></li>
+      <li><a href='./examples/shapes/snowman2.js'>Snowman2</a></li>
+      <li><a href='./examples/shapes/moveLine.js'>moveLine</a></li>
+      <li><a href='./examples/shapes/movePolygon.js'>movePolygon</a></li>
+    </ol>
+    <h2>Colors</h2>
+    <ol>
+      <li><a href='./examples/styles/hsl.js'>HSL</a></li>
+      <li><a href='./examples/styles/const.js'>const</a></li>
+      <li><a href='./examples/styles/alpha.js'>Alpha</a></li>
+      <li><a href='./examples/styles/randomColor.js'>Random Color</a></li>
+      <li><a href='./examples/styles/gradient.js'>Gradient</a></li>
+      <li><a href='./examples/styles/rainbow.js'>Rainbow</a></li>
+    </ol>
+    <h2>Event</h2>
+    <ol>
+      <li><a href='./examples/events/preventDefault.js'>Prevent Default</a></li>
+      <li><a href='./examples/events/draw.js'>Point Draw</a></li>
+      <li><a href='./examples/events/keyEvent.js'>Key Event</a></li>
+      <li><a href='./examples/events/piano.js'>Piano</a></li>
+    </ol>
+    <h2>Animation</h2>
+    <ol>
+      <li><a href='./examples/animations/setInterval.js'>SetInterval</a></li>
+      <li><a href='./examples/animations/sunrise.js'>Sunrise</a></li>
+      <li><a href='./examples/animations/animation.js'>Animation</a></li>
+    </ol>
+    <h2>Clone</h2>
+    <ol>
+      <li><a href='./examples/clone.js'>Clone</a></li>
+    </ol>
+    <h2>Collision</h2>
+    <ol>
+      <li><a href='./examples/collision/rectCollision.js'>Rect</a></li>
+      <li><a href='./examples/collision/collision.js'>Collision</a></li>
+      <li><a href='./examples/collision/polygonCollision.js'>Polygon</a></li>
+      <li><a href='./examples/collision/lotCollision.js'>Lot Collision</a></li>
+    </ol>
+    <h2>Physics</h2>
+    <ol>
+      <li><a href='./examples/physics/moveTo.js'>MoveTo</a></li>
+      <li><a href='./examples/physics/gravity.js'>Gravity</a></li>
+      <li><a href='./examples/physics/gravityAndCollision.js'>G&C</a></li>
+    </ol>
+    <h2>Projects</h2>
+    <ol>
+      <li><a href='./examples/projects/fantasticSpot.js'>Fantastic Spot</a></li>
+      <li><a href='./examples/projects/drops.js'>Drops</a></li>
+      <li><a href='./examples/projects/clickHero.js'>Click Hero</a></li>
+      <li><a href='./examples/projects/flppyBird.js'>Flappy Bird</a></li>
+    </ol>
   </div>
-  <div class="half" id="output">
+  <div id="code">
+    <textarea id="js"></textarea>
+
+  </div>
+  <div id="output">
     <button onclick="submit()">Run</button>
     <iframe></iframe>
   </div>
+  </div>
   <script src="index.js"></script>
- </script>
+  </script>
 </body>
 </html>

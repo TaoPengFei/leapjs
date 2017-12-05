@@ -1,3 +1,4 @@
+/* global CodeMirror */
 var JSEditor = CodeMirror.fromTextArea(document.getElementById('js'), {
   lineNumbers: true,
   lineWrapping: true,
@@ -9,7 +10,7 @@ var JSEditor = CodeMirror.fromTextArea(document.getElementById('js'), {
   lint: true
 })
 
-JSEditor.setSize('auto', 600)
+JSEditor.setSize('auto', 'auto')
 
 function iframeHtml () {
   var html = ''
@@ -53,4 +54,13 @@ function load (file) {
   })
 }
 
-load('./examples/animation.js')
+$(function () {
+  $('li a').click(function (e) {
+    e.preventDefault()
+    console.log(1)
+    var link = $(this).attr('href')
+    load(link)
+  })
+})
+
+load('./examples/animations/animation.js')
