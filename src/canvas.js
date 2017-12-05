@@ -3,7 +3,7 @@ let p = document.createElement('p')
 const clickShapes = require('./util.js').clickShapes
 
 canvas.style = 'border: 1px solid #d3d3d3;'
-p.style = "color: orange;"
+p.style = 'color: orange;'
 
 document.body.appendChild(canvas)
 document.body.appendChild(p)
@@ -11,7 +11,7 @@ document.body.appendChild(p)
 let ctx = canvas.getContext('2d')
 
 canvas.resize = function (width, height) {
-  canvas.width = width || window.innerWidth - 2  // borders size
+  canvas.width = width || window.innerWidth - 2 // borders size
   canvas.height = height || window.innerHeight - 60 // p, height
   ctx.strokeStyle = '#00FFFF'
   ctx.fillStyle = 'rgba(0, 255, 255, 0.5)'
@@ -27,13 +27,13 @@ canvas.clear = function () {
 canvas.showAxis = function () {
   ctx.save()
   ctx.strokeStyle = 'black'
-  let txt = new Text("", 1, 1, 15)
-  txt.fillStyle = "orange"
+  let txt = new Text('', 1, 1, 15)
+  txt.fillStyle = 'orange'
 
   for (let i = 0; i < canvas.width; i += 10) {
     if (i % 100 === 0) {
       txt.src = i.toString()
-      txt.x = i+1
+      txt.x = i + 1
       txt.draw()
       ctx.lineWidth = 0.4
     } else ctx.lineWidth = 0.1
@@ -44,12 +44,12 @@ canvas.showAxis = function () {
     ctx.stroke()
   }
 
-  txt.x = 1;
+  txt.x = 1
   for (let i = 0; i < canvas.height; i += 10) {
     if (i % 100 === 0) {
       txt.src = i.toString()
-      txt.y = i+1
-      if(i > 0) txt.draw()
+      txt.y = i + 1
+      if (i > 0) txt.draw()
       ctx.lineWidth = 0.3
     } else ctx.lineWidth = 0.1
     ctx.beginPath()
@@ -87,7 +87,7 @@ ctx.update = function (shape) {
   if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha
   if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation
 
-  if (shape.lineDash) ctx.setLineDash( shape.lineDash )
+  if (shape.lineDash) ctx.setLineDash(shape.lineDash)
 
   if (shape.transform.transformed()) ctx.updateTransform(shape.transform)
 }
@@ -99,10 +99,10 @@ ctx.updateTransform = function (transform) {
 
   ctx.rotate(degree)
   ctx.transform(
-    transform.scaleX, transform.skewX, 
+    transform.scaleX, transform.skewX,
     transform.skewY, transform.scaleY,
     transform.translateX, transform.translateY
-    )
+  )
 
   ctx.translate(-transform.anchorX, -transform.anchorY)
 }

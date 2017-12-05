@@ -10,7 +10,16 @@ class Shape {
   constructor () {
     this.transform = new Transform()
     this._points = []
-    this.globalAlpha = 1
+  }
+
+  _path () {}
+  _stroke () {
+    this._path()
+    ctx.stroke()
+  }
+  _fill () {
+    this._path()
+    ctx.fill()
   }
 
   stroke () {
@@ -18,12 +27,7 @@ class Shape {
 
     ctx.save()
     ctx.update(this)
-
-    ctx.beginPath()
-    this._path()
-    ctx.closePath()
-
-    ctx.stroke()
+    this._stroke()
     ctx.restore()
   }
 
@@ -32,29 +36,22 @@ class Shape {
 
     ctx.save()
     ctx.update(this)
-
-    ctx.beginPath()
-    this._path()
-    ctx.closePath()
-
-    ctx.fill()
+    this._fill()
     ctx.restore()
   }
 
-  _path () {}
+  _draw () {
+    this._path()
+    ctx.fill()
+    ctx.stroke()
+  }
+
   draw () {
     if (this.click) clickShapes.add(this) // use for handle click event
 
     ctx.save()
     ctx.update(this)
-
-    ctx.beginPath()
-    this._path()
-    ctx.closePath()
-
-    ctx.fill()
-    ctx.stroke()
-    
+    this._draw()
     ctx.restore()
   }
 
@@ -86,7 +83,7 @@ class Shape {
     return this._points.map(p => this.transform.getRealPoint(p))
   }
 
-  setLineDash ( arr ) {
+  setLineDash (arr) {
     this.lineDash = arr
   }
 }
@@ -103,6 +100,7 @@ class Circle extends Shape {
   set radius (r) { this.r = r }
 
   _path () {
+    ctx.beginPath()
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI)
   }
 
@@ -120,7 +118,7 @@ class Circle extends Shape {
 }
 
 class Line extends Shape {
-  constructor (x1, y1, x2, y2) {
+  constructor (x1 = 100, y1 = 100, x2 = 200, y2 = 100) {
     super()
     this.x1 = x1
     this.y1 = y1
@@ -129,6 +127,7 @@ class Line extends Shape {
   }
 
   _path () {
+    ctx.beginPath()
     ctx.moveTo(this.x1, this.y1)
     ctx.lineTo(this.x2, this.y2)
   }
@@ -141,7 +140,7 @@ class Line extends Shape {
 
   get x () { return (this.x1 + this.x2) / 2 }
   set x (x) {
-    let deltaX = x - this.x 
+    let deltaX = x - this.x
     this.x1 += deltaX
     this.x2 += deltaX
   }
@@ -169,41 +168,39 @@ class Polygon extends Shape {
   }
 
   _path () {
+    ctx.beginPath()
     let p = this._points[0]
     ctx.moveTo(p.x, p.y)
     for (let i = 1; i < this._points.length; i++) {
       p = this._points[i]
       ctx.lineTo(p.x, p.y)
     }
+    ctx.closePath()
   }
 
   get x () {
-    let x = 0;
-    for(let i=0; i<this._points.length; i++)
-      x += this._points[i].x
-    return x/this._points.length
+    let x = 0
+    for (let i = 0; i < this._points.length; i++) { x += this._points[i].x }
+    return x / this._points.length
   }
   set x (x) {
     let deltaX = x - this.x
-    for(let i=0; i<this._points.length; i++)
-      this._points[i].x += deltaX 
+    for (let i = 0; i < this._points.length; i++) { this._points[i].x += deltaX }
   }
 
   get y () {
-    let y = 0;
-    for(let i=0; i<this._points.length; i++)
-      y += this._points[i].y
-    return y/this._points.length
+    let y = 0
+    for (let i = 0; i < this._points.length; i++) { y += this._points[i].y }
+    return y / this._points.length
   }
   set y (y) {
     let deltaY = y - this.y
-    for(let i=0; i<this._points.length; i++)
-      this._points[i].y += deltaY 
+    for (let i = 0; i < this._points.length; i++) { this._points[i].y += deltaY }
   }
 }
 
 class Rectangle extends Shape {
-  constructor (x, y, w, h) {
+  constructor (x = 100, y = 100, w = 100, h = 50) {
     super()
     this.x = x
     this.y = y
@@ -220,6 +217,7 @@ class Rectangle extends Shape {
   set height (h) { this.h = h }
 
   _path () {
+    ctx.beginPath()
     ctx.rect(this.x, this.y, this.w, this.h)
   }
 
@@ -244,19 +242,20 @@ class Rectangle extends Shape {
 }
 
 class Text extends Rectangle {
-  constructor (src = '', x = 0, y = 0, size=20, font = 'Arial') {
+  constructor (src = 'LeapLearner', x = 0, y = 0, size = 20, font = 'Arial') {
     super(x, y, 100, size)
     this._src = src
     this._font = font
-    this.fillStyle = "orange"
+    this.fillStyle = 'orange'
     this._updateWidth()
   }
 
   _updateWidth () {
     ctx.save()
+    ctx.update(this)
     ctx.font = this.h + 'px ' + this._font
     this.w = ctx.measureText(this._src).width
-    ctx.restore() 
+    ctx.restore()
   }
 
   get src () { return this._src }
@@ -272,37 +271,22 @@ class Text extends Rectangle {
   }
 
   get font () { return this._font }
-  set font ( font ) {
+  set font (font) {
     this._font = font
     this._updateWidth()
   }
 
-  stroke () {
-    if (this.click) clickShapes.add(this)
-    ctx.save()
-    ctx.update(this)
+  _stroke () {
     ctx.font = this.size + 'px ' + this.font
-
-    ctx.strokeText(this.src, this.x, this.y+this.h)
-
-    ctx.restore()
+    ctx.strokeText(this.src, this.x, this.y + this.h)
   }
 
-  fill () {
-    if (this.click) clickShapes.add(this)
-    ctx.save()
-    ctx.update(this)
-
+  _fill () {
     ctx.font = this.size + 'px ' + this.font
-
-    ctx.fillText(this.src, this.x, this.y+this.h)
-
-    ctx.restore()
+    ctx.fillText(this.src, this.x, this.y + this.h)
   }
 
-  draw () {
-    this.fill()
-  }
+  draw () { this.fill() }
 }
 
 class Sprite extends Rectangle {
@@ -330,58 +314,58 @@ class Sprite extends Rectangle {
       callback()
     }
   }
-}
 
-Sprite.prototype.clip = function (sx, sy, sw, sh) {
-  this.sx = sx > 0 ? sx : 1
-  this.sy = sy > 0 ? sx : 1
-  this.sw = sw
-  this.sh = sh
-  this.w = this.w || sw
-  this.h = this.h || sh
-}
-
-Sprite.prototype._path = function () {
-  if (this.sx && this.sy && this.sw & this.sh) {
-    ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh,
-      this.x, this.y, this.w, this.h)
-  } else if (this.w && this.h) { 
-    ctx.drawImage(this.img, this.x, this.y, this.w, this.h) 
-  } else { 
-    ctx.drawImage(this.img, this.x, this.y) 
+  clip (sx, sy, sw, sh) {
+    this.sx = sx > 0 ? sx : 1
+    this.sy = sy > 0 ? sx : 1
+    this.sw = sw
+    this.sh = sh
+    this.w = this.w || sw
+    this.h = this.h || sh
   }
-}
 
-Sprite.prototype.fill = null
-Sprite.prototype.stroke = null
+  _draw () {
+    if (this.sx && this.sy && this.sw & this.sh) {
+      ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh,
+        this.x, this.y, this.w, this.h)
+    } else if (this.w && this.h) {
+      ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
+    } else {
+      ctx.drawImage(this.img, this.x, this.y)
+    }
+  }
+
+  fill () {}
+  stroke () {}
+}
 
 class Animation extends Sprite {
   constructor (src, x, y, w, h) {
     super(src, x, y, w, h)
     this.speed = 10
   }
-}
 
-Animation.prototype.setFrame = function (sx, sy, sw, sh, c, r) {
-  this.c = c
-  this.r = r || 1
-  this.cf = 0 // current frame count
-  this.clip(sx, sy, sw, sh)
-}
+  setFrame (sx, sy, sw, sh, c, r) {
+    this.c = c
+    this.r = r || 1
+    this.cf = 0 // current frame count
+    this.clip(sx, sy, sw, sh)
+  }
 
-Animation.prototype.setSpeed = function (speed) {
-  this.speed = speed
-  if (this.speed < 1) this.speed = 1
-  if (this.speed > 60) this.speed = 60
-}
+  setSpeed (speed) {
+    this.speed = speed
+    if (this.speed < 1) this.speed = 1
+    if (this.speed > 60) this.speed = 60
+  }
 
-Animation.prototype._path = function () {
-  let sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c)
-  let sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r)
-  ctx.drawImage(this.img, sx, sy, this.sw, this.sh,
-    this.x, this.y, this.w, this.h)
+  _draw () {
+    let sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c)
+    let sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r)
+    ctx.drawImage(this.img, sx, sy, this.sw, this.sh,
+      this.x, this.y, this.w, this.h)
 
-  this.cf++ // update frame count
+    this.cf++ // update frame count
+  }
 }
 
 class Point extends Circle {
@@ -393,25 +377,26 @@ class Point extends Circle {
 
 class Ellipse extends Shape {
   constructor (x, y, rX, rY) {
-    super ()
-    this.x = x;
-    this.y = y;
-    this.rX = rX;
-    this.rY = rY;
+    super()
+    this.x = x
+    this.y = y
+    this.rX = rX
+    this.rY = rY
   }
-  
+
   _path () {
+    ctx.beginPath()
     ctx.ellipse(this.x, this.y, this.rX, this.rY, 0, 0, Math.PI * 2)
   }
 
- _updatePoints () {
+  _updatePoints () {
     this._points = []
     let n = 8
     let degree = Math.PI * 2 / n
     for (let i = 0; i < n; i++) {
-    this._points.push({
-      x: this.x + this.rX * Math.sin(degree * i), // ? to be confirmed
-      y: this.y + this.rY * Math.cos(degree * i)  // ? to be confirmed
+      this._points.push({
+        x: this.x + this.rX * Math.sin(degree * i), // ? to be confirmed
+        y: this.y + this.rY * Math.cos(degree * i) // ? to be confirmed
       })
     }
   }

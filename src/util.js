@@ -34,7 +34,7 @@ var nextFrame = function (func) {
 }
 
 // handle shape click event;
-var clickShapes = new Set();
-window.clickShapes = clickShapes;
+var clickShapes = new Set()
+window.clickShapes = clickShapes
 
 export { nextFrame, clickShapes }

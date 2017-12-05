@@ -54,5 +54,6 @@
       "mocha": true
     },
     "extends": "standard"
-  }
+  },
+  "eslintIgnore": ["examples/*"]
 }
