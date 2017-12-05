@@ -1,6 +1,6 @@
 node_modules
 package-lock.json
-doc/*.pdf
-doc/*.docx
+*.pdf
+*.docx
 doc/*.html
 .eslintrc.js
