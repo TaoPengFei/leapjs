@@ -414,6 +414,12 @@ class Ellipse extends Shape {
       })
     }
   }
+
+  get radiusX () { return this.rX }
+  set radiusX (rX) { this.rX = rX }
+
+  get radiusY () { return this.rY }
+  set radiusY (rY) { this.rY = rY }
 }
 
 Point.prototype.draw = Point.prototype.fill

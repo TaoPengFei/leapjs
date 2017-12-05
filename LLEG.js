@@ -1043,6 +1043,22 @@ var Ellipse = function (_Shape5) {
         });
       }
     }
+  }, {
+    key: 'radiusX',
+    get: function get() {
+      return this.rX;
+    },
+    set: function set(rX) {
+      this.rX = rX;
+    }
+  }, {
+    key: 'radiusY',
+    get: function get() {
+      return this.rY;
+    },
+    set: function set(rY) {
+      this.rY = rY;
+    }
   }]);
 
   return Ellipse;
