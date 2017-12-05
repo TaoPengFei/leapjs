@@ -1167,9 +1167,11 @@ var _resource = __webpack_require__(5);
 
 var _colors = __webpack_require__(10);
 
+// canvas
 window.canvas = _canvas.canvas;
 window.ctx = _canvas.ctx;
 
+// shapes
 window.Line = _shapes.Line;
 window.Rectangle = _shapes.Rectangle;
 window.Polygon = _shapes.Polygon;
@@ -1181,14 +1183,19 @@ window.Animation = _shapes.Animation;
 window.Point = _shapes.Point;
 window.Ellipse = _shapes.Ellipse;
 
+// events
 window.Key = _keys.Key;
 window.Mouse = _mouse.Mouse;
 
+// rss
 window.nextFrame = _util.nextFrame;
 window.loadRssAndRun = _resource.loadRssAndRun;
 
+// colors
 window.RGB = _colors.RGB;
 window.RGBA = _colors.RGBA;
+window.HSL = _colors.HSL;
+window.HSLA = _colors.HSLA;
 
 /***/ }),
 /* 7 */
@@ -1734,18 +1741,28 @@ if (typeof module === 'object' && module.exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 function RGB(r, g, b) {
-  return 'rgb(' + Math.floor(r) + ',' + Math.floor(g) + ',' + Math.floor(b) + ')';
+    return "rgb(" + r + ", " + g + ", " + b + ")";
 }
 
 function RGBA(r, g, b, a) {
-  return 'rgba(' + Math.floor(r) + ',' + Math.floor(g) + ',' + Math.floor(b) + ',' + a + ')';
+    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+}
+
+function HSL(h, s, l) {
+    return "hsl(" + h + ", " + s * 100 + "%, " + l * 100 + "%)";
+}
+
+function HSLA(h, s, l, a) {
+    return "hsla(" + h + ", " + s * 100 + "%, " + l * 100 + "%, " + a + ")";
 }
 
 exports.RGB = RGB;
 exports.RGBA = RGBA;
+exports.HSL = HSL;
+exports.HSLA = HSLA;
 
 /***/ })
 /******/ ]);
