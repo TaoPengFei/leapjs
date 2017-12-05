@@ -65,1412 +65,1117 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return canvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ctx; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return p; });
+let canvas = document.createElement('canvas')
+let p = document.createElement('p')
+const clickShapes = __webpack_require__(1).clickShapes
 
+canvas.style = 'border: 1px solid #d3d3d3;'
+p.style = "color: orange;"
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var canvas = document.createElement('canvas');
-var p = document.createElement('p');
-var clickShapes = __webpack_require__(1).clickShapes;
+document.body.appendChild(canvas)
+document.body.appendChild(p)
 
-canvas.style = 'border: 1px solid #d3d3d3;';
-p.style = "color: orange;";
-
-document.body.appendChild(canvas);
-document.body.appendChild(p);
-
-var ctx = canvas.getContext('2d');
+let ctx = canvas.getContext('2d')
 
 canvas.resize = function (width, height) {
-  canvas.width = width || window.innerWidth - 2; // borders size
-  canvas.height = height || window.innerHeight - 60; // p, height
-  ctx.strokeStyle = '#00FFFF';
-  ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
-};
+  canvas.width = width || window.innerWidth - 2  // borders size
+  canvas.height = height || window.innerHeight - 60 // p, height
+  ctx.strokeStyle = '#00FFFF'
+  ctx.fillStyle = 'rgba(0, 255, 255, 0.5)'
+}
 
-canvas.resize();
+canvas.resize()
 
 canvas.clear = function () {
-  clickShapes.clear();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-};
+  clickShapes.clear()
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+}
 
 canvas.showAxis = function () {
-  ctx.save();
-  ctx.strokeStyle = 'black';
-  var txt = new Text("", 1, 1, 15);
-  txt.fillStyle = "orange";
+  ctx.save()
+  ctx.strokeStyle = 'black'
+  let txt = new Text("", 1, 1, 15)
+  txt.fillStyle = "orange"
 
-  for (var i = 0; i < canvas.width; i += 10) {
+  for (let i = 0; i < canvas.width; i += 10) {
     if (i % 100 === 0) {
-      txt.src = i.toString();
-      txt.x = i + 1;
-      txt.draw();
-      ctx.lineWidth = 0.4;
-    } else ctx.lineWidth = 0.1;
-    ctx.beginPath();
-    ctx.moveTo(i, 0);
-    ctx.lineTo(i, canvas.height);
-    ctx.closePath();
-    ctx.stroke();
+      txt.src = i.toString()
+      txt.x = i+1
+      txt.draw()
+      ctx.lineWidth = 0.4
+    } else ctx.lineWidth = 0.1
+    ctx.beginPath()
+    ctx.moveTo(i, 0)
+    ctx.lineTo(i, canvas.height)
+    ctx.closePath()
+    ctx.stroke()
   }
 
   txt.x = 1;
-  for (var _i = 0; _i < canvas.height; _i += 10) {
-    if (_i % 100 === 0) {
-      txt.src = _i.toString();
-      txt.y = _i + 1;
-      if (_i > 0) txt.draw();
-      ctx.lineWidth = 0.3;
-    } else ctx.lineWidth = 0.1;
-    ctx.beginPath();
-    ctx.moveTo(0, _i);
-    ctx.lineTo(canvas.width, _i);
-    ctx.closePath();
-    ctx.stroke();
+  for (let i = 0; i < canvas.height; i += 10) {
+    if (i % 100 === 0) {
+      txt.src = i.toString()
+      txt.y = i+1
+      if(i > 0) txt.draw()
+      ctx.lineWidth = 0.3
+    } else ctx.lineWidth = 0.1
+    ctx.beginPath()
+    ctx.moveTo(0, i)
+    ctx.lineTo(canvas.width, i)
+    ctx.closePath()
+    ctx.stroke()
   }
-  ctx.restore();
-};
+  ctx.restore()
+}
 
 ctx.drawPathByPoints = function (ps) {
-  ctx.beginPath();
-  ctx.moveTo(ps[0].x, ps[0].y);
+  ctx.beginPath()
+  ctx.moveTo(ps[0].x, ps[0].y)
 
-  for (var i = 1; i < ps.length; i++) {
-    ctx.lineTo(ps[i].x, ps[i].y);
-  }
+  for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
 
-  ctx.closePath();
-};
+  ctx.closePath()
+}
 
 ctx.update = function (shape) {
-  if (shape.fillStyle) ctx.fillStyle = shape.fillStyle;
-  if (shape.strokeStyle) ctx.strokeStyle = shape.strokeStyle;
+  if (shape.fillStyle) ctx.fillStyle = shape.fillStyle
+  if (shape.strokeStyle) ctx.strokeStyle = shape.strokeStyle
 
-  if (shape.shadowColor) ctx.shadowColor = shape.shadowColor;
-  if (shape.shadowBlur) ctx.shadowBlur = shape.shadowBlur;
-  if (shape.shadowOffsetX) ctx.shadowOffsetX = shape.shadowOffsetX;
-  if (shape.shadowOffsetY) ctx.shadowOffsetY = shape.shadowOffsetY;
+  if (shape.shadowColor) ctx.shadowColor = shape.shadowColor
+  if (shape.shadowBlur) ctx.shadowBlur = shape.shadowBlur
+  if (shape.shadowOffsetX) ctx.shadowOffsetX = shape.shadowOffsetX
+  if (shape.shadowOffsetY) ctx.shadowOffsetY = shape.shadowOffsetY
 
-  if (shape.lineCap) ctx.lineCap = shape.lineCap;
-  if (shape.lineJoin) ctx.lineJoin = shape.lineJoin;
-  if (shape.lineWidth) ctx.lineWidth = shape.lineWidth;
-  if (shape.miterLimit) ctx.miterLimit = shape.miterLimit;
+  if (shape.lineCap) ctx.lineCap = shape.lineCap
+  if (shape.lineJoin) ctx.lineJoin = shape.lineJoin
+  if (shape.lineWidth) ctx.lineWidth = shape.lineWidth
+  if (shape.miterLimit) ctx.miterLimit = shape.miterLimit
 
-  if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha;
-  if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation;
+  if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha
+  if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation
 
-  if (shape.lineDash) ctx.setLineDash(shape.lineDash);
+  if (shape.lineDash) ctx.setLineDash( shape.lineDash )
 
-  if (shape.transform.transformed()) ctx.updateTransform(shape.transform);
-};
+  if (shape.transform.transformed()) ctx.updateTransform(shape.transform)
+}
 
 ctx.updateTransform = function (transform) {
-  var degree = transform.degree * Math.PI / 180;
+  let degree = transform.degree * Math.PI / 180
 
-  ctx.translate(transform.anchorX, transform.anchorY);
+  ctx.translate(transform.anchorX, transform.anchorY)
 
-  ctx.rotate(degree);
-  ctx.transform(transform.scaleX, transform.skewX, transform.skewY, transform.scaleY, transform.translateX, transform.translateY);
+  ctx.rotate(degree)
+  ctx.transform(
+    transform.scaleX, transform.skewX, 
+    transform.skewY, transform.scaleY,
+    transform.translateX, transform.translateY
+    )
 
-  ctx.translate(-transform.anchorX, -transform.anchorY);
-};
+  ctx.translate(-transform.anchorX, -transform.anchorY)
+}
 
-exports.canvas = canvas;
-exports.ctx = ctx;
-exports.p = p;
+
+
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nextFrame", function() { return nextFrame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clickShapes", function() { return clickShapes; });
 // requestAnimationFrame
 (function () {
-  var lastTime = 0;
-  var vendors = ['webkit', 'moz'];
+  var lastTime = 0
+  var vendors = ['webkit', 'moz']
   for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame']
+    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||
+      window[vendors[x] + 'CancelRequestAnimationFrame']
   }
 
   if (!window.requestAnimationFrame) {
     window.requestAnimationFrame = function (func, element) {
-      var currTime = new Date().getTime();
-      var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+      var currTime = new Date().getTime()
+      var timeToCall = Math.max(0, 16.7 - (currTime - lastTime))
       var id = window.setTimeout(function () {
-        func(currTime + timeToCall);
-      }, timeToCall);
-      lastTime = currTime + timeToCall;
-      return id;
-    };
+        func(currTime + timeToCall)
+      }, timeToCall)
+      lastTime = currTime + timeToCall
+      return id
+    }
   }
   if (!window.cancelAnimationFrame) {
     window.cancelAnimationFrame = function (id) {
-      clearTimeout(id);
-    };
+      clearTimeout(id)
+    }
   }
-})();
+}())
 
 // void run multi frame
-var frameId;
-var nextFrame = function nextFrame(func) {
-  if (frameId) window.cancelAnimationFrame(frameId);
-  frameId = window.requestAnimationFrame(func);
-};
+var frameId
+var nextFrame = function (func) {
+  if (frameId) window.cancelAnimationFrame(frameId)
+  frameId = window.requestAnimationFrame(func)
+}
 
 // handle shape click event;
 var clickShapes = new Set();
 window.clickShapes = clickShapes;
 
-exports.nextFrame = nextFrame;
-exports.clickShapes = clickShapes;
+
+
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Key; });
+let Key = {}
 
+const keyboard = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=,./<>?|\\;:\'"'
+const keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', ' ', 'Tab', 'Shift', 'Control', 'Alt']
+const noPressKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape', 'Tab', 'Shift', 'Control', 'Alt']
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var Key = {};
-
-var keyboard = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=,./<>?|\\;:\'"';
-var keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', ' ', 'Tab', 'Shift', 'Control', 'Alt'];
-var noPressKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape', 'Tab', 'Shift', 'Control', 'Alt'];
-
-for (var i = 0; i < keyboard.length; i++) {
-  Key[keyboard[i]] = {};
+for (let i = 0; i < keyboard.length; i++) {
+  Key[keyboard[i]] = {}
 }
 
-for (var _i = 0; _i < keyboard2.length; _i++) {
-  Key[keyboard2[_i]] = {};
+for (let i = 0; i < keyboard2.length; i++) {
+  Key[keyboard2[i]] = {}
 }
 
 document.onkeyup = function (e) {
-  var key = Key[e.key];
+  let key = Key[e.key]
   if (key && key.up) {
-    key.up();
+    key.up()
   }
-};
+}
 
 document.onkeydown = function (e) {
-  var key = Key[e.key];
-  if (key && key.down) {
-    key.down();
-  }
+  let key = Key[e.key]
+  if (key && key.down) { key.down() }
   if (noPressKeys.includes(e.key) && key.press) {
-    key.press();
+    key.press()
   }
-};
+}
 
 // keyboard2 will not file key press event
 document.onkeypress = function (e) {
-  var key = Key[e.key];
-  if (key && key.press) {
-    key.press();
-  }
-};
+  let key = Key[e.key]
+  if (key && key.press) { key.press() }
+}
 
-exports.Key = Key;
+
+
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Mouse; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(1);
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Mouse = undefined;
 
-var _canvas = __webpack_require__(0);
 
-var _keys = __webpack_require__(2);
-
-var _util = __webpack_require__(1);
-
-var Mouse = {
+let Mouse = {
   x: 0,
   y: 0
-};
+}
 
-var TouchStart = {};
+let TouchStart = {}
 TouchStart.init = function () {
-  TouchStart.x = Mouse.x;
-  TouchStart.y = Mouse.y;
-};
+  TouchStart.x = Mouse.x
+  TouchStart.y = Mouse.y
+}
 
-function windowToCanvas(canvas, x, y) {
-  var box = canvas.getBoundingClientRect();
+function windowToCanvas (canvas, x, y) {
+  let box = canvas.getBoundingClientRect()
   return {
     x: x - box.left * (canvas.width / box.width),
     y: y - box.top * (canvas.height / box.height)
-  };
+  }
 }
 
-function updateEvent(e) {
+function updateEvent (e) {
   // e.preventDefault();
   // update e if it is on phone
-  if (e.touches) e = e.touches.item(0);
+  if (e.touches) e = e.touches.item(0)
 
-  var point = windowToCanvas(_canvas.canvas, e.clientX, e.clientY);
-  Mouse.x = Math.floor(point.x);
-  Mouse.y = Math.floor(point.y);
+  let point = windowToCanvas(__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */], e.clientX, e.clientY)
+  Mouse.x = Math.floor(point.x)
+  Mouse.y = Math.floor(point.y)
 
-  _canvas.p.innerHTML = 'x: ' + Mouse.x + ', y: ' + Mouse.y;
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["c" /* p */].innerHTML = `x: ${Mouse.x}, y: ${Mouse.y}`
 }
 
-_canvas.canvas.onmousedown = function (e) {
-  updateEvent(e);
-  if (Mouse.down) Mouse.down();
+__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousedown = function (e) {
+  updateEvent(e)
+  if (Mouse.down) Mouse.down()
 
   // handle events of all shapes, LIFO
   // IMPORTANT
-  var array = Array.from(_util.clickShapes);
-  var i = array.length;
-  while (i--) {
-    var shape = array[i];
+  const array = Array.from(__WEBPACK_IMPORTED_MODULE_2__util__["clickShapes"]);
+  let i = array.length;
+  while(i--){
+    let shape = array[i]
     if (shape.touched() && shape.click) {
-      shape.click();
-      break;
+      shape.click()
+      break
     }
   }
-};
+}
 
-var _preventDefault = false;
-_canvas.canvas.preventDefaultEvent = function () {
-  _preventDefault = true;
-};
+let _preventDefault = false
+__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].preventDefaultEvent = function () {
+  _preventDefault = true
+}
 
-_canvas.canvas.ontouchstart = function (e) {
-  if (_preventDefault) {
-    e.preventDefault();
-  }
-  _canvas.canvas.onmousedown(e);
-  TouchStart.init();
-};
+__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].ontouchstart = function (e) {
+  if (_preventDefault) { e.preventDefault() }
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousedown(e)
+  TouchStart.init()
+}
 
-_canvas.canvas.onmousemove = function (e) {
-  updateEvent(e);
-  if (Mouse.move) Mouse.move();
-};
+__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousemove = function (e) {
+  updateEvent(e)
+  if (Mouse.move) Mouse.move()
+}
 
-_canvas.canvas.ontouchmove = function (e) {
-  if (_preventDefault) {
-    e.preventDefault();
-  }
-  _canvas.canvas.onmousemove(e);
-  if (Mouse.x - TouchStart.x > 50 && _keys.Key.ArrowRight.down) {
-    _keys.Key.ArrowRight.down();
-    TouchStart.init();
-  } else if (TouchStart.x - Mouse.x > 50 && _keys.Key.ArrowLeft.down) {
-    _keys.Key.ArrowLeft.down();
-    TouchStart.init();
+__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].ontouchmove = function (e) {
+  if (_preventDefault) { e.preventDefault() }
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousemove(e)
+  if (Mouse.x - TouchStart.x > 50 && __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowRight.down) {
+    __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowRight.down()
+    TouchStart.init()
+  } else if (TouchStart.x - Mouse.x > 50 && __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowLeft.down) {
+    __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowLeft.down()
+    TouchStart.init()
   }
 
-  if (TouchStart.y - Mouse.y > 50 && _keys.Key.ArrowUp.down) {
-    _keys.Key.ArrowUp.down();
-    TouchStart.init();
-  } else if (Mouse.y - TouchStart.y > 50 && _keys.Key.ArrowDown.down) {
-    _keys.Key.ArrowDown.down();
-    TouchStart.init();
+  if (TouchStart.y - Mouse.y > 50 && __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowUp.down) {
+    __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowUp.down()
+    TouchStart.init()
+  } else if (Mouse.y - TouchStart.y > 50 && __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowDown.down) {
+    __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowDown.down()
+    TouchStart.init()
   }
-};
+}
 
-_canvas.canvas.ontouchend = _canvas.canvas.onmouseup = function (e) {
-  if (_preventDefault) {
-    e.preventDefault();
-  }
-  updateEvent(e);
-  if (Mouse.up) Mouse.up();
-};
+__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].ontouchend = __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmouseup = function (e) {
+  if (_preventDefault) { e.preventDefault() }
+  updateEvent(e)
+  if (Mouse.up) Mouse.up()
+}
 
-_canvas.canvas.onclick = function (e) {
-  updateEvent(e);
-  if (Mouse.click) Mouse.click();
-};
+__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onclick = function (e) {
+  updateEvent(e)
+  if (Mouse.click) Mouse.click()
+}
 
-exports.Mouse = Mouse;
+
+
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export Shape */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Line; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return Rectangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return Polygon; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return Triangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Circle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return Point; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return Text; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return Sprite; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Animation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Ellipse; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resource__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__collision__ = __webpack_require__(8);
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Ellipse = exports.Animation = exports.Sprite = exports.Text = exports.Point = exports.Circle = exports.Triangle = exports.Polygon = exports.Rectangle = exports.Line = exports.Shape = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _canvas = __webpack_require__(0);
 
-var _util = __webpack_require__(1);
 
-var _mouse = __webpack_require__(3);
+const clone = __webpack_require__(9)
 
-var _transform = __webpack_require__(7);
-
-var _resource = __webpack_require__(5);
-
-var _collision = __webpack_require__(8);
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _clone = __webpack_require__(9);
-
-var Shape = function () {
-  function Shape() {
-    _classCallCheck(this, Shape);
-
-    this.transform = new _transform.Transform();
-    this._points = [];
-    this.globalAlpha = 1;
+class Shape {
+  constructor () {
+    this.transform = new __WEBPACK_IMPORTED_MODULE_3__transform__["a" /* Transform */]()
+    this._points = []
+    this.globalAlpha = 1
   }
 
-  _createClass(Shape, [{
-    key: 'stroke',
-    value: function stroke() {
-      if (this.click) _util.clickShapes.add(this); // use for handle click event
+  stroke () {
+    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["clickShapes"].add(this) // use for handle click event
 
-      _canvas.ctx.save();
-      _canvas.ctx.update(this);
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].update(this)
 
-      _canvas.ctx.beginPath();
-      this._path();
-      _canvas.ctx.closePath();
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+    this._path()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
 
-      _canvas.ctx.stroke();
-      _canvas.ctx.restore();
-    }
-  }, {
-    key: 'fill',
-    value: function fill() {
-      if (this.click) _util.clickShapes.add(this); // use for handle click event
-
-      _canvas.ctx.save();
-      _canvas.ctx.update(this);
-
-      _canvas.ctx.beginPath();
-      this._path();
-      _canvas.ctx.closePath();
-
-      _canvas.ctx.fill();
-      _canvas.ctx.restore();
-    }
-  }, {
-    key: '_path',
-    value: function _path() {}
-  }, {
-    key: 'draw',
-    value: function draw() {
-      if (this.click) _util.clickShapes.add(this); // use for handle click event
-
-      _canvas.ctx.save();
-      _canvas.ctx.update(this);
-
-      _canvas.ctx.beginPath();
-      this._path();
-      _canvas.ctx.closePath();
-
-      _canvas.ctx.fill();
-      _canvas.ctx.stroke();
-
-      _canvas.ctx.restore();
-    }
-  }, {
-    key: 'translate',
-    value: function translate(x, y) {
-      this.transform.translate(x, y);
-    }
-  }, {
-    key: 'scale',
-    value: function scale(x, y) {
-      this.transform.scale(x, y);
-    }
-  }, {
-    key: 'skew',
-    value: function skew(x, y) {
-      this.transform.skew(x, y);
-    }
-  }, {
-    key: 'setAnchor',
-    value: function setAnchor(x, y) {
-      this.transform.setAnchor(x, y);
-    }
-  }, {
-    key: 'rotate',
-    value: function rotate(degree) {
-      this.transform.rotate(degree);
-    }
-  }, {
-    key: 'getRealPoint',
-    value: function getRealPoint(p) {
-      return this.transform.getRealPoint(p);
-    }
-  }, {
-    key: 'click',
-    value: function click() {}
-  }, {
-    key: 'touched',
-    value: function touched() {
-      return (0, _collision.pointInShape)(_mouse.Mouse, this);
-    }
-  }, {
-    key: 'collide',
-    value: function collide(other) {
-      if (other instanceof Shape) {
-        return (0, _collision.collide)(this, other);
-      } else {
-        return false;
-      }
-    }
-  }, {
-    key: 'clone',
-    value: function clone() {
-      return _clone(this, false);
-    }
-  }, {
-    key: '_updatePoints',
-    value: function _updatePoints() {}
-  }, {
-    key: 'setLineDash',
-    value: function setLineDash(arr) {
-      this.lineDash = arr;
-    }
-  }, {
-    key: 'points',
-    get: function get() {
-      var _this = this;
-
-      this._updatePoints();
-      return this._points.map(function (p) {
-        return _this.transform.getRealPoint(p);
-      });
-    }
-  }]);
-
-  return Shape;
-}();
-
-var Circle = function (_Shape) {
-  _inherits(Circle, _Shape);
-
-  function Circle() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 50;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 50;
-    var r = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 20;
-
-    _classCallCheck(this, Circle);
-
-    var _this2 = _possibleConstructorReturn(this, (Circle.__proto__ || Object.getPrototypeOf(Circle)).call(this));
-
-    _this2.x = x;
-    _this2.y = y;
-    _this2.r = r;
-    return _this2;
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
   }
 
-  _createClass(Circle, [{
-    key: '_path',
-    value: function _path() {
-      _canvas.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    }
-  }, {
-    key: '_updatePoints',
-    value: function _updatePoints() {
-      this._points = [];
-      var n = 8;
-      var degree = Math.PI * 2 / n;
-      for (var i = 0; i < n; i++) {
-        this._points.push({
-          x: this.x + this.r * Math.sin(degree * i),
-          y: this.y + this.r * Math.cos(degree * i)
-        });
-      }
-    }
-  }, {
-    key: 'radius',
-    get: function get() {
-      return this.r;
-    },
-    set: function set(r) {
-      this.r = r;
-    }
-  }]);
+  fill () {
+    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["clickShapes"].add(this) // use for handle click event
 
-  return Circle;
-}(Shape);
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].update(this)
 
-var Line = function (_Shape2) {
-  _inherits(Line, _Shape2);
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+    this._path()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
 
-  function Line(x1, y1, x2, y2) {
-    _classCallCheck(this, Line);
-
-    var _this3 = _possibleConstructorReturn(this, (Line.__proto__ || Object.getPrototypeOf(Line)).call(this));
-
-    _this3.x1 = x1;
-    _this3.y1 = y1;
-    _this3.x2 = x2;
-    _this3.y2 = y2;
-    return _this3;
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
   }
 
-  _createClass(Line, [{
-    key: '_path',
-    value: function _path() {
-      _canvas.ctx.moveTo(this.x1, this.y1);
-      _canvas.ctx.lineTo(this.x2, this.y2);
+  _path () {}
+  draw () {
+    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["clickShapes"].add(this) // use for handle click event
+
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].update(this)
+
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+    this._path()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
+
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+    
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+  }
+
+  translate (x, y) { this.transform.translate(x, y) }
+  scale (x, y) { this.transform.scale(x, y) }
+  skew (x, y) { this.transform.skew(x, y) }
+  setAnchor (x, y) { this.transform.setAnchor(x, y) }
+  rotate (degree) { this.transform.rotate(degree) }
+
+  getRealPoint (p) { return this.transform.getRealPoint(p) }
+
+  click () {}
+  touched () { return Object(__WEBPACK_IMPORTED_MODULE_5__collision__["b" /* pointInShape */])(__WEBPACK_IMPORTED_MODULE_2__mouse__["a" /* Mouse */], this) }
+
+  collide (other) {
+    if (other instanceof Shape) {
+      return Object(__WEBPACK_IMPORTED_MODULE_5__collision__["a" /* collide */])(this, other)
+    } else {
+      return false
     }
-  }, {
-    key: '_updatePoints',
-    value: function _updatePoints() {
-      this._points = [];
-      this._points.push({ x: this.x1, y: this.y1 });
-      this._points.push({ x: this.x2, y: this.y2 });
+  }
+
+  clone () { return clone(this, false) }
+
+  _updatePoints () {}
+
+  get points () {
+    this._updatePoints()
+    return this._points.map(p => this.transform.getRealPoint(p))
+  }
+
+  setLineDash ( arr ) {
+    this.lineDash = arr
+  }
+}
+
+class Circle extends Shape {
+  constructor (x = 50, y = 50, r = 20) {
+    super()
+    this.x = x
+    this.y = y
+    this.r = r
+  }
+
+  get radius () { return this.r }
+  set radius (r) { this.r = r }
+
+  _path () {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].arc(this.x, this.y, this.r, 0, 2 * Math.PI)
+  }
+
+  _updatePoints () {
+    this._points = []
+    let n = 8
+    let degree = Math.PI * 2 / n
+    for (let i = 0; i < n; i++) {
+      this._points.push({
+        x: this.x + this.r * Math.sin(degree * i),
+        y: this.y + this.r * Math.cos(degree * i)
+      })
     }
-  }, {
-    key: 'x',
-    get: function get() {
-      return (this.x1 + this.x2) / 2;
-    },
-    set: function set(x) {
-      var deltaX = x - this.x;
-      this.x1 += deltaX;
-      this.x2 += deltaX;
-    }
-  }, {
-    key: 'y',
-    get: function get() {
-      return (this.y1 + this.y2) / 2;
-    },
-    set: function set(y) {
-      var deltaY = y - this.y;
-      this.y1 += deltaY;
-      this.y2 += deltaY;
-    }
-  }]);
+  }
+}
 
-  return Line;
-}(Shape);
+class Line extends Shape {
+  constructor (x1, y1, x2, y2) {
+    super()
+    this.x1 = x1
+    this.y1 = y1
+    this.x2 = x2
+    this.y2 = y2
+  }
 
-var Polygon = function (_Shape3) {
-  _inherits(Polygon, _Shape3);
+  _path () {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(this.x1, this.y1)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(this.x2, this.y2)
+  }
 
-  function Polygon() {
-    _classCallCheck(this, Polygon);
+  _updatePoints () {
+    this._points = []
+    this._points.push({x: this.x1, y: this.y1})
+    this._points.push({x: this.x2, y: this.y2})
+  }
 
-    var _this4 = _possibleConstructorReturn(this, (Polygon.__proto__ || Object.getPrototypeOf(Polygon)).call(this));
+  get x () { return (this.x1 + this.x2) / 2 }
+  set x (x) {
+    let deltaX = x - this.x 
+    this.x1 += deltaX
+    this.x2 += deltaX
+  }
 
+  get y () { return (this.y1 + this.y2) / 2 }
+  set y (y) {
+    let deltaY = y - this.y
+    this.y1 += deltaY
+    this.y2 += deltaY
+  }
+}
+
+class Polygon extends Shape {
+  constructor () {
+    super()
     if (arguments.length < 6) {
-      throw String('Polygon should have at lease 3 points');
+      throw String('Polygon should have at lease 3 points')
     }
 
-    _this4._points = [];
-    for (var i = 0; i < arguments.length - 1; i += 2) {
-      var p = { x: arguments[i], y: arguments[i + 1] };
-      _this4._points.push(p);
+    this._points = []
+    for (let i = 0; i < arguments.length - 1; i += 2) {
+      let p = { x: arguments[i], y: arguments[i + 1] }
+      this._points.push(p)
     }
-    return _this4;
   }
 
-  _createClass(Polygon, [{
-    key: '_path',
-    value: function _path() {
-      var p = this._points[0];
-      _canvas.ctx.moveTo(p.x, p.y);
-      for (var i = 1; i < this._points.length; i++) {
-        p = this._points[i];
-        _canvas.ctx.lineTo(p.x, p.y);
-      }
+  _path () {
+    let p = this._points[0]
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(p.x, p.y)
+    for (let i = 1; i < this._points.length; i++) {
+      p = this._points[i]
+      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(p.x, p.y)
     }
-  }, {
-    key: 'x',
-    get: function get() {
-      var x = 0;
-      for (var i = 0; i < this._points.length; i++) {
-        x += this._points[i].x;
-      }return x / this._points.length;
-    },
-    set: function set(x) {
-      var deltaX = x - this.x;
-      for (var i = 0; i < this._points.length; i++) {
-        this._points[i].x += deltaX;
-      }
-    }
-  }, {
-    key: 'y',
-    get: function get() {
-      var y = 0;
-      for (var i = 0; i < this._points.length; i++) {
-        y += this._points[i].y;
-      }return y / this._points.length;
-    },
-    set: function set(y) {
-      var deltaY = y - this.y;
-      for (var i = 0; i < this._points.length; i++) {
-        this._points[i].y += deltaY;
-      }
-    }
-  }]);
-
-  return Polygon;
-}(Shape);
-
-var Rectangle = function (_Shape4) {
-  _inherits(Rectangle, _Shape4);
-
-  function Rectangle(x, y, w, h) {
-    _classCallCheck(this, Rectangle);
-
-    var _this5 = _possibleConstructorReturn(this, (Rectangle.__proto__ || Object.getPrototypeOf(Rectangle)).call(this));
-
-    _this5.x = x;
-    _this5.y = y;
-    _this5.w = w;
-    _this5.h = h;
-    _this5.collideW = 1;
-    _this5.collideH = 1;
-    return _this5;
   }
 
-  _createClass(Rectangle, [{
-    key: '_path',
-    value: function _path() {
-      _canvas.ctx.rect(this.x, this.y, this.w, this.h);
-    }
-  }, {
-    key: 'setCollisionScale',
-    value: function setCollisionScale(w, h) {
-      this.collideW = w;
-      this.collideH = h;
-    }
-  }, {
-    key: '_updatePoints',
-    value: function _updatePoints() {
-      this._points = [];
-
-      var minX = this.x + this.w / 2 * (1 - this.collideW);
-      var maxX = this.x + this.w / 2 * (1 + this.collideW);
-      var minY = this.y + this.h / 2 * (1 - this.collideH);
-      var maxY = this.y + this.h / 2 * (1 + this.collideH);
-
-      this._points.push({ x: minX, y: minY });
-      this._points.push({ x: minX, y: maxY });
-      this._points.push({ x: maxX, y: maxY });
-      this._points.push({ x: maxX, y: minY });
-    }
-  }, {
-    key: 'width',
-    get: function get() {
-      return this.w;
-    },
-    set: function set(w) {
-      this.w = w;
-    }
-  }, {
-    key: 'height',
-    get: function get() {
-      return this.h;
-    },
-    set: function set(h) {
-      this.h = h;
-    }
-  }]);
-
-  return Rectangle;
-}(Shape);
-
-var Text = function (_Rectangle) {
-  _inherits(Text, _Rectangle);
-
-  function Text() {
-    var src = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var x = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var size = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 20;
-    var font = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'Arial';
-
-    _classCallCheck(this, Text);
-
-    var _this6 = _possibleConstructorReturn(this, (Text.__proto__ || Object.getPrototypeOf(Text)).call(this, x, y, 100, size));
-
-    _this6._src = src;
-    _this6._font = font;
-    _this6.fillStyle = "orange";
-    _this6._updateWidth();
-    return _this6;
+  get x () {
+    let x = 0;
+    for(let i=0; i<this._points.length; i++)
+      x += this._points[i].x
+    return x/this._points.length
+  }
+  set x (x) {
+    let deltaX = x - this.x
+    for(let i=0; i<this._points.length; i++)
+      this._points[i].x += deltaX 
   }
 
-  _createClass(Text, [{
-    key: '_updateWidth',
-    value: function _updateWidth() {
-      _canvas.ctx.save();
-      _canvas.ctx.font = this.h + 'px ' + this._font;
-      this.w = _canvas.ctx.measureText(this._src).width;
-      _canvas.ctx.restore();
-    }
-  }, {
-    key: 'stroke',
-    value: function stroke() {
-      if (this.click) _util.clickShapes.add(this);
-      _canvas.ctx.save();
-      _canvas.ctx.update(this);
-      _canvas.ctx.font = this.size + 'px ' + this.font;
+  get y () {
+    let y = 0;
+    for(let i=0; i<this._points.length; i++)
+      y += this._points[i].y
+    return y/this._points.length
+  }
+  set y (y) {
+    let deltaY = y - this.y
+    for(let i=0; i<this._points.length; i++)
+      this._points[i].y += deltaY 
+  }
+}
 
-      _canvas.ctx.strokeText(this.src, this.x, this.y + this.h);
-
-      _canvas.ctx.restore();
-    }
-  }, {
-    key: 'fill',
-    value: function fill() {
-      if (this.click) _util.clickShapes.add(this);
-      _canvas.ctx.save();
-      _canvas.ctx.update(this);
-
-      _canvas.ctx.font = this.size + 'px ' + this.font;
-
-      _canvas.ctx.fillText(this.src, this.x, this.y + this.h);
-
-      _canvas.ctx.restore();
-    }
-  }, {
-    key: 'draw',
-    value: function draw() {
-      this.fill();
-    }
-  }, {
-    key: 'src',
-    get: function get() {
-      return this._src;
-    },
-    set: function set(src) {
-      this._src = src;
-      this._updateWidth();
-    }
-  }, {
-    key: 'size',
-    get: function get() {
-      return this.h;
-    },
-    set: function set(size) {
-      this.h = size;
-      this._updateWidth();
-    }
-  }, {
-    key: 'font',
-    get: function get() {
-      return this._font;
-    },
-    set: function set(font) {
-      this._font = font;
-      this._updateWidth();
-    }
-  }]);
-
-  return Text;
-}(Rectangle);
-
-var Sprite = function (_Rectangle2) {
-  _inherits(Sprite, _Rectangle2);
-
-  function Sprite(src, x, y, w, h) {
-    _classCallCheck(this, Sprite);
-
-    var _this7 = _possibleConstructorReturn(this, (Sprite.__proto__ || Object.getPrototypeOf(Sprite)).call(this, x, y, w, h));
-
-    _this7.collideW = 0.8;
-    _this7.collideH = 0.8;
-
-    _this7.img = new window.Image();
-    _this7.img.crossOrigin = 'anonymous';
-    _this7.img.src = src;
-    _this7.img.onload = function () {
-      _resource.Rss.load();
-    };
-
-    _resource.Rss.add();
-    return _this7;
+class Rectangle extends Shape {
+  constructor (x, y, w, h) {
+    super()
+    this.x = x
+    this.y = y
+    this.w = w
+    this.h = h
+    this.collideW = 1
+    this.collideH = 1
   }
 
-  _createClass(Sprite, [{
-    key: 'src',
-    get: function get() {
-      return this.img.src;
-    },
-    set: function set(src) {
-      this.img.src = src;
-    }
-  }, {
-    key: 'onload',
-    set: function set(callback) {
-      this.img.onload = function () {
-        _resource.Rss.load();
-        callback();
-      };
-    }
-  }]);
+  get width () { return this.w }
+  set width (w) { this.w = w }
 
-  return Sprite;
-}(Rectangle);
+  get height () { return this.h }
+  set height (h) { this.h = h }
+
+  _path () {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].rect(this.x, this.y, this.w, this.h)
+  }
+
+  setCollisionScale (w, h) {
+    this.collideW = w
+    this.collideH = h
+  }
+
+  _updatePoints () {
+    this._points = []
+
+    let minX = this.x + this.w / 2 * (1 - this.collideW)
+    let maxX = this.x + this.w / 2 * (1 + this.collideW)
+    let minY = this.y + this.h / 2 * (1 - this.collideH)
+    let maxY = this.y + this.h / 2 * (1 + this.collideH)
+
+    this._points.push({x: minX, y: minY})
+    this._points.push({x: minX, y: maxY})
+    this._points.push({x: maxX, y: maxY})
+    this._points.push({x: maxX, y: minY})
+  }
+}
+
+class Text extends Rectangle {
+  constructor (src = '', x = 0, y = 0, size=20, font = 'Arial') {
+    super(x, y, 100, size)
+    this._src = src
+    this._font = font
+    this.fillStyle = "orange"
+    this._updateWidth()
+  }
+
+  _updateWidth () {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = this.h + 'px ' + this._font
+    this.w = __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].measureText(this._src).width
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore() 
+  }
+
+  get src () { return this._src }
+  set src (src) {
+    this._src = src
+    this._updateWidth()
+  }
+
+  get size () { return this.h }
+  set size (size) {
+    this.h = size
+    this._updateWidth()
+  }
+
+  get font () { return this._font }
+  set font ( font ) {
+    this._font = font
+    this._updateWidth()
+  }
+
+  stroke () {
+    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["clickShapes"].add(this)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].update(this)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = this.size + 'px ' + this.font
+
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeText(this.src, this.x, this.y+this.h)
+
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+  }
+
+  fill () {
+    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["clickShapes"].add(this)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].update(this)
+
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = this.size + 'px ' + this.font
+
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(this.src, this.x, this.y+this.h)
+
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+  }
+
+  draw () {
+    this.fill()
+  }
+}
+
+class Sprite extends Rectangle {
+  constructor (src, x, y, w, h) {
+    super(x, y, w, h)
+    this.collideW = 0.8
+    this.collideH = 0.8
+
+    this.img = new window.Image()
+    this.img.crossOrigin = 'anonymous'
+    this.img.src = src
+    this.img.onload = function () {
+      __WEBPACK_IMPORTED_MODULE_4__resource__["a" /* Rss */].load()
+    }
+
+    __WEBPACK_IMPORTED_MODULE_4__resource__["a" /* Rss */].add()
+  }
+
+  get src () { return this.img.src }
+  set src (src) { this.img.src = src }
+
+  set onload (callback) {
+    this.img.onload = function () {
+      __WEBPACK_IMPORTED_MODULE_4__resource__["a" /* Rss */].load()
+      callback()
+    }
+  }
+}
 
 Sprite.prototype.clip = function (sx, sy, sw, sh) {
-  this.sx = sx > 0 ? sx : 1;
-  this.sy = sy > 0 ? sx : 1;
-  this.sw = sw;
-  this.sh = sh;
-  this.w = this.w || sw;
-  this.h = this.h || sh;
-};
+  this.sx = sx > 0 ? sx : 1
+  this.sy = sy > 0 ? sx : 1
+  this.sw = sw
+  this.sh = sh
+  this.w = this.w || sw
+  this.h = this.h || sh
+}
 
 Sprite.prototype._path = function () {
   if (this.sx && this.sy && this.sw & this.sh) {
-    _canvas.ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h);
-  } else if (this.w && this.h) {
-    _canvas.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-  } else {
-    _canvas.ctx.drawImage(this.img, this.x, this.y);
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this.img, this.sx, this.sy, this.sw, this.sh,
+      this.x, this.y, this.w, this.h)
+  } else if (this.w && this.h) { 
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this.img, this.x, this.y, this.w, this.h) 
+  } else { 
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this.img, this.x, this.y) 
   }
-};
+}
 
-Sprite.prototype.fill = null;
-Sprite.prototype.stroke = null;
+Sprite.prototype.fill = null
+Sprite.prototype.stroke = null
 
-var Animation = function (_Sprite) {
-  _inherits(Animation, _Sprite);
-
-  function Animation(src, x, y, w, h) {
-    _classCallCheck(this, Animation);
-
-    var _this8 = _possibleConstructorReturn(this, (Animation.__proto__ || Object.getPrototypeOf(Animation)).call(this, src, x, y, w, h));
-
-    _this8.speed = 10;
-    return _this8;
+class Animation extends Sprite {
+  constructor (src, x, y, w, h) {
+    super(src, x, y, w, h)
+    this.speed = 10
   }
-
-  return Animation;
-}(Sprite);
+}
 
 Animation.prototype.setFrame = function (sx, sy, sw, sh, c, r) {
-  this.c = c;
-  this.r = r || 1;
-  this.cf = 0; // current frame count
-  this.clip(sx, sy, sw, sh);
-};
+  this.c = c
+  this.r = r || 1
+  this.cf = 0 // current frame count
+  this.clip(sx, sy, sw, sh)
+}
 
 Animation.prototype.setSpeed = function (speed) {
-  this.speed = speed;
-  if (this.speed < 1) this.speed = 1;
-  if (this.speed > 60) this.speed = 60;
-};
+  this.speed = speed
+  if (this.speed < 1) this.speed = 1
+  if (this.speed > 60) this.speed = 60
+}
 
 Animation.prototype._path = function () {
-  var sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c);
-  var sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r);
-  _canvas.ctx.drawImage(this.img, sx, sy, this.sw, this.sh, this.x, this.y, this.w, this.h);
+  let sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c)
+  let sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this.img, sx, sy, this.sw, this.sh,
+    this.x, this.y, this.w, this.h)
 
-  this.cf++; // update frame count
-};
+  this.cf++ // update frame count
+}
 
-var Point = function (_Circle) {
-  _inherits(Point, _Circle);
+class Point extends Circle {
+  constructor (x, y) {
+    super(x, y, 2)
+    this.fillStyle = 'red'
+  }
+}
 
-  function Point(x, y) {
-    _classCallCheck(this, Point);
-
-    var _this9 = _possibleConstructorReturn(this, (Point.__proto__ || Object.getPrototypeOf(Point)).call(this, x, y, 2));
-
-    _this9.fillStyle = 'red';
-    return _this9;
+class Ellipse extends Shape {
+  constructor (x, y, rX, rY) {
+    super ()
+    this.x = x;
+    this.y = y;
+    this.rX = rX;
+    this.rY = rY;
+  }
+  
+  _path () {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].ellipse(this.x, this.y, this.rX, this.rY, 0, 0, Math.PI * 2)
   }
 
-  return Point;
-}(Circle);
-
-var Ellipse = function (_Shape5) {
-  _inherits(Ellipse, _Shape5);
-
-  function Ellipse(x, y, rX, rY) {
-    _classCallCheck(this, Ellipse);
-
-    var _this10 = _possibleConstructorReturn(this, (Ellipse.__proto__ || Object.getPrototypeOf(Ellipse)).call(this));
-
-    _this10.x = x;
-    _this10.y = y;
-    _this10.rX = rX;
-    _this10.rY = rY;
-    return _this10;
+ _updatePoints () {
+    this._points = []
+    let n = 8
+    let degree = Math.PI * 2 / n
+    for (let i = 0; i < n; i++) {
+    this._points.push({
+      x: this.x + this.rX * Math.sin(degree * i), // ? to be confirmed
+      y: this.y + this.rY * Math.cos(degree * i)  // ? to be confirmed
+      })
+    }
   }
 
-  _createClass(Ellipse, [{
-    key: '_path',
-    value: function _path() {
-      _canvas.ctx.ellipse(this.x, this.y, this.rX, this.rY, 0, 0, Math.PI * 2);
-    }
-  }, {
-    key: '_updatePoints',
-    value: function _updatePoints() {
-      this._points = [];
-      var n = 8;
-      var degree = Math.PI * 2 / n;
-      for (var i = 0; i < n; i++) {
-        this._points.push({
-          x: this.x + this.rX * Math.sin(degree * i), // ? to be confirmed
-          y: this.y + this.rY * Math.cos(degree * i) // ? to be confirmed
-        });
-      }
-    }
-  }, {
-    key: 'radiusX',
-    get: function get() {
-      return this.rX;
-    },
-    set: function set(rX) {
-      this.rX = rX;
-    }
-  }, {
-    key: 'radiusY',
-    get: function get() {
-      return this.rY;
-    },
-    set: function set(rY) {
-      this.rY = rY;
-    }
-  }]);
+  get radiusX () { return this.rX }
+  set radiusX (rX) { this.rX = rX }
 
-  return Ellipse;
-}(Shape);
+  get radiusY () { return this.rY }
+  set radiusY (rY) { this.rY = rY }
+}
 
-Point.prototype.draw = Point.prototype.fill;
-var Triangle = Polygon;
+Point.prototype.draw = Point.prototype.fill
+const Triangle = Polygon
 
-exports.Shape = Shape;
-exports.Line = Line;
-exports.Rectangle = Rectangle;
-exports.Polygon = Polygon;
-exports.Triangle = Triangle;
-exports.Circle = Circle;
-exports.Point = Point;
-exports.Text = Text;
-exports.Sprite = Sprite;
-exports.Animation = Animation;
-exports.Ellipse = Ellipse;
+
+
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rss; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadRssAndRun; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shapes__ = __webpack_require__(4);
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.loadRssAndRun = exports.Rss = undefined;
 
-var _canvas = __webpack_require__(0);
+let count = 0
+let loaded = 0
+let main
 
-var _shapes = __webpack_require__(4);
-
-var count = 0;
-var loaded = 0;
-var main = void 0;
-
-function loadRssAndRun(func) {
-    main = func;
-    check();
+function loadRssAndRun (func) {
+  main = func
+  check()
 }
 
-var Rss = {};
-Rss.add = function () {
-    count++;
-};
-Rss.load = function () {
-    loaded++;
-};
-Rss.isLoaded = function () {
-    return loaded >= count;
-};
+let Rss = {}
+Rss.add = function () { count++ }
+Rss.load = function () { loaded++ }
+Rss.isLoaded = function () { return loaded >= count }
 
-var n = 0;
+let n = 0
 
-function check() {
-    if (Rss.isLoaded()) {
-        main();
-    } else {
-        _canvas.canvas.clear();
+function check () {
+  if (Rss.isLoaded()) { main() } else {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].clear()
 
-        new _shapes.Text('LeapLearner', _canvas.canvas.width / 2 - 110, 200, 40).draw();
+    new __WEBPACK_IMPORTED_MODULE_1__shapes__["i" /* Text */]('LeapLearner', __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width / 2 - 110, 200, 40).draw()
 
-        var msg = 'loading';
-        for (var i = 0; i < n % 6; i++) {
-            msg += '.';
-        }
-        new _shapes.Text(msg, _canvas.canvas.width / 2 - 40, _canvas.canvas.height - 240).draw();
+    let msg = 'loading'
+    for (let i = 0; i < n % 6; i++) { msg += '.' }
+    new __WEBPACK_IMPORTED_MODULE_1__shapes__["i" /* Text */](msg, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width / 2 - 40, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 240).draw()
 
-        new _shapes.Rectangle(50, _canvas.canvas.height - 200, _canvas.canvas.width - 100, 10).fill();
+    new __WEBPACK_IMPORTED_MODULE_1__shapes__["g" /* Rectangle */](50, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 200, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width - 100, 10).fill()
 
-        var r2 = new _shapes.Rectangle(50, _canvas.canvas.height - 200, (_canvas.canvas.width - 100) * loaded / count, 10);
-        r2.fillStyle = 'orange';
-        r2.fill();
+    let r2 = new __WEBPACK_IMPORTED_MODULE_1__shapes__["g" /* Rectangle */](50, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 200, (__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width - 100) * loaded / count, 10)
+    r2.fillStyle = 'orange'
+    r2.fill()
 
-        n++;
-        setTimeout(check, 100);
-    }
+    n++
+    setTimeout(check, 100)
+  }
 }
 
-exports.Rss = Rss;
-exports.loadRssAndRun = loadRssAndRun;
+
+
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shapes__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resource__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(10);
 
 
-var _canvas = __webpack_require__(0);
 
-var _keys = __webpack_require__(2);
 
-var _mouse = __webpack_require__(3);
 
-var _shapes = __webpack_require__(4);
 
-var _util = __webpack_require__(1);
 
-var _resource = __webpack_require__(5);
-
-var _colors = __webpack_require__(10);
 
 // canvas
-window.canvas = _canvas.canvas;
-window.ctx = _canvas.ctx;
+window.canvas = __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */]
+window.ctx = __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */]
 
 // shapes
-window.Line = _shapes.Line;
-window.Rectangle = _shapes.Rectangle;
-window.Polygon = _shapes.Polygon;
-window.Triangle = _shapes.Triangle;
-window.Circle = _shapes.Circle;
-window.Text = _shapes.Text;
-window.Sprite = _shapes.Sprite;
-window.Animation = _shapes.Animation;
-window.Point = _shapes.Point;
-window.Ellipse = _shapes.Ellipse;
+window.Line = __WEBPACK_IMPORTED_MODULE_3__shapes__["d" /* Line */]
+window.Rectangle = __WEBPACK_IMPORTED_MODULE_3__shapes__["g" /* Rectangle */]
+window.Polygon = __WEBPACK_IMPORTED_MODULE_3__shapes__["f" /* Polygon */]
+window.Triangle = __WEBPACK_IMPORTED_MODULE_3__shapes__["j" /* Triangle */]
+window.Circle = __WEBPACK_IMPORTED_MODULE_3__shapes__["b" /* Circle */]
+window.Text = __WEBPACK_IMPORTED_MODULE_3__shapes__["i" /* Text */]
+window.Sprite = __WEBPACK_IMPORTED_MODULE_3__shapes__["h" /* Sprite */]
+window.Animation = __WEBPACK_IMPORTED_MODULE_3__shapes__["a" /* Animation */]
+window.Point = __WEBPACK_IMPORTED_MODULE_3__shapes__["e" /* Point */]
+window.Ellipse = __WEBPACK_IMPORTED_MODULE_3__shapes__["c" /* Ellipse */]
 
 // events
-window.Key = _keys.Key;
-window.Mouse = _mouse.Mouse;
+window.Key = __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */]
+window.Mouse = __WEBPACK_IMPORTED_MODULE_2__mouse__["a" /* Mouse */]
 
 // rss
-window.nextFrame = _util.nextFrame;
-window.loadRssAndRun = _resource.loadRssAndRun;
+window.nextFrame = __WEBPACK_IMPORTED_MODULE_4__util__["nextFrame"]
+window.loadRssAndRun = __WEBPACK_IMPORTED_MODULE_5__resource__["b" /* loadRssAndRun */]
 
 // colors
-window.RGB = _colors.RGB;
-window.RGBA = _colors.RGBA;
-window.HSL = _colors.HSL;
-window.HSLA = _colors.HSLA;
+window.RGB = __WEBPACK_IMPORTED_MODULE_6__colors__["c" /* RGB */]
+window.RGBA = __WEBPACK_IMPORTED_MODULE_6__colors__["d" /* RGBA */]
+window.HSL = __WEBPACK_IMPORTED_MODULE_6__colors__["a" /* HSL */]
+window.HSLA = __WEBPACK_IMPORTED_MODULE_6__colors__["b" /* HSLA */]
+
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Transform = function () {
-  function Transform() {
-    _classCallCheck(this, Transform);
-
-    this.anchorX = 0;
-    this.anchorY = 0;
-    this.scaleX = 1;
-    this.scaleY = 1;
-    this.skewX = 0;
-    this.skewY = 0;
-    this.translateX = 0;
-    this.translateY = 0;
-    this.degree = 0;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Transform; });
+class Transform {
+  constructor () {
+    this.anchorX = 0
+    this.anchorY = 0
+    this.scaleX = 1
+    this.scaleY = 1
+    this.skewX = 0
+    this.skewY = 0
+    this.translateX = 0
+    this.translateY = 0
+    this.degree = 0
   }
 
-  _createClass(Transform, [{
-    key: "transformed",
-    value: function transformed() {
-      return this.scaleX !== 1 || this.scaleY !== 1 || this.skewX || this.skewY || this.translateX || this.translateY || this.degree;
-    }
-  }, {
-    key: "scale",
-    value: function scale(x, y) {
-      this.scaleX = x;
-      this.scaleY = y;
-    }
-  }, {
-    key: "translate",
-    value: function translate(x, y) {
-      this.translateX = x;
-      this.translateY = y;
-    }
-  }, {
-    key: "skew",
-    value: function skew(x, y) {
-      this.skewX = x;
-      this.skewY = y;
-    }
-  }, {
-    key: "setAnchor",
-    value: function setAnchor(x, y) {
-      this.anchorX = x;
-      this.anchorY = y;
-    }
-  }, {
-    key: "rotate",
-    value: function rotate(degree) {
-      this.degree = degree;
-    }
-  }, {
-    key: "getRealPoint",
-    value: function getRealPoint(p) {
-      if (!this.transformed()) {
-        return p;
-      }
+  transformed () {
+    return this.scaleX !== 1 || this.scaleY !== 1 ||
+      this.skewX || this.skewY ||
+      this.translateX || this.translateY || this.degree
+  }
 
-      var x = p.x;
-      var y = p.y;
+  scale (x, y) {
+    this.scaleX = x
+    this.scaleY = y
+  }
 
-      x -= this.anchorX;
-      y -= this.anchorY;
+  translate (x, y) {
+    this.translateX = x
+    this.translateY = y
+  }
 
-      var degree = this.degree * Math.PI / 180;
-      var sin = Math.sin(degree);
-      var cos = Math.cos(degree);
+  skew (x, y) {
+    this.skewX = x
+    this.skewY = y
+  }
 
-      var newX = x * cos - y * sin;
-      var newY = y * cos + x * sin;
-      x = newX;
-      y = newY;
+  setAnchor (x, y) {
+    this.anchorX = x
+    this.anchorY = y
+  }
 
-      newX = this.scaleX * x + this.skewX * y + this.translateX;
-      newY = this.skewY * x + this.scaleY * y + this.translateY;
-      x = newX;
-      y = newY;
+  rotate (degree) {
+    this.degree = degree
+  }
 
-      x += this.anchorX;
-      y += this.anchorY;
+  getRealPoint (p) {
+    if (!this.transformed()) { return p }
 
-      return { x: x, y: y };
-    }
-  }]);
+    let x = p.x
+    let y = p.y
 
-  return Transform;
-}();
+    x -= this.anchorX
+    y -= this.anchorY
 
-exports.Transform = Transform;
+    let degree = this.degree * Math.PI / 180
+    let sin = Math.sin(degree)
+    let cos = Math.cos(degree)
+
+    let newX = x * cos - y * sin
+    let newY = y * cos + x * sin
+    x = newX
+    y = newY
+
+    newX = this.scaleX * x + this.skewX * y + this.translateX
+    newY = this.skewY * x + this.scaleY * y + this.translateY
+    x = newX
+    y = newY
+
+    x += this.anchorX
+    y += this.anchorY
+
+    return {x, y}
+  }
+}
+
+
+
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.pointInShape = exports.collide = undefined;
-
-var _canvas = __webpack_require__(0);
-
-function collide(shape1, shape2) {
-  var ps1 = shape1.points;
-  var ps2 = shape2.points;
-
-  if (ps1.length < 2) return false;
-  if (ps2.length < 2) return false;
-
-  // quick check start
-  var r1 = {};
-  var r2 = {};
-  r1 = getRectShape(ps1);
-  r2 = getRectShape(ps2);
-
-  if (r1.minX > r2.maxX || r1.minY > r2.maxY || r2.minX > r1.maxX || r2.minY > r1.maxY) {
-    return false;
-  }
-  // quick check end
-
-  // possible rect
-  var collideRect = getCollideRect(r1, r2);
-
-  // if point inside shapes, return point
-  _canvas.ctx.drawPathByPoints(ps2);
-  for (var i = 0; i < ps1.length; i++) {
-    var p = ps1[i];
-    if (pointInRect(p, collideRect) && _canvas.ctx.isPointInPath(p.x, p.y)) {
-      return p;
-    }
-  }
-
-  _canvas.ctx.drawPathByPoints(ps1);
-  for (var _i = 0; _i < ps2.length; _i++) {
-    var _p = ps2[_i];
-    if (pointInRect(_p, collideRect) && _canvas.ctx.isPointInPath(_p.x, _p.y)) {
-      return _p;
-    }
-  }
-  // points check end
-
-  // lines check
-  for (var _i2 = 0; _i2 < ps1.length - 1; _i2++) {
-    // bcz we had checked the points, ignore the last line
-    var p1 = ps1[_i2];
-    var p2 = ps1[_i2 + 1];
-    for (var j = 0; j < ps2.length - 1; j++) {
-      var p3 = ps2[j];
-      var p4 = ps2[j + 1];
-
-      var _p2 = lineCollideLine(p1, p2, p3, p4);
-      if (_p2) return _p2;
-    }
-  }
-
-  return false;
-} // detect collision using shadows
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return collide; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return pointInShape; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+// detect collision using shadows
 // p: Point, {x, y}
 // ps: Points, Array
 // rect: {minX, maxX, minY, maxY}
 
 
-function getCollideRect(r1, r2) {
+function collide (shape1, shape2) {
+  const ps1 = shape1.points
+  const ps2 = shape2.points
+
+  if (ps1.length < 2) return false
+  if (ps2.length < 2) return false
+
+  // quick check start
+  let r1 = {}
+  let r2 = {}
+  r1 = getRectShape(ps1)
+  r2 = getRectShape(ps2)
+
+  if (r1.minX > r2.maxX || r1.minY > r2.maxY || r2.minX > r1.maxX || r2.minY > r1.maxY) {
+    return false
+  }
+  // quick check end
+
+  // possible rect
+  let collideRect = getCollideRect(r1, r2)
+
+  // if point inside shapes, return point
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawPathByPoints(ps2)
+  for (let i = 0; i < ps1.length; i++) {
+    let p = ps1[i]
+    if (pointInRect(p, collideRect) && __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].isPointInPath(p.x, p.y)) { return p }
+  }
+
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawPathByPoints(ps1)
+  for (let i = 0; i < ps2.length; i++) {
+    let p = ps2[i]
+    if (pointInRect(p, collideRect) && __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].isPointInPath(p.x, p.y)) { return p }
+  }
+  // points check end
+
+  // lines check
+  for (let i = 0; i < ps1.length - 1; i++) { // bcz we had checked the points, ignore the last line
+    let p1 = ps1[i]
+    let p2 = ps1[i + 1]
+    for (let j = 0; j < ps2.length - 1; j++) {
+      let p3 = ps2[j]
+      let p4 = ps2[j + 1]
+
+      let p = lineCollideLine(p1, p2, p3, p4)
+      if (p) return p
+    }
+  }
+
+  return false
+}
+
+function getCollideRect (r1, r2) {
   return {
     minX: r1.minX > r2.minX ? r1.minX : r2.minX,
     minY: r1.minY > r2.minY ? r1.minY : r2.minY,
     maxX: r1.maxX < r2.maxX ? r1.maxX : r2.maxX,
     maxY: r1.maxY < r2.maxY ? r1.maxY : r2.maxY
-  };
+  }
 }
 
-function lineCollideLine(p1, p2, p3, p4) {
-  var x1 = p1.x;
-  var x2 = p2.x;
-  var x3 = p3.x;
-  var x4 = p4.x;
+function lineCollideLine (p1, p2, p3, p4) {
+  let x1 = p1.x
+  let x2 = p2.x
+  let x3 = p3.x
+  let x4 = p4.x
 
-  var y1 = p1.y;
-  var y2 = p2.y;
-  var y3 = p3.y;
-  var y4 = p4.y;
+  let y1 = p1.y
+  let y2 = p2.y
+  let y3 = p3.y
+  let y4 = p4.y
 
   // quick check
-  if (Math.min(x1, x2) > Math.max(x3, x4) || Math.min(y1, y2) > Math.max(y3, y4) || Math.max(x1, x2) < Math.min(x3, x4) || Math.max(y1, y2) < Math.min(y3, y4)) {
-    return false;
-  }
+  if (Math.min(x1, x2) > Math.max(x3, x4) ||
+      Math.min(y1, y2) > Math.max(y3, y4) ||
+      Math.max(x1, x2) < Math.min(x3, x4) ||
+      Math.max(y1, y2) < Math.min(y3, y4)) { return false }
 
   // same slope rate
-  if ((y1 - y2) * (x3 - x4) === (x1 - x2) * (y3 - y4)) {
-    return false;
-  }
+  if ((y1 - y2) * (x3 - x4) === (x1 - x2) * (y3 - y4)) { return false }
 
-  if (cross(p3, p2, p3, p4) * cross(p3, p4, p3, p1) < 0 || cross(p1, p4, p1, p2) * cross(p1, p2, p1, p3) < 0) {
-    return false;
-  }
+  if (cross(p3, p2, p3, p4) * cross(p3, p4, p3, p1) < 0 ||
+    cross(p1, p4, p1, p2) * cross(p1, p2, p1, p3) < 0) { return false }
 
   // get collide point
-  var b1 = (y2 - y1) * x1 + (x1 - x2) * y1;
-  var b2 = (y4 - y3) * x3 + (x3 - x4) * y3;
-  var D = (x2 - x1) * (y4 - y3) - (x4 - x3) * (y2 - y1);
-  var D1 = b2 * (x2 - x1) - b1 * (x4 - x3);
-  var D2 = b2 * (y2 - y1) - b1 * (y4 - y3);
+  let b1 = (y2 - y1) * x1 + (x1 - x2) * y1
+  let b2 = (y4 - y3) * x3 + (x3 - x4) * y3
+  let D = (x2 - x1) * (y4 - y3) - (x4 - x3) * (y2 - y1)
+  let D1 = b2 * (x2 - x1) - b1 * (x4 - x3)
+  let D2 = b2 * (y2 - y1) - b1 * (y4 - y3)
 
   return {
     x: D1 / D,
     y: D2 / D
-  };
+  }
 }
 
-function cross(p1, p2, p3, p4) {
-  return (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x);
+function cross (p1, p2, p3, p4) {
+  return (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x)
 }
 
-function max(a, b) {
-  return Math.max(a, b);
-}
-function min(a, b) {
-  return Math.min(a, b);
-}
+function max (a, b) { return Math.max(a, b) }
+function min (a, b) { return Math.min(a, b) }
 
-function getRectShape(ps) {
-  var xs = ps.map(function (p) {
-    return p.x;
-  });
-  var ys = ps.map(function (p) {
-    return p.y;
-  });
+function getRectShape (ps) {
+  let xs = ps.map(p => p.x)
+  let ys = ps.map(p => p.y)
 
   return {
     minX: xs.reduce(min),
     maxX: xs.reduce(max),
     minY: ys.reduce(min),
     maxY: ys.reduce(max)
-  };
-}
-
-function pointInRect(p, r) {
-  return r.minX <= p.x && p.x <= r.maxX && r.minY <= p.y && p.y <= r.maxY;
-}
-
-function pointInShape(p, shape) {
-  var ps = shape.points;
-  if (ps.length < 3) return false;
-
-  var rect = getRectShape(ps);
-  if (!pointInRect(p, rect)) {
-    return false;
   }
-
-  _canvas.ctx.drawPathByPoints(ps);
-  if (_canvas.ctx.isPointInPath(p.x, p.y)) {
-    return p;
-  }
-
-  return false;
 }
 
-exports.collide = collide;
-exports.pointInShape = pointInShape;
+function pointInRect (p, r) {
+  return r.minX <= p.x && p.x <= r.maxX &&
+    r.minY <= p.y && p.y <= r.maxY
+}
+
+function pointInShape (p, shape) {
+  let ps = shape.points
+  if (ps.length < 3) return false
+
+  let rect = getRectShape(ps)
+  if (!pointInRect(p, rect)) { return false }
+
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawPathByPoints(ps)
+  if (__WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].isPointInPath(p.x, p.y)) { return p }
+
+  return false
+}
+
+
+
 
 /***/ }),
 /* 9 */
@@ -1735,34 +1440,31 @@ if (typeof module === 'object' && module.exports) {
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-function RGB(r, g, b) {
-    return "rgb(" + r + ", " + g + ", " + b + ")";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return RGB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return RGBA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HSL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HSLA; });
+function RGB (r, g, b) { 
+    return `rgb(${r}, ${g}, ${b})` 
 }
 
-function RGBA(r, g, b, a) {
-    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+function RGBA (r, g, b, a) { 
+    return `rgba(${r}, ${g}, ${b}, ${a})` 
 }
 
-function HSL(h, s, l) {
-    return "hsl(" + h + ", " + s * 100 + "%, " + l * 100 + "%)";
+function HSL (h, s, l) { 
+    return `hsl(${h}, ${s*100}%, ${l*100}%)` 
 }
 
-function HSLA(h, s, l, a) {
-    return "hsla(" + h + ", " + s * 100 + "%, " + l * 100 + "%, " + a + ")";
+function HSLA (h, s, l, a) { 
+    return `hsla(${h}, ${s*100}%, ${l*100}%, ${a})`
 }
 
-exports.RGB = RGB;
-exports.RGBA = RGBA;
-exports.HSL = HSL;
-exports.HSLA = HSLA;
+
+
 
 /***/ })
 /******/ ]);
