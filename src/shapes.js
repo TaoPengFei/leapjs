@@ -97,21 +97,24 @@ class Circle extends Shape {
     this.y = y
     this.r = r
   }
-}
 
-Circle.prototype._draw = function () {
-  ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI)
-}
+  get radius () { return this.r }
+  set radius (r) { this.r = r }
 
-Circle.prototype._updatePoints = function () {
-  this._points = []
-  let n = 8
-  let degree = Math.PI * 2 / n
-  for (let i = 0; i < n; i++) {
-    this._points.push({
-      x: this.x + this.r * Math.sin(degree * i),
-      y: this.y + this.r * Math.cos(degree * i)
-    })
+  _draw () {
+    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI)
+  }
+
+  _updatePoints () {
+    this._points = []
+    let n = 8
+    let degree = Math.PI * 2 / n
+    for (let i = 0; i < n; i++) {
+      this._points.push({
+        x: this.x + this.r * Math.sin(degree * i),
+        y: this.y + this.r * Math.cos(degree * i)
+      })
+    }
   }
 }
 
@@ -123,17 +126,31 @@ class Line extends Shape {
     this.x2 = x2
     this.y2 = y2
   }
-}
 
-Line.prototype._draw = function () {
-  ctx.moveTo(this.x1, this.y1)
-  ctx.lineTo(this.x2, this.y2)
-}
+  _draw () {
+    ctx.moveTo(this.x1, this.y1)
+    ctx.lineTo(this.x2, this.y2)
+  }
 
-Line.prototype._updatePoints = function () {
-  this._points = []
-  this._points.push({x: this.x1, y: this.y1})
-  this._points.push({x: this.x2, y: this.y2})
+  _updatePoints () {
+    this._points = []
+    this._points.push({x: this.x1, y: this.y1})
+    this._points.push({x: this.x2, y: this.y2})
+  }
+
+  get x () { return (this.x1 + this.x2) / 2 }
+  set x (x) {
+    let deltaX = x - this.x 
+    this.x1 += deltaX
+    this.x2 += deltaX
+  }
+
+  get y () { return (this.y1 + this.y2) / 2 }
+  set y (y) {
+    let deltaY = y - this.y
+    this.y1 += deltaY
+    this.y2 += deltaY
+  }
 }
 
 class Polygon extends Shape {
@@ -149,14 +166,38 @@ class Polygon extends Shape {
       this._points.push(p)
     }
   }
-}
 
-Polygon.prototype._draw = function () {
-  let p = this._points[0]
-  ctx.moveTo(p.x, p.y)
-  for (let i = 1; i < this._points.length; i++) {
-    p = this._points[i]
-    ctx.lineTo(p.x, p.y)
+  _draw () {
+    let p = this._points[0]
+    ctx.moveTo(p.x, p.y)
+    for (let i = 1; i < this._points.length; i++) {
+      p = this._points[i]
+      ctx.lineTo(p.x, p.y)
+    }
+  }
+
+  get x () {
+    let x = 0;
+    for(let i=0; i<this._points.length; i++)
+      x += this._points[i].x
+    return x/this._points.length
+  }
+  set x (x) {
+    deltaX = x - this.x
+    for(let i=0; i<this._points.length; i++)
+      this._points[i].x += deltaX 
+  }
+
+  get y () {
+    let y = 0;
+    for(let i=0; i<this._points.length; i++)
+      y += this._points[i].y
+    return y/this._points.length
+  }
+  set y (y) {
+    deltaY = y - this.y
+    for(let i=0; i<this._points.length; i++)
+      this._points[i].y += deltaY 
   }
 }
 
@@ -165,41 +206,46 @@ class Rectangle extends Shape {
     super()
     this.x = x
     this.y = y
-    this.width = w
-    this.height = h
+    this.w = w
+    this.h = h
     this.collideW = 1
     this.collideH = 1
   }
-}
 
-Rectangle.prototype._draw = function () {
-  ctx.rect(this.x, this.y, this.width, this.height)
-}
+  get width () { return this.w }
+  set width (w) { this.w = w }
 
-Rectangle.prototype.setCollisionScale = function (w, h) {
-  this.collideW = w
-  this.collideH = h
-}
+  get height () { return this.h }
+  set height (h) { this.h = h }
 
-Rectangle.prototype._updatePoints = function () {
-  this._points = []
+  _draw () {
+    ctx.rect(this.x, this.y, this.w, this.h)
+  }
 
-  let minX = this.x + this.width / 2 * (1 - this.collideW)
-  let maxX = this.x + this.width / 2 * (1 + this.collideW)
-  let minY = this.y + this.height / 2 * (1 - this.collideH)
-  let maxY = this.y + this.height / 2 * (1 + this.collideH)
+  setCollisionScale (w, h) {
+    this.collideW = w
+    this.collideH = h
+  }
 
-  this._points.push({x: minX, y: minY})
-  this._points.push({x: minX, y: maxY})
-  this._points.push({x: maxX, y: maxY})
-  this._points.push({x: maxX, y: minY})
+  _updatePoints () {
+    this._points = []
+
+    let minX = this.x + this.w / 2 * (1 - this.collideW)
+    let maxX = this.x + this.w / 2 * (1 + this.collideW)
+    let minY = this.y + this.h / 2 * (1 - this.collideH)
+    let maxY = this.y + this.h / 2 * (1 + this.collideH)
+
+    this._points.push({x: minX, y: minY})
+    this._points.push({x: minX, y: maxY})
+    this._points.push({x: maxX, y: maxY})
+    this._points.push({x: maxX, y: minY})
+  }
 }
 
 class Text extends Rectangle {
   constructor (src = '', x = 0, y = 0, size=20, font = 'Arial') {
-    super(x, y, 1, size)
+    super(x, y, 100, size)
     this._src = src
-    this.height = size
     this._font = font
     this.fillStyle = "orange"
     this._updateWidth()
@@ -207,8 +253,8 @@ class Text extends Rectangle {
 
   _updateWidth () {
     ctx.save()
-    ctx.font = this.height + 'px ' + this._font
-    this.width = ctx.measureText(this._src).width
+    ctx.font = this.h + 'px ' + this._font
+    this.w = ctx.measureText(this._src).width
     ctx.restore() 
   }
 
@@ -218,9 +264,9 @@ class Text extends Rectangle {
     this._updateWidth()
   }
 
-  get size () { return this.height }
+  get size () { return this.h }
   set size (size) {
-    this.height = size
+    this.h = size
     this._updateWidth()
   }
 
@@ -236,7 +282,7 @@ class Text extends Rectangle {
     ctx.update(this)
     ctx.font = this.size + 'px ' + this.font
 
-    ctx.strokeText(this.src, this.x, this.y+this.height)
+    ctx.strokeText(this.src, this.x, this.y+this.h)
 
     ctx.restore()
   }
@@ -248,7 +294,7 @@ class Text extends Rectangle {
 
     ctx.font = this.size + 'px ' + this.font
 
-    ctx.fillText(this.src, this.x, this.y+this.height)
+    ctx.fillText(this.src, this.x, this.y+this.h)
 
     ctx.restore()
   }
@@ -288,17 +334,21 @@ class Sprite extends Rectangle {
 Sprite.prototype.clip = function (sx, sy, sw, sh) {
   this.sx = sx > 0 ? sx : 1
   this.sy = sy > 0 ? sx : 1
-  this.swidth = sw
-  this.sheight = sh
-  this.width = this.width || sw
-  this.height = this.height || sh
+  this.sw = sw
+  this.sh = sh
+  this.w = this.w || sw
+  this.h = this.h || sh
 }
 
 Sprite.prototype._draw = function () {
-  if (this.sx && this.sy && this.swidth & this.sheight) {
-    ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight,
-      this.x, this.y, this.width, this.height)
-  } else if (this.width && this.height) { ctx.drawImage(this.img, this.x, this.y, this.width, this.height) } else { ctx.drawImage(this.img, this.x, this.y) }
+  if (this.sx && this.sy && this.sw & this.sh) {
+    ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh,
+      this.x, this.y, this.w, this.h)
+  } else if (this.w && this.h) { 
+    ctx.drawImage(this.img, this.x, this.y, this.w, this.h) 
+  } else { 
+    ctx.drawImage(this.img, this.x, this.y) 
+  }
 }
 
 Sprite.prototype.fill = null
@@ -325,10 +375,10 @@ Animation.prototype.setSpeed = function (speed) {
 }
 
 Animation.prototype._draw = function () {
-  let sx = this.sx + this.swidth * (Math.floor(this.cf * this.speed / 60) % this.c)
-  let sy = this.sy + this.sheight * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r)
-  ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight,
-    this.x, this.y, this.width, this.height)
+  let sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c)
+  let sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r)
+  ctx.drawImage(this.img, sx, sy, this.sw, this.sh,
+    this.x, this.y, this.w, this.h)
 
   this.cf++ // update frame count
 }

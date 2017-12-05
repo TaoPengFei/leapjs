@@ -592,24 +592,36 @@ var Circle = function (_Shape) {
     return _this2;
   }
 
+  _createClass(Circle, [{
+    key: '_draw',
+    value: function _draw() {
+      _canvas.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+    }
+  }, {
+    key: '_updatePoints',
+    value: function _updatePoints() {
+      this._points = [];
+      var n = 8;
+      var degree = Math.PI * 2 / n;
+      for (var i = 0; i < n; i++) {
+        this._points.push({
+          x: this.x + this.r * Math.sin(degree * i),
+          y: this.y + this.r * Math.cos(degree * i)
+        });
+      }
+    }
+  }, {
+    key: 'radius',
+    get: function get() {
+      return this.r;
+    },
+    set: function set(r) {
+      this.r = r;
+    }
+  }]);
+
   return Circle;
 }(Shape);
-
-Circle.prototype._draw = function () {
-  _canvas.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-};
-
-Circle.prototype._updatePoints = function () {
-  this._points = [];
-  var n = 8;
-  var degree = Math.PI * 2 / n;
-  for (var i = 0; i < n; i++) {
-    this._points.push({
-      x: this.x + this.r * Math.sin(degree * i),
-      y: this.y + this.r * Math.cos(degree * i)
-    });
-  }
-};
 
 var Line = function (_Shape2) {
   _inherits(Line, _Shape2);
@@ -626,19 +638,43 @@ var Line = function (_Shape2) {
     return _this3;
   }
 
+  _createClass(Line, [{
+    key: '_draw',
+    value: function _draw() {
+      _canvas.ctx.moveTo(this.x1, this.y1);
+      _canvas.ctx.lineTo(this.x2, this.y2);
+    }
+  }, {
+    key: '_updatePoints',
+    value: function _updatePoints() {
+      this._points = [];
+      this._points.push({ x: this.x1, y: this.y1 });
+      this._points.push({ x: this.x2, y: this.y2 });
+    }
+  }, {
+    key: 'x',
+    get: function get() {
+      return (this.x1 + this.x2) / 2;
+    },
+    set: function set(x) {
+      var deltaX = x - this.x;
+      this.x1 += deltaX;
+      this.x2 += deltaX;
+    }
+  }, {
+    key: 'y',
+    get: function get() {
+      return (this.y1 + this.y2) / 2;
+    },
+    set: function set(y) {
+      var deltaY = y - this.y;
+      this.y1 += deltaY;
+      this.y2 += deltaY;
+    }
+  }]);
+
   return Line;
 }(Shape);
-
-Line.prototype._draw = function () {
-  _canvas.ctx.moveTo(this.x1, this.y1);
-  _canvas.ctx.lineTo(this.x2, this.y2);
-};
-
-Line.prototype._updatePoints = function () {
-  this._points = [];
-  this._points.push({ x: this.x1, y: this.y1 });
-  this._points.push({ x: this.x2, y: this.y2 });
-};
 
 var Polygon = function (_Shape3) {
   _inherits(Polygon, _Shape3);
@@ -660,17 +696,48 @@ var Polygon = function (_Shape3) {
     return _this4;
   }
 
+  _createClass(Polygon, [{
+    key: '_draw',
+    value: function _draw() {
+      var p = this._points[0];
+      _canvas.ctx.moveTo(p.x, p.y);
+      for (var i = 1; i < this._points.length; i++) {
+        p = this._points[i];
+        _canvas.ctx.lineTo(p.x, p.y);
+      }
+    }
+  }, {
+    key: 'x',
+    get: function get() {
+      var x = 0;
+      for (var i = 0; i < this._points.length; i++) {
+        x += this._points[i].x;
+      }return x / this._points.length;
+    },
+    set: function set(x) {
+      deltaX = x - this.x;
+      for (var i = 0; i < this._points.length; i++) {
+        this._points[i].x += deltaX;
+      }
+    }
+  }, {
+    key: 'y',
+    get: function get() {
+      var y = 0;
+      for (var i = 0; i < this._points.length; i++) {
+        y += this._points[i].y;
+      }return y / this._points.length;
+    },
+    set: function set(y) {
+      deltaY = y - this.y;
+      for (var i = 0; i < this._points.length; i++) {
+        this._points[i].y += deltaY;
+      }
+    }
+  }]);
+
   return Polygon;
 }(Shape);
-
-Polygon.prototype._draw = function () {
-  var p = this._points[0];
-  _canvas.ctx.moveTo(p.x, p.y);
-  for (var i = 1; i < this._points.length; i++) {
-    p = this._points[i];
-    _canvas.ctx.lineTo(p.x, p.y);
-  }
-};
 
 var Rectangle = function (_Shape4) {
   _inherits(Rectangle, _Shape4);
@@ -682,38 +749,59 @@ var Rectangle = function (_Shape4) {
 
     _this5.x = x;
     _this5.y = y;
-    _this5.width = w;
-    _this5.height = h;
+    _this5.w = w;
+    _this5.h = h;
     _this5.collideW = 1;
     _this5.collideH = 1;
     return _this5;
   }
 
+  _createClass(Rectangle, [{
+    key: '_draw',
+    value: function _draw() {
+      _canvas.ctx.rect(this.x, this.y, this.w, this.h);
+    }
+  }, {
+    key: 'setCollisionScale',
+    value: function setCollisionScale(w, h) {
+      this.collideW = w;
+      this.collideH = h;
+    }
+  }, {
+    key: '_updatePoints',
+    value: function _updatePoints() {
+      this._points = [];
+
+      var minX = this.x + this.w / 2 * (1 - this.collideW);
+      var maxX = this.x + this.w / 2 * (1 + this.collideW);
+      var minY = this.y + this.h / 2 * (1 - this.collideH);
+      var maxY = this.y + this.h / 2 * (1 + this.collideH);
+
+      this._points.push({ x: minX, y: minY });
+      this._points.push({ x: minX, y: maxY });
+      this._points.push({ x: maxX, y: maxY });
+      this._points.push({ x: maxX, y: minY });
+    }
+  }, {
+    key: 'width',
+    get: function get() {
+      return this.w;
+    },
+    set: function set(w) {
+      this.w = w;
+    }
+  }, {
+    key: 'height',
+    get: function get() {
+      return this.h;
+    },
+    set: function set(h) {
+      this.h = h;
+    }
+  }]);
+
   return Rectangle;
 }(Shape);
-
-Rectangle.prototype._draw = function () {
-  _canvas.ctx.rect(this.x, this.y, this.width, this.height);
-};
-
-Rectangle.prototype.setCollisionScale = function (w, h) {
-  this.collideW = w;
-  this.collideH = h;
-};
-
-Rectangle.prototype._updatePoints = function () {
-  this._points = [];
-
-  var minX = this.x + this.width / 2 * (1 - this.collideW);
-  var maxX = this.x + this.width / 2 * (1 + this.collideW);
-  var minY = this.y + this.height / 2 * (1 - this.collideH);
-  var maxY = this.y + this.height / 2 * (1 + this.collideH);
-
-  this._points.push({ x: minX, y: minY });
-  this._points.push({ x: minX, y: maxY });
-  this._points.push({ x: maxX, y: maxY });
-  this._points.push({ x: maxX, y: minY });
-};
 
 var Text = function (_Rectangle) {
   _inherits(Text, _Rectangle);
@@ -727,10 +815,9 @@ var Text = function (_Rectangle) {
 
     _classCallCheck(this, Text);
 
-    var _this6 = _possibleConstructorReturn(this, (Text.__proto__ || Object.getPrototypeOf(Text)).call(this, x, y, 1, size));
+    var _this6 = _possibleConstructorReturn(this, (Text.__proto__ || Object.getPrototypeOf(Text)).call(this, x, y, 100, size));
 
     _this6._src = src;
-    _this6.height = size;
     _this6._font = font;
     _this6.fillStyle = "orange";
     _this6._updateWidth();
@@ -741,8 +828,8 @@ var Text = function (_Rectangle) {
     key: '_updateWidth',
     value: function _updateWidth() {
       _canvas.ctx.save();
-      _canvas.ctx.font = this.height + 'px ' + this._font;
-      this.width = _canvas.ctx.measureText(this._src).width;
+      _canvas.ctx.font = this.h + 'px ' + this._font;
+      this.w = _canvas.ctx.measureText(this._src).width;
       _canvas.ctx.restore();
     }
   }, {
@@ -753,7 +840,7 @@ var Text = function (_Rectangle) {
       _canvas.ctx.update(this);
       _canvas.ctx.font = this.size + 'px ' + this.font;
 
-      _canvas.ctx.strokeText(this.src, this.x, this.y + this.height);
+      _canvas.ctx.strokeText(this.src, this.x, this.y + this.h);
 
       _canvas.ctx.restore();
     }
@@ -766,7 +853,7 @@ var Text = function (_Rectangle) {
 
       _canvas.ctx.font = this.size + 'px ' + this.font;
 
-      _canvas.ctx.fillText(this.src, this.x, this.y + this.height);
+      _canvas.ctx.fillText(this.src, this.x, this.y + this.h);
 
       _canvas.ctx.restore();
     }
@@ -787,10 +874,10 @@ var Text = function (_Rectangle) {
   }, {
     key: 'size',
     get: function get() {
-      return this.height;
+      return this.h;
     },
     set: function set(size) {
-      this.height = size;
+      this.h = size;
       this._updateWidth();
     }
   }, {
@@ -853,17 +940,17 @@ var Sprite = function (_Rectangle2) {
 Sprite.prototype.clip = function (sx, sy, sw, sh) {
   this.sx = sx > 0 ? sx : 1;
   this.sy = sy > 0 ? sx : 1;
-  this.swidth = sw;
-  this.sheight = sh;
-  this.width = this.width || sw;
-  this.height = this.height || sh;
+  this.sw = sw;
+  this.sh = sh;
+  this.w = this.w || sw;
+  this.h = this.h || sh;
 };
 
 Sprite.prototype._draw = function () {
-  if (this.sx && this.sy && this.swidth & this.sheight) {
-    _canvas.ctx.drawImage(this.img, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
-  } else if (this.width && this.height) {
-    _canvas.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  if (this.sx && this.sy && this.sw & this.sh) {
+    _canvas.ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h);
+  } else if (this.w && this.h) {
+    _canvas.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
   } else {
     _canvas.ctx.drawImage(this.img, this.x, this.y);
   }
@@ -901,9 +988,9 @@ Animation.prototype.setSpeed = function (speed) {
 };
 
 Animation.prototype._draw = function () {
-  var sx = this.sx + this.swidth * (Math.floor(this.cf * this.speed / 60) % this.c);
-  var sy = this.sy + this.sheight * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r);
-  _canvas.ctx.drawImage(this.img, sx, sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
+  var sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c);
+  var sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r);
+  _canvas.ctx.drawImage(this.img, sx, sy, this.sw, this.sh, this.x, this.y, this.w, this.h);
 
   this.cf++; // update frame count
 };
