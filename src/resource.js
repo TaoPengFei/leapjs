@@ -18,8 +18,8 @@ Rss.isLoaded = function () { return loaded >= count }
 let n = 0
 
 function check () {
-  if (Rss.isLoaded()) { main() } else {
-    canvas.clear()
+  canvas.clear()
+  if (Rss.isLoaded()) { main() } else {   
 
     new Text('LeapLearner', canvas.width / 2 - 110, 200, 40).draw()
 
