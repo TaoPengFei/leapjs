@@ -512,6 +512,51 @@ Loop();
 
 #### 案例：涟漪效果
 
+#### 练习：充电游戏
+
+```javascript
+canvas.width = 300;
+canvas.height = 500;
+
+var iphone = new Sprite('http://ou1htxdl4.bkt.clouddn.com/iphone.jpg',0,0,300,500);
+var r1 = new Rectangle(130, 140, 40, 10);
+var rect = new Rectangle(100, 150, 100, 200);
+var power = new Rectangle(110, 160, 80, 180);
+
+rect.lineWidth = 5;
+rect.fillStyle = "white";
+
+function Loop() {
+    power.use();
+    iphone.draw();
+    r1.draw();
+    rect.draw();
+    power.fill();
+    nextFrame(Loop);
+}
+
+function charge() {
+    if (power.height < 170) {
+        power.height += 10;
+        power.y -= 10;
+    }
+}
+
+function use() {
+    if (this.height > 0) {
+        this.height -= 0.1;
+        this.y += 0.1;
+        this.fillStyle = RGB((180-this.height)*2.55,this.height*2.55,0);
+    }
+}
+
+power.use = use;
+Mouse.click = charge;
+Loop();
+```
+
+[点击查看代码效果](https://code.leaplearner.com/show.html?v=3753)
+
 
 
 点击事件
@@ -867,20 +912,20 @@ Loop();
 
 >  基础代码：
 >
-> ```javascript
-> canvas.width = 350;
-> canvas.height = 500;
+>  ```javascript
+>  canvas.width = 350;
+>  canvas.height = 500;
 >
-> var s_line = new Line(175, 200, 175, 100);
-> var m_line = new Line(175, 200, 175, 120);
-> var h_line = new Line(175, 200, 175, 150);
+>  var s_line = new Line(175, 200, 175, 100);
+>  var m_line = new Line(175, 200, 175, 120);
+>  var h_line = new Line(175, 200, 175, 150);
 >
-> //修改三根针的属性
+>  //修改三根针的属性
 >
-> s_line.draw();
-> m_line.draw();
-> h_line.draw();
-> ```
+>  s_line.draw();
+>  m_line.draw();
+>  h_line.draw();
+>  ```
 
 完整代码如下：
 
