@@ -702,7 +702,7 @@ class Text extends Rectangle {
 }
 
 class Sprite extends Rectangle {
-  constructor (src, x, y, w, h) {
+  constructor (src, x = 0, y = 0, w = null, h = null) {
     super(x, y, w, h)
     this.collideW = 0.8
     this.collideH = 0.8
@@ -855,8 +855,8 @@ Rss.isLoaded = function () { return loaded >= count }
 let n = 0
 
 function check () {
-  if (Rss.isLoaded()) { main() } else {
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].clear()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].clear()
+  if (Rss.isLoaded()) { main() } else {   
 
     new __WEBPACK_IMPORTED_MODULE_1__shapes__["i" /* Text */]('LeapLearner', __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width / 2 - 110, 200, 40).draw()
 
