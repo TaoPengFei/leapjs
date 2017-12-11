@@ -1258,6 +1258,7 @@ function clone(parent, circular, depth, prototype, includeNonEnumerable) {
       child = new nativeSet();
     } else if (_instanceof(parent, Image)) {
       child = new Image();
+      child.crossOrigin = 'anonymous'
       child.src = parent.src;
       return child;
     } else if (_instanceof(parent, nativePromise)) {
