@@ -4,3 +4,4 @@ package-lock.json
 *.docx
 doc/*.html
 .eslintrc.js
+test.json
