@@ -42,7 +42,7 @@ Fish.use = function(Colors, Actions){
     Colors.edge = Colors.edge || "#cccccc";
     Colors.body = Colors.body || "#eeeeee";
     Colors.eye = Colors.eye || "#ffffff";
-    Colors.eyeBall = Colors.eyeBall || "#eeeeee";
+    Colors.pupil = Colors.pupil || "#eeeeee";
     Colors.fin = Colors.fin || "#cccccc";
     
     Fish.colors = Colors;
@@ -102,8 +102,8 @@ Fish.update = function(){
     Fish.eye.strokeStyle = Fish.colors.edge;
     Fish.eye.lineWidth = 3;
     
-    Fish.eyeBall = new Circle (x+90, y-20, 10 - wink/5);
-    Fish.eyeBall.fillStyle = Fish.colors.eyeBall;
+    Fish.pupil = new Circle (x+90, y-20, 10 - wink/5);
+    Fish.pupil.fillStyle = Fish.colors.pupil;
 
     Fish.fin = new Polygon(
         x,      y + 20, 
@@ -135,7 +135,7 @@ Fish.draw = function(){
     Fish.body.fill();
     Fish.stripe.draw();
     Fish.eye.draw();
-    Fish.eyeBall.fill();
+    Fish.pupil.fill();
     Fish.fin.fill();
     Fish.mouth.fill();
 };
@@ -156,7 +156,7 @@ var Colors = {
     edge: "",
     
     eye: "",
-    eyeBall: "",
+    pupil: "",
     
     fin: ""
 };
