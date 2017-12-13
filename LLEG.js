@@ -76,7 +76,7 @@ let p = document.createElement('p')
 const clickShapes = __webpack_require__(1).clickShapes
 
 canvas.style = 'border: 1px solid #d3d3d3;'
-p.style = 'color: orange;'
+p.style = 'color: orange; position: absolute; bottom: 23px;'
 
 document.body.appendChild(canvas)
 document.body.appendChild(p)
