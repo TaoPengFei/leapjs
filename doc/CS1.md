@@ -207,6 +207,73 @@ c.click = function(){
 | 30-39 | 良好   |      |
 | 40+   | 优秀   |      |
 
+## 交互
+
+### 鼠标点击事件
+
+### 任务：热带雨林射击
+
+把下面的代码复制并运行，瞄准红点靶心，试一试自己能拿几分。
+
+```javascript
+var frogBacGro = new Sprite('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg', 0, 0, 650, 332); //background
+var tiger = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_tiger.png', 145, 230, 95, 103);
+var fox = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_fox.png', 240, 230, 95, 103);
+var eagle = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_eagle.png', 335, 230, 95, 103);
+var snake = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png', 430, 230, 95, 103);
+var score = 0;
+
+function main() {
+    canvas.clear();
+    frogBacGro.draw();
+    tiger.draw();
+    fox.draw();
+    eagle.draw();
+    snake.draw();
+
+
+    drawPoint();
+
+}
+
+Mouse.move = function () {
+    loadRssAndRun(main);
+    var point = new Point(Mouse.x, Mouse.y);
+    point.r = 5;
+    point.fillStyle = 'red';
+    point.fill();
+    drawPoint();
+    var circle = new Circle(Mouse.x, Mouse.y, 100);
+    var lineX = new Line(Mouse.x-100, Mouse.y, Mouse.x+100, Mouse.y);
+    lineX.strokeStyle = "black";
+    lineX.setLineDash([5,15]);
+    lineX.draw();
+    var lineY = new Line(Mouse.x, Mouse.y-100, Mouse.x, Mouse.y+100);
+    lineY.strokeStyle = 'black';
+    lineY.setLineDash([5,15]);
+    lineY.draw();
+    circle.strokeStyle = 'black';
+    circle.stroke(); 
+    var text = new Text();
+}
+Mouse.click = function () {
+    score += 10;
+}
+
+function drawPoint() {
+    var pointX = tiger.x + 47.5;
+    var pointY = 281.5;
+    var n = 95; //95+47.5;
+    for (i = 0; i < 4; i++) {
+        var point = new Point(pointX + i * n, pointY);
+        point.r = 5;
+        point.fillStyle = 'red';
+        point.fill();
+    }
+}
+loadRssAndRun(main);
+```
+
 ## 键盘练习
 
 目标：熟悉键盘操作
@@ -246,6 +313,79 @@ Susie小故事时间：
 因为当初设计键盘的人为了让人们不会记错复制和粘贴的快捷键，特地按先复制后粘贴的顺序设计的C键和V键。
 
 问小朋友班级人数；这个故事很少有人知道，你现在是你们班里30个人里唯一知道这个小故事的人了，真棒！
+
+## 输入
+
+### 键盘输入
+
+### 挑战：打字游戏
+
+### 中英文字符
+
+在输入的时候要特别注意，在这里，计算机只能识别英文字符，如果输入中文的标点符号，计算机就无法正确识别出来你的命令。
+
+改正下面代码中错误的标点符号，让程序跑起来。
+
+1.
+
+```javascript
+var ball = new Circle（200，200, 50）;
+ball。draw()；
+```
+
+2.
+
+```javascript
+var circle = new Circle(100, 100, 100);
+circle.fillStyle = ‘red’;
+circle.fill（）；
+```
+
+正确答案：
+
+1.
+
+```javascript
+var ball = new Circle(200,200, 50);
+ball.draw();
+```
+
+2.
+
+```javascript
+var circle = new Circle(100, 100, 100);
+circle.fillStyle = 'red';
+circle.fill();
+```
+
+
+
+下面列出了一些常见的错误符号，一般来说，中文的标点符号要比英文标点符号占据的空间更大。
+
+| 符号名称 | 英文标点 | 中文标点 |
+| ---- | ---- | ---- |
+| 句号   | .    | 。    |
+| 逗号   | ,    | ，    |
+| 分号   | ;    | ；    |
+| 圆括号  | ()   | （）   |
+| 单引号  | '    | ‘    |
+| 双引号  | "    | “    |
+
+不过，好在计算机可以帮助我们做这件事情，当你输入一个错误的符号时，计算机会在代码前面提示这个错误，如果发现有错误提示，赶紧看看是不是标点符号出错了呢。
+
+### 复制和粘贴
+
+在学习过程中，我们经常会用到一些命令
+
+选中：
+
+复制：
+
+粘贴：
+
+快捷键
+
+Ctrl + C / V;
 
 ## 颜色
 
@@ -1083,261 +1223,3 @@ for (i = 0; i < urlArr.length; i++) {
     rect2.draw();
 }
 ```
-
-
-
-## 输入
-
-### 键盘输入
-
-### 挑战：打字游戏
-
-### 中英文字符
-
-在输入的时候要特别注意，在这里，计算机只能识别英文字符，如果输入中文的标点符号，计算机就无法正确识别出来你的命令。
-
-改正下面代码中错误的标点符号，让程序跑起来。
-
-1.
-
-```javascript
-var ball = new Circle（200，200, 50）;
-ball。draw()；
-```
-
-2.
-
-```javascript
-var circle = new Circle(100, 100, 100);
-circle.fillStyle = ‘red’;
-circle.fill（）；
-```
-
-正确答案：
-
-1.
-
-```javascript
-var ball = new Circle(200,200, 50);
-ball.draw();
-```
-
-2.
-
-```javascript
-var circle = new Circle(100, 100, 100);
-circle.fillStyle = 'red';
-circle.fill();
-```
-
-
-
-下面列出了一些常见的错误符号，一般来说，中文的标点符号要比英文标点符号占据的空间更大。
-
-| 符号名称 | 英文标点 | 中文标点 |
-| ---- | ---- | ---- |
-| 句号   | .    | 。    |
-| 逗号   | ,    | ，    |
-| 分号   | ;    | ；    |
-| 圆括号  | ()   | （）   |
-| 单引号  | '    | ‘    |
-| 双引号  | "    | “    |
-
-不过，好在计算机可以帮助我们做这件事情，当你输入一个错误的符号时，计算机会在代码前面提示这个错误，如果发现有错误提示，赶紧看看是不是标点符号出错了呢。
-
-### 复制和粘贴
-
-在学习过程中，我们经常会用到一些命令
-
-选中：
-
-复制：
-
-粘贴：
-
-快捷键
-
-Ctrl + C / V;
-
-## 交互
-
-### 鼠标点击事件
-
-### 任务：热带雨林射击
-
-把下面的代码复制并运行，瞄准红点靶心，试一试自己能拿几分。
-
-```javascript
-var frogBacGro = new Sprite('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg', 0, 0, 650, 332); //background
-var tiger = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_tiger.png', 145, 230, 95, 103);
-var fox = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_fox.png', 240, 230, 95, 103);
-var eagle = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_eagle.png', 335, 230, 95, 103);
-var snake = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png', 430, 230, 95, 103);
-var score = 0;
-
-function main() {
-    canvas.clear();
-    frogBacGro.draw();
-    tiger.draw();
-    fox.draw();
-    eagle.draw();
-    snake.draw();
-
-
-    drawPoint();
-
-}
-
-Mouse.move = function () {
-    loadRssAndRun(main);
-    var point = new Point(Mouse.x, Mouse.y);
-    point.r = 5;
-    point.fillStyle = 'red';
-    point.fill();
-    drawPoint();
-    var circle = new Circle(Mouse.x, Mouse.y, 100);
-    var lineX = new Line(Mouse.x-100, Mouse.y, Mouse.x+100, Mouse.y);
-    lineX.strokeStyle = "black";
-    lineX.setLineDash([5,15]);
-    lineX.draw();
-    var lineY = new Line(Mouse.x, Mouse.y-100, Mouse.x, Mouse.y+100);
-    lineY.strokeStyle = 'black';
-    lineY.setLineDash([5,15]);
-    lineY.draw();
-    circle.strokeStyle = 'black';
-    circle.stroke(); 
-    var text = new Text();
-}
-Mouse.click = function () {
-    score += 10;
-}
-
-function drawPoint() {
-    var pointX = tiger.x + 47.5;
-    var pointY = 281.5;
-    var n = 95; //95+47.5;
-    for (i = 0; i < 4; i++) {
-        var point = new Point(pointX + i * n, pointY);
-        point.r = 5;
-        point.fillStyle = 'red';
-        point.fill();
-    }
-}
-loadRssAndRun(main);
-```
-
-
-
-## 键盘练习
-
-目标：熟悉键盘操作
-
-### 大小写
-
-输入10个数字
-
-输入26个字母及大写字幕
-
-### 标点符号
-
-输入标点符号
-
-### 切换输入法
-
-学会切换输入法
-
-输入回车和删除键
-
-![enter.jpg](.\images\enter.jpg)
-
-### 复制和粘贴
-
-使用复制和粘贴快捷键
-
-Copy: Ctrl+C
-
-Paste: Ctrl+V
-
-Tips: 学生常混淆快捷键，将复制按成粘贴，所以以键盘方位的可视化助其操作
-
-Susie小故事时间：
-
-为什么复制是Ctrl+C而不是V呢？小朋友们猜一猜。
-
-因为当初设计键盘的人为了让人们不会记错复制和粘贴的快捷键，特地按先复制后粘贴的顺序设计的C键和V键。
-
-问小朋友班级人数；这个故事很少有人知道，你现在是你们班里30个人里唯一知道这个小故事的人了，真棒！
-
-## 鼠标练习
-
-### 鼠标移动
-
-将鼠标光标移动到指定位置
-
-### 点击和双击
-
-为了使学生能区分左键点击和右键点击，使其复制下列代码并点击运行后，鼠标点击output区域。
-
-```javascript
-document.onmousedown = function(event) {
-    var oEvent = event; //IE浏览器直接使用event或者window.event得到事件本身。IE下鼠标的 左键是1 ，  右键是2   ff和chrome下 鼠标左键是0  右键是2
-    if (oEvent.button == 0) {
-        alert('鼠标左键');
-    }
-    if (oEvent.button == 2) {
-        alert('鼠标右键');
-    }
-};
-```
-
-![leftClick](.\images\leftClick.png)
-
-![right](.\images\rightClick.png)
-
-### 选中
-
-To do
-
-使用鼠标选中物体
-
-### 右键菜单
-
-使用鼠标完成复制、剪切和粘贴操作
-
-目标：熟悉鼠标操作
-
-下面的代码是一个鼠标点击小游戏，复制以下代码到编辑器中，运行后，在规定时间内达到20分即及格。
-
-```javascript
-var c = new Circle();
-
-a = new Date();
-score = 0;
-
-!function () {
-    canvas.clear();
-    c.draw();
-    score.toString().draw();
-    var t = (new Date() - a)/1000;
-    (""+t+'s').draw(1, 50);
-    if(t < 30)
-       nextFrame(arguments.callee)
-}();
-
-c.click = function(){
-    c.x = 50 + 300 * Math.random();
-    c.y = 50 + 500 * Math.random();
-    score++;
-};
-```
-
-| 分数    | 评价   |      |
-| ----- | ---- | ---- |
-| 20-29 | 及格   |      |
-| 30-39 | 良好   |      |
-| 40+   | 优秀   |      |
-
-### 
-
-
-
