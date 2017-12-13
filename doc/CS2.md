@@ -601,6 +601,8 @@ comments
 
 变量的命名规则
 
+
+
 变量的命名规范
 
 ### 变量赋值和传递
@@ -903,6 +905,298 @@ s_brush.click = m_brush.click = l_brush.click = brush_click;
 clearBtn.click = clear;
 Loop();
 ```
+
+#### 赛车游戏
+
+```javascript
+canvas.width = 350;
+canvas.height = 500;
+
+var track = new Sprite('http://ou1htxdl4.bkt.clouddn.com/saidao.jpg',0,0,350,500);
+var car = new Sprite('http://ou1htxdl4.bkt.clouddn.com/car.png',200,330,80,160);
+var carA = new Sprite('http://ou1htxdl4.bkt.clouddn.com/car.png',70,100,80,160);
+var speed = 6;
+var moveX = 0;
+var acc = false;
+var dec = false;
+
+function Loop() {
+    if (acc) speed += 0.1;
+    if (dec) speed -= 0.1;
+    car.x += moveX;
+    track.move(speed);
+    carA.move(4);
+    car.draw();
+    nextFrame(Loop);
+}
+
+function trackMove(speed) {
+    
+    this.y += speed;
+    if (this.y > 0) this.y = -this.height;
+    this.translate(0,0);
+    this.draw();
+    this.translate(0,this.height);
+    this.draw();
+}
+
+function carMove(mySpeed) {
+    this.y += speed - mySpeed;
+    if (this.y > canvas.height) {
+        this.y = -this.height;
+        this.x = Math.random() * (canvas.width - this.width);
+    }
+    this.translate(0,0);
+    this.draw();
+}
+
+Key["ArrowLeft"].down = function() {
+    moveX = -3;
+}
+
+Key["ArrowRight"].down = function() {
+    moveX = 3;
+}
+
+Key["ArrowUp"].down = function() {
+    acc = true;
+}
+
+Key["ArrowDown"].down = function() {
+    dec = true;
+}
+
+Key["ArrowLeft"].up = function() {
+    moveX = 0;
+}
+
+Key["ArrowRight"].up = function() {
+    moveX = 0;
+}
+
+Key["ArrowUp"].up = function() {
+    acc = false;
+}
+
+Key["ArrowDown"].up = function() {
+    dec = false;
+}
+
+carA.move = carMove;
+track.move = trackMove;
+Loop();
+```
+
+#### 圣诞大作战
+
+```javascript
+canvas.width = 600;
+canvas.height = 400;
+
+var bg = new Sprite('http://ou1htxdl4.bkt.clouddn.com/crs.jpg',0,-130,600,530);
+var p1 = new Sprite('http://ou1htxdl4.bkt.clouddn.com/santa1.png',200,200,70,80);
+var p2 = new Sprite('http://ou1htxdl4.bkt.clouddn.com/santa2.png',500,200,70,80);
+var ball = new Sprite("http://ou1htxdl4.bkt.clouddn.com/c_ball.png",100, 260, 40,40);
+var tree = new Sprite("http://ou1htxdl4.bkt.clouddn.com/c_tree.png",250, 200, 100, 200);
+var score1 = 0;
+var score2 = 0;
+var txt = new Text();
+p1.moveY = 0;
+p2.moveY = 0;
+p1.moveX = 0;
+p2.moveX = 0;
+tree.moveY = 0;
+ball.moveX = 0;
+ball.moveY = 0;
+
+function Loop() {
+    //1、清理画布
+    canvas.clear();
+    
+    //2、画出背景
+    bg.draw();
+    
+    p1.drop();
+    p2.drop();
+    ball.drop();
+    
+    
+    if (ball.collide(tree)) {
+        ball.hit(tree);
+    }
+    if (p1.collide(ball)) {
+        ball.hit(p1);
+        score2 += 1;
+    }
+    if (p2.collide(ball)) {
+        ball.hit(p2);
+        score1 += 1;
+    }
+    
+    //球碰到两壁反弹
+    if ((ball.x < 0) || ball.x > (canvas.width - ball.width))
+    ball.moveX = -ball.moveX;
+    
+    //3、画出所有游戏元素
+    p1.draw();
+    p2.draw();
+    tree.draw();
+    ball.draw();
+    txt.src = "P1:" + score1 + "         P2:" + score2;
+    txt.x = 230;
+    txt.draw();
+    nextFrame(Loop);
+}
+
+//设置按键
+Key['a'].down = function() {
+    p1.moveX = -3;
+}
+
+Key['d'].down = function() {
+    p1.moveX = 3;
+}
+
+Key['a'].up = function() {
+    p1.moveX = 0;
+}
+
+Key['d'].up = function() {
+    p1.moveX = 0;
+}
+
+Key['w'].down = function() {
+    p1.jump();
+}
+
+Key['ArrowLeft'].down = function() {
+    p2.moveX = -3;
+}
+
+Key['ArrowRight'].down = function() {
+    p2.moveX = 3;
+}
+
+Key['ArrowLeft'].up = function() {
+    p2.moveX = 0;
+}
+
+Key['ArrowRight'].up = function() {
+    p2.moveX = 0;
+}
+
+Key['ArrowUp'].down = function() {
+    p2.jump();
+}
+
+function Drop() {
+    this.x += this.moveX;
+    this.y += this.moveY;
+    if (this.y < (canvas.height - this.height)) this.moveY += 0.2;
+    else {
+        this.moveY = 0;
+        // this.moveX = 0;
+    }
+}
+
+function Jump() {
+    if (this.y >= (canvas.height - this.height)) {
+        this.moveY = -5;
+    }
+}
+
+function Hit(player) {
+    if ((this.x+this.width/2) >= (player.x + player.width/2)) this.moveX = 4;
+    else this.moveX = -4;
+    this.moveY = -9;
+}
+
+ball.hit = Hit;
+ball.drop = p1.drop = p2.drop = Drop;
+p1.jump = p2.jump = Jump;
+Loop();
+```
+
+#### 时钟王国
+
+```javascript
+canvas.height = 400;
+canvas.width = 600;
+
+var dashboard = new Sprite("http://ou1htxdl4.bkt.clouddn.com/zhongpan-01.png",184,106,233,233);
+var clk = new Sprite("http://ou1htxdl4.bkt.clouddn.com/L1U3/images/clock_1.png",150,50,300,350);
+var bg = new Sprite("http://ou1htxdl4.bkt.clouddn.com/L1U3/images/234697-130203193G545.jpg",0,-10,600,450);
+
+var h_line = new Line(300, 225, 300, 165);
+var m_line = new Line(300, 225, 300, 145);
+var s_line = new Line(300, 225, 300, 115);
+
+s_line.setAnchor(300,225);
+m_line.setAnchor(300,225);
+h_line.setAnchor(300,225);
+
+s_line.rotate(0);
+m_line.rotate(60);
+h_line.rotate(90);
+
+s_line.strokeStyle = "green";
+m_line.strokeStyle = "red";
+h_line.strokeStyle = "yellow";
+
+s_line.lineWidth = 4;
+m_line.lineWidth = 7;
+h_line.lineWidth = 10;
+
+var h, m, s;
+var h_angle,m_angle,s_angle;
+var t;
+
+function updateTime(){
+  t = new Date();
+  h = t.getHours();
+  m = t.getMinutes();
+  s = t.getSeconds();
+    
+  //任务2 通过时间计算三根针的角度
+  s_angle = 6 * s;
+  m_abgle = 6 * m;
+  h_angle = 30 * h;
+  //任务2结束
+  
+}
+function main(){
+  updateTime();
+  canvas.clear();
+ 
+  //任务3 让三根针转动
+  s_line.rotate(s_angle);
+  m_line.rotate(m_angle);
+  h_line.rotate(h_angle);
+  //任务3结束
+
+
+  bg.draw();
+  clk.draw();
+  
+  
+  //任务4 画出表盘
+  dashboard.draw();
+  //任务4结束
+  
+  
+  //任务1 画出指针
+  s_line.draw();
+  m_line.draw();
+  h_line.draw();
+  //任务1结束
+  nextFrame(main);
+}
+
+loadRssAndRun(main);
+
+```
+
+
 
 #### 练习：画出指针
 
