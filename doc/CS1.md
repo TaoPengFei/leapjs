@@ -10,13 +10,29 @@ Learning Coding with LeapLearner
 
 ## 什么是编程
 
-### 编码
+### 什么是编码
 
-如果我们现在不能说话，只能靠手势交流。我们规定竖起一根大拇指是我的意思，竖起一根食指是你的意思，把大拇指和食指一起竖起来是吃饭的意思，竖起无名指是句号，竖起小拇指是问号。那老师问你：“你吃饭了吗？”， 是不是要先竖起一根食指，然后放下食指，接着把大拇指和食指一起竖起来，然后把它们放下，接着竖起小拇指，你就能明白老师的意思啦？如果你要回答老师：“我吃饭了。”是不是要先竖起一根大拇指，然后放下大拇指，接着把大拇指和食指一起竖起来，然后把它们放下，接着竖起无名指，老师就能明白你的意思啦。我们跟计算机说话，它并不能听懂，所以我们要有一种与计算机交流的方法，这就是编码。而程序就是由很多编码组成的。
+人与人之间使用人类的语言进行交流。猫咪与猫咪之间使用猫类的语言进行交流。
+
+**想一想**
+
+- 你能用人类的语言跟猫咪说话吗？
+- 猫咪能用猫类的语言跟你说话吗？
+- 你能用人类的语言跟计算机说话吗？
+
+![Cat_think](./images/Cat_think.png)
 
 ### 重要性
 
-网络的普及，使得人们被一分为二：告诉电脑该怎么做的人，以及被电脑告知该怎么做的人。我们通过编程与计算机交流。
+我们通过编写代码与计算机交流。
+
+如果我们现在不能说话，只能靠手势交流。我们规定竖起一根大拇指是我的意思，竖起一根食指是你的意思，把大拇指和食指一起竖起来是吃饭的意思，竖起无名指是句号，竖起小拇指是问号。那老师问你：“你吃饭了吗？”， 是不是要先竖起一根食指，然后放下食指，接着把大拇指和食指一起竖起来，然后把它们放下，接着竖起小拇指，你就能明白老师的意思啦？如果你要回答老师：“我吃饭了。”是不是要先竖起一根大拇指，然后放下大拇指，接着把大拇指和食指一起竖起来，然后把它们放下，接着竖起无名指，老师就能明白你的意思啦。我们跟计算机说话，它并不能听懂，所以我们要有一种与计算机交流的方法，这就是编码。而程序就是由很多编码组成的。
+
+**想一想**
+
+- 如何用不同的水果来表示`“我吃饭了。”`
+
+
 
 ### 编程的应用
 
@@ -42,7 +58,7 @@ Learning Coding with LeapLearner
 
 下面是立乐IDE的一个截图，可以看见分成了左右2个区域，左边是展示区域，右边是代码输入区域。我们在代码输入区域将代码输入完成后，如果一切正常，点击左上角`运行`按钮就可以看到你写的代码的结果了。
 
-![ide](.\images\ide.png)
+![ide](./images/ide.png)
 
 #### 功能说明
 
@@ -60,7 +76,7 @@ Learning Coding with LeapLearner
 
 我们将左上角的坐标定义为`(0,0)`，把水平轴为`x轴`，把垂直坐标定义为`y轴`。平面上的任意一个点，在`x轴`上的投影称之为该点的`x坐标`，同样，在`y轴`上的投影即`y坐标`。因此，整个坐标系看起来像是这个样子的。横方向有一条轴，竖方向也有一条轴。
 
-![pos_xy](.\images\pos_xy.png)
+![pos_xy](./images/pos_xy.png)
 
 **说一说**
 
@@ -87,7 +103,7 @@ Learning Coding with LeapLearner
 
 立乐项目组开发了一个跑酷游戏，明天就要上线了，但是还剩最后一点工作没有完成，就是摆放障碍物的位置。我们需要你来帮忙摆放障碍物的位置，来完成这个项目。在这里，障碍物的位置，就是由坐标来决定的，修改代码中各个障碍物的位置，完成这个项目吧。
 
-![runner](.\images\runner.png)
+![runner](./images/runner.png)
 
 **试一试**
 
@@ -101,19 +117,19 @@ Learning Coding with LeapLearner
 
 有一天立乐动物园里来了一位大坏蛋魔法师，他使用变矮魔法，把小动物们都变矮了。让我们使用编程的魔法，帮助他们复原吧。
 
-![Einstein_angry.png](.\images\Einstein_angry.png)
+![Einstein_angry.png](./images/Einstein_angry.png)
 
 ​											大坏蛋魔法师
 
-![](.\images\normalAnimals.png)
+![](./images/normalAnimals.png)
 
 ​										动物们正常的身高
 
-![](.\images\magicBefore.png)
+![](./images/magicBefore.png)
 
 ​						大坏蛋魔法师看到了可爱的小动物们准备使用变矮魔法
 
-![](.\images\magicAfter.png)
+![](./images/magicAfter.png)
 
 ​						大坏蛋魔法师使用了变矮魔法后小动物们都变矮了！
 
@@ -160,9 +176,9 @@ document.onmousedown = function(event) {
 };
 ```
 
-![leftClick](.\images\leftClick.png)
+![leftClick](./images/leftClick.png)
 
-![right](.\images\rightClick.png)
+![right](./images/rightClick.png)
 
 ### 选中
 
@@ -207,6 +223,73 @@ c.click = function(){
 | 30-39 | 良好   |      |
 | 40+   | 优秀   |      |
 
+## 交互
+
+### 鼠标点击事件
+
+### 任务：热带雨林射击
+
+把下面的代码复制并运行，瞄准红点靶心，试一试自己能拿几分。
+
+```javascript
+var frogBacGro = new Sprite('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg', 0, 0, 650, 332); //background
+var tiger = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_tiger.png', 145, 230, 95, 103);
+var fox = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_fox.png', 240, 230, 95, 103);
+var eagle = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_eagle.png', 335, 230, 95, 103);
+var snake = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png', 430, 230, 95, 103);
+var score = 0;
+
+function main() {
+    canvas.clear();
+    frogBacGro.draw();
+    tiger.draw();
+    fox.draw();
+    eagle.draw();
+    snake.draw();
+
+
+    drawPoint();
+
+}
+
+Mouse.move = function () {
+    loadRssAndRun(main);
+    var point = new Point(Mouse.x, Mouse.y);
+    point.r = 5;
+    point.fillStyle = 'red';
+    point.fill();
+    drawPoint();
+    var circle = new Circle(Mouse.x, Mouse.y, 100);
+    var lineX = new Line(Mouse.x-100, Mouse.y, Mouse.x+100, Mouse.y);
+    lineX.strokeStyle = "black";
+    lineX.setLineDash([5,15]);
+    lineX.draw();
+    var lineY = new Line(Mouse.x, Mouse.y-100, Mouse.x, Mouse.y+100);
+    lineY.strokeStyle = 'black';
+    lineY.setLineDash([5,15]);
+    lineY.draw();
+    circle.strokeStyle = 'black';
+    circle.stroke(); 
+    var text = new Text();
+}
+Mouse.click = function () {
+    score += 10;
+}
+
+function drawPoint() {
+    var pointX = tiger.x + 47.5;
+    var pointY = 281.5;
+    var n = 95; //95+47.5;
+    for (i = 0; i < 4; i++) {
+        var point = new Point(pointX + i * n, pointY);
+        point.r = 5;
+        point.fillStyle = 'red';
+        point.fill();
+    }
+}
+loadRssAndRun(main);
+```
+
 ## 键盘练习
 
 目标：熟悉键盘操作
@@ -227,7 +310,7 @@ c.click = function(){
 
 输入回车和删除键
 
-![enter.jpg](.\images\enter.jpg)
+![enter.jpg](./images/enter.jpg)
 
 ### 复制和粘贴
 
@@ -246,6 +329,79 @@ Susie小故事时间：
 因为当初设计键盘的人为了让人们不会记错复制和粘贴的快捷键，特地按先复制后粘贴的顺序设计的C键和V键。
 
 问小朋友班级人数；这个故事很少有人知道，你现在是你们班里30个人里唯一知道这个小故事的人了，真棒！
+
+## 输入
+
+### 键盘输入
+
+### 挑战：打字游戏
+
+### 中英文字符
+
+在输入的时候要特别注意，在这里，计算机只能识别英文字符，如果输入中文的标点符号，计算机就无法正确识别出来你的命令。
+
+改正下面代码中错误的标点符号，让程序跑起来。
+
+1.
+
+```javascript
+var ball = new Circle（200，200, 50）;
+ball。draw()；
+```
+
+2.
+
+```javascript
+var circle = new Circle(100, 100, 100);
+circle.fillStyle = ‘red’;
+circle.fill（）；
+```
+
+正确答案：
+
+1.
+
+```javascript
+var ball = new Circle(200,200, 50);
+ball.draw();
+```
+
+2.
+
+```javascript
+var circle = new Circle(100, 100, 100);
+circle.fillStyle = 'red';
+circle.fill();
+```
+
+
+
+下面列出了一些常见的错误符号，一般来说，中文的标点符号要比英文标点符号占据的空间更大。
+
+| 符号名称 | 英文标点 | 中文标点 |
+| ---- | ---- | ---- |
+| 句号   | .    | 。    |
+| 逗号   | ,    | ，    |
+| 分号   | ;    | ；    |
+| 圆括号  | ()   | （）   |
+| 单引号  | '    | ‘    |
+| 双引号  | "    | “    |
+
+不过，好在计算机可以帮助我们做这件事情，当你输入一个错误的符号时，计算机会在代码前面提示这个错误，如果发现有错误提示，赶紧看看是不是标点符号出错了呢。
+
+### 复制和粘贴
+
+在学习过程中，我们经常会用到一些命令
+
+选中：
+
+复制：
+
+粘贴：
+
+快捷键
+
+Ctrl + C / V;
 
 ## 颜色
 
@@ -295,7 +451,7 @@ var colArr = ["red","orange","yellow","green","cyan","blue","purple"];//写入�
 
 
 
-![colorLight](.\images\colorLight.png)
+![colorLight](./images/colorLight.png)
 
 ```javascript
 附录全代码：
@@ -376,7 +532,7 @@ c.x = 400;
 c.draw();
 ```
 
-![cs1_fillAndstroke1](.\images\cs1_fillAndstroke2.png)
+![cs1_fillAndstroke1](./images/cs1_fillAndstroke2.png)
 
 按照不同的方法，同样的大小，我们画出来的圆也是不一样的。
 
@@ -420,7 +576,7 @@ var body = new Circle(200, 250, 100);
 body.draw();
 ```
 
-![cs1_snowman1](.\images\cs1_snowman1.png)
+![cs1_snowman1](./images/cs1_snowman1.png)
 
 运行，看雪人的身体是不是出现在屏幕上了。但是呢，雪人的身体是白色的，我们要把它改成白色的。在第一行代码后面加入一行代码，将雪人的颜色修改成为白色。
 
@@ -430,7 +586,7 @@ body.fillStyle = "white";
 body.draw();
 ```
 
-![cs1_snowman2](.\images\cs1_snowman2.png)
+![cs1_snowman2](./images/cs1_snowman2.png)
 
 快看，我们成功的用代码画出了一个白色的雪人身体。接下来，让我们把雪人的头画上去，雪人的头也是一个圆，同样，我们也要将雪人脑袋的颜色改成白色。
 
@@ -440,7 +596,7 @@ head.fillStyle = "white";
 head.draw();
 ```
 
-![cs1_snowman3](.\images\cs1_snowman3.png)
+![cs1_snowman3](./images/cs1_snowman3.png)
 
 再次运行，看雪人的头是不是出现了。接下来，就是雪人的眼睛了，这里我们让雪人的眼睛变成黑色。你可以选择喜欢其他你喜欢的颜色，
 
@@ -462,7 +618,7 @@ eye.fillStyle = "black";
 eye.draw()
 ```
 
-![cs1_snowman4](.\images\cs1_snowman4.png)
+![cs1_snowman4](./images/cs1_snowman4.png)
 
 我的雪人完成了，接下来就到你了。
 
@@ -499,7 +655,7 @@ c.r = 100;
 c.draw(200, 200); // body
 ```
 
-![cs1_paul1](.\images\cs1_paul1.png)
+![cs1_paul1](./images/cs1_paul1.png)
 
 接下来，让我们把保罗的脚们画上去，脚比身体要小很多，所以我要把半径减小。我的保罗有5只脚，让我们依次画出它们来。
 
@@ -512,7 +668,7 @@ c.draw(264, 309); // foot 4
 c.draw(310, 276); // foot 5
 ```
 
-![cs1_paul2](.\images\cs1_paul2.png)
+![cs1_paul2](./images/cs1_paul2.png)
 
 保罗出现了，不过好像它背对着我们，让我们来想个办法让它转过来。在上面加个眼睛和嘴巴。
 
@@ -586,7 +742,7 @@ wheel.draw(120, 200);
 wheel.draw(280, 200);
 ```
 
-![cs1_bus](.\images\cs1_bus.png)
+![cs1_bus](./images/cs1_bus.png)
 
 **说一说**
 
@@ -615,7 +771,7 @@ var rightHand = new Line(320, 150, 250, 220);
 rightHand.draw();
 ```
 
-![cs1_snowman5](.\images\cs1_snowman5.png)
+![cs1_snowman5](./images/cs1_snowman5.png)
 
 **试一试**
 
@@ -670,7 +826,7 @@ var colArr = ["red","orange","yellow","green","cyan","blue","purple"];//写入�
 
 
 
-![colorLight](.\images\colorLight.png)
+![colorLight](./images/colorLight.png)
 
 ````javascript
 附录全代码：
@@ -751,7 +907,7 @@ c.x = 400;
 c.draw();
 ```
 
-![cs1_fillAndstroke1](.\images\cs1_fillAndstroke2.png)
+![cs1_fillAndstroke1](./images/cs1_fillAndstroke2.png)
 
 按照不同的方法，同样的大小，我们画出来的圆也是不一样的。
 
@@ -767,11 +923,11 @@ fillStyle是图形的填充颜色，strokeStyle是图形的变长颜色，利用
 
 我们现在就有一个变量盒子，它的名字叫box，因为它可以用来放东西，所以我们先往里面放一个苹果吧。
 
-![variableA.png](.\images\variableA.png)
+![variableA.png](./images/variableA.png)
 
 放了一个苹果后，叫box的这个变量盒子里面就有了一个苹果。
 
-![variableB.png](.\images\variableB.png)
+![variableB.png](./images/variableB.png)
 
 如果我们再往叫box的这个变量盒子里面放一根香蕉呢？猜一猜会发生什么。
 
@@ -779,7 +935,7 @@ fillStyle是图形的填充颜色，strokeStyle是图形的变长颜色，利用
 
 变量这个盒子的容量很小，里面只能放一个东西。之前我们放的苹果就被计算机扔出去啦。因为塞不下啦。
 
-![](.\images\variableC.png)
+![](./images/variableC.png)
 
 **试一试**
 
@@ -878,7 +1034,7 @@ var sprite = new Sprite('http://static.leaplearner.com/image/image.png', 53, 363
 sprite.draw();
 ```
 
-![cacti](.\images\cacti.png)
+![cacti](./images/cacti.png)
 
 ### 图片的顺序
 
@@ -903,7 +1059,7 @@ frogBacGro.onload = function() {
 };
 ```
 
-![ImageOrder](.\images\ImageOrder.png)
+![ImageOrder](./images/ImageOrder.png)
 
 ### 挑战：动物园I
 
@@ -913,9 +1069,9 @@ frogBacGro.onload = function() {
 
 通过修改图片的宽度和高度来完成放大和缩小。
 
-动物可不是一样大小，我们要让动物变的和他们实际体型一样。（也就说小猫是不可能比大象的图片大的哟）![](.\images\elephant.jpg)
+动物可不是一样大小，我们要让动物变的和他们实际体型一样。（也就说小猫是不可能比大象的图片大的哟）![](./images/elephant.jpg)
 
-![Cat_happy.png](.\images\Cat_happy.png)
+![Cat_happy.png](./images/Cat_happy.png)
 
 让我们找两张动物的图片来试一试吧。
 
@@ -1055,7 +1211,7 @@ music.play();
 
 如何使用音乐素材库: 点击左侧`多媒体`，点击`音乐`，选择你最喜欢的音乐吧!	
 
-![musicGuide](.\images\musicGuide.png)
+![musicGuide](./images/musicGuide.png)
 
 **试一试**
 
@@ -1083,261 +1239,3 @@ for (i = 0; i < urlArr.length; i++) {
     rect2.draw();
 }
 ```
-
-
-
-## 输入
-
-### 键盘输入
-
-### 挑战：打字游戏
-
-### 中英文字符
-
-在输入的时候要特别注意，在这里，计算机只能识别英文字符，如果输入中文的标点符号，计算机就无法正确识别出来你的命令。
-
-改正下面代码中错误的标点符号，让程序跑起来。
-
-1.
-
-```javascript
-var ball = new Circle（200，200, 50）;
-ball。draw()；
-```
-
-2.
-
-```javascript
-var circle = new Circle(100, 100, 100);
-circle.fillStyle = ‘red’;
-circle.fill（）；
-```
-
-正确答案：
-
-1.
-
-```javascript
-var ball = new Circle(200,200, 50);
-ball.draw();
-```
-
-2.
-
-```javascript
-var circle = new Circle(100, 100, 100);
-circle.fillStyle = 'red';
-circle.fill();
-```
-
-
-
-下面列出了一些常见的错误符号，一般来说，中文的标点符号要比英文标点符号占据的空间更大。
-
-| 符号名称 | 英文标点 | 中文标点 |
-| ---- | ---- | ---- |
-| 句号   | .    | 。    |
-| 逗号   | ,    | ，    |
-| 分号   | ;    | ；    |
-| 圆括号  | ()   | （）   |
-| 单引号  | '    | ‘    |
-| 双引号  | "    | “    |
-
-不过，好在计算机可以帮助我们做这件事情，当你输入一个错误的符号时，计算机会在代码前面提示这个错误，如果发现有错误提示，赶紧看看是不是标点符号出错了呢。
-
-### 复制和粘贴
-
-在学习过程中，我们经常会用到一些命令
-
-选中：
-
-复制：
-
-粘贴：
-
-快捷键
-
-Ctrl + C / V;
-
-## 交互
-
-### 鼠标点击事件
-
-### 任务：热带雨林射击
-
-把下面的代码复制并运行，瞄准红点靶心，试一试自己能拿几分。
-
-```javascript
-var frogBacGro = new Sprite('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg', 0, 0, 650, 332); //background
-var tiger = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_tiger.png', 145, 230, 95, 103);
-var fox = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_fox.png', 240, 230, 95, 103);
-var eagle = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_eagle.png', 335, 230, 95, 103);
-var snake = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png', 430, 230, 95, 103);
-var score = 0;
-
-function main() {
-    canvas.clear();
-    frogBacGro.draw();
-    tiger.draw();
-    fox.draw();
-    eagle.draw();
-    snake.draw();
-
-
-    drawPoint();
-
-}
-
-Mouse.move = function () {
-    loadRssAndRun(main);
-    var point = new Point(Mouse.x, Mouse.y);
-    point.r = 5;
-    point.fillStyle = 'red';
-    point.fill();
-    drawPoint();
-    var circle = new Circle(Mouse.x, Mouse.y, 100);
-    var lineX = new Line(Mouse.x-100, Mouse.y, Mouse.x+100, Mouse.y);
-    lineX.strokeStyle = "black";
-    lineX.setLineDash([5,15]);
-    lineX.draw();
-    var lineY = new Line(Mouse.x, Mouse.y-100, Mouse.x, Mouse.y+100);
-    lineY.strokeStyle = 'black';
-    lineY.setLineDash([5,15]);
-    lineY.draw();
-    circle.strokeStyle = 'black';
-    circle.stroke(); 
-    var text = new Text();
-}
-Mouse.click = function () {
-    score += 10;
-}
-
-function drawPoint() {
-    var pointX = tiger.x + 47.5;
-    var pointY = 281.5;
-    var n = 95; //95+47.5;
-    for (i = 0; i < 4; i++) {
-        var point = new Point(pointX + i * n, pointY);
-        point.r = 5;
-        point.fillStyle = 'red';
-        point.fill();
-    }
-}
-loadRssAndRun(main);
-```
-
-
-
-## 键盘练习
-
-目标：熟悉键盘操作
-
-### 大小写
-
-输入10个数字
-
-输入26个字母及大写字幕
-
-### 标点符号
-
-输入标点符号
-
-### 切换输入法
-
-学会切换输入法
-
-输入回车和删除键
-
-![enter.jpg](.\images\enter.jpg)
-
-### 复制和粘贴
-
-使用复制和粘贴快捷键
-
-Copy: Ctrl+C
-
-Paste: Ctrl+V
-
-Tips: 学生常混淆快捷键，将复制按成粘贴，所以以键盘方位的可视化助其操作
-
-Susie小故事时间：
-
-为什么复制是Ctrl+C而不是V呢？小朋友们猜一猜。
-
-因为当初设计键盘的人为了让人们不会记错复制和粘贴的快捷键，特地按先复制后粘贴的顺序设计的C键和V键。
-
-问小朋友班级人数；这个故事很少有人知道，你现在是你们班里30个人里唯一知道这个小故事的人了，真棒！
-
-## 鼠标练习
-
-### 鼠标移动
-
-将鼠标光标移动到指定位置
-
-### 点击和双击
-
-为了使学生能区分左键点击和右键点击，使其复制下列代码并点击运行后，鼠标点击output区域。
-
-```javascript
-document.onmousedown = function(event) {
-    var oEvent = event; //IE浏览器直接使用event或者window.event得到事件本身。IE下鼠标的 左键是1 ，  右键是2   ff和chrome下 鼠标左键是0  右键是2
-    if (oEvent.button == 0) {
-        alert('鼠标左键');
-    }
-    if (oEvent.button == 2) {
-        alert('鼠标右键');
-    }
-};
-```
-
-![leftClick](.\images\leftClick.png)
-
-![right](.\images\rightClick.png)
-
-### 选中
-
-To do
-
-使用鼠标选中物体
-
-### 右键菜单
-
-使用鼠标完成复制、剪切和粘贴操作
-
-目标：熟悉鼠标操作
-
-下面的代码是一个鼠标点击小游戏，复制以下代码到编辑器中，运行后，在规定时间内达到20分即及格。
-
-```javascript
-var c = new Circle();
-
-a = new Date();
-score = 0;
-
-!function () {
-    canvas.clear();
-    c.draw();
-    score.toString().draw();
-    var t = (new Date() - a)/1000;
-    (""+t+'s').draw(1, 50);
-    if(t < 30)
-       nextFrame(arguments.callee)
-}();
-
-c.click = function(){
-    c.x = 50 + 300 * Math.random();
-    c.y = 50 + 500 * Math.random();
-    score++;
-};
-```
-
-| 分数    | 评价   |      |
-| ----- | ---- | ---- |
-| 20-29 | 及格   |      |
-| 30-39 | 良好   |      |
-| 40+   | 优秀   |      |
-
-### 
-
-
-
