@@ -290,7 +290,7 @@ class Text extends Rectangle {
 }
 
 class Sprite extends Rectangle {
-  constructor (src, x, y, w, h) {
+  constructor (src, x = 0, y = 0, w = null, h = null) {
     super(x, y, w, h)
     this.collideW = 0.8
     this.collideH = 0.8
