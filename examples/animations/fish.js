@@ -36,7 +36,15 @@ var Fish = {
 };
         
 Fish.use = function(Colors, Actions){
-    // colors 
+    // default color
+    Colors.background = Colors.background || "white";
+    Colors.stripe = Colors.stripe || "white";
+    Colors.edge = Colors.edge || "#cccccc";
+    Colors.body = Colors.body || "#eeeeee";
+    Colors.eye = Colors.eye || "#ffffff";
+    Colors.pupil = Colors.pupil || "#eeeeee";
+    Colors.fin = Colors.fin || "#cccccc";
+    
     Fish.colors = Colors;
     Fish.background = new Rectangle(0, 0, canvas.width, canvas.height);
     Fish.background.fillStyle = Colors.background;
@@ -47,8 +55,15 @@ Fish.use = function(Colors, Actions){
     }
     
     // Actions
-    Fish.actions.moveX = new Increase(-100, canvas.width+100, Actions.moveX * 20);
-    Fish.actions.moveY = new Swing(50, canvas.height-50, Actions.moveY * 20); 
+    if(Actions.moveX)
+        Fish.actions.moveX = new Increase(-100, canvas.width+100, Actions.moveX * 20);
+    else
+        Fish.actions.moveX = { val: canvas.width/2 };
+    if(Actions.moveY)    
+        Fish.actions.moveY = new Swing(50, canvas.height-50, Actions.moveY * 20);
+    else
+        Fish.actions.moveY = { val: canvas.height/2 };
+    
     Fish.actions.wave  = new Swing(0, 10, Actions.wave * 10);
     Fish.actions.wink  = new Swing(0, 15, Actions.wink * 5);
     Fish.actions.breath= new Swing(0, 10, Actions.breath);
@@ -87,8 +102,8 @@ Fish.update = function(){
     Fish.eye.strokeStyle = Fish.colors.edge;
     Fish.eye.lineWidth = 3;
     
-    Fish.eyeBall = new Circle (x+90, y-20, 10 - wink/5);
-    Fish.eyeBall.fillStyle = Fish.colors.eyeBall;
+    Fish.pupil = new Circle (x+90, y-20, 10 - wink/5);
+    Fish.pupil.fillStyle = Fish.colors.pupil;
 
     Fish.fin = new Polygon(
         x,      y + 20, 
@@ -120,7 +135,7 @@ Fish.draw = function(){
     Fish.body.fill();
     Fish.stripe.draw();
     Fish.eye.draw();
-    Fish.eyeBall.fill();
+    Fish.pupil.fill();
     Fish.fin.fill();
     Fish.mouth.fill();
 };
@@ -134,25 +149,24 @@ function loop(){
 /////////////////////////////////////////////////////////
 
 var Colors = {
-    background: "cyan",
-    body: "yellow",
+    background: "",
+    body: "",
     
-    stripe: "white",
-    edge: "brown",
+    stripe: "",
+    edge: "",
     
-    eye: "white",
-    eyeBall: "black",
+    eye: "",
+    pupil: "",
     
-    fin: "#ffee00",
-    mouth: "yellow"
+    fin: ""
 };
 
 var Actions = {
-    moveX: 10,
-    moveY: 2,
-    wave: 5,
-    wink: 10,
-    breath: 10,
+    moveX: 0,
+    moveY: 0,
+    wave: 0,
+    wink: 0,
+    breath: 0,
 };
 
 Fish.use(Colors, Actions);
