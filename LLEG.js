@@ -891,6 +891,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resource__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__changingNumber__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basicDraw__ = __webpack_require__(12);
+
+
+
 
 
 
@@ -928,6 +933,29 @@ window.RGB = __WEBPACK_IMPORTED_MODULE_6__colors__["c" /* RGB */]
 window.RGBA = __WEBPACK_IMPORTED_MODULE_6__colors__["d" /* RGBA */]
 window.HSL = __WEBPACK_IMPORTED_MODULE_6__colors__["a" /* HSL */]
 window.HSLA = __WEBPACK_IMPORTED_MODULE_6__colors__["b" /* HSLA */]
+
+// VARS
+window.Swing = __WEBPACK_IMPORTED_MODULE_7__changingNumber__["c" /* Swing */]
+window.Increase = __WEBPACK_IMPORTED_MODULE_7__changingNumber__["a" /* Increase */]
+window.Sine = __WEBPACK_IMPORTED_MODULE_7__changingNumber__["b" /* Sine */]
+
+window.background = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["a" /* background */]
+window.noFill =  __WEBPACK_IMPORTED_MODULE_8__basicDraw__["i" /* noFill */]
+window.noStroke = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["j" /* noStroke */]
+window.fill = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["d" /* fill */]
+window.stroke = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["o" /* stroke */]
+window.lineWidth = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["h" /* lineWidth */]
+window.rectangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["n" /* rectangle */]
+window.circle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["b" /* circle */]
+window.line = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["g" /* line */]
+window.point = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["l" /* point */]
+window.polygon = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["m" /* polygon */]
+window.triangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["q" /* triangle */]
+window.ellipse = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["c" /* ellipse */]
+window.image = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["f" /* image */]
+window.text = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["p" /* text */]
+window.font = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["e" /* font */]
+window.playSound = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["k" /* playSound */]
 
 
 /***/ }),
@@ -1455,6 +1483,182 @@ function HSL (h, s, l) {
 function HSLA (h, s, l, a) {
   h = Math.floor(h)
   return `hsla(${h}, ${s * 100}%, ${l * 100}%, ${a})`
+}
+
+
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Swing; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Increase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Sine; });
+class Swing {
+  constructor (min, max, speed) {
+    this.min = min;
+    this.max = max;
+    this.cycle = (max - min)/speed * 2000;
+    this.t = new Date().getTime();
+  }
+
+  [Symbol.toPrimitive](hint) {
+    var deltaT = (new Date().getTime() - this.t) % this.cycle;
+    var x = (this.max - this.min) * 2 * deltaT / this.cycle + this.min;
+    if(deltaT > this.cycle/2) return 2*this.max - x;
+    else return x;
+  }
+
+}
+
+class Increase {
+  constructor (min, max, speed) {
+    this.min = min;
+    this.max = max;
+    this.cycle = (max - min)/speed * 1000;
+    this.t = new Date().getTime();
+  }
+
+  [Symbol.toPrimitive](hint) {
+    var deltaT = (new Date().getTime() - this.t) % this.cycle;
+    return (this.max - this.min) * deltaT / this.cycle + this.min;
+  }
+}
+
+class Sine {
+  constructor (min, max, speed) {
+    this.min = min;
+    this.max = max;
+    this.cycle = (max - min)/speed * 2000;
+    this.t = new Date().getTime();
+  }
+
+  [Symbol.toPrimitive](hint) {
+    var deltaT = (new Date().getTime() - this.t) % this.cycle;
+    return (this.max + this.min) / 2 + 
+      (this.max - this.min) / 2 * Math.sin(deltaT/this.cycle * Math.PI * 2)
+  }
+}
+
+
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return background; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return noFill; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return noStroke; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return fill; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return stroke; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return lineWidth; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return rectangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return circle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return line; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return point; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return polygon; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return triangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ellipse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return image; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return text; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return font; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return playSound; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+
+
+function background(r, g, b) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  fill(r, g, b)
+  rectangle(0, 0, canvas.width, canvas.height)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+}
+
+function noFill() { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = RGBA(0, 0, 0, 0) }
+function noStroke () { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = RGBA(0, 0, 0, 0) }
+
+function fill(r, g, b) {
+  if(arguments.length == 1)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = r
+  else
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = RGB(r, g, b) 
+}
+
+function stroke(r, g, b) { 
+  if(arguments.length == 1)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = r
+  else
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = RGB(r, g, b) 
+}
+
+function lineWidth(thickness) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = thickness }
+
+function rectangle(x, y, w, h) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].rect(x, y, w, h)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+}
+
+function circle(x, y, r) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].arc(x, y, r, 0, 2 * Math.PI)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+}
+
+function line(x1, y1, x2, y2) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(x1, y1)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(x2, y2)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+}
+
+function point(x, y){ circle(x, y, 2) }
+
+function polygon() {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(arguments[0], arguments[1])
+  for(let i=2; i<arguments.length-1; i+=2)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i+1])
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+}
+
+var triangle = polygon
+
+function ellipse(x, y, rX, rY) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].ellipse(x, y, rX, rY, 0, 0, Math.PI * 2)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+}
+
+function image(src, x, y, w, h) {
+  let img = new Image()
+  img.src = src
+  if (w && h) {
+      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y, w, h)
+  } else {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y)
+  }
+}
+
+function text(src, x, y) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y) }
+
+function font(size, font) {
+  font = font || 'Arial'
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px ' + font
+}
+
+function playSound(sound) {
+  var m = new Audio()
+  m.src = sound
+  m.play()
 }
 
 

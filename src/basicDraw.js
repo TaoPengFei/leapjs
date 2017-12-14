@@ -1,34 +1,4 @@
-let canvas = document.createElement('canvas')
-let p = document.createElement('p')
-
-canvas.style = 'border: 1px solid #d3d3d3;'
-p.style = 'color: orange; position: absolute; bottom: 23px;'
-
-document.body.appendChild(canvas)
-document.body.appendChild(p)
-
-let ctx = canvas.getContext('2d')
-
-function resize(width, height) {
-  canvas.width = width || window.innerWidth - 2 // borders size
-  canvas.height = height || window.innerHeight - 60 // p, height
-}
-
-resize()
-
-function RGB (r, g, b) {
-  r = Math.floor(r)
-  g = Math.floor(g)
-  b = Math.floor(b)
-  return 'rgb(' + r + ', ' + g + ', ' + b + ')' 
-}
-
-function RGBA (r, g, b, a) {
-  r = Math.floor(r)
-  g = Math.floor(g)
-  b = Math.floor(b)
-  return 'rgb(' + r + ', ' + g + ', ' + b + ', ' + a + ')' 
-}
+import { ctx } from './canvas'
 
 function background(r, g, b) {
   ctx.save()
@@ -40,8 +10,20 @@ function background(r, g, b) {
 function noFill() { ctx.fillStyle = RGBA(0, 0, 0, 0) }
 function noStroke () { ctx.strokeStyle = RGBA(0, 0, 0, 0) }
 
-function fill(r, g, b) { ctx.fillStyle = RGB(r, g, b) }
-function stroke(r, g, b) { ctx.strokeStyle = RBG(r, g, b) }
+function fill(r, g, b) {
+  if(arguments.length == 1)
+    ctx.fillStyle = r
+  else
+    ctx.fillStyle = RGB(r, g, b) 
+}
+
+function stroke(r, g, b) { 
+  if(arguments.length == 1)
+    ctx.strokeStyle = r
+  else
+    ctx.fillStyle = RGB(r, g, b) 
+}
+
 function lineWidth(thickness) { ctx.lineWidth = thickness }
 
 function rectangle(x, y, w, h) {
@@ -93,6 +75,7 @@ function image(src, x, y, w, h) {
       ctx.drawImage(img, x, y, w, h)
   } else {
     ctx.drawImage(img, x, y)
+  }
 }
 
 function text(src, x, y) { ctx.fillText(src, x, y) }
@@ -108,10 +91,4 @@ function playSound(sound) {
   m.play()
 }
 
-var draw = function(){}
-
-function loop(){
-  canvas.clear()
-  draw()
-  requestAnimationFrame(loop)
-}
+export { background, noFill, noStroke, fill, stroke, lineWidth, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, font, playSound }
