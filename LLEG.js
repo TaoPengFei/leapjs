@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -407,16 +407,16 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onclick = function (e) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resource__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__collision__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__collision__ = __webpack_require__(9);
 
 
 
 
 
 
-const clone = __webpack_require__(9)
+const clone = __webpack_require__(10)
 
 class Shape {
   constructor () {
@@ -883,6 +883,42 @@ function check () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return RGB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return RGBA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HSL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HSLA; });
+function RGB (r, g, b) {
+  r = Math.floor(r)
+  g = Math.floor(g)
+  b = Math.floor(b)
+  return 'rgb(' + r + ', ' + g + ', ' + b + ')' 
+}
+
+function RGBA (r, g, b, a) {
+  r = Math.floor(r)
+  g = Math.floor(g)
+  b = Math.floor(b)
+  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')' 
+}
+
+function HSL (h, s, l) {
+  h = Math.floor(h)
+  return `hsl(${h}, ${s * 100}%, ${l * 100}%)`
+}
+
+function HSLA (h, s, l, a) {
+  h = Math.floor(h)
+  return `hsla(${h}, ${s * 100}%, ${l * 100}%, ${a})`
+}
+
+
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(2);
@@ -890,7 +926,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shapes__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resource__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__changingNumber__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basicDraw__ = __webpack_require__(12);
 
@@ -959,7 +995,7 @@ window.playSound = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["k" /* playSound */]
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1041,7 +1077,7 @@ class Transform {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1191,7 +1227,7 @@ function pointInShape (p, shape) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 var clone = (function() {
@@ -1453,42 +1489,6 @@ if (typeof module === 'object' && module.exports) {
 
 
 /***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return RGB; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return RGBA; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HSL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HSLA; });
-function RGB (r, g, b) {
-  r = Math.floor(r)
-  g = Math.floor(g)
-  b = Math.floor(b)
-  return 'rgb(' + r + ', ' + g + ', ' + b + ')' 
-}
-
-function RGBA (r, g, b, a) {
-  r = Math.floor(r)
-  g = Math.floor(g)
-  b = Math.floor(b)
-  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')' 
-}
-
-function HSL (h, s, l) {
-  h = Math.floor(h)
-  return `hsl(${h}, ${s * 100}%, ${l * 100}%)`
-}
-
-function HSLA (h, s, l, a) {
-  h = Math.floor(h)
-  return `hsla(${h}, ${s * 100}%, ${l * 100}%, ${a})`
-}
-
-
-
-
-/***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1498,47 +1498,46 @@ function HSLA (h, s, l, a) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Sine; });
 class Swing {
   constructor (min, max, speed) {
-    this.min = min;
-    this.max = max;
-    this.cycle = (max - min)/speed * 2000;
-    this.t = new Date().getTime();
+    this.min = min
+    this.max = max
+    this.cycle = (max - min) / speed * 2000
+    this.t = new Date().getTime()
   }
 
-  [Symbol.toPrimitive](hint) {
-    var deltaT = (new Date().getTime() - this.t) % this.cycle;
-    var x = (this.max - this.min) * 2 * deltaT / this.cycle + this.min;
-    if(deltaT > this.cycle/2) return 2*this.max - x;
-    else return x;
+  [Symbol.toPrimitive] (hint) {
+    var deltaT = (new Date().getTime() - this.t) % this.cycle
+    var x = (this.max - this.min) * 2 * deltaT / this.cycle + this.min
+    if (deltaT > this.cycle / 2) return 2 * this.max - x
+    else return x
   }
-
 }
 
 class Increase {
   constructor (min, max, speed) {
-    this.min = min;
-    this.max = max;
-    this.cycle = (max - min)/speed * 1000;
-    this.t = new Date().getTime();
+    this.min = min
+    this.max = max
+    this.cycle = (max - min) / speed * 1000
+    this.t = new Date().getTime()
   }
 
-  [Symbol.toPrimitive](hint) {
-    var deltaT = (new Date().getTime() - this.t) % this.cycle;
-    return (this.max - this.min) * deltaT / this.cycle + this.min;
+  [Symbol.toPrimitive] (hint) {
+    var deltaT = (new Date().getTime() - this.t) % this.cycle
+    return (this.max - this.min) * deltaT / this.cycle + this.min
   }
 }
 
 class Sine {
   constructor (min, max, speed) {
-    this.min = min;
-    this.max = max;
-    this.cycle = (max - min)/speed * 2000;
-    this.t = new Date().getTime();
+    this.min = min
+    this.max = max
+    this.cycle = (max - min) / speed * 2000
+    this.t = new Date().getTime()
   }
 
-  [Symbol.toPrimitive](hint) {
-    var deltaT = (new Date().getTime() - this.t) % this.cycle;
-    return (this.max + this.min) / 2 + 
-      (this.max - this.min) / 2 * Math.sin(deltaT/this.cycle * Math.PI * 2)
+  [Symbol.toPrimitive] (hint) {
+    var deltaT = (new Date().getTime() - this.t) % this.cycle
+    return (this.max + this.min) / 2 +
+      (this.max - this.min) / 2 * Math.sin(deltaT / this.cycle * Math.PI * 2)
   }
 }
 
@@ -1568,62 +1567,57 @@ class Sine {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return font; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return playSound; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__colors__ = __webpack_require__(6);
 
 
-function background(r, g, b) {
+
+function background (r, g, b) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
   fill(r, g, b)
-  rectangle(0, 0, canvas.width, canvas.height)
+  rectangle(0, 0, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
-function noFill() { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = RGBA(0, 0, 0, 0) }
-function noStroke () { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = RGBA(0, 0, 0, 0) }
+function noFill () { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["d" /* RGBA */])(0, 0, 0, 0) }
+function noStroke () { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["d" /* RGBA */])(0, 0, 0, 0) }
 
-function fill(r, g, b) {
-  if(arguments.length == 1)
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = r
-  else
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = RGB(r, g, b) 
+function fill (r, g, b) {
+  if (arguments.length === 1) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = r } else { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["c" /* RGB */])(r, g, b) }
 }
 
-function stroke(r, g, b) { 
-  if(arguments.length == 1)
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = r
-  else
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = RGB(r, g, b) 
+function stroke (r, g, b) {
+  if (arguments.length === 1) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = r } else { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["c" /* RGB */])(r, g, b) }
 }
 
-function lineWidth(thickness) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = thickness }
+function lineWidth (thickness) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = thickness }
 
-function rectangle(x, y, w, h) {
+function rectangle (x, y, w, h) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].rect(x, y, w, h)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
 }
 
-function circle(x, y, r) {
+function circle (x, y, r) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].arc(x, y, r, 0, 2 * Math.PI)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
 }
 
-function line(x1, y1, x2, y2) {
+function line (x1, y1, x2, y2) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(x1, y1)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(x2, y2)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
 }
 
-function point(x, y){ circle(x, y, 2) }
+function point (x, y) { circle(x, y, 2) }
 
-function polygon() {
+function polygon () {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(arguments[0], arguments[1])
-  for(let i=2; i<arguments.length-1; i+=2)
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i+1])
+  for (let i = 2; i < arguments.length - 1; i += 2) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i + 1]) }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
@@ -1631,31 +1625,31 @@ function polygon() {
 
 var triangle = polygon
 
-function ellipse(x, y, rX, rY) {
+function ellipse (x, y, rX, rY) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].ellipse(x, y, rX, rY, 0, 0, Math.PI * 2)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
 }
 
-function image(src, x, y, w, h) {
+function image (src, x, y, w, h) {
   let img = new Image()
   img.src = src
   if (w && h) {
-      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y, w, h)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y, w, h)
   } else {
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y)
   }
 }
 
-function text(src, x, y) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y) }
+function text (src, x, y) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y) }
 
-function font(size, font) {
+function font (size, font) {
   font = font || 'Arial'
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px ' + font
 }
 
-function playSound(sound) {
+function playSound (sound) {
   var m = new Audio()
   m.src = sound
   m.play()
