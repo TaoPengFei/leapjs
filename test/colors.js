@@ -10,7 +10,7 @@ describe('Colors', function () {
       assert.equal(RGB(1, 2, 3), 'rgb(1, 2, 3)')
     })
     it('cannot use decimal numbers', function () {
-      assert.notEqual(RGB(1.1, 2.2, 3.3), 'rgb(1, 2, 3)')
+      assert.equal(RGB(1.1, 2.2, 3.3), 'rgb(1, 2, 3)')
     })
   })
 
@@ -22,7 +22,7 @@ describe('Colors', function () {
       assert.equal(RGBA(1, 2, 3, 0.1), 'rgba(1, 2, 3, 0.1)')
     })
     it('cannot use decimal numbers', function () {
-      assert.notEqual(RGBA(1.1, 2.2, 3.3, 0.2), 'rgba(1, 2, 3, 0.2)')
+      assert.equal(RGBA(1.1, 2.2, 3.3, 0.2), 'rgba(1, 2, 3, 0.2)')
     })
   })
 
