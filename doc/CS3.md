@@ -674,10 +674,19 @@ var myAge = 18;
 var myFavouriteBook = 'Javascript';
 ```
 
-**试一试：**
+如果第一个字母是小写，则称之为小驼峰法。如果第一个字母也写成大写，则可以称之为大驼峰法。一般情况下，我们只使用驼峰法就可以了。
+
+试一试：
 
 * 下面的变量名称是否满足驼峰法的要求。
 * 如果不是，将下面的变量名称改成驼峰法。
+
+```javascript
+var orange = 1;
+var 
+```
+
+
 
 #### 变量的名称
 
@@ -912,6 +921,72 @@ Mouse.move
 手机上的点击事件
 
 和电脑上不同的是，
+
+### 图形触碰
+
+当鼠标移动时，鼠标可能会停留在图形的上方，这个时候，如果我们使用图形的`touched`方法，就可以知道鼠标是不是在图形内。
+
+如果鼠标在图形内，那么方法就会返回一个`true`值，反之则是`false`值
+
+**例子：变化的圆**
+
+```javascript
+var c = new Circle(200, 200, 150);
+
+function loop(){
+  nextFrame(loop);
+  if(c.touched())
+    c.fillStyle = 'red';
+  else
+    c.fillStyle = 'green';
+    
+  c.draw();
+}
+
+loop();
+```
+
+当我们把鼠标移到图形上时，图形的颜色就变为红色，移开时，图形又变为绿色。
+
+**练习题**
+
+* 绘制一个图形，当鼠标移上去的时候，让图形的颜色变化
+* 绘制一个图形，当鼠标移上去的时候，让图形的大小发生改变
+* 绘制一个图形，当鼠标移上去的时候，让图形的大小持续发生改变
+
+**例子：点不到的确认键**
+
+我们在卸载一些软件的时候，卸载按钮总是隐藏的很深，今天我们就来模拟这些软件做一个永远点不到的卸载按钮。
+
+```javascript
+var btn = new Rectangle(100, 200, 100, 40);
+var txt = new Text("Uninstall", 110, 205);
+
+function loop(){
+  nextFrame(loop);
+  canvas.clear();
+   
+  new Text("Do you want to uninstall LeapLearner", 100, 100).draw();
+  
+  if(btn.touched()){
+    btn.x = Math.random() * canvas.width;
+    btn.y = Math.random() * canvas.height;
+    txt.x = btn.x + 10;
+    txt.y = btn.y + 5;
+  }
+
+  btn.draw();
+  txt.draw();
+}
+
+loop();
+```
+
+**练习题**
+
+* 在上面的代码中，按钮为什么不会被点到
+
+  ​
 
 ### 键盘事件
 
