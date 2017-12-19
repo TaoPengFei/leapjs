@@ -3,7 +3,7 @@ import { RGB, RGBA } from './colors'
 
 function background (r, g, b) {
   ctx.save()
-  fill(r, g, b)
+  if (arguments.length === 1) { ctx.fillStyle = r } else { ctx.fillStyle = RGB(r, g, b) }
   rectangle(0, 0, canvas.width, canvas.height)
   ctx.restore()
 }
