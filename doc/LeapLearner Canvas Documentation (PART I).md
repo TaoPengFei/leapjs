@@ -2,16 +2,17 @@
 
 ### Shapes
 
-| Code                                     | Shape                              |
-| ---------------------------------------- | ---------------------------------- |
-| `rectangle(x, y, w, h)`                  | ![](./images/basic_rectangle.png)  |
-| `circle(x, y, r)`                        | ![](./images/basic_circle.png)     |
-| `line(x1, y1, x2, y2)`                   | ![](./images/basic_line.png)       |
-| `point(x, y)`                            | ![](./images/basic_point.png)      |
-| `polygon(x1, y1, x2, y2, x3, y3, ...)`   | ![](./images/basic_polygon.png)    |
-| `ellipse(x, y, rX, rY)`                  | ![](./images/basic_ellipse.png)    |
-| `image(src, x, y)` || `image(src, x, y, w, h)` | ![](./images/basic_image.png)      |
-| `background(r, g, b)` || `background(color)` | ![](./images/basic_background.png) |
+| Code                                   | Shape                              |
+| -------------------------------------- | ---------------------------------- |
+| `rectangle(x, y, w, h)`                | ![](./images/basic_rectangle.png)  |
+| `circle(x, y, r)`                      | ![](./images/basic_circle.png)     |
+| `line(x1, y1, x2, y2)`                 | ![](./images/basic_line.png)       |
+| `point(x, y)`                          | ![](./images/basic_point.png)      |
+| `triangle(x1, y1, x2, y2, x3, y3)`     | ![](./images/basic_triangle.png)   |
+| `polygon(x1, y1, x2, y2, x3, y3, ...)` | ![](./images/basic_polygon.png)    |
+| `ellipse(x, y, rX, rY)`                | ![](./images/basic_ellipse.png)    |
+| `image(src, x, y)`                     | ![](./images/basic_image.png)      |
+| `background(r, g, b)`                  | ![](./images/basic_background.png) |
 
 ### Colors
 
