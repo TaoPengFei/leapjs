@@ -1573,7 +1573,7 @@ class Sine {
 
 function background (r, g, b) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  fill(r, g, b)
+  if (arguments.length === 1) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = r } else { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["c" /* RGB */])(r, g, b) }
   rectangle(0, 0, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
@@ -1612,7 +1612,12 @@ function line (x1, y1, x2, y2) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
 }
 
-function point (x, y) { circle(x, y, 2) }
+function point (x, y) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["d" /* RGBA */])(0, 0, 0, 0)
+  circle(x, y, 3)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+}
 
 function polygon () {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()

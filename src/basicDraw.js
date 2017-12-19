@@ -42,7 +42,12 @@ function line (x1, y1, x2, y2) {
   ctx.stroke()
 }
 
-function point (x, y) { circle(x, y, 2) }
+function point (x, y) {
+  ctx.save()
+  ctx.strokeStyle = RGBA(0, 0, 0, 0)
+  circle(x, y, 3)
+  ctx.restore()
+}
 
 function polygon () {
   ctx.beginPath()
