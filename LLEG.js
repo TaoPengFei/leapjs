@@ -1638,7 +1638,10 @@ function ellipse (x, y, rX, rY) {
 }
 
 function image (src, x, y, w, h) {
+  x = x || 0
+  y = y || 0
   let img = new Image()
+  img.crossOrigin = 'anonymous'
   img.src = src
   if (w && h) {
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y, w, h)
@@ -1647,7 +1650,11 @@ function image (src, x, y, w, h) {
   }
 }
 
-function text (src, x, y) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y) }
+function text (src, x, y) {
+  x = x || 0
+  y = y || 0
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y)
+}
 
 function font (size, font) {
   font = font || 'Arial'
