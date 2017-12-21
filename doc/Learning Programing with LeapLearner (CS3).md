@@ -1251,8 +1251,23 @@ restart.click = function(){
 
 ```javascript
 var music = new Audio();
+music.src = "..."
 music.loop = true;
-music.play();
+music.onload = function {
+  music.play();
+};
+```
+
+### 重新播放
+
+当你想要重新播放一段音乐的时候，如果当前音乐还没有播放完成 ，那么音乐是不会继续播放的
+
+```javascript
+var music = new Audio();
+music.src = "..."
+Mouse.click = function(){
+  
+}
 ```
 
 
