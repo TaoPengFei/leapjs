@@ -1586,30 +1586,39 @@ function fill (r, g, b) {
 }
 
 function stroke (r, g, b) {
-  if (arguments.length === 1) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = r } else { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["c" /* RGB */])(r, g, b) }
+  if (arguments.length === 1) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = r } else { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["c" /* RGB */])(r, g, b) }
 }
 
 function lineWidth (thickness) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = thickness }
 
-function rectangle (x, y, w, h) {
+function rectangle (x, y, w, h, c) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  if (c) fill(c)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].rect(x, y, w, h)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
-function circle (x, y, r) {
+function circle (x, y, r, c) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  if (c) fill(c)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].arc(x, y, r, 0, 2 * Math.PI)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
-function line (x1, y1, x2, y2) {
+function line (x1, y1, x2, y2, c) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  if (c) stroke(c)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(x1, y1)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(x2, y2)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 function point (x, y) {
@@ -1620,21 +1629,31 @@ function point (x, y) {
 }
 
 function polygon () {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(arguments[0], arguments[1])
   for (let i = 2; i < arguments.length - 1; i += 2) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i + 1]) }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
-var triangle = polygon
+function triangle (x1, y1, x2, y2, x3, y3, c) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  if (c) fill(c)
+  polygon(x1, y1, x2, y2, x3, y3)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+}
 
-function ellipse (x, y, rX, rY) {
+function ellipse (x, y, rX, rY, c) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  if (c) fill(c)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].ellipse(x, y, rX, rY, 0, 0, Math.PI * 2)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 function image (src, x, y, w, h) {
@@ -1650,10 +1669,13 @@ function image (src, x, y, w, h) {
   }
 }
 
-function text (src, x, y) {
+function text (src, x, y, c) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  if (c) fill(c)
   x = x || 0
   y = y || 0
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 function font (size, font) {
