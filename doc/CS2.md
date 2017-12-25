@@ -78,7 +78,7 @@ circle.fill();
 
 RGB色彩模式是工业界的一种颜色标准，是通过对红(R)、绿(G)、蓝(B)三个颜色通道的变化以及它们相互之间的叠加来得到各式各样的颜色的，RGB即是代表红、绿、蓝三个通道的颜色，这个标准几乎包括了人类视力所能感知的所有颜色，是目前运用最广的颜色系统之一。
 
-![RGB原理示意](http://ou1htxdl4.bkt.clouddn.com/rgb%E5%8E%9F%E7%90%86.png)
+![RGB原理示意](http://ou1htxdl4.bkt.clouddn.com/rgb%E5%8E%9F%E7%90%86.png) 
 
 目前的显示器大都是采用了RGB颜色标准，在显示器上，是通过电子枪打在屏幕的红、绿、蓝三色发光极上来产生色彩的，因此电脑屏幕上的所有颜色，都由这红色绿色蓝色三种色光按照不同的比例混合而成的。一组红色绿色蓝色就是一个最小的显示单位。屏幕上的任何一个颜色都可以由一组RGB值来记录和表达。
 
@@ -233,7 +233,7 @@ Loop();
 
 > adidas是世界著名的运动品牌，它的标志由三条斜杠组成，代表山区，指出实现挑战、成就未来和不断达成目标的愿望。
 >
-> ![adidaslogo](http://ou1htxdl4.bkt.clouddn.com/adidas.jpg)
+> ![adidaslogo](http://ou1htxdl4.bkt.clouddn.com/adidas.jpg) 
 >
 > 你能仿照上图，画出adidas的三条纹标志吗？
 
@@ -286,7 +286,7 @@ line.draw();
 
 > 奥运五环，是我们非常熟悉的一个标志。它由蓝、黄、绿、红、黑五个颜色的圆环组成，象征世界上承认奥林匹克运动，并准备参加奥林匹克竞赛的五大洲。请参考五环标志图，用javascript画出五环标志。
 >
-> ![奥运五环](http://ou1htxdl4.bkt.clouddn.com/%E4%BA%94%E7%8E%AF.jpg)
+> ![奥运五环](http://ou1htxdl4.bkt.clouddn.com/%E4%BA%94%E7%8E%AF.jpg) 
 
 代码如下：
 
@@ -334,7 +334,7 @@ circle.stroke();
 
 > 中国银行是我国的货币发行银行，是中国金融商界的代表，具有非常重要的地位，它的标志也非常有特色。
 >
-> ![中国银行Logo](http://ou1htxdl4.bkt.clouddn.com/chinabank.jpg)
+> ![中国银行Logo](http://ou1htxdl4.bkt.clouddn.com/chinabank.jpg) 
 >
 > 这个标志是由古钱造型和“中”字结合而来的，简洁明了，寓意深刻。你能结合学过的知识，用javascript语言将它画出来吗？
 
@@ -472,6 +472,227 @@ Loop();
 
 圆和矩形不同的地方
 
+## 变量基础
+
+### 如何定义变量
+
+### 变量的名称
+
+变量的命名规则
+
+
+
+变量的命名规范
+
+### 变量赋值和传递
+
+```javascript
+let a = 1;
+let b = a;
+```
+
+## 动画基础
+
+### 动画的原理
+
+> 1872年的一天，在美国加利福尼亚州一个酒店里，斯坦福与科恩发生了激烈的争执：马奔跑时蹄子是否都着地？斯坦福认为奔跑的马在跃起的瞬间四蹄是腾空的；科恩却认为，马奔跑时始终有一蹄着地。争执的结果谁也说服不了谁，于是就采取了美国人惯用的方式打赌来解决。他们请来一位驯马好手来做裁决，然而，这位裁判员也难以断定谁是谁非。这很正常，因为单凭人的眼睛确实难以看清快速奔跑的马蹄是如何运动的。裁判的好友——英国摄影师麦布里奇知道了这件事后，表示可由他来试一试。他在跑道的一边安置了24架照相机，排成一行，相机镜头都对准跑道；在跑道的另一边，他打了24个木桩，每根木桩上都系上一根细绳，这些细绳横穿跑道，分别系到对面每架照相机的快门上。一切准备就绪后，麦布里奇牵来一匹漂亮的骏马，让它从跑道一端飞奔到另一端。当跑马经过这一区域时，依次把24根引线绊断，24架照相机的快门也就依次被拉动而拍下24张照片。麦布里奇把这些照片按先后顺序剪接起来。每相邻的两张照片动作差别很小，它们组成了一条连贯的照片带。裁判根据这组照片，终于看出马在奔跑时总有一蹄着地，不会四蹄腾空，从而判定科恩赢了。
+
+![跑马图片](http://p0msr3pkn.bkt.clouddn.com/horseRun.jpg) 
+
+动画的原理与电影是一样的。我们不断画出新的图形，他们连起来播放，就成为了动画。
+
+#### 示例：动画原理演示
+
+[点击查看示例](https://code.leaplearner.com/show.html?v=4237)
+
+在这个示例中，我们点击红圈处，可以切换图片。当我们快速点击时，图片快速切换，因为视觉滞留现象，就连接成了会动的画面——动画。
+
+项目代码如下：
+
+```javascript
+canvas.width = 350;
+canvas.height = 462;
+canvas.preventDefaultEvent();
+
+var camera = new Sprite('http://p0msr3pkn.bkt.clouddn.com/camera.png', 0, 0, 350, 462);
+var leopard = new Sprite('http://p0msr3pkn.bkt.clouddn.com/run-01.png', 20, 110, 1088, 68);
+var nextBtn = new Circle(200, 75, 25);
+var line = new Line(194, 90, 85, 315);
+var txt = new Text("点击查看下一张", 20, 320);
+txt.fillStyle = "red";
+var index = 0;
+
+nextBtn.fillStyle = RGBA(255, 0, 0, 0.4);
+line.strokeStyle = "red";
+nextBtn.clicked = false;
+
+function Loop() {
+    leopard.y = 110;
+    leopard.x = 20 - 136 * index;
+    canvas.clear();
+    leopard.draw();
+    camera.draw();
+    nextBtn.fill();
+    if (!nextBtn.clicked) {
+        line.draw();
+        txt.draw();
+    }
+    
+}
+
+nextBtn.click = function() {
+    index = (index < 7) ? (index + 1) : 0;
+    nextBtn.clicked = true;
+    Loop();
+}
+
+Loop();
+```
+
+### 让画面不停切换的秘密
+
+在javascript中，我们可以通过`setInterval`函数让画面不停切换。顾名思义`setInterval`的作用就是让一个函数间隔一段固定的时间重复执行，它的写法如下：
+
+```javascript
+setInterval(要执行的函数名称, 间隔时间);
+```
+
+其中：间隔时间的单位是毫秒（ms），1000毫秒相当于1秒。
+
+#### 示例1：让圆不断增大
+
+```javascript
+canvas.width = 350;
+canvas.height = 500;
+
+var circle = new Circle(175, 175, 5);
+
+function Loop() {
+    circle.r = circle.r + 1;
+    circle.draw();
+}
+
+setInterval(Loop,100);
+```
+
+在这个示例中，我们每隔100毫秒（也就是0.1秒）执行一次Loop函数。每执行一次Loop函数，circle的半径r都增加1，并画出这个圆。于是我们看到的效果就是：圆不断增大。
+
+#### 示例2：让矩形不断增大
+
+让矩形中心位置不变，不断变大。
+
+> ##### 想一想
+>
+> 如何在增大的同时保证矩形中心位置不变？
+
+```javascript
+canvas.width = 300;
+canvas.height = 500;
+
+var rect = new Rectangle(100,150,100,200);
+
+function Loop() {
+    rect.x = rect.x - 1;
+    rect.y = rect.y - 2;
+    rect.width = rect.width + 2;
+    rect.height = rect.height + 4;
+    rect.draw();
+}
+
+setInterval(Loop,100);
+```
+
+### 移动和方向 
+
+#### 示例1：让小球向右移动
+
+```javascript
+canvas.width = 400;
+canvas.height = 400;
+
+var circle = new Circle(50, 50, 20);
+
+function Loop() {
+    canvas.clear();
+    circle.x = circle.x + 1;
+    circle.draw();
+}
+
+setInterval(Loop,10);
+```
+
+#### 示例2：让小球往右下方移动
+
+```javascript
+canvas.width = 400;
+canvas.height = 400;
+
+var circle = new Circle(50, 50, 20);
+
+function Loop() {
+    canvas.clear();
+    circle.x = circle.x + 1;
+    circle.y = circle.y + 1;
+    circle.draw();
+}
+
+setInterval(Loop,10);
+```
+
+#### 示例3：让小球一边移动一边变大
+
+```javascript
+canvas.width = 400;
+canvas.height = 400;
+
+var circle = new Circle(50, 200, 20);
+
+function Loop() {
+    canvas.clear();
+    circle.x = circle.x + 1;
+    circle.r = circle.r + 0.2;
+    circle.draw();
+}
+
+setInterval(Loop,10);
+```
+
+#### 示例4：让小球往右上方移动
+
+```javascript
+canvas.width = 400;
+canvas.height = 400;
+
+var circle = new Circle(50, 350, 20);
+
+function Loop() {
+    canvas.clear();
+    circle.x = circle.x + 1;
+    circle.y = circle.y - 1;
+    circle.draw();
+}
+
+setInterval(Loop,10);
+```
+
+#### 移动方向和数值变化的关系
+
+* 向右移动：x值增大
+* 向左移动：x值减小
+* 向下移动：y值增大
+* 向上移动：y值减小
+* ​
+
+### 使用update函数
+
+### 反弹
+
+当遇到边界时，如何反弹
+
+#### 案例：弹球游戏
+
+考虑边框
+
 ## 事件与交互
 
 ### 鼠标点击事件
@@ -511,6 +732,8 @@ Loop();
 [点击查看效果](https://code.leaplearner.com/show.html?v=3659)
 
 #### 案例：涟漪效果
+
+clickhero改
 
 #### 练习：充电游戏
 
@@ -593,25 +816,6 @@ comments
 
 使用缩进来让代码看起来更美观
 
-## 变量基础
-
-### 如何定义变量
-
-### 变量的名称
-
-变量的命名规则
-
-
-
-变量的命名规范
-
-### 变量赋值和传递
-
-```javascript
-let a = 1;
-let b = a;
-```
-
 ## 错误提示
 
 ### 如何发现错误
@@ -630,25 +834,11 @@ let b = a;
 
 ### 对象的属性
 
+#### 案例：孙悟空变身
+
 ### 对象的方法
 
-## 动画基础
 
-位置和大小的关系
-
-### 移动和方向
-
-移动方向和数值变化的关系
-
-### 使用update函数
-
-### 反弹
-
-当遇到边界时，如何反弹
-
-#### 案例：弹球游戏
-
-考虑边框
 
 ## 图片的类型
 
@@ -658,15 +848,19 @@ url
 
 ### png和jpg的区别
 
-## 音效
+## 音效            
 
 ### 使用立乐音效库
 
 ### 在事件中添加音效
 
-## 网络安全
+## 浏览器知识
 
-如何安全的使用网络
+地址栏
+
+搜索栏
+
+扩展：如何安全的使用网络
 
 ### http与https
 
@@ -1193,7 +1387,6 @@ function main(){
 }
 
 loadRssAndRun(main);
-
 ```
 
 
