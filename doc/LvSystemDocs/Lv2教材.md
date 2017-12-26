@@ -411,13 +411,13 @@ Loop();
 
   用到`this`关键字。
 
-  1. 绑定方法到sky和land上
+  2. 绑定方法到sky和land上
 
   ```javascript
-  sky.moveAndDraw = move;
+  sky.move = move;
   ```
 
-  1. 使用这个方法
+  3. 使用这个方法
 
   ```javascript
   sky.move();
@@ -432,58 +432,49 @@ Loop();
 
   //创建一个图片对象
   var sky = new Sprite('http://ou1htxdl4.bkt.clouddn.com/yomo/background.png',0,0,355,500);
-
   var fish = new Sprite('http://ou1htxdl4.bkt.clouddn.com/fish1.png',150,200,50,50);
   var land = new Sprite('http://ou1htxdl4.bkt.clouddn.com/ground.png',0,450,355,50);
   var box = new Sprite('http://ou1htxdl4.bkt.clouddn.com/yomo/spike3.png',300,300,60,150);
   var box2 = new Sprite('http://ou1htxdl4.bkt.clouddn.com/yomo/spike3.png',300,0,60,150);
   var box3 = new Sprite('http://ou1htxdl4.bkt.clouddn.com/yomo/spike3.png',300,-150,60,150);
-  ```
 
   function Loop() {
-
-```
-  sky.move();
-  fish.draw();
-  box.draw();
-  box2.draw();
-  box3.draw();
-  land.move();
-  nextFrame(Loop);
-```
-
+    sky.move();
+    fish.draw();
+    box.draw();
+    box2.draw();
+    box3.draw();
+    land.move();
+    nextFrame(Loop);
   }
 
   function move() {
-
-```
-  this.translate(0,0);
-  this.draw();
-  this.translate(this.width,0);
-  this.draw();
-  if (this.x < - this.width) {
-      this.x = 0;
-  }
-  // sky.x = (sky.x < -sky.width) ? 0 : sky.x;
-  this.x = this.x - 2;
-```
-
+    this.translate(0,0);
+    this.draw();
+    this.translate(this.width,0);
+    this.draw();
+    if (this.x < - this.width) {
+        this.x = 0;
+    }
+    // sky.x = (sky.x < -sky.width) ? 0 : sky.x;
+    this.x = this.x - 2;
   }
 
   sky.move = move;
   land.move = move;
-
   Loop();
+   
+  ```
 
-```
-### 4 让障碍物移动
+
+ ### 4 让障碍物移动
 
 * 先让一个障碍物移动：重复产生的移动逻辑
 * 另一个障碍物的位置：
   1. x与第一个障碍物相等
   2. y与第一个障碍物保持相同间距
 
-​```javascript
+```javascript
 // Let us code the future
 canvas.width = 355;
 canvas.height = 500;
@@ -531,7 +522,6 @@ function move() {
 
 sky.move = move;
 land.move = move;
-
 Loop();
 ```
 

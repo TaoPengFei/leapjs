@@ -1219,13 +1219,74 @@ var sprite = new Sprite('https://static.leaplearner.com/image/image.png',150,200
 
 ### Lesson 15 使用立乐音乐库
 
-`music.loop = 1;`
+我们在开发环境中准备了素材丰富的音乐库，每个同学都可以很方便的使用。那么，如何使用呢？我们一起来试一试吧！
+
+#### 试一试
+
+> 1. 打开[code.leaplearner.com](code.leaplearner.com)，点击“文件”-“新建”，创建一个新项目，删掉右侧所有代码。
+>
+> 2. 点击界面左侧![多媒体资源](https://code.leaplearner.com/resource/assets/icon_library.png) 按钮，再点击“音乐”，查看音乐列表。
+>
+>    ![music1](.\images\music1.jpg) 
+>
+> 3. 点击`fish`，点击选择音乐`ParkourTrack`，右侧代码框就会出现一行代码，这段代码就可以播放音乐文件。
+>
+>    ![music2](.\images\music2.jpg) 
+>
+> 4. 点击左上角的`运行`，就能播放音乐了。
+>
+> * 小贴士：如果不能播放，记得检查一下电脑的声音是否打开哦。
+
+现在我们来研究一下这行代码：
+
+```javascript
+playSound('https://rss.leaplearner.com/BGM/Fish/ParkourTrack.mp3');
+```
+
+在这行代码中，`playSound`是函数的名称，表示我们要播放音乐。那么具体是播放哪段音乐呢？这就是由括号里面的`'https://rss.leaplearner.com/BGM/Fish/ParkourTrack.mp3'`决定的了！这一长串字符叫做`音乐链接`，它是一个存放音乐的网址。我们在用它的时候，需要用一对`' '`（单引号）把它包括起来。
+
+在播放完这段音乐后，音乐就停住了。但很多时候，我们都希望音乐能够不停地循环播放，这就需要我们用另一种方式来写代码了。
+
+请看下面这段代码：
+
+```javascript
+var music = new Audio('https://rss.leaplearner.com/BGM/Fish/ParkourTrack.mp3');
+music.play();
+```
+
+在这两行代码中：
+
+1. 我们用第一行代码创建了一个叫做`music`的音乐对象，这个音乐对象的链接就是`'https://rss.leaplearner.com/BGM/Fish/ParkourTrack.mp3'`
+2. 第二行代码中，`play`是音乐对象`music`的一个方法，它的效果就是将这个音乐对象播放出来，使用`music.play();`我们就能播放音乐。
+
+* **让音乐循环播放**
+
+  那么，如何让音乐可以循环播放呢？我们只需要在`music.play();`前加上一句`music.loop = 1;`即可。完整代码如下：
+
+  ```javascript
+  var music = new Audio('https://rss.leaplearner.com/BGM/Fish/ParkourTrack.mp3');
+  music.loop = 1;
+  music.play();
+  ```
+
+  其中：
+
+  `loop`是音乐对象`music`的一个属性，当这个属性的值为`1`时，`music`就会循环播放，当它为`0`时，`music`就只播放一遍。
 
 #### 做一做
 
-> 1. 图片拼贺卡，加节日音乐
+> **音乐贺卡**
+>
+> 以最近的一个节日为主题，做一张贺卡送给爸爸妈妈吧！
+>
+> 要求：
+>
+> 1. 搜索节日主题图片，组合成一张漂亮的贺卡
+> 2. 给贺卡添加一段背景循环播放的背景音乐
 
 ### Lesson 16 添加音效
+
+
 
 //`music.currentTime = 0;`
 
@@ -1237,38 +1298,352 @@ var sprite = new Sprite('https://static.leaplearner.com/image/image.png',150,200
 
 ### Lesson 17 鼠标点击事件（1）
 
+鼠标是家用电脑非常重要的一种输入设备，很多游戏中，我们都是通过鼠标点击来与计算机互动。这节课，我们将会学习如何用鼠标的点击来控制计算机绘制出的形状和图片。在学习之前，我们先一起熟悉一下鼠标的使用吧！
+
 #### 试一试
 
-> 1. 鼠标操作练习
+> 挑战鼠标点击游戏，达到20分过关
+>
+> * **演示项目代码**
+>
+>   ```javascript
+>   canvas.resize(350, 500);
+>   var circle = new Circle(0, 0, 20);
+>
+>   circle.globalAlpha = 1;
+>   var ripple = circle.clone();
+>
+>   var bgm = new Audio();
+>   bgm.src = "http://oq2qlcey8.bkt.clouddn.com/bgm.mp3";
+>   bgm.loop = true;
+>   bgm.play();
+>
+>   var sound = new Audio();
+>   sound.src = "http://oq2qlcey8.bkt.clouddn.com/jump.mp3";
+>
+>   var score = 0;
+>   var hiscore = 0;
+>
+>   function randomInt(n){ return Math.floor(Math.random() * n); }
+>   function randomColor(){
+>     return "rgba(" + randomInt(250) + "," + randomInt(250) + "," + randomInt(250) + "," + (0.3 +Math.random()*0.5) + ")";
+>   }
+>
+>   circle.init = function(){
+>     this.x = 15 + Math.random() * (canvas.width-30);
+>     this.y = 0;
+>     this.r = 30 + Math.random() * 20;
+>     this.fillStyle = randomColor();
+>   };
+>
+>   circle.update = function(){ 
+>       this.yspeed = 1 + score*0.5;
+>       this.y += this.yspeed;
+>   };
+>
+>   var blowUp = function(){    
+>       this.globalAlpha *= 0.95; 
+>       this.r += 3;
+>   };
+>   ripple.update = blowUp;
+>
+>   circle.click = function(){
+>       score += 1;
+>       if(score > hiscore) hiscore = score;
+>       sound.currentTime = 0;
+>       sound.play();
+>       
+>       ripple = circle.clone();
+>       ripple.update = blowUp;
+>       ripple.click = null;
+>
+>       circle.init();
+>   };
+>
+>   function GameStart(){
+>       circle.init();
+>       score = 0;
+>       bgm.play();
+>       nextFrame(GameLoop);
+>   }
+>
+>   var scoreMsg = new Text();
+>   var hiscoreMsg = new Text("", canvas.width-100, 0);
+>
+>   function GameLoop(){
+>     canvas.clear();
+>     
+>     ripple.update();
+>     ripple.fill();
+>     
+>     circle.update();
+>     circle.fill();
+>     
+>     scoreMsg.src = "Score: " + score;
+>     scoreMsg.draw();
+>      
+>     hiscoreMsg.src = "HI: " + hiscore;
+>     hiscoreMsg.draw();
+>
+>     if(iSGameOver())
+>         nextFrame(GameOver);
+>     else
+>         nextFrame(GameLoop);
+>   }
+>
+>   function iSGameOver(){
+>       return circle.y > canvas.height;
+>   }
+>
+>   var retry = new Text("RETRY", 100, 250, 50);
+>   function GameOver(){
+>       retry.click = GameStart;
+>       retry.fill();
+>   }
+>
+>   GameStart();
+>   ```
+>
+>   [点击进入项目](https://code.leaplearner.com/show.html?v=4987)
+
+那么，我们如何用鼠标的点击来控制图形和图片呢？在JS中，鼠标被点击叫做一个“事件”，当这个“事件”发生的时候，我们就可以让代码做出相应的反应。
+
+请看下面一段代码：
+
+```javascript
+canvas.width = 400;
+canvas.height = 300;
+
+var circle = new Circle(50,150,50);
+
+function Loop() {
+  canvas.clear();
+  //要重复执行的代码
+  circle.draw();
+}
+
+Mouse.click = function() {
+  circle.x = circle.x + 1;
+};
+
+setInterval(Loop,10);
+```
+
+将这段代码复制粘贴到代码框，点击左侧画布后，点击鼠标左键，会发现，在鼠标点击时，圆形向右移动。
+
+这个效果是如何实现的呢：
+
+1. 根据我们已经学过的知识，我们可以用以下代码画出一个不动的圆：
+
+   ```javascript
+   canvas.width = 400;
+   canvas.height = 300;
+
+   var circle = new Circle(50,150,50);
+
+   function Loop() {
+     canvas.clear();
+     //要重复执行的代码
+     circle.draw();
+   }
+
+   setInterval(Loop,10);
+   ```
+
+2. 接下来，我们就只需要在`setInterval(Loop,10)`前，加上发生鼠标点击事件使要产生的效果即可：
+
+   ```javascript
+   Mouse.click = function() {
+     circle.x = circle.x + 1;
+   };
+   ```
+
+   * 在这段代码中，`Mouse`是代表鼠标的对象的名称，`Mouse.click`表示鼠标的点击事件。
+   * `Mouse.click = function() {    };`是一种固定的写法，在大括号`{  }`之间输入代码，用来表示点击鼠标时会发生的事情即可。
+   * 在这个案例中，`circle.x = circle.x + 1`是点击鼠标时会发生的事情，它表示将`circle`向右移动`1`的距离，所以整段代码表示：每当我们点击鼠标时，圆形就会向右移动`1`的距离，这也是我们看到的效果。
 
 #### 做一做
 
-> 1. 小球快跑
-
-#### 拓展训练
-
-> 1. 被压扁的矩形
+> **小猫快跑**
+>
+> 黑魔法博士看上了一只可爱的小猫，想要用他来进行邪恶的实验，你能帮助小猫逃脱魔掌吗？
+>
+> 要求：
+>
+> 1. 绘制黑魔法博士的图片，并让他不断往右移动
+> 2. 在黑魔法博士前方绘制一只小猫
+> 3. 利用鼠标点击事件控制小猫移动，让黑魔法博士不能追到他
+> 4. 素材图片：
+>    * 黑魔法博士：[https://rss.leaplearner.com/Image/Character/Einstein_walk.png](https://rss.leaplearner.com/Image/Character/Einstein_walk.png)
+>    * 小猫：[https://rss.leaplearner.com/Image/Animals/Cat_happy.png](https://rss.leaplearner.com/Image/Animals/Cat_happy.png)
+>
+> * **参考代码**
+>
+>   ```javascript
+>   canvas.width = 400;
+>   canvas.height = 300;
+>
+>   var bg = new Sprite('https://rss.leaplearner.com/Image/Bgs/Alarm_frame_01.png',0,-300, 700, 600);
+>   var bad = new Sprite('https://rss.leaplearner.com/Image/Character/Einstein_walk.png',320,140,80,80);
+>   var cat = new Sprite('https://rss.leaplearner.com/Image/Animals/Cat_happy.png',160,140,80,80);
+>
+>   function Loop() {
+>     canvas.clear();
+>     //要重复执行的代码
+>     bg.draw();
+>     bad.x = bad.x - 1;
+>     bad.draw();
+>     cat.draw();
+>     circle.draw();
+>   }
+>
+>   Mouse.click = function() {
+>       cat.x = cat.x - 15;
+>   }
+>
+>   setInterval(Loop,10);
+>   ```
 
 ### Lesson 18 鼠标点击事件（2）
 
+这节课，我们将继续学习鼠标点击事件。我们可以看到，鼠标点击事件不仅可以改变形状和图片的位置，还能改变它们的大小。
+
+#### 想一想
+
+> 在上节课中，我们用鼠标点击事件控制了形状和图片的位置，我们让圆形向右移动，就让它的`x`属性增大。那么，如果我们要改变圆形或图片的大小，应该怎么办呢？
+
+* **控制圆形的大小**
+
+  控制圆形大小的属性是圆形的半径，它的名称是`r`，所以我们改变圆形对象`circle`的大小，就应该：
+
+  1. 变大：`circle.r = circle.r + 1;`
+  2. 变小：`circle.r = circle.r - 1;`
+
+* **控制图片的大小**
+
+  图片对象的大小被它的宽度和高度决定，宽度的属性名是`width`，高度的属性名是`height`，所以，我们如果要控制图片对象`sprite`的大小，就应该：
+
+  1. 让图片变宽：`sprite.width = sprite.width + 1;`
+  2. 让图片变窄：`sprite.width = sprite.width - 1;`
+  3. 让图片变高：`sprite.height = sprite.height + 1;`
+  4. 让图片变矮：`sprite.height = sprite.height - 1;`
+
 #### 做一做
 
-> 1. 吹气球
+> **热气球升空**
+>
+> 要求：用一个绿色的圆形代表热气球，它会不断变小并且降落，在鼠标点击时又越来越大且网上升起。
+>
+> * **参考代码**
+>
+>   ```javascript
+>   canvas.width = 400;
+>   canvas.height = 300;
+>
+>   var circle = new Circle(200,50,50);
+>   circle.fillStyle = 'lightgreen';
+>
+>   function Loop() {
+>     canvas.clear();
+>     //要重复执行的代码
+>     circle.y = circle.y + 0.5;
+>     circle.r = circle.r - 0.1;
+>     circle.draw();
+>   }
+>
+>   Mouse.click = function() {
+>       circle.r = circle.r + 3;
+>       circle.y = circle.y - 15;
+>   }
+>
+>   setInterval(Loop,10);
+>   ```
 
 ### Lesson 19 键盘按键事件（1）
 
+计算机的另一个重要的输入设备是键盘，当键盘按下时，计算机会检测到键盘按键事件。这节课，我们将学习如何使用键盘按键事件来控制图形和图片。
+
 #### 试一试
 
-> 1. 键盘操作练习
+> 挑战键盘输入游戏，达到20分过关
+
+我们如何用键盘的按键事件来控制图形和图片呢？和鼠标点击事件类似，我们有一些固定的格式的代码：
+
+```javascript
+canvas.width = 400;
+canvas.height = 300;
+
+var circle = new Circle(50,150,50);
+
+function Loop() {
+  canvas.clear();
+  //要重复执行的代码
+  circle.draw();
+}
+
+Key['a'].press = function() {
+  circle.x = circle.x + 1;
+};
+
+setInterval(Loop,10);
+```
+
+其中，键盘按键事件的代码如下：
+
+```javascript
+Key['a'].press = function() {
+  circle.x = circle.x + 1;
+};
+```
+
+1. `Key['a'].press`表示键盘上`a`键被按下的事件。`'a'`可以换成键盘上的其他按键，表示其它按键被按下的事件。具体的按键名称可参考下图：
+
+   ![键盘示意图](http://ou1htxdl4.bkt.clouddn.com/keyboard2-01.jpg) 
+
+2. `function() {   };`是固定格式，而按键事件的效果，则写在大括号`{   }`之间。
+
+3. 在这里，按键的效果是让圆形`circle`向右移动，即：`circle.x = circle.x + 1;`
 
 #### 做一做
 
-> 1. 用键盘控制小球
-
-#### 拓展练习
-
-> 1. 键盘拔河
-> 2. 赛车
+> **用键盘控制角色**
+>
+> 在许多游戏中，玩家都可以被按键操作，在上下左右四个方向进行移动。本节课的作品，就是要完成用四个方向键控制游戏角色移动的效果。
+>
+> * **参考代码**
+>
+>   ```javascript
+>   canvas.width = 400;
+>   canvas.height = 500;
+>
+>   var bg = new Sprite('https://rss.leaplearner.com/Image/Bgs/guanka_bg_2.jpg',0,0,400,500);
+>   var cat = new Sprite('https://rss.leaplearner.com/Image/Animals/Cat_happy.png',40,45,80,80);
+>
+>   function Loop() {
+>     canvas.clear();
+>     //要重复执行的代码
+>     bg.draw();
+>     cat.draw();
+>   }
+>
+>   Key['ArrowLeft'].press = function() {
+>       cat.x = cat.x - 10;
+>   };
+>
+>   Key['ArrowRight'].press = function() {
+>       cat.x = cat.x + 10;
+>   };
+>
+>   Key['ArrowUp'].press = function() {
+>       cat.y = cat.y - 10;
+>   };
+>
+>   Key['ArrowDown'].press = function() {
+>       cat.y = cat.y + 10;
+>   };
+>
+>   setInterval(Loop,10);
+>   ```
 
 ### Lesson 20 键盘按键事件（2）
 
