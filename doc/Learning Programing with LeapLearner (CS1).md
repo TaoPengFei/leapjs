@@ -8,33 +8,53 @@ Learning Coding with LeapLearner
 
 [TOC]
 
-## 什么是编程
+## Chapter 1: 打开编程世界的大门
 
-### 什么是编码
+### Lesson 1: 认识编程与运用编程环境
+
+#### 编程是什么
 
 人与人之间使用人类的语言进行交流。猫咪与猫咪之间使用猫类的语言进行交流。
 
 **想一想**
 
 - 你能用人类的语言跟猫咪说话吗？
-- 猫咪能用猫类的语言跟你说话吗？
-- 你能用人类的语言跟计算机说话吗？
+- 猫咪能用猫猫咪的语言与你说话吗？
+- 你能用人类的语言与计算机说话吗？
 
 ![Cat_think](./images/Cat_think.png)
 
-### 重要性
+你对老师说“你好”，老师能明白你的意思，但是你用人类的语言与计算机说“你好”，计算机并不会明白。所以我们要有一种与计算机交流的方法，这就是编程。
 
-我们通过编写代码与计算机交流。//做个游戏
+你对老师说“你好”，老师能明白你的意思，但是你用人类的语言与计算机说“你好”，计算机并不会明白。所以我们要有一种与计算机交流的方法，这就是编程。
 
-如果我们现在不能说话，只能靠手势交流。我们规定竖起一根大拇指是`我们`的意思，竖起一根食指是`一起玩`的意思。那老师说：“我们一起吃饭”， 是不是要先竖起一根大拇指，然后放下这根大拇指，接着竖起一根食指，然后放下这根食指，你就能明白老师的意思啦。我们跟计算机说话，它并不能听懂，所以我们要有一种与计算机交流的方法，这就是编码。而程序就是由很多编码组成的。就像写作文需要写很多句子一样。
+**试一试**
 
-**想一想**
-
-- 如何用不同的水果来表示`“我们一起玩”`
-
+- 给你的计算机起一个英文名，把单词`A`替换成这个英文名吧
+- 把单词`B`替换成你想对计算机说的话吧
 
 
-### 编程的应用
+```javascript
+var title = new Text("A", 100, 150, 70);
+var slogen = new Text("B", 180, 600, 30);
+```
+
+附录全代码
+
+```javascript
+var title = new Text("Hello", 100, 150, 70);
+var slogen = new Text("Code the future", 180, 600, 30);
+var mike = new Sprite('https://rss.leaplearner.com/Image/Role/Frog1.png', 180, 300);
+title.draw();
+slogen.draw();
+mike.onload = function() {
+    mike.draw();
+};
+```
+
+
+
+**编程的应用**
 
 **想一想**
 
@@ -48,14 +68,15 @@ Learning Coding with LeapLearner
 - 你还知道哪些东西用到了编程
 
 
+#### http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
 
-## 编程环境
+#### 编程环境
 
-### 立乐课堂地址
+**立乐课堂地址**
 
 在浏览器中打开https://code.leaplearner.com，登录你的账号，用于保存学习进度，你的作品会被保存在网上哦。
 
-### 如何登陆立乐课堂
+##### 如何登陆立乐课堂
 
 1.如图所示，点击`学生登录`
 
@@ -65,13 +86,13 @@ Learning Coding with LeapLearner
 
 ![login2](./images/login2.png)
 
-### 编程环境介绍
+##### 编程环境介绍
 
 下面是立乐IDE的一个截图，可以看见分成了左右2个区域，左边是展示区域，右边是代码输入区域。我们在代码输入区域将代码输入完成后，如果一切正常，点击左上角`运行`按钮就可以看到你写的代码的结果了。
 
 ![ide](./images/ide.png)
 
-#### 功能说明
+##### 功能说明
 
 `分享`: 点击后生成链接和二维码，可以通过手机扫描获取到项目展示信息。
 
@@ -84,13 +105,11 @@ Learning Coding with LeapLearner
 - 点击`文件`→`新建`，并且用你的英文名字给新文件命名吧
 - 点击左上角的`运行`
 - 点击`文件`→`保存`
-- 把自己的名字显示在。。。。//todo
+- 把单词`LeapLearner`改成你的英文名字吧
 
-## 认识坐标
+## Chapter 2: 计算机坐标体系
 
-### 坐标系统
-
-为了定义空间的位置，数学家们发明了坐标的概念，在此之上发展出了庞大的几何学科。在计算机图形中，坐标系统更是不可或缺。
+### Lesson 2: 认识坐标
 
 在计算机坐标系统中，有一条横方向的轴名字叫`x轴`，有一条竖方向的轴名字叫`y轴`。它们相交的点，代表横方向位置为0，竖方向位置也为0，这个点名字叫`原点`。数学家们规定，表示一个物体的坐标位置，要先说横方向位置再说竖方向位置。因此，整个坐标系看起来像是这个样子的。
 
@@ -102,9 +121,9 @@ Learning Coding with LeapLearner
 * 说出横方向的轴和竖方向的轴它们的名字
 * 指出原点的位置，并说出原点的横方向位置和竖方向位置
 
-### 屏幕坐标
+**屏幕坐标**
 
-只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。比如点（250，150）在坐标轴上的位置，我们就可以很容易找出来了。
+**只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。比如点（250，150）在坐标轴上的位置，我们就可以很容易找出来了。
 
 ![](./images/axis.png)
 
@@ -118,23 +137,32 @@ Learning Coding with LeapLearner
 * 说出一个坐标，让其他人来指出这个坐标的位置
 * 如果你在原点的位置，越往右边走横坐标的值越大还是越小？越往下走竖坐标的值越大还是越小？
 
-#### 挑战：快乐的小红  todo IDE
+#### 挑战：行走的小熊 
 
-http://ide.leaplearner.com/lregut/1/edit
+立乐星球里有一位个小熊Ben特别喜欢走来走去，今天它要去找小猫Susie、小青蛙Nina、小鸭子Quack 玩。它每次都在原点出发。
 
-有一位小朋友叫小红，今天她要出去玩。她每次都在原点出发。
+![showAxis](./images/showAxis.png)
 
 **试一试**
 
-* 让小红去甜品店
-* 让小红去服装店
-* 让小红回家
+* 让小熊Ben找到小猫Susie
+* 让小熊Ben找到小青蛙Nina
+* 让小熊Ben找到小鸭子Quack
 
-#### 挑战：移动瞄准镜
+#### Lesson 3: 运用坐标
+
+##### 挑战：移动瞄准镜
 
 今天老师用代码画了一个坐标系和瞄准镜，通过改变`left`，`right`，`up`，`down`的值可以让瞄准镜向左、向右、向上、向下、移动，让我们来试一下吧。
 
 ![coordinate](./images/coordinate.png)
+
+```javascript
+var left; //向左
+var right; //向右
+var up; //向上
+var down; //向下
+```
 
 **试一试**
 
@@ -187,15 +215,17 @@ function moveCollimationMirror(left, right, up, down) {
 
 
 
-## 鼠标练习
+## Chapter 3: 人机交互
 
-### 鼠标移动-鼠标光标移动到指定位置
+### Lesson 4: 鼠标交互
 
-有一天立乐动物园里来了一位大坏蛋魔法师，他使用变矮魔法，把小动物们都变矮了。让我们使用编程的魔法，帮助他们复原吧。
+#### 鼠标光标
+
+有一天立乐动物园里来了一位黑魔法师Vic，他使用变矮魔法，把小动物们都变矮了。让我们使用编程的魔法，帮助他们复原吧。
 
 ![Einstein_angry.png](./images/Einstein_angry.png)
 
-​											大坏蛋魔法师
+​											黑魔法师Vic
 
 ![](./images/normalAnimals.png)
 
@@ -203,40 +233,57 @@ function moveCollimationMirror(left, right, up, down) {
 
 ![](./images/magicBefore.png)
 
-​						大坏蛋魔法师看到了可爱的小动物们准备使用变矮魔法
+​						黑魔法师Vic看到了可爱的小动物们准备使用变矮魔法
 
 ![](./images/magicAfter.png)
 
-​						大坏蛋魔法师使用了变矮魔法后小动物们都变矮了！ //换图
+​						黑魔法师使用了变矮魔法后小动物们都变矮了！
 
 让我们复制下面的代码，然后鼠标移到第一行的最后`数字1`的后面点击一下，是不是会看到一个一闪一闪的小竖线，这就是光标。光标是用来显示你将要输入文字的位置的。让我们把数字1改成数字2试试吧。
 
 ```javascript
 var height = 100 * 1;
-var link = ['http://rss.leaplearner.com/Image/Character/Einstein_angry.png', 'http://rss.leaplearner.com/Image/Character/Einstein_happy.png'];
-var magicMan;
-if (height == 100) {
-    magicMan = link[1]
-} else {
-    magicMan = link[0]
-};
-
-var bear = new Sprite('http://rss.leaplearner.com/Image/Animals/Bear_happy.png', 20, 250, height, 200);
-bear.draw();
-
-var frog = new Sprite('http://rss.leaplearner.com/Image/Role/Frog1.png', 190, 250, 200, height);
-frog.draw();
-
-var cat = new Sprite('http://rss.leaplearner.com/Image/Animals/Cat.png', 360, 250, 200, height);
-cat.draw();
-
-var magicMan = new Sprite(magicMan, 150, 0, 250, 250);
-magicMan.draw();
+a();
 ```
 
 
 
-### 点击和双击
+附录全代码
+
+```javascript
+<script src='libs/LLEG.min.js'></script>
+<script>
+    function a() {
+        var link = ['http://rss.leaplearner.com/Image/Character/Einstein_angry.png', 'http://rss.leaplearner.com/Image/Character/Einstein_happy.png'];
+        var magicManLink;
+
+        if (height == 100) {
+            magicManLink = link[1]
+        } else {
+            magicManLink = link[0]
+        }
+
+        function drawAll() {
+            var bear = new Sprite('http://rss.leaplearner.com/Image/Animals/Bear_happy.png', 20, 250, 200, height);
+            bear.draw();
+
+            var frog = new Sprite('https://rss.leaplearner.com/Image/Animals/Frog_happy.png', 190, 250, 200, height);
+            frog.draw();
+
+            var cat = new Sprite('http://rss.leaplearner.com/Image/Animals/Cat.png', 360, 250, 200, height);
+            cat.draw();
+
+            var magicMan = new Sprite(magicManLink, 150, 0, 250, 250);
+            magicMan.draw();
+        }
+        loadRssAndRun(drawAll);
+    }
+</script>
+```
+
+
+
+#### 点击和双击
 
 为了能区分鼠标的左键点击和右键点击，让我们复制下列代码并点击`运行`后，鼠标点击编程环境的左侧区域。
 
@@ -258,7 +305,7 @@ document.onmousedown = function(event) {
 
 ![right](./images/rightClick.png)
 
-### 选中+右键菜单+复制粘贴
+#### 选中+右键菜单+复制粘贴
 
 下面的代码是一个鼠标点击小游戏，让把鼠标移动到`var`的`v`前面点击一下，使鼠标变为一闪一闪的光标，选中下面的代码，并且点击鼠标右键复制及粘贴以下代码到编辑器中，运行后，在规定时间内达到20分即及格。
 
@@ -291,11 +338,9 @@ c.click = function(){
 | 30-39 | 良好   |      |
 | 40+   | 优秀   |      |
 
-## 交互
+#### 鼠标点击事件
 
-### 鼠标点击事件
-
-### 任务：热带雨林射击
+##### 任务：热带雨林射击
 
 **试一试**
 
@@ -364,9 +409,9 @@ function drawPoint() {
 loadRssAndRun(main);
 ```
 
-### 鼠标按压事件
+#### 鼠标按压事件
 
-### 任务：小小画家
+##### 任务：小小画家
 
 把下面的代码复制并运行，按住鼠标会出现颜色，画出你喜欢的东西吧。
 
@@ -480,27 +525,27 @@ Loop();
 
 
 
-## 键盘练习
+### Lesson 5: 正确的打字姿势
 
-目标：熟悉键盘操作
-
-### 正确的打字姿势 （指位图todo 提需求）
+**正确的打字姿势 （指位图todo 提需求）**
 
 打字时身子要坐正，双手轻松的放在键盘上。
 
 左右手分别负责键盘的左右区域。用拇指按空格键。
 
-### 大小写和数字键
+键盘指法键位图
+
+**大小写和数字键**
 
 输入10个数字 todo
 
 输入26个字母及大写字母 todo
 
-### 标点符号
+**标点符号**
 
 输入标点符号
 
-### 切换输入法
+**切换输入法**
 
 学会切换输入法：Shift键 
 
@@ -551,7 +596,7 @@ Key.Enter.press = function() {
 }
 ```
 
-### 中英文字符
+**中英文字符**
 
 下面列出了一些常见的错误符号，一般来说，中文的标点符号要比英文标点符号占据的空间更大。
 
@@ -566,7 +611,7 @@ Key.Enter.press = function() {
 
 不过，好在计算机可以帮助我们做这件事情，当你输入一个错误的符号时，计算机会在代码前面提示这个错误，如果发现有错误提示，赶紧看看是不是标点符号出错了呢。
 
-### 挑战：纠正错误字符
+#### 挑战：纠正错误字符
 
 在输入的时候要特别注意，在这里，计算机只能识别英文字符，如果输入中文的标点符号，计算机就无法正确识别出来你的命令。
 
@@ -604,9 +649,11 @@ circle.fillStyle = 'red';
 circle.fill();
 ```
 
-### 挑战: 猫咪故事大王
+### Lesson 6: 键盘交互
 
-在立乐星球里有一只很爱说故事的猫咪，大家都叫它“故事大王喵喵”。让我们在`who`后面的`‘ ’` 中填写上主角的名字，像是这样`'喵喵'`
+#### 挑战: 猫咪故事大王
+
+在立乐星球里有一只很爱说故事的猫咪，大家都叫它“故事大王Susie”。让我们在`who`后面的`‘ ’` 中填写上主角的名字，像是这样`'喵喵'`
 
 ```javascript
 var who = ['','',''];
@@ -617,9 +664,47 @@ var doWhat = ['','',''];
 var when = ['','',''];
 ```
 
+附录全代码：
 
+```javascript
+// Let us code the future
+var who = ['helen','susie','coco','dora','david'];
+var where = ["在家里", "在办公室", "在咖啡店", "在上海", "在游乐园", "在森林里",'在ktv里'];
+var withWhom = ["和susie", "和coco", "和helen",'和dora','和david','和粑粑','和麻麻','和姥姥'];
+var adj = ['一起开心的','一起难过的','一起疲倦的','一起痛苦的','一起自由的','一起慢慢的','一起快速的','一起懒散的','一起放肆的','一起严肃的','一起带着减肥目标的'];
+var doWhat = ["睡懒觉", "看书", "吃饭", "打游戏", "工作",'写作业','看电视',"唱歌",'散步','跑步','遛狗','飞兔游太空'];
+var when = ['在中午','在早上','在晚上','在下午','在半夜2点'];
+var link = 'https://rss.leaplearner.com/Image/Animals/Cat_think.png';
+var robert = new Sprite(link,100, 150,291, 291);
+robert.draw();
+Sprite.prototype.click = magicStory;
 
-## 颜色
+function magicStory() {
+    canvas.clear();
+    var indexA = Math.floor((Math.random() * who.length));
+    var indexB = Math.floor((Math.random() * where.length));
+    var indexC = Math.floor((Math.random() * withWhom.length));
+    var indexAdj = Math.floor((Math.random() * adj.length));
+    var indexD = Math.floor((Math.random() * doWhat.length));
+    var indexE = Math.floor((Math.random() * when.length));
+    var str1 = who[indexA];
+    var str2 = where[indexB];
+    var str3 = withWhom[indexC];
+    var stradj = adj[indexAdj];
+    var str4 = doWhat[indexD];
+    var str5 = when[indexE];
+    var text = new Text();
+    text.src = str1+' '+str2+' '+str3+' '+stradj+' '+str4+' '+str5;
+    text.fillStyle ="#" + Math.floor(Math.random() * 16777215).toString(16);
+    text.fill();
+    robert.draw();
+
+}
+```
+
+## Chapter 4: 颜色
+
+### Lesson 7: 计算机里颜色
 
 在生活中，有许许多多的颜色，让世界变得丰富起来。比如彩虹，就有红橙黄绿青蓝紫等颜色。 **to do 画彩虹**
 
@@ -627,7 +712,7 @@ var when = ['','',''];
 
 
 
-### 颜色代码
+#### 颜色代码
 
 我们要让计算机知道颜色，那么我们就要告诉计算机这个颜色的名字。和坐标不一样的是，颜色的代码是一串字符，而不是数字，因此，我们需要将颜色名字用双引号或者单引号引起来。
 
@@ -648,7 +733,7 @@ circle.fillStyle = 'green';
 - 列出所有你知道的颜色名称
 - 试试你知道的颜色
 
-### 常见颜色
+### Lesson 8: 常见颜色认识与运用
 
 让我们来认识这些颜色：红色、橙色、黄色、绿色、青色、蓝色、紫色。
 
@@ -721,7 +806,9 @@ function draw() {
 }
 ```
 
-### 挑战: 多彩的章鱼宝宝
+### Lesson 9: 颜色设计
+
+#### 挑战: 多彩的章鱼宝宝
 
 曾经有一只可爱的章鱼宝宝，但是有一天它不小心喝了可恶的黑魔法师维克的变灰药水，所以它失去了自己的颜色，让我们用编程的魔法帮它找回自己的颜色吧。
 
@@ -736,6 +823,36 @@ function draw() {
 ![babyOctopus2](./images/babyOctopus2.png)
 
 ​                                                           **喝了变灰魔法药水的章鱼宝宝是这样的**
+
+```javascript
+//写下你的英文名吧
+var yourName = '';
+//写下你名字的颜色吧
+var nameColor = '';
+
+Colors = {
+    head: '', //章鱼宝宝脑袋的颜色
+    feet1: '', //章鱼宝宝第1只脚的颜色
+    feet2: '', //章鱼宝宝第2只脚的颜色
+    feet3: '', //章鱼宝宝第3只脚的颜色
+    feet4: '', //章鱼宝宝第4只脚的颜色
+    feet5: '', //章鱼宝宝第5只脚的颜色
+    nipple: '', //章鱼宝宝嘴巴里奶嘴的颜色
+    bubble: '' //章鱼宝宝吐的泡泡的颜色
+};
+Actions = {
+    speed: 0, //章鱼游动的速度
+    feet1: 0, //章鱼第1只脚的速度
+    feet2: 0, //章鱼第2只脚的速度
+    feet3: 0, //章鱼第3只脚的速度
+    feet4: 0, //章鱼第4只脚的速度
+    feet5: 0, //章鱼第5只脚的速度
+    eyes: 0, //章鱼能睁眼的速度
+    bubble: 0 //章鱼能吐泡泡的速度
+};
+```
+
+附录全代码
 
 ```javascript
 //写下你的英文名吧
@@ -891,9 +1008,11 @@ function circle(circlex, circley, circleradius, co1) {
 
 - [颜色列表](http://www.w3school.com.cn/tags/html_ref_colornames.asp)
 
-## 图形基础
+### Lesson 10: 复习与测验
 
-### 使用代码来画图
+## Chapter 5: 图形
+
+### Lesson 11: 圆形
 
 在学会坐标后，我们就可以学着用代码来绘图了。第一步，来我们来在画布上画出一个圆来。
 
@@ -1045,7 +1164,7 @@ c.draw(200, 250);  // mouse
 * 创作你的章鱼。
 * 给你的小章鱼取个名字，说说为什么。
 
-### 矩形
+### Lesson 12: 矩形
 
 除了圆以外，我们还可以使用更多的图形，创造出来更多丰富的图形出来。
 
@@ -1101,7 +1220,7 @@ wheel.draw(280, 200);
 
 *　使用矩形和圆形来创作你的作品
 
-### 线条
+### Lesson 13: 线条
 
 线条，是由2个不同的点决定的。
 
@@ -1129,13 +1248,15 @@ rightHand.draw();
 * 帮你的雪人加上手臂，还有手指
 * 使用矩形、圆、线条来创作你的作品
 
+### Lesson 14: 复习与测验
+
 综合课：
 
 引导 让学生自己画出自己喜欢的图形use 圆。线。矩形（有缺口的圆 、用很多三角形画宝剑） 
 
-## 变量
+## Chapter 6: 变量
 
-### 介绍变量
+### Lesson 15: 认识变量
 
 变量，就像是计算机里的一个盒子，可以存放着各种各样的东西，但是里面只能放一个东西。
 
@@ -1155,7 +1276,7 @@ rightHand.draw();
 
 ![](./images/variableC.png)
 
-**试一试**
+#### **试一试**
 
 - 找一张你最喜欢的动物的图片，放在变量里吧
 
@@ -1181,9 +1302,9 @@ sprite.onload = function() {
 }
 ```
 
-### 变量的重要性
+### Lesson 16: 使用变量
 
-### 小测验：变量
+小测验：变量
 
 通过之前的课程，我们学会了画圆的方法，那让我们把圆心的横方向位置（X坐标）用计算机里的盒子——变量来表示吧。
 
@@ -1195,7 +1316,7 @@ var circle = new Circle(circleX, 80, 70);
 circle.draw();
 ```
 
-### 更多的变量
+**更多的变量**
 
 既然圆的左右位置我们可以通过变量进行改变，那圆的上下位置是不是也可以呢？
 
@@ -1208,7 +1329,7 @@ var circle = new Circle(circleX, circleY, 70);
 circle.draw();
 ```
 
-### 挑战：用变量来绘制雪人
+#### 挑战：用变量来绘制雪人
 
 让学生找出之前的雪人项目，将xy坐标用变量来表示。通过修改变量，让雪人整体移动。
 
@@ -1235,9 +1356,11 @@ eye.draw()
 
 
 
-## 图片
+## Chapter 7: 图片
 
-### 什么是链接
+### Lesson 17: 使用图片
+
+**什么是链接**
 
 链接是资源在网络上的地址，那小朋友们是不是都有家庭住址，你的好朋友知道你家的地址就能来找你玩了呀，所以我们知道了图片的地址，就能够找到这张图片了。
 
@@ -1279,11 +1402,13 @@ frogBacGro.onload = function() {
 
 ![ImageOrder](./images/ImageOrder.png)
 
-### 挑战：动物园I
+### Lesson 18: 图片的位置
+
+#### 挑战：动物园I
 
 使用图片来创建一个动物园
 
-### 放大和缩小
+### Lesson 19: 图片的放大与缩小
 
 通过修改图片的宽度和高度来完成放大和缩小。
 
@@ -1297,19 +1422,21 @@ frogBacGro.onload = function() {
 
 让我们挑选出故事的主人公，并且带上他们各自的宠物出现吧。
 
-### 立乐图片素材库
+#### 立乐图片素材库
 
-### 挑战：动物快乐节
+### Lesson 20: 复习与测验
+
+#### 挑战：动物快乐节
 
 今天是动物界里的快乐节，所有的小动物都要笑，请你从素材库里找出所有笑着的小动物，把它们用插图片的方法画出来吧。找出五个。
 
-## 动画基础
+## Chapter 8: 动画
 
-### 什么是动画
+### Lesson 21: 动画原理
 
 每一个画面称为一帧，下一帧的内容总比前一帧有稍微的变化。这样，就产生了运动的错觉：每一帧都很短并且很快被另一个帧所代替，这样就产生了运动。比如我们拍下举起手的照片和放下手的照片，快速的看一眼举起手的照片，然后再快速的看一眼放下手的照片，就会有一种运动的错觉。
 
-### 制作动画：让小猫动起来
+#### 制作动画：让小猫动起来
 
 找出图片素材库里所有小猫的图片，把图片链接放在`var catLink = [ ];`这句代码的`[ ]`里，每一个图片的链接之间要用逗号隔开，像这样`['http://rss.leaplearner.com/Image/Animals/Cat_happy.png' , 'http://rss.leaplearner.com/Image/Animals/Cat_angry.png'];`
 
@@ -1333,7 +1460,7 @@ function main() {
 setInterval(main, 500);
 ```
 
-
+### Lesson 22: 制作动画
 
 #### 挑战：日出
 
@@ -1413,25 +1540,36 @@ var n = setInterval(draw, 100);
 
 
 
-## 音效
+## Chapter 9: 音频
+
+### Lesson 23: 使用立乐音乐库
+
+说一说
+
+- 你喜欢听到什么声音
 
 ### 加入背景音乐
 
 ```javascript
-var music = new Audio();
-music.src = "ddd.mp3";
-music.play();
+playSound('https://rss.leaplearner.com/BGM/Fish/GameMasterInterface.mp3');
 ```
+
+##### **想一想**
+
+- 你觉得什么是音乐
+- 观察文件名字的尾巴，就是.后面的英文字母和数字
 
 ### 立乐音乐素材库
 
-如何使用音乐素材库: 点击左侧`多媒体`，点击`音乐`，选择你最喜欢的音乐吧!	
+如何使用音乐素材库: 点击左侧`多媒体`，点击`音乐`，红色方框标出的橙色小三角形可以选择不同的音乐哦，选择你最喜欢的音乐吧!	
 
 ![musicGuide](./images/musicGuide.png)
 
-**试一试**
+### Lesson 24: 制作自己的音乐钢琴
 
-- 通过改变`var catLink = [ ]`里的链接，制作属于你自己的钢琴键吧
+#### 试一试
+
+- 通过改变`var catLink = [ ]`里的链接，制作属于你自己的音乐钢琴吧
 
 附录代码：
 

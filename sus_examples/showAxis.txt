@@ -1,0 +1,56 @@
+var X = 0; //向右走几步
+var Y = 0; //向下走几步
+
+var size = 50; //每格间距
+var count = 10; //格数
+var startX = 50; //第一个格子的X
+var startY = 150; //第一个格子的Y
+
+var XiaoHong = new Sprite('https://rss.leaplearner.com/Image/Animals/Bear_walk.png', startX - 15 - size, startY - 20 - size, 80, 80); //主角初始位置
+walk();
+
+//绘制坐标系
+function showAxis() {
+    ctx.save();
+    stroke('gold');
+    lineWidth(5);
+    font(20);
+    fill('#DC143C');
+
+    for (var i = 0; i <= count; i++) {
+        text(i, startX - 30, startY - 20 + i * size);
+        text(i, startX - 30 + i * size, startY - 20);
+        line(startX, startY + i * size, startX + size * count, startY + i * size);
+        line(startX + i * size, startY, startX + i * size, startY + size * count);
+    }
+
+    ctx.restore();
+}
+
+XiaoHong.X = 0;
+XiaoHong.Y = 0;
+
+function walk() {
+    canvas.clear();
+
+    showAxis();
+    XiaoHong.draw();
+    //CAT
+    image('https://rss.leaplearner.com/Image/Animals/Cat_happy.png', 130, 30 + 3 * size, 80, 80);
+    //DUCK
+    image('https://rss.leaplearner.com/Image/Animals/Duck_happy.png', 183 - 2 * size, 230 + 4 * size, 80, 80);
+    //FROG
+    image('https://rss.leaplearner.com/Image/Animals/Frog_happy.png', 300 - 20, 230 + 3 * size, 80, 80);
+
+
+
+    if (XiaoHong.X < X) {
+        XiaoHong.X++;
+        XiaoHong.x += size;
+    } else if (XiaoHong.Y < Y) {
+        XiaoHong.Y++;
+        XiaoHong.y += size;
+    }
+
+    setTimeout(walk, 500);
+}
