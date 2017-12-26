@@ -1662,10 +1662,16 @@ function image (src, x, y, w, h) {
   let img = new Image()
   img.crossOrigin = 'anonymous'
   img.src = src
-  if (w && h) {
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y, w, h)
-  } else {
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y)
+  img._x = x
+  img._y = y
+  img.w = w
+  img.h = h
+  img.onload = function () {
+    if (this.w && this.h) {
+      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y, this.w, this.h)
+    } else {
+      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y)
+    }
   }
 }
 
