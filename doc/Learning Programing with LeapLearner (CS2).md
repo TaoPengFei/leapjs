@@ -32,51 +32,38 @@
 >  canvas.width = 400;
 >  canvas.height = 300;
 >
->  var circle = new Circle(200,400,350);
+>  var c1 = new Circle(200,400,350);
+>  c1.fillStyle = "red";
+>  c1.fill();
 >
->  //红色 "red"
->  circle.fillStyle = "red";
->  circle.fill();
+>  var c2 = new Circle(200,400,335);
+>  c2.fillStyle = "orange";
+>  c2.fill();
 >
->  //橙色 "orange"
->  circle.r -= 15;
->  circle.fillStyle = "orange";
->  circle.fill();
+>  var c3 = new Circle(200,400,320);
+>  c3.fillStyle = "yellow";
+>  c3.fill();
 >
->  //黄色 "yellow"
->  circle.r -= 15;
->  circle.fillStyle = "yellow";
->  circle.fill();
+>  var c4 = new Circle(200,400,305);
+>  c4.fillStyle = "green";
+>  c4.fill();
 >
->  //绿色 "green"
->  circle.r -= 15;
->  circle.fillStyle = "green";
->  circle.fill();
+>  var c5 = new Circle(200,400,290);
+>  c5.fillStyle = "cyan";
+>  c5.fill();
 >
->  //青色 "cyan"
->  circle.r -= 15;
->  circle.fillStyle = "cyan";
->  circle.fill();
+>  var c6 = new Circle(200,400,275);
+>  c6.fillStyle = "blue";
+>  c6.fill();
 >
->  //蓝色 "blue"
->  circle.r -= 15;
->  circle.fillStyle = "blue";
->  circle.fill();
+>  var c7 = new Circle(200,400,260);
+>  c7.fillStyle = "purple";
+>  c7.fill();
 >
->  //紫色 "purple"
->  circle.r -= 15;
->  circle.fillStyle = "purple";
->  circle.fill();
->
->  //白色 "white"
->  circle.r -= 15;
->  circle.fillStyle = "white";
->  circle.fill();
+>  var c8 = new Circle(200,400,245);
+>  c8.fillStyle = "white";
+>  c8.fill();
 >  ```
-
-#### 拓展练习
-
-> 
 
 ### Lesson 2 使用Web标准色
 
@@ -305,12 +292,6 @@
 >   loadRssAndRun(Loop);
 >   ```
 
-#### 拓展练习
-
-> 
-
-
-
 ## Chapter 2 图形的属性
 
 ### Lesson 3 认识坐标
@@ -437,10 +418,6 @@
 >   line4.strokeStyle = "white";
 >   line4.draw();
 >   ```
-
-#### 拓展练习
-
->
 
 ### Lesson 5 圆形的属性
 
@@ -682,21 +659,15 @@
 >
 >   ​
 
-#### 拓展练习
-
->
-
 ### Lesson 7 复习和测试
-
-
 
 #### 做一做
 
+> **我是小画家**
+>
 > 用学过的知识，创作一幅自己的画作。
 >
-> //提一个方向，画面上有什么形状
-
-
+> 需要给予学生方向性的指导，例如：画面上必须有什么形状
 
 ## Chapter 3 动画基础
 
@@ -852,9 +823,7 @@ setInterval(Loop,10);
 
 #### 拓展练习
 
-> 1. 让矩形逐渐变大。
-> 2. //热气球
-> 3. 自己画的作品
+> **让自己画的作品动起来**
 
 ### Lesson 10 让形状移动
 
@@ -953,7 +922,7 @@ setInterval(Loop,10);
 
 可以看到，我们同时改变`circle.x`和`circle.y`，就可以让`circle`沿斜方向移动。从这个案例中我们可以看出，在同一帧中，可以改变多个属性。因为一帧的时间实在是太快了，我们可以认为这些改变是同时发生的。
 
-![速度分解图]() 
+![速度分解图](.\images\move.jpg) 
 
 #### 做一做
 
@@ -1097,7 +1066,6 @@ setInterval(Loop,10);
 >   setInterval(Loop, 10);
 >   ```
 >
->   ​
 
 ## Chapter 4 多媒体素材
 
@@ -1204,8 +1172,6 @@ var sprite = new Sprite('https://static.leaplearner.com/image/image.png',150,200
 > 1. 拼图游戏
 >
 >    在画布中有4张拼图，你能把它们放到正确的位置吗？
-
-
 
 #### 做一做
 
@@ -1647,22 +1613,250 @@ Key['a'].press = function() {
 
 ### Lesson 20 键盘按键事件（2）
 
+本节课，我们继续来学习键盘按键事件。键盘按键事件是非常强大的，我们不仅可以用它来控制图形和图片的移动，还可以用它来控制音乐的播放。下面，我们就一起来制作一个键盘钢琴。
+
+#### 想一想
+
+> 如果我们要通过键盘按键来实现钢琴的功能，发出音符的代码应该如何写？
+>
+> 提示：我们可以把每个音符都看作一个音效。如果不知道该怎么办，可以再回忆一下Lesson 16的内容哦。
+
+#### 试一试
+
+> **完成第一个钢琴键**
+>
+> 任务：按下数字键`1`，弹奏出`Do`音符
+
+* **参考代码**
+
+  ```javascript
+  var Do = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/40-C.mp3");
+
+  Key['1'].press = function() {
+      Do.currentTime = 0;
+      Do.play();
+  };
+  ```
+
+  在这段代码中：
+
+  1. `var Do = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/40-C.mp3");`创建了一个名为`Do`的音效对象
+  2. 正如上节课所学，`Key['1'].press`指的就是按下键盘按键`1`的事件，每按下一次`1`，大括号内的代码就执行一次
+  3. 当按下`1`时，我们首先用`Do.currentTime = 0`将音效重置，以免上一段音效没有播放完导致不能播放，接下来用`Do.play();`将音效播放一遍
+
 #### 做一做
 
-> 1. 键盘钢琴
+> **完成键盘钢琴**
+>
+> 参考上面的代码，完成键盘钢琴的所有功能，让数字键`1`-`7`可以发出对应音符的声音
+>
+> * 参考音效链接：
+>
+>   Do：[http://llcs-1252287760.cossh.myqcloud.com/Piano/40-C.mp3](http://llcs-1252287760.cossh.myqcloud.com/Piano/40-C.mp3)
+>
+>   Re：[http://llcs-1252287760.cossh.myqcloud.com/Piano/42-D.mp3](http://llcs-1252287760.cossh.myqcloud.com/Piano/42-D.mp3)
+>
+>   Mi：[http://llcs-1252287760.cossh.myqcloud.com/Piano/44-E.mp3](http://llcs-1252287760.cossh.myqcloud.com/Piano/40-C.mp3)
+>
+>   Fa：[http://llcs-1252287760.cossh.myqcloud.com/Piano/45-F.mp3](http://llcs-1252287760.cossh.myqcloud.com/Piano/45-F.mp3)
+>
+>   So：[http://llcs-1252287760.cossh.myqcloud.com/Piano/47-G.mp3](http://llcs-1252287760.cossh.myqcloud.com/Piano/47-G.mp3)
+>
+>   La：[http://llcs-1252287760.cossh.myqcloud.com/Piano/49-A.mp3](http://llcs-1252287760.cossh.myqcloud.com/Piano/49-A.mp3)
+>
+>   Si：[http://llcs-1252287760.cossh.myqcloud.com/Piano/51-B.mp3](http://llcs-1252287760.cossh.myqcloud.com/Piano/51-B.mp3)
+>
+> * **参考代码**
+>
+>   ```javascript
+>   var Do = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/40-C.mp3");
+>   var Re = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/42-D.mp3");
+>   var Mi = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/44-E.mp3");
+>   var Fa = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/45-F.mp3");
+>   var So = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/47-G.mp3");
+>   var La = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/49-A.mp3");
+>   var Si = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/51-B.mp3");
+>
+>   Key['1'].press = function() {
+>       Do.currentTime = 0;
+>       Do.play();
+>   };
+>
+>   Key['2'].press = function() {
+>       Re.currentTime = 0;
+>       Re.play();
+>   };
+>
+>   Key['3'].press = function() {
+>       Mi.currentTime = 0;
+>       Mi.play();
+>   };
+>
+>   Key['4'].press = function() {
+>       Fa.currentTime = 0;
+>       Fa.play();
+>   };
+>
+>   Key['5'].press = function() {
+>       So.currentTime = 0;
+>       So.play();
+>   };
+>
+>   Key['6'].press = function() {
+>       La.currentTime = 0;
+>       La.play();
+>   };
+>
+>   Key['7'].press = function() {
+>       Si.currentTime = 0;
+>       Si.play();
+>   };
+>   ```
 
 ### Lesson 21 对象的点击事件（1）
 
+相信有的同学和小猫玩耍过，当我们抚摸小猫时，小猫会舒服地发出“喵~”的声音。不管你有没有过这样的经历，在我们万能的代码时间，你可以自己创造出这样一只小猫，当你点击它的时候，它就会发出声音。
+
+* **画出小猫**
+
+  我们通过以下代码，可以画出小猫：
+
+  ```javascript
+  canvas.width = 350;
+  canvas.height = 500;
+
+  var bg = new Sprite('https://rss.leaplearner.com/Image/Bgs/piano_bg2.png',0,0,350,500);
+  var cat = new Sprite('https://rss.leaplearner.com/Image/Animals/Cat_happy.png',75,150,200,200);
+
+  bg.draw();
+  cat.draw();
+  ```
+
+* **添加小猫的声音**
+
+  我们要实现点击小猫发出声音的功能，同样需要用到事件，这次我们要用到的是某个对象的事件。在这个例子中，这个对象就是小猫的图片，也就是`cat`。
+
+  我们要让小猫发出声音，首先要创建一个`Audio`对象，然后在`cat`的点击事件中播放它。
+
+  类似的，要使用`cat`的点击事件，就是使用`cat.click`，所以，代码如下：
+
+  ```javascript
+  canvas.width = 350;
+  canvas.height = 500;
+
+  var bg = new Sprite('https://rss.leaplearner.com/Image/Bgs/piano_bg2.png',0,0,350,500);
+  var cat = new Sprite('https://rss.leaplearner.com/Image/Animals/Cat_happy.png',75,150,200,200);
+  var say = new Audio('https://rss.leaplearner.com/Audio/Com/happy.mp3');
+
+  bg.draw();
+  cat.draw();
+
+  cat.click = function() {
+      say.currentTime = 0;
+      say.play();
+  }
+  ```
+
 #### 做一做
 
-> 1. 会叫的动物
+> **会叫的神奇动物**
+>
+> 任务：给你在Lesson 14中创作的神奇动物添加叫声，当点击它的不同部位时，发出不同的声音。
 
 ### Lesson 22 对象的点击事件（2）
 
+这节课，我们将继续练习对象点击事件的使用。
+
 #### 做一做
 
-> 1. 触屏钢琴
+> **彩虹钢琴**
+>
+> 将Lesson 20中你制作的键盘和Lesson 1中制作的彩虹相结合，创作出彩红钢琴：点击彩虹不同的颜色，发出不同的音符。
+>
+> * **参考代码**
+>
+>   ```javascript
+>   canvas.width = 400;
+>   canvas.height = 300;
+>
+>   var c1 = new Circle(200,400,350);
+>   c1.fillStyle = "red";
+>   c1.fill();
+>
+>   var c2 = new Circle(200,400,335);
+>   c2.fillStyle = "orange";
+>   c2.fill();
+>
+>   var c3 = new Circle(200,400,320);
+>   c3.fillStyle = "yellow";
+>   c3.fill();
+>
+>   var c4 = new Circle(200,400,305);
+>   c4.fillStyle = "green";
+>   c4.fill();
+>
+>   var c5 = new Circle(200,400,290);
+>   c5.fillStyle = "cyan";
+>   c5.fill();
+>
+>   var c6 = new Circle(200,400,275);
+>   c6.fillStyle = "blue";
+>   c6.fill();
+>
+>   var c7 = new Circle(200,400,260);
+>   c7.fillStyle = "purple";
+>   c7.fill();
+>
+>   var c8 = new Circle(200,400,245);
+>   c8.fillStyle = "white";
+>   c8.fill();
+>
+>   var Do = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/40-C.mp3");
+>   var Re = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/42-D.mp3");
+>   var Mi = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/44-E.mp3");
+>   var Fa = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/45-F.mp3");
+>   var So = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/47-G.mp3");
+>   var La = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/49-A.mp3");
+>   var Si = new Audio("http://llcs-1252287760.cossh.myqcloud.com/Piano/51-B.mp3");
+>
+>   c1.click = function() {
+>       Do.currentTime = 0;
+>       Do.play();
+>   };
+>
+>   c2.click = function() {
+>       Re.currentTime = 0;
+>       Re.play();
+>   };
+>
+>   c3.click = function() {
+>       Mi.currentTime = 0;
+>       Mi.play();
+>   };
+>
+>   c4.click = function() {
+>       Fa.currentTime = 0;
+>       Fa.play();
+>   };
+>
+>   c5.click = function() {
+>       So.currentTime = 0;
+>       So.play();
+>   };
+>
+>   c6.click = function() {
+>       La.currentTime = 0;
+>       La.play();
+>   };
+>
+>   c7.click = function() {
+>       Si.currentTime = 0;
+>       Si.play();
+>   };
+>   ```
 
 ### Lesson 23 事件综合练习
+
+
 
 ### Lesson 24 复习和测试
