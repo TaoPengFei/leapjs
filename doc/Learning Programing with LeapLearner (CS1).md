@@ -19,30 +19,32 @@ Learning Coding with LeapLearner
 **想一想**
 
 - 你能用人类的语言跟猫咪说话吗？
-- 猫咪能用猫猫咪的语言与你说话吗？
+- 猫咪能用猫类的语言与你说话吗？
 - 你能用人类的语言与计算机说话吗？
 
 ![Cat_think](./images/Cat_think.png)
 
-你对老师说“你好”，老师能明白你的意思，但是你用人类的语言与计算机说“你好”，计算机并不会明白。所以我们要有一种与计算机交流的方法，这就是编程。
+你对老师说“你好”，老师能明白你的意思，但是你用人类的语言与计算机说“你好”，计算机并不会明白。
+
+>所以我们要有一种与计算机交流的方法，这就是编程。
 
 你对老师说“你好”，老师能明白你的意思，但是你用人类的语言与计算机说“你好”，计算机并不会明白。所以我们要有一种与计算机交流的方法，这就是编程。
 
-**试一试**
+**说一说** 
 
-- 给你的计算机起一个英文名，把单词`A`替换成这个英文名吧
-- 把单词`B`替换成你想对计算机说的话吧
+- 给你的计算机起一个英文名，说出它吧
+- 你想对你的计算机说什么？说出它吧
 
 
 ```javascript
-var title = new Text("A", 100, 150, 70);
-var slogen = new Text("B", 180, 600, 30);
+var title = new Text("A", 100, 150, 70);//A代表你的计算机的名字
+var slogen = new Text("B", 180, 600, 30);//B代表你想对计算机说的话
 ```
 
-附录全代码
+##### 附录全代码
 
 ```javascript
-var title = new Text("Hello", 100, 150, 70);
+var title = new Text("Hello World", 100, 150, 70);
 var slogen = new Text("Code the future", 180, 600, 30);
 var mike = new Sprite('https://rss.leaplearner.com/Image/Role/Frog1.png', 180, 300);
 title.draw();
@@ -52,23 +54,9 @@ mike.onload = function() {
 };
 ```
 
+**编程的介绍**
 
-
-**编程的应用**
-
-**想一想**
-
-- 下列哪些东西用到了编程
-
-
-![whichUsedCoding](./images/whichUsedCoding.png)
-
-**说一说**
-
-- 你还知道哪些东西用到了编程
-
-
-#### http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
+http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
 
 #### 编程环境
 
@@ -88,7 +76,9 @@ mike.onload = function() {
 
 ##### 编程环境介绍
 
-下面是立乐IDE的一个截图，可以看见分成了左右2个区域，左边是展示区域，右边是代码输入区域。我们在代码输入区域将代码输入完成后，如果一切正常，点击左上角`运行`按钮就可以看到你写的代码的结果了。
+下面是立乐IDE的一个截图，可以看见分成了左右2个区域，左边是展示区域，右边是代码输入区域。
+
+我们在代码输入区域将代码输入完成后，如果一切正常，点击左上角`运行`按钮就可以看到你写的代码的结果了。
 
 ![ide](./images/ide.png)
 
@@ -102,16 +92,17 @@ mike.onload = function() {
 
 **试一试**
 
-- 点击`文件`→`新建`，并且用你的英文名字给新文件命名吧
+- 点击`文件`→`新建`，并且用你的英文名字给第一份编程作品命名吧
+- 把单词`LeapLearner`改成你的英文名字吧
 - 点击左上角的`运行`
 - 点击`文件`→`保存`
-- 把单词`LeapLearner`改成你的英文名字吧
+- 点击`分享`，把你的第一份编程作品分享给你的好朋友或者爸爸妈妈吧
 
 ## Chapter 2: 计算机坐标体系
 
 ### Lesson 2: 认识坐标
 
-在计算机坐标系统中，有一条横方向的轴名字叫`x轴`，有一条竖方向的轴名字叫`y轴`。它们相交的点，代表横方向位置为0，竖方向位置也为0，这个点名字叫`原点`。数学家们规定，表示一个物体的坐标位置，要先说横方向位置再说竖方向位置。因此，整个坐标系看起来像是这个样子的。
+在计算机坐标系统中，有一条横方向的轴名字叫`x轴`，有一条竖方向的轴名字叫`y轴`。它们相交的点，代表横方向位置为0，竖方向位置也为0，这个点名字叫`原点`。想表示一个物体的坐标位置，要先说横方向位置再说竖方向位置。因此，整个坐标系看起来像是这个样子的。
 
 ![pos_xy](./images/pos_xy.png)
 
@@ -123,7 +114,7 @@ mike.onload = function() {
 
 **屏幕坐标**
 
-**只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。比如点（250，150）在坐标轴上的位置，我们就可以很容易找出来了。
+只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。比如点（250，150）在坐标轴上的位置，我们就可以很容易找出来了。
 
 ![](./images/axis.png)
 
@@ -139,19 +130,84 @@ mike.onload = function() {
 
 #### 挑战：行走的小熊 
 
-立乐星球里有一位个小熊Ben特别喜欢走来走去，今天它要去找小猫Susie、小青蛙Nina、小鸭子Quack 玩。它每次都在原点出发。
+立乐星球里有一个小熊，它的名字叫Ben，它特别喜欢走来走去。
+
+今天它要去找小猫Susie、小青蛙Nina、小鸭子Quack 玩。它每次都在原点，即横方向位置是0，竖方向位置也是0的地方出发。
 
 ![showAxis](./images/showAxis.png)
 
-**试一试**
+**说一说**
 
-* 让小熊Ben找到小猫Susie
-* 让小熊Ben找到小青蛙Nina
-* 让小熊Ben找到小鸭子Quack
+* 让小熊Ben找到小猫Susie，需要先往右走几步，再往下走几步
+* 让小熊Ben找到小青蛙Nina，需要先往右走几步，再往下走几步
+* 让小熊Ben找到小鸭子Quack，需要先往右走几步，再往下走几步
 
-#### Lesson 3: 运用坐标
+##### 附录全代码
 
-##### 挑战：移动瞄准镜
+```javascript
+var X = 0; //向右走几步
+var Y = 0; //向下走几步
+
+var size = 50; //每格间距
+var count = 10; //格数
+var startX = 50; //第一个格子的X
+var startY = 150; //第一个格子的Y
+
+var XiaoHong = new Sprite('https://rss.leaplearner.com/Image/Animals/Bear_walk.png', startX - 15 - size, startY - 20 - size, 80, 80); //主角初始位置
+walk();
+
+//绘制坐标系
+function showAxis() {
+    ctx.save();
+    stroke('gold');
+    lineWidth(5);
+    font(20);
+    fill('#DC143C');
+
+    for (var i = 0; i <= count; i++) {
+        text(i, startX - 30, startY - 20 + i * size);
+        text(i, startX - 30 + i * size, startY - 20);
+        line(startX, startY + i * size, startX + size * count, startY + i * size);
+        line(startX + i * size, startY, startX + i * size, startY + size * count);
+    }
+
+    ctx.restore();
+}
+
+XiaoHong.X = 0;
+XiaoHong.Y = 0;
+
+function walk() {
+    canvas.clear();
+
+    showAxis();
+    XiaoHong.draw();
+    //CAT
+    image('https://rss.leaplearner.com/Image/Animals/Cat_happy.png', 130, 30 + 3 * size, 80, 80);
+    //DUCK
+    image('https://rss.leaplearner.com/Image/Animals/Duck_happy.png', 183 - 2 * size, 230 + 4 * size, 80, 80);
+    //FROG
+    image('https://rss.leaplearner.com/Image/Animals/Frog_happy.png', 300 - 20, 230 + 3 * size, 80, 80);
+
+
+
+    if (XiaoHong.X < X) {
+        XiaoHong.X++;
+        XiaoHong.x += size;
+    } else if (XiaoHong.Y < Y) {
+        XiaoHong.Y++;
+        XiaoHong.y += size;
+    }
+
+    setTimeout(walk, 500);
+}
+```
+
+
+
+### Lesson 3: 运用坐标
+
+#### 挑战：移动瞄准镜
 
 今天老师用代码画了一个坐标系和瞄准镜，通过改变`left`，`right`，`up`，`down`的值可以让瞄准镜向左、向右、向上、向下、移动，让我们来试一下吧。
 
@@ -175,7 +231,7 @@ var down; //向下
 - 让瞄准镜先往左移动，再往下移动
 - 让瞄准镜先往右移动，再往下移动
 
-附录代码：
+##### 附录全代码
 
 ```javascript
 var left; //向左
@@ -221,7 +277,9 @@ function moveCollimationMirror(left, right, up, down) {
 
 #### 鼠标光标
 
-有一天立乐动物园里来了一位黑魔法师Vic，他使用变矮魔法，把小动物们都变矮了。让我们使用编程的魔法，帮助他们复原吧。
+有一天立乐星球来了一位黑魔法师Vic，他使用变矮魔法，把小动物们都变矮了。、
+
+让我们使用编程的魔法，帮助他们复原吧。
 
 ![Einstein_angry.png](./images/Einstein_angry.png)
 
@@ -237,7 +295,7 @@ function moveCollimationMirror(left, right, up, down) {
 
 ![](./images/magicAfter.png)
 
-​						黑魔法师使用了变矮魔法后小动物们都变矮了！
+​						黑魔法师Vic使用了变矮魔法后小动物们都变矮了
 
 让我们复制下面的代码，然后鼠标移到第一行的最后`数字1`的后面点击一下，是不是会看到一个一闪一闪的小竖线，这就是光标。光标是用来显示你将要输入文字的位置的。让我们把数字1改成数字2试试吧。
 
@@ -246,48 +304,49 @@ var height = 100 * 1;
 a();
 ```
 
-
-
-附录全代码
+##### 附录全代码
 
 ```javascript
-<script src='libs/LLEG.min.js'></script>
-<script>
-    function a() {
-        var link = ['http://rss.leaplearner.com/Image/Character/Einstein_angry.png', 'http://rss.leaplearner.com/Image/Character/Einstein_happy.png'];
-        var magicManLink;
+var height = 100 * 2;
+a();
 
-        if (height == 100) {
-            magicManLink = link[1]
-        } else {
-            magicManLink = link[0]
-        }
+function a() {
+    var link = ['http://rss.leaplearner.com/Image/Character/Einstein_angry.png', 'http://rss.leaplearner.com/Image/Character/Einstein_happy.png'];
+    var magicManLink;
 
-        function drawAll() {
-            var bear = new Sprite('http://rss.leaplearner.com/Image/Animals/Bear_happy.png', 20, 250, 200, height);
-            bear.draw();
-
-            var frog = new Sprite('https://rss.leaplearner.com/Image/Animals/Frog_happy.png', 190, 250, 200, height);
-            frog.draw();
-
-            var cat = new Sprite('http://rss.leaplearner.com/Image/Animals/Cat.png', 360, 250, 200, height);
-            cat.draw();
-
-            var magicMan = new Sprite(magicManLink, 150, 0, 250, 250);
-            magicMan.draw();
-        }
-        loadRssAndRun(drawAll);
+    if (height == 100) {
+        magicManLink = link[1]
+    } else {
+        magicManLink = link[0]
     }
-</script>
+
+    function drawAll() {
+        var bear = new Sprite('http://rss.leaplearner.com/Image/Animals/Bear_happy.png', 20, 250, 200, height);
+        bear.draw();
+
+        var frog = new Sprite('https://rss.leaplearner.com/Image/Animals/Frog_happy.png', 190, 250, 200, height);
+        frog.draw();
+
+        var cat = new Sprite('http://rss.leaplearner.com/Image/Animals/Cat.png', 360, 250, 200, height);
+        cat.draw();
+
+        var magicMan = new Sprite(magicManLink, 150, 0, 250, 250);
+        magicMan.draw();
+    }
+    loadRssAndRun(drawAll);
+}
 ```
-
-
 
 #### 点击和双击
 
 为了能区分鼠标的左键点击和右键点击，让我们复制下列代码并点击`运行`后，鼠标点击编程环境的左侧区域。
 
-双击就是连续点击两下的意思。
+鼠标双击就是连续点击两下的意思。
+
+**试一试** 
+
+- 点击鼠标左键
+- 点击鼠标右键
 
 ```javascript
 document.onmousedown = function(event) {
@@ -307,7 +366,7 @@ document.onmousedown = function(event) {
 
 #### 选中+右键菜单+复制粘贴
 
-下面的代码是一个鼠标点击小游戏，让把鼠标移动到`var`的`v`前面点击一下，使鼠标变为一闪一闪的光标，选中下面的代码，并且点击鼠标右键复制及粘贴以下代码到编辑器中，运行后，在规定时间内达到20分即及格。
+下面的代码是一个鼠标点击小游戏，把鼠标移动到`var`的前面点击一下，使鼠标变为一闪一闪的光标，按住鼠标左键的同时手慢慢向右移动，选中下面的代码，并且点击鼠标右键，出现菜单，点击复制，然后粘贴以下代码到编辑器中，运行后，在规定时间内达到20分即及格。
 
 ```javascript
 var c = new Circle();
@@ -653,7 +712,7 @@ circle.fill();
 
 #### 挑战: 猫咪故事大王
 
-在立乐星球里有一只很爱说故事的猫咪，大家都叫它“故事大王Susie”。让我们在`who`后面的`‘ ’` 中填写上主角的名字，像是这样`'喵喵'`
+在立乐星球里有一只很爱说故事的猫咪，大家都叫它“故事大王Susie”。让我们在`who`后面的`''` 中填写上`主角的名字`，像是这样`'喵喵'`。让我们在`where`后面的`''` 中填写上`故事的地点`，像是这样`'在操场上'`。让我们在`withWhom`后面的`''` 中填写上`配角的名字`，像是这样`'和小青蛙夸克一起'`，让我们在`adj`后面的`''` 中填写上`形容词`，像是这样`'快乐的'`，让我们在`doWhat`后面的`''` 中填写上`做什么`，像是这样`'唱歌'`，让我们在`when`后面的`''` 中填写上`时间`，像是这样`'在早上'`。把这些内容都补全后点击`运行`，再点击猫咪Susie，她就会开始说故事啦！
 
 ```javascript
 var who = ['','',''];
@@ -752,8 +811,9 @@ var colArr = ["red","orange","yellow","green","cyan","blue","purple"];//写入�
 
 ![colorLight](./images/colorLight.png)
 
+##### 附录全代码
+
 ```javascript
-附录全代码：
 var colArr = ["red", "orange", "yellow", "green", "cyan", "blue", "purple"]; //调色板
 var circle1 = new Circle(100, 100, 100);
 var circle2 = new Circle(100, 285, 10);
@@ -852,7 +912,7 @@ Actions = {
 };
 ```
 
-附录全代码
+##### 附录全代码
 
 ```javascript
 //写下你的英文名吧
@@ -1004,11 +1064,128 @@ function circle(circlex, circley, circleradius, co1) {
 }
 ```
 
-**参考颜色列表**
+#### **参考颜色列表**
 
 - [颜色列表](http://www.w3school.com.cn/tags/html_ref_colornames.asp)
 
 ### Lesson 10: 复习与测验
+
+#### 挑战：绘制多彩风景画
+
+我们现在有一张黑白的风景画，让我们用自己喜欢的颜色，画出属于自己的多彩风景画吧。
+
+![colorDraw](./images/colorDraw.png)
+
+##### 附录全代码
+
+```javascript
+//天空
+var sky = new Rectangle(0, 0, 608, 250);
+sky.strokeStyle ='black';
+sky.fillStyle = 'white';
+sky.draw();
+
+//太阳
+var sun = new Circle(156, 100, 50);
+sun.strokeStyle ='black';
+sun.fillStyle = 'white';
+sun.draw();
+
+//云
+var cloud1 = new Ellipse(440, 25, 30,10);
+cloud1.strokeStyle ='black';
+cloud1.fillStyle = 'white';
+cloud1.draw();
+var cloud2 = new Ellipse(550, 60, 75,25);
+cloud2.strokeStyle ='black';
+cloud2.fillStyle = 'white';
+cloud2.draw();
+
+//地平线上的山
+var hill1 = new Triangle(250,300,500,260,400,235);
+hill1.strokeStyle ='black';
+hill1.fillStyle = 'white';
+hill1.draw();
+
+//大地
+var land = new Rectangle(0, 250, 608, 300);
+land.strokeStyle ='black';
+land.fillStyle = 'white';
+land.draw();
+
+//远山
+var hillB1 = new Triangle(360,300,600,300,500,220);
+hillB1.strokeStyle ='black';
+hillB1.fillStyle = 'white';
+hillB1.draw();
+var hillB2 = new Triangle(-30,320,300,290,90,200);
+hillB2.strokeStyle ='black';
+hillB2.fillStyle = 'white';
+hillB2.draw();
+
+//河流
+var river1 = new Rectangle(0, 350, 320, 50);
+river1.strokeStyle ='black';
+river1.fillStyle = 'white';
+river1.draw();
+var river2 = new Rectangle(200, 380, 408, 50);
+river2.strokeStyle ='black';
+river2.fillStyle = 'white';
+river2.draw();
+
+//波浪
+var line1 = new Line(250, 400, 320, 400);
+line1.strokeStyle ='black';
+line1.draw();
+var line2 = new Line(300, 415, 420, 415);
+line2.strokeStyle ='black';
+line2.draw();
+var line3 = new Line(500, 400, 550, 400);
+line3.strokeStyle ='black';
+line3.draw();
+var line4 = new Line(50, 370, 120, 370);
+line4.strokeStyle ='black';
+line4.draw();
+var line5 = new Line(110, 380, 170, 380);
+line5.strokeStyle ='black';
+line5.draw();
+
+//近处的树
+tree(150,450,'black','white','black',7)
+tree(250,480,'black','white','black',5)
+tree(500,450,'black','white','black',6)
+tree(85,500,'black','white','black',4)
+tree(105,510,'black','white','black',4)
+tree(550,480,'black','white','black',4)
+
+//小船
+var flag = new Triangle(425,395,425,330,450,360);
+flag.strokeStyle ='black';
+flag.fillStyle = 'white';
+flag.draw();
+var boat = new Rectangle(405, 390, 45, 8);
+boat.strokeStyle ='black';
+boat.fillStyle = 'white';
+boat.draw();
+
+function text(str,x,y,color,size){
+      ctx.fillStyle = color;
+      ctx.font = size +"px Arial";
+      ctx.fillText(str, x, y);  
+}
+
+function tree(x,y,color1,color2,color3,size){
+      var leaf = new Ellipse(x, y, 3*size,5*size);
+      leaf.strokeStyle = color1;
+      leaf.fillStyle = color2;
+      leaf.draw();  
+      var bole = new Line(x, y+size, x, y+7*size);
+      bole.strokeStyle = color3;
+      bole.draw();
+}
+```
+
+
 
 ## Chapter 5: 图形
 
@@ -1252,7 +1429,7 @@ rightHand.draw();
 
 综合课：
 
-引导 让学生自己画出自己喜欢的图形use 圆。线。矩形（有缺口的圆 、用很多三角形画宝剑） 
+引导 让学生自己画出自己喜欢的图形use 圆。线。矩形（如：有缺口的圆 、用很多三角形画宝剑） 
 
 ## Chapter 6: 变量
 
@@ -1278,10 +1455,15 @@ rightHand.draw();
 
 #### **试一试**
 
-- 找一张你最喜欢的动物的图片，放在变量里吧
+- 找一张你最喜欢的图片，放在变量里吧  
+
+- ```javascript
+  var apple = 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=261613111,2092797742&fm=27&gp=0.jpg'
+  ```
+
+#### 附录全代码
 
 ```javascript
-附录代码：
 var box = new Rectangle(45, 436, 500, 300);
 box.fillStyle = 'orange';
 box.fill();
@@ -1303,8 +1485,6 @@ sprite.onload = function() {
 ```
 
 ### Lesson 16: 使用变量
-
-小测验：变量
 
 通过之前的课程，我们学会了画圆的方法，那让我们把圆心的横方向位置（X坐标）用计算机里的盒子——变量来表示吧。
 
@@ -1422,8 +1602,6 @@ frogBacGro.onload = function() {
 
 让我们挑选出故事的主人公，并且带上他们各自的宠物出现吧。
 
-#### 立乐图片素材库
-
 ### Lesson 20: 复习与测验
 
 #### 挑战：动物快乐节
@@ -1440,8 +1618,9 @@ frogBacGro.onload = function() {
 
 找出图片素材库里所有小猫的图片，把图片链接放在`var catLink = [ ];`这句代码的`[ ]`里，每一个图片的链接之间要用逗号隔开，像这样`['http://rss.leaplearner.com/Image/Animals/Cat_happy.png' , 'http://rss.leaplearner.com/Image/Animals/Cat_angry.png'];`
 
+#### 附录全代码
+
 ```javascript
-附录完整代码：
 var catLink = ['http://rss.leaplearner.com/Image/Animals/Cat_happy.png', 'http://rss.leaplearner.com/Image/Animals/Cat_angry.png', 'http://rss.leaplearner.com/Image/Animals/Cat_stand.png', 'http://rss.leaplearner.com/Image/Animals/Cat_think.png', 'http://rss.leaplearner.com/Image/Animals/Cat_walk.png'];
 var cat = new Sprite(catLink[0], 150, 200, 200, 200);
 var i = 0;
@@ -1548,18 +1727,18 @@ var n = setInterval(draw, 100);
 
 - 你喜欢听到什么声音
 
-### 加入背景音乐
+#### 加入背景音乐
 
 ```javascript
 playSound('https://rss.leaplearner.com/BGM/Fish/GameMasterInterface.mp3');
 ```
 
-##### **想一想**
+**想一想**
 
 - 你觉得什么是音乐
 - 观察文件名字的尾巴，就是.后面的英文字母和数字
 
-### 立乐音乐素材库
+**立乐音乐素材库**
 
 如何使用音乐素材库: 点击左侧`多媒体`，点击`音乐`，红色方框标出的橙色小三角形可以选择不同的音乐哦，选择你最喜欢的音乐吧!	
 
@@ -1567,11 +1746,11 @@ playSound('https://rss.leaplearner.com/BGM/Fish/GameMasterInterface.mp3');
 
 ### Lesson 24: 制作自己的音乐钢琴
 
-#### 试一试
+**试一试**
 
 - 通过改变`var catLink = [ ]`里的链接，制作属于你自己的音乐钢琴吧
 
-附录代码：
+##### 附录全代码
 
 ```javascript
 var urlArr = ['http://static.leaplearner.com/sounds/jump.mp3', 'http://static.leaplearner.com/sounds/coin.mp3'];
