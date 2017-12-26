@@ -92,10 +92,16 @@ function image (src, x, y, w, h) {
   let img = new Image()
   img.crossOrigin = 'anonymous'
   img.src = src
-  if (w && h) {
-    ctx.drawImage(img, x, y, w, h)
-  } else {
-    ctx.drawImage(img, x, y)
+  img._x = x
+  img._y = y
+  img.w = w
+  img.h = h
+  img.onload = function () {
+    if (this.w && this.h) {
+      ctx.drawImage(this, this._x, this._y, this.w, this.h)
+    } else {
+      ctx.drawImage(this, this._x, this._y)
+    }
   }
 }
 
