@@ -341,7 +341,7 @@
 >   - C `draw(rect);`
 >   - D `draw.rect();`
 
-### Lesson 9
+### Lesson 9 
 
 ### Lesson 10
 
