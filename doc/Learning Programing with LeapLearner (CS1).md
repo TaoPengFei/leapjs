@@ -277,17 +277,13 @@ function moveCollimationMirror(left, right, up, down) {
 
 #### 鼠标光标
 
-有一天立乐星球来了一位黑魔法师Vic，他使用变矮魔法，把小动物们都变矮了。、
+有一天立乐星球来了一位黑魔法师Vic，他使用变矮魔法，把小动物们都变矮了。
 
 让我们使用编程的魔法，帮助他们复原吧。
 
 ![Einstein_angry.png](./images/Einstein_angry.png)
 
 ​											黑魔法师Vic
-
-![](./images/normalAnimals.png)
-
-​										动物们正常的身高
 
 ![](./images/magicBefore.png)
 
@@ -723,6 +719,8 @@ var doWhat = ['','',''];
 var when = ['','',''];
 ```
 
+![storyKing](./images/storyKing.png)
+
 附录全代码：
 
 ```javascript
@@ -765,11 +763,9 @@ function magicStory() {
 
 ### Lesson 7: 计算机里颜色
 
-在生活中，有许许多多的颜色，让世界变得丰富起来。比如彩虹，就有红橙黄绿青蓝紫等颜色。 **to do 画彩虹**
+在生活中，有许许多多的颜色，让世界变得丰富起来。比如彩虹，就有红橙黄绿青蓝紫等颜色。
 
 ![](./images/rainbow2.png)
-
-
 
 #### 颜色代码
 
@@ -791,6 +787,66 @@ circle.fillStyle = 'green';
 
 - 列出所有你知道的颜色名称
 - 试试你知道的颜色
+
+#### 用编码绘制彩虹
+
+将颜色的英文单词填入两个双引号（" "）之间，绘制出你自己的彩虹吧
+
+```javascript
+var cc1 = " ";
+var cc2 = " ";
+var cc3 = " ";
+var cc4 = " ";
+var cc5 = " ";
+var cc6 = " ";
+var cc7 = " ";
+```
+
+#### 附录全代码
+
+```javascript
+var cc1 = "red";
+var cc2 = "orange";
+var cc3 = "yellow";
+var cc4 = "green";
+var cc5 = "cyan";
+var cc6 = "blue";
+var cc7 = "purple";
+
+canvas.width = 400;
+canvas.height = 300;
+var c1 = new Circle(200,400,350);
+c1.fillStyle = cc1;
+c1.fill();
+
+var c2 = new Circle(200,400,335);
+c2.fillStyle = cc2;
+c2.fill();
+
+var c3 = new Circle(200,400,320);
+c3.fillStyle = cc3;
+c3.fill();
+
+var c4 = new Circle(200,400,305);
+c4.fillStyle = cc4;
+c4.fill();
+
+var c5 = new Circle(200,400,290);
+c5.fillStyle = cc5;
+c5.fill();
+
+var c6 = new Circle(200,400,275);
+c6.fillStyle = cc6;
+c6.fill();
+
+var c7 = new Circle(200,400,260);
+c7.fillStyle = cc7;
+c7.fill();
+
+var c8 = new Circle(200,400,245);
+c8.fillStyle = "white";
+c8.fill();
+```
 
 ### Lesson 8: 常见颜色认识与运用
 
@@ -1076,112 +1132,222 @@ function circle(circlex, circley, circleradius, co1) {
 
 ![colorDraw](./images/colorDraw.png)
 
+```javascript
+//写下你的名字吧
+var yourName = "Your Name";
+//写下你名字的颜色吧
+var nameColor = 'red';
+
+Colors = {
+    sky: '', //天空颜色
+    land: '', //大地颜色
+    hill1: '', //山丘颜色1
+    hill2: '', //山丘颜色2
+    hill3: '', //山丘颜色3
+    tree1: '', //树木颜色1
+    tree2: '', //树木颜色2
+    tree3: '', //树木颜色3
+    tree4: '', //树木颜色4
+    bole: '', //树干颜色
+    sun: '', //太阳颜色
+    cloud: '', //云的颜色
+    river: '', //河流颜色
+    wave: '', //河面波纹颜色
+    flag: '', //小船风帆颜色
+    boat: '' //小船船身颜色
+};
+Actions = {
+    speed: 0, //小船航行的速度
+    cloud: 0//云飘动的速度
+};
+```
+
 ##### 附录全代码
 
 ```javascript
-//天空
-var sky = new Rectangle(0, 0, 608, 250);
-sky.strokeStyle ='black';
-sky.fillStyle = 'white';
-sky.draw();
+//写下你的名字吧
+var yourName = "Your Name";
+//写下你名字的颜色吧
+var nameColor = 'red';
 
-//太阳
-var sun = new Circle(156, 100, 50);
-sun.strokeStyle ='black';
-sun.fillStyle = 'white';
-sun.draw();
+Colors = {
+    sky: '', //天空颜色
+    land: '', //大地颜色
+    hill1: '', //山丘颜色1
+    hill2: '', //山丘颜色2
+    hill3: '', //山丘颜色3
+    tree1: '', //树木颜色1
+    tree2: '', //树木颜色2
+    tree3: '', //树木颜色3
+    tree4: '', //树木颜色4
+    bole: '', //树干颜色
+    sun: '', //太阳颜色
+    cloud: '', //云的颜色
+    river: '', //河流颜色
+    wave: '', //河面波纹颜色
+    flag: '', //小船风帆颜色
+    boat: '' //小船船身颜色
+};
+Actions = {
+    speed: 0, //小船航行的速度
+    cloud: 0//云飘动的速度
+};
 
-//云
-var cloud1 = new Ellipse(440, 25, 30,10);
-cloud1.strokeStyle ='black';
-cloud1.fillStyle = 'white';
-cloud1.draw();
-var cloud2 = new Ellipse(550, 60, 75,25);
-cloud2.strokeStyle ='black';
-cloud2.fillStyle = 'white';
-cloud2.draw();
 
-//地平线上的山
-var hill1 = new Triangle(250,300,500,260,400,235);
-hill1.strokeStyle ='black';
-hill1.fillStyle = 'white';
-hill1.draw();
+canvas.width = 608;
+canvas.height = 550;
 
-//大地
-var land = new Rectangle(0, 250, 608, 300);
-land.strokeStyle ='black';
-land.fillStyle = 'white';
-land.draw();
 
-//远山
-var hillB1 = new Triangle(360,300,600,300,500,220);
-hillB1.strokeStyle ='black';
-hillB1.fillStyle = 'white';
-hillB1.draw();
-var hillB2 = new Triangle(-30,320,300,290,90,200);
-hillB2.strokeStyle ='black';
-hillB2.fillStyle = 'white';
-hillB2.draw();
+drawGame();
 
-//河流
-var river1 = new Rectangle(0, 350, 320, 50);
-river1.strokeStyle ='black';
-river1.fillStyle = 'white';
-river1.draw();
-var river2 = new Rectangle(200, 380, 408, 50);
-river2.strokeStyle ='black';
-river2.fillStyle = 'white';
-river2.draw();
-
-//波浪
-var line1 = new Line(250, 400, 320, 400);
-line1.strokeStyle ='black';
-line1.draw();
-var line2 = new Line(300, 415, 420, 415);
-line2.strokeStyle ='black';
-line2.draw();
-var line3 = new Line(500, 400, 550, 400);
-line3.strokeStyle ='black';
-line3.draw();
-var line4 = new Line(50, 370, 120, 370);
-line4.strokeStyle ='black';
-line4.draw();
-var line5 = new Line(110, 380, 170, 380);
-line5.strokeStyle ='black';
-line5.draw();
-
-//近处的树
-tree(150,450,'black','white','black',7)
-tree(250,480,'black','white','black',5)
-tree(500,450,'black','white','black',6)
-tree(85,500,'black','white','black',4)
-tree(105,510,'black','white','black',4)
-tree(550,480,'black','white','black',4)
-
-//小船
-var flag = new Triangle(425,395,425,330,450,360);
-flag.strokeStyle ='black';
-flag.fillStyle = 'white';
-flag.draw();
-var boat = new Rectangle(405, 390, 45, 8);
-boat.strokeStyle ='black';
-boat.fillStyle = 'white';
-boat.draw();
-
-function text(str,x,y,color,size){
-      ctx.fillStyle = color;
-      ctx.font = size +"px Arial";
-      ctx.fillText(str, x, y);  
+function moveCloud(A) {
+    if (A !== 0) {
+        A++;
+        if (A > 450) {
+            A = 1;
+        }
+    }
+    return A;
 }
 
-function tree(x,y,color1,color2,color3,size){
+function moveSpeed(A) {
+    if (A !== 0) {
+        A ++;
+        if (A > 550) {
+            A = 1;
+        }
+    }
+    return A;
+}
+
+
+function drawGame() {
+    Actions.speed = moveSpeed(Actions.speed);
+    Actions.cloud = moveCloud(Actions.cloud);
+    drawOctopus(Actions, Colors);
+}
+
+setInterval(drawGame, 20);
+//绘制画面
+function drawOctopus(A, C) {
+    C.sky = C.sky || '#80fefb';
+    C.land = C.land || '#959743';
+    C.hill1 = C.hill1 || "#d2c65a";
+    C.hill2 = C.hill2 || "#a1cd76";
+    C.hill3 = C.hill3 || "#f6f39f";
+    C.tree1 = C.tree1 || "#fbc352";
+    C.tree2 = C.tree2 || "#ed8230";
+    C.tree3 = C.tree3 || "#97cb1e";
+    C.tree4 = C.tree4 || "#e7a904";
+    C.cloud = C.cloud || "white";
+    C.bole = C.bole || "#4e361c";
+    C.sun = C.sun || "#ef4f30";
+    C.river = C.river || "#a9fffc";
+    C.wave = C.wave || "#a2c9fe";
+    C.flag = C.flag || "#675bff";
+    C.boat = C.boat || "#4e361c";
+    A.speed = A.speed || 0;
+    A.cloud = A.cloud || 0;
+    rectangle(0, 0, 608, 550, C.sky); //天空
+    circle(156, 100, 50, C.sun);//太阳
+    ellipse(440 - A.cloud*0.75, 25, 30,10,C.cloud); //第1朵云
+    ellipse(550 - A.cloud*0.5, 60, 75,25,C.cloud); //第2朵云
+    triangle(250,300,500,260,400,235,C.hill3);//地平线上的山
+    rectangle(0, 250, 608, 300, C.land); //大地
+    triangle(360,300,600,300,500,220,C.hill1);//右侧山丘
+    triangle(-30,320,300,290,90,200,C.hill2);//左侧山丘
+    rectangle(0, 350, 320, 50, C.river); //河流左端
+    rectangle(200, 380, 408, 50, C.river); //河流右端
+    line(250 + A.speed*0.4, 400, 320+ A.speed*0.4, 400, 2, C.wave);//河面波纹1
+    line(300+ A.speed*0.2, 415, 420+ A.speed*0.2, 415, 2, C.wave);//河面波纹2
+    line(500+ A.speed*0.4, 400, 550+ A.speed*0.4, 400, 2, C.wave);//河面波纹3
+    line(50+ A.speed*0.2, 370, 120+ A.speed*0.2, 370, 2, C.wave);//河面波纹4
+    line(110+ A.speed*0.3, 385, 170+ A.speed*0.3, 385, 2, C.wave);//河面波纹5
+    tree(85,500,C.tree1,C.bole,4);//左1树木
+    tree(105,510,C.tree2,C.bole,4);//左2树木
+    tree(150,450,C.tree3,C.bole,7);//左3树木
+    tree(250,480,C.tree2,C.bole,5);//左4树木
+    tree(500,450,C.tree1,C.bole,6);//左5树木
+    tree(550,480,C.tree4,C.bole,4);//左6树木
+    triangle(425 - A.speed*0.8,395,425 - A.speed*0.8,330,400 - A.speed*0.8,360,C.flag);//船帆
+    rectangle(400 - A.speed*0.8, 390, 45, 6, C.boat); //船身
+    text(yourName, nameColor);
+}
+
+
+
+/* ================
+
+     函数汇总
+
+================ */
+
+
+
+function tree(x,y,color1,color2,size){
       var leaf = new Ellipse(x, y, 3*size,5*size);
       leaf.strokeStyle = color1;
-      leaf.fillStyle = color2;
+      leaf.fillStyle = color1;
       leaf.draw();  
       var bole = new Line(x, y+size, x, y+7*size);
-      bole.strokeStyle = color3;
+      bole.strokeStyle = color2;
       bole.draw();
+}
+
+
+function ellipse(x, y, rX, rY, color){
+    var e = new Ellipse(x, y, rX, rY);
+    e.fillStyle = color;
+    e.fill();
+};
+
+
+function circle(circlex, circley, circleradius, co1) {
+    ctx.beginPath();
+    ctx.arc(circlex, circley, circleradius, 0, 2 * Math.PI);
+    ctx.fillStyle = co1;
+    ctx.fill();
+    ctx.closePath();
+}
+
+
+function rectangle(x,y,w,l,co) {
+    ctx.beginPath();
+    ctx.rect(x,y,w,l);
+    ctx.fillStyle = co;
+    ctx.fill();
+    ctx.closePath();
+}
+
+
+function line(x,y,x1,y1, width, color) {
+ctx.beginPath();
+ctx.moveTo(x, y);
+ctx.lineTo(x1, y1);
+ctx.lineWidth = width;
+ctx.strokeStyle = color;
+ctx.stroke();
+ctx.closePath();
+}
+
+
+function triangle(x1,y1,x2,y2,x3,y3,color){
+  ctx.beginPath();
+  ctx.moveTo(x1,y1);
+  ctx.lineTo(x2,y2);
+  ctx.lineTo(x3,y3);
+  ctx.lineTo(x1,y1);
+  ctx.fillStyle=color;
+  ctx.fill();
+  ctx.strokeStyle = color;
+  ctx.stroke();
+}
+
+
+function text(str, color) {
+    ctx.fillStyle = color;
+    ctx.font = "25" + "px Arial";
+    ctx.fillText(str, 450, 30);
 }
 ```
 
@@ -1435,52 +1601,92 @@ rightHand.draw();
 
 ### Lesson 15: 认识变量
 
-变量，就像是计算机里的一个盒子，可以存放着各种各样的东西，但是里面只能放一个东西。
+变量，就像是计算机里的一个盒子,可以用来放东西。
 
-我们现在就有一个变量盒子，它的名字叫box，因为它可以用来放东西，所以我们先往里面放一个动物吧。
+我们现在就有一个变量盒子，它的名字叫box。
 
 ![variableA.png](./images/variableA.png)
 
-放了一个苹果后，叫box的这个变量盒子里面就有了一个苹果。
+今天立乐星球的小动物们也来了呢
+
+#### **试一试**
+
+- 点一点你最喜欢的立乐星球小动物
 
 ![variableB.png](./images/variableB.png)
 
-如果我们再往叫box的这个变量盒子里面放一根香蕉呢？猜一猜会发生什么。
+#### **说一说**
 
-当当当当！里面并不是有苹果也有香蕉，而是只有香蕉。
-
-变量这个盒子的容量很小，里面只能放一个东西。之前我们放的苹果就被计算机扔出去啦。因为塞不下啦。
+- 发生了什么
 
 ![](./images/variableC.png)
 
 #### **试一试**
 
-- 找一张你最喜欢的图片，放在变量里吧  
+- 点一点其他的立乐星球小动物
 
-- ```javascript
-  var apple = 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=261613111,2092797742&fm=27&gp=0.jpg'
-  ```
+#### **说一说**
+
+- 发生了什么
+
+#### **想一想**
+
+- 变量这个盒子只能装多少小动物
+
+#### **说一说**
+
+- 为什么变量这个盒子里只能装下一只小动物
+
+> 变量这个盒子可以存放各种各样的东西，但是里面只能放一个东西。
+>
+> 它的容量很小，之前我们放的小动物就被计算机扔出去啦，因为塞不下啦。
 
 #### 附录全代码
 
 ```javascript
-var box = new Rectangle(45, 436, 500, 300);
-box.fillStyle = 'orange';
-box.fill();
-var apple = 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=261613111,2092797742&fm=27&gp=0.jpg'
-var banana = 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3134587658,578833225&fm=27&gp=0.jpg'
-var text = new Text();
-text.x = 45;
-text.y = 436 + 250;
-text.src = '变量box';
-text.fillStyle = 'white';
-var sprite = new Sprite(apple, 272.5 - 100 - 22.5, 436, 250, 250);
-sprite.onload = function() {
-    box.click = function() {
-        sprite.draw();
-        text.fill();
+var box = 'http://owtvvc2bc.bkt.clouddn.com/box.jpg';
+var cat = 'https://rss.leaplearner.com/Image/Animals/Cat_happy.png';
+var bear = 'https://rss.leaplearner.com/Image/Animals/Bear_happy.png';
+var duck = 'https://rss.leaplearner.com/Image/Animals/Duck_happy.png';
+var frog = 'https://rss.leaplearner.com/Image/Animals/Frog_happy.png';
+var sprite = new Sprite(box, 45, 436, 250 * 2, 250);
+var disCat = new Sprite(cat, 45 + 250 / 2, 436 + 10, 250 / 2, 250 / 2);
+var disBear = new Sprite(bear, 45 + 250 / 2, 436 + 10, 250 / 2, 250 / 2);
+var disDuck = new Sprite(duck, 45 + 250 / 2, 436 + 10, 250 / 2, 250 / 2);
+var disFrog = new Sprite(frog, 45 + 250 / 2, 436 + 10, 250 / 2, 250 / 2);
+var cliCat = new Sprite(cat, 20, 20, 250 / 2, 250 / 2);
+var cliBear = new Sprite(bear, 20 + 80, 20, 250 / 2, 250 / 2);
+var cliDuck = new Sprite(duck, 20 + 80 + 80, 20, 250 / 2, 250 / 2);
+var cliFrog = new Sprite(frog, 20 + 80 + 80 + 80, 20, 250 / 2, 250 / 2);
+sprite.onload = drawAll();
 
-    }
+function drawAll() {
+    sprite.draw();
+    cliCat.draw();
+    cliBear.draw();
+    cliDuck.draw();
+    cliFrog.draw();
+
+}
+cliCat.click = function() {
+    canvas.clear();
+    drawAll();
+    disCat.draw();
+}
+cliBear.click = function() {
+    canvas.clear();
+    drawAll();
+    disBear.draw();
+}
+cliDuck.click = function() {
+    canvas.clear();
+    drawAll();
+    disDuck.draw();
+}
+cliFrog.click = function() {
+    canvas.clear();
+    drawAll();
+    disFrog.draw();
 }
 ```
 
@@ -1544,7 +1750,7 @@ eye.draw()
 
 链接是资源在网络上的地址，那小朋友们是不是都有家庭住址，你的好朋友知道你家的地址就能来找你玩了呀，所以我们知道了图片的地址，就能够找到这张图片了。
 
-### 使用图片
+#### 如何使用图片
 
 首先点击`内置函数`里的`image方法`，然后修改图片的链接和横纵方向的位置和图片的宽度高度。我们就能在画布上绘制出一张自己喜欢的图片啦。
 
@@ -1557,7 +1763,7 @@ sprite.draw();
 
 ![cacti](./images/cacti.png)
 
-### 图片的顺序
+#### 图片的顺序
 
 插入图片时，后插入的图片会盖住先插入的图片。就像我们在一张白纸上画画，后画的东西是不是会盖住先画的东西呀。
 
@@ -1598,7 +1804,7 @@ frogBacGro.onload = function() {
 
 让我们找两张动物的图片来试一试吧。
 
-### 挑战：小剧场
+#### 挑战：小剧场
 
 让我们挑选出故事的主人公，并且带上他们各自的宠物出现吧。
 
@@ -1606,7 +1812,7 @@ frogBacGro.onload = function() {
 
 #### 挑战：动物快乐节
 
-今天是动物界里的快乐节，所有的小动物都要笑，请你从素材库里找出所有笑着的小动物，把它们用插图片的方法画出来吧。找出五个。
+今天是动物界里的快乐节，所有的小动物都要笑，请你从素材库里找出五个笑着的小动物，把它们用插图片的方法画出来吧。
 
 ## Chapter 8: 动画
 
@@ -1723,9 +1929,9 @@ var n = setInterval(draw, 100);
 
 ### Lesson 23: 使用立乐音乐库
 
-说一说
+听一听
 
-- 你喜欢听到什么声音
+- 你听到了什么声音
 
 #### 加入背景音乐
 
@@ -1733,7 +1939,7 @@ var n = setInterval(draw, 100);
 playSound('https://rss.leaplearner.com/BGM/Fish/GameMasterInterface.mp3');
 ```
 
-**想一想**
+**说一说**
 
 - 你觉得什么是音乐
 - 观察文件名字的尾巴，就是.后面的英文字母和数字
