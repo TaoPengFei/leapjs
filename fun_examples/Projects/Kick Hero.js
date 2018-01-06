@@ -1,11 +1,11 @@
-/******* ¸Ä±ä»­²¼´óĞ¡ *******/
-canvas.width = 350;
+/******* æ”¹å˜ç”»å¸ƒå¤§å° *******/
+canvas.width = 355;
 canvas.height = 500;
 
-/******* ¶¨ÒåÍ¼Æ¬¶ÔÏó *******/
+/******* å®šä¹‰å›¾ç‰‡å¯¹è±¡ *******/
 var score;
 var hi_score = 0;
-var sky = new Sprite("http://ou1htxdl4.bkt.clouddn.com/qiuchang.jpg", 0, 0, 355, 580);
+var sky = new Sprite("http://ou1htxdl4.bkt.clouddn.com/qiuchang.jpg", 0, 0, 355, 500);
 var turkey1 = new Sprite("http://ou1htxdl4.bkt.clouddn.com/football.png", 80, 20, 80, 80);
 var turkey2 = new Sprite("http://ou1htxdl4.bkt.clouddn.com/football.png", 160, 20, 80, 80);
 var turkey3 = new Sprite("http://ou1htxdl4.bkt.clouddn.com/football.png", 240, 20, 80, 80);
@@ -14,7 +14,7 @@ var hiMsg = new Text("Hi:",300,30);
 var overMsg = new Text("Click Restart!",120,300);
 
 
-/******* Ö÷º¯Êı *******/
+/******* ä¸»å‡½æ•° *******/
 var acc;
 var speed;
 var isOver;
