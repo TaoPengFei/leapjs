@@ -405,6 +405,18 @@ c.click = function(){
 
 - 每个小动物代表的分数都是不同的，老虎、狐狸、老鹰、小蛇各自代表几分
 
+**说一说**
+
+- 老虎是几分，狐狸是几分、老鹰是几分、小蛇是几分
+
+![tiger](./images/tiger.png)
+
+![fox](./images/fox.png)
+
+![eagle](./images/eagle.png)
+
+![snake](./images/snake.png)
+
 ```javascript
 var frogBacGro = new Sprite('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg', 0, 0, 650, 332); //background
 var tiger = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_tiger.png', 145, 230, 95, 103);
@@ -589,6 +601,8 @@ Loop();
 左右手分别负责键盘的左右区域。用拇指按空格键。
 
 键盘指法键位图
+
+https://www.typing.com/
 
 **大小写和数字键**
 
@@ -1360,18 +1374,15 @@ function text(str, color) {
 在学会坐标后，我们就可以学着用代码来绘图了。第一步，来我们来在画布上画出一个圆来。
 
 ```javascript
-var circle = new Circle(100, 100, 50);
-circle.draw();
+circle(100, 100, 50, 'orange');
 ```
 
-第一行，我们定义了一个圆，名字叫做`circle`。它是一个Circle的实例，括号里有3个参数，从左到右依次是圆的x、y值，还有半径r。
-
-第二行，我们是有那个了`circle`的方法`draw`，将圆画在屏幕上。
+括号里有3个参数，从左到右依次是圆的横坐标位置，竖坐标位置还有圆的大小半径r。
 
 **试一试**
 
-* 修改圆的x坐标，y坐标，重新运行，看看会有什么变化。
-* 修改圆的半径，重新运行，看看会有什么变化。
+* 修改圆的x坐标，y坐标，点击`运行`，看看会有什么变化。
+* 修改圆的大小，即圆的半径，点击`运行`，看看会有什么变化。
 * 画一个圆，尽可能大的占满屏幕，但又不超出屏幕。做完后，你有什么发现呢。这个最大的圆和画布的关系是什么。
 
 #### 挑战：雪人
@@ -1385,8 +1396,7 @@ circle.draw();
 首先，让我们用圆来画出雪人的身体。我们需要把雪人的身体摆在合适的位置，对照坐标轴，为雪人的身体选择一个最合适的位置。
 
 ```javascript
-var body = new Circle(200, 250, 100);
-body.draw();
+circle(200, 250, 100);
 ```
 
 ![cs1_snowman1](./images/cs1_snowman1.png)
@@ -1394,9 +1404,7 @@ body.draw();
 运行，看雪人的身体是不是出现在屏幕上了。但是呢，雪人的身体是白色的，我们要把它改成白色的。在第一行代码后面加入一行代码，将雪人的颜色修改成为白色。
 
 ```javascript
-var body = new Circle(200, 250, 100);
-body.fillStyle = "white";
-body.draw();
+circle(200, 250, 100,"white");
 ```
 
 ![cs1_snowman2](./images/cs1_snowman2.png)
@@ -1404,31 +1412,16 @@ body.draw();
 快看，我们成功的用代码画出了一个白色的雪人身体。接下来，让我们把雪人的头画上去，雪人的头也是一个圆，同样，我们也要将雪人脑袋的颜色改成白色。
 
 ```javascript
-var head = new Circle(200, 130, 60);
-head.fillStyle = "white";
-head.draw();
+circle(200, 130, 60,"white");
 ```
 
 ![cs1_snowman3](./images/cs1_snowman3.png)
 
-再次运行，看雪人的头是不是出现了。接下来，就是雪人的眼睛了，这里我们让雪人的眼睛变成黑色。你可以选择喜欢其他你喜欢的颜色，
+再次运行，看雪人的头是不是出现了。接下来，就是雪人的眼睛了，这里我们让雪人的眼睛变成黑色。你可以选择喜欢其他你喜欢的颜色，先画出左眼再画出右眼。
 
 ```javascript
-var body = new Circle(200, 250, 100);
-body.fillStyle = "white";
-body.draw();
-
-var head = new Circle(200, 130, 60);
-head.fillStyle = "white";
-head.draw();
-
-var eye = new Circle(180, 120, 10);
-eye.fillStyle = "black";
-eye.draw()
-
-var eye = new Circle(220, 120, 10);
-eye.fillStyle = "black";
-eye.draw()
+circle(180, 120, 10,"black");
+circle(220, 120, 10,"black");
 ```
 
 ![cs1_snowman4](./images/cs1_snowman4.png)
@@ -1518,41 +1511,23 @@ c.draw(200, 250);  // mouse
 在画布上画出一个矩形，我们需要使用以下的代码。
 
 ```javascript
-var rect = new Rectangle(100, 100, 200, 50);
-rect.draw();
+rectangle(10, 10, 100, 50);
 ```
+
+'orange'
 
 #### 挑战：车辆
 
 `drawXY`函数可以让图形可以直接使用`draw(x, y)`，我们将在后面的单元中学习相关的知识。
 
 ```javascript
-function drawXY(x, y){
-    this.x = x;
-    this.y = y;
-    this.fill();
-}
-
-var bus = new Rectangle(50, 50, 300, 150);
-
-var glass = new Rectangle(0, 0, 50, 50);
-glass.draw = drawXY;
-
-var wheel = new Circle(100, 100, 30);
-wheel.draw = drawXY;
-
-bus.fillStyle = "green";
-bus.draw();
-
-glass.fillStyle = "white";
-glass.draw(80, 80);
-glass.draw(140, 80);
-glass.draw(200, 80);
-glass.draw(260, 80);
-
-wheel.fillStyle = "black";
-wheel.draw(120, 200);
-wheel.draw(280, 200);
+rectangle(50, 50, 300, 150, "green");
+rectangle(80, 80, 50, 50, "white");
+rectangle(140, 80, 50, 50, "white");
+rectangle(200, 80, 50, 50, "white");
+rectangle(260, 80, 50, 50, "white");
+circle(120, 200, 30, "black");
+circle(280, 200, 30, "black");
 ```
 
 ![cs1_bus](./images/cs1_bus.png)
@@ -1568,20 +1543,18 @@ wheel.draw(280, 200);
 线条，是由2个不同的点决定的。
 
 ```javascript
-var line = new Line(100, 100, 200, 200);
-line.draw();
+line(50, 50, 200, 200);
 ```
+
+, 'orange'
 
 #### 挑战：雪人的手臂
 
 让我们回到雪人，让我们为雪人加上手臂。
 
 ```javascript
-var leftHand = new Line(80, 150, 150, 220);
-leftHand.draw();
-
-var rightHand = new Line(320, 150, 250, 220);
-rightHand.draw();
+line(80, 150, 150, 220);
+line(320, 150, 250, 220);
 ```
 
 ![cs1_snowman5](./images/cs1_snowman5.png)
@@ -1757,8 +1730,7 @@ eye.draw()
 注意：图片链接一定要写在英文的引号里
 
 ```javascript
-var sprite = new Sprite('http://static.leaplearner.com/image/image.png', 53, 363, 40, 40);
-sprite.draw();
+image('http://static.leaplearner.com/image/image.png', 53, 363, 40, 40);
 ```
 
 ![cacti](./images/cacti.png)
@@ -1767,23 +1739,14 @@ sprite.draw();
 
 插入图片时，后插入的图片会盖住先插入的图片。就像我们在一张白纸上画画，后画的东西是不是会盖住先画的东西呀。
 
-试一下将frogBacGro.draw();这一行代码加在snake.draw();后面图片会发生什么吧。
+试一下将第一行的`image('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg',0,0,650,332);`这一行代码加在最后面图片会发生什么吧。
 
 ```javascript
-// Let us code the future
-var frogBacGro = new Sprite('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg',0,0,650,332);//background
-var tiger = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_tiger.png',145,230,95,103);
-var fox = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_fox.png',240,230,95,103);
-var eagle = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_eagle.png',335,230,95,103);
-var snake = new Sprite('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png',430,230,95,103);
-
-frogBacGro.onload = function() {
-   frogBacGro.draw();
-   tiger.draw();
-   fox.draw();
-   eagle.draw();
-   snake.draw();
-};
+image('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg',0,0,650,332);
+image('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_tiger.png',145,230,95,103);
+image('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_fox.png',240,230,95,103);
+image('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_eagle.png',335,230,95,103);
+image('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png',430,230,95,103);
 ```
 
 ![ImageOrder](./images/ImageOrder.png)

@@ -39,6 +39,3 @@ function axisText(str, x, y) {
     ctx.font = "20px Arial";
     ctx.fillText(str, x, y);
 }
-canvas.width = 710;
-canvas.height = 540;
-setInterval(drawBG8, 10); //10msË¢ÐÂÒ»´Î
