@@ -3,6 +3,7 @@ var mX = 0;
 var mY = 0;
 var bgX = 0;
 var bgY = 0;
+var bg8 = 'http://ozjxf6i5r.bkt.clouddn.com/u01p08.png';
 //设置标志位
 var pageNum = 1;
 var cstatus = 1;
