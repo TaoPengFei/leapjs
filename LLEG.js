@@ -1666,11 +1666,19 @@ function image (src, x, y, w, h) {
   img._y = y
   img.w = w
   img.h = h
-  img.onload = function () {
+  if (img.complete) {
     if (this.w && this.h) {
       __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y, this.w, this.h)
     } else {
       __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y)
+    }
+  } else {
+    img.onload = function () {
+      if (this.w && this.h) {
+        __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y, this.w, this.h)
+      } else {
+        __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y)
+      }
     }
   }
 }
