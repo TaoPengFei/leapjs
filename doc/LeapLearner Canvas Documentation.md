@@ -50,6 +50,52 @@
 
 `文件`: 用于操作文件，可以新建一个文件，或者打开、保存已有的文件。
 
+## 基本绘图函数
+
+以下函数只执行绘制命令，不会创建对象，因此无法获得对应的属性
+
+### 基本形状
+
+| Code                                   | Shape                             |
+| -------------------------------------- | --------------------------------- |
+| `rectangle(x, y, w, h)`                | ![](./images/basic_rectangle.png) |
+| `circle(x, y, r)`                      | ![](./images/basic_circle.png)    |
+| `line(x1, y1, x2, y2)`                 | ![](./images/basic_line.png)      |
+| `point(x, y)`                          | ![](./images/basic_point.png)     |
+| `triangle(x1, y1, x2, y2, x3, y3)`     | ![](./images/basic_triangle.png)  |
+| `polygon(x1, y1, x2, y2, x3, y3, ...)` | ![](./images/basic_polygon.png)   |
+| `ellipse(x, y, rX, rY)`                | ![](./images/basic_ellipse.png)   |
+
+
+
+### 图片
+
+| Code                     | Result |
+| ------------------------ | ------ |
+| `image(src, x, y, w, h)` |        |
+
+### 样式
+
+`fill(r, g, b)` || `fill(color)` : 修改画笔填充的颜色
+
+`stroke(r, g, b)` || `stroke(color)` : 修改画笔描边的颜色
+
+`noFill()` : 使用该方法后，绘制的图形不再填充，使用`fill`方法后恢复填充
+
+`noStroke()` : 使用该方法后，图形的边不再绘制，使用`stroke`方法恢复绘制
+
+`lineWidth(thickness)` : 设置线条的粗细
+
+`background(color)` : 使用颜色直接绘制背景
+
+`background(r, g, b)` : 使用RGB值来绘制背景
+
+### 文字
+
+`font(size, font*)` : 设置文本大小和字体，文本颜色仍然通过`fill`来设置
+
+`text(src, x, y)` : 绘制文本
+
 ## 基本图形
 
 基本图形是所有画面展示的基本单位，通过基本图形的组合，我们可以创造出许许多多丰富的图案，做出漂亮的动画。
@@ -73,16 +119,6 @@
 > 小知识：笛卡尔坐标系和网页坐标系
 >
 > 和数学上常见的笛卡尔坐标系不同的是，网页坐标系的y轴正方向朝下。这是因为人类阅读习惯于从左到右，从上到下，在浏览器的定位系统中，根据这个习惯来定义坐标的位置，使得在网页设计时更为合理。
-
-
-
-没有什么比实际应用更容易掌握知识了，让我们用一个有趣的项目来熟悉下坐标的概念。
-
-##### 实例：设计一个跑酷游戏
-
-在这个项目中，我们可以摆放障碍物的位置，来调整游戏的难度。而障碍物的位置，就是由坐标来决定的。
-
-![runner](.\images\runner.png)
 
 ### 矩形
 
