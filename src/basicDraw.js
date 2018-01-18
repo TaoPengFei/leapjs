@@ -31,16 +31,33 @@ function rectangle (x, y, w, h, c) {
   ctx.restore()
 }
 
-function circle (x, y, r, c) {
+function circle (x, y, r, lW, c) {
   ctx.save()
   if (c) fill(c)
   ctx.beginPath()
   ctx.arc(x, y, r, 0, 2 * Math.PI)
+  ctx.lineWidth = lW || 1;
   ctx.fill()
   ctx.stroke()
   ctx.restore()
 }
-
+// with selectable parameter : lineWidth and color 
+function line(x1, y1, x2, y2, lW, c) {
+    ctx.save();
+    if (typeof(lW) !== "string") {
+        ctx.lineWidth = lW;
+        if (c) stroke(c);
+    } else {
+        ctx.lineWidth = 1;
+        if (lW) stroke(lW);
+    }
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.restore();
+}
+/**
 function line (x1, y1, x2, y2, c) {
   ctx.save()
   if (c) stroke(c)
@@ -50,7 +67,7 @@ function line (x1, y1, x2, y2, c) {
   ctx.stroke()
   ctx.restore()
 }
-
+**/
 function point (x, y) {
   ctx.save()
   ctx.strokeStyle = RGBA(0, 0, 0, 0)
