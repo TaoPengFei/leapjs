@@ -96,7 +96,7 @@ http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
 - 把单词`LeapLearner`改成你的英文名字吧
 - 点击左上角的`运行`
 - 点击`文件`→`保存`
-- 点击`分享`，把你的第一份编程作品分享给你的好朋友或者爸爸妈妈吧
+- 点击`分享`，课后把你的第一份编程作品分享给你的好朋友或者爸爸妈妈吧
 
 ## Chapter 2: 计算机坐标体系
 
@@ -594,13 +594,19 @@ Loop();
 
 ### Lesson 5: 正确的打字姿势
 
-**正确的打字姿势 （指位图todo 提需求）**
+**正确的打字姿势 **
 
 打字时身子要坐正，双手轻松的放在键盘上。
 
 左右手分别负责键盘的左右区域。用拇指按空格键。
 
-键盘指法键位图
+下面的图叫键盘指法键位图，我们应该如图所示，双手放在`ASDFJKL;`键上。
+
+![keyboard1](./images/keyboard1.PNG)
+
+下图是键盘解析图，键盘从左往右最上方的Esc到F12是功能键区。
+
+![keyboard2.PNG](./images/keyboard2.PNG)
 
 https://www.typing.com/
 
