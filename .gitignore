@@ -3,3 +3,4 @@ package-lock.json
 *.pdf
 *.docx
 .eslintrc.js
+src/.idea
