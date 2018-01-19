@@ -1611,9 +1611,17 @@ function circle (x, y, r, c) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
-function line (x1, y1, x2, y2, c) {
+// with selectable parameter : lineWidth and color
+// line(x1, y1, x2, y2, *lineWidth, *color);
+// line(x1, y1, x2, y2, *color)
+function line (x1, y1, x2, y2, lW, c) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (c) stroke(c)
+  if (typeof (lW) === 'number') {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = lW
+    if (c) stroke(c)
+  } else {
+    if (lW) stroke(lW)
+  }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(x1, y1)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(x2, y2)
