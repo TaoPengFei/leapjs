@@ -40,32 +40,25 @@ function circle (x, y, r, c) {
   ctx.stroke()
   ctx.restore()
 }
-// with selectable parameter : lineWidth and color 
-function line(x1, y1, x2, y2, lW, c) {
-    ctx.save();
-    if (typeof(lW) === "number") {
-        ctx.lineWidth = lW;
-        if (c) stroke(c);
-    } else {
-        if (lW) stroke(lW);
-    }
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-    ctx.restore();
-}
-/**
-function line (x1, y1, x2, y2, c) {
+
+// with selectable parameter : lineWidth and color
+// line(x1, y1, x2, y2, *lineWidth, *color);
+// line(x1, y1, x2, y2, *color)
+function line (x1, y1, x2, y2, lW, c) {
   ctx.save()
-  if (c) stroke(c)
+  if (typeof (lW) === 'number') {
+    ctx.lineWidth = lW
+    if (c) stroke(c)
+  } else {
+    if (lW) stroke(lW)
+  }
   ctx.beginPath()
   ctx.moveTo(x1, y1)
   ctx.lineTo(x2, y2)
   ctx.stroke()
   ctx.restore()
 }
-**/
+
 function point (x, y) {
   ctx.save()
   ctx.strokeStyle = RGBA(0, 0, 0, 0)
