@@ -31,12 +31,11 @@ function rectangle (x, y, w, h, c) {
   ctx.restore()
 }
 
-function circle (x, y, r, lW, c) {
+function circle (x, y, r, c) {
   ctx.save()
   if (c) fill(c)
   ctx.beginPath()
   ctx.arc(x, y, r, 0, 2 * Math.PI)
-  ctx.lineWidth = lW || 1;
   ctx.fill()
   ctx.stroke()
   ctx.restore()
@@ -44,11 +43,10 @@ function circle (x, y, r, lW, c) {
 // with selectable parameter : lineWidth and color 
 function line(x1, y1, x2, y2, lW, c) {
     ctx.save();
-    if (typeof(lW) !== "string") {
+    if (typeof(lW) === "number") {
         ctx.lineWidth = lW;
         if (c) stroke(c);
     } else {
-        ctx.lineWidth = 1;
         if (lW) stroke(lW);
     }
     ctx.beginPath();
