@@ -1664,21 +1664,31 @@ function ellipse (x, y, rX, rY, c) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
+var globalImages = {}
+
 function image (src, x, y, w, h) {
   x = x || 0
   y = y || 0
-  let img = new Image()
-  img.crossOrigin = 'anonymous'
-  img.src = src
+  let img
+  if (globalImages.hasOwnProperty(src)) {
+    img = globalImages[src]
+  } else {
+    img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.src = src
+    globalImages[src] = img
+  }
+
   img._x = x
   img._y = y
   img.w = w
   img.h = h
+
   if (img.complete) {
-    if (this.w && this.h) {
-      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y, this.w, this.h)
+    if (w && h) {
+      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y, w, h)
     } else {
-      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y)
+      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y)
     }
   } else {
     img.onload = function () {
