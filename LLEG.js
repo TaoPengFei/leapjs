@@ -976,22 +976,23 @@ window.Increase = __WEBPACK_IMPORTED_MODULE_7__changingNumber__["a" /* Increase 
 window.Sine = __WEBPACK_IMPORTED_MODULE_7__changingNumber__["b" /* Sine */]
 
 window.background = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["a" /* background */]
-window.noFill =  __WEBPACK_IMPORTED_MODULE_8__basicDraw__["i" /* noFill */]
+window.noFill = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["i" /* noFill */]
 window.noStroke = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["j" /* noStroke */]
 window.fill = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["d" /* fill */]
-window.stroke = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["o" /* stroke */]
+window.stroke = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["p" /* stroke */]
 window.lineWidth = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["h" /* lineWidth */]
-window.rectangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["n" /* rectangle */]
+window.rectangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["o" /* rectangle */]
 window.circle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["b" /* circle */]
 window.line = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["g" /* line */]
-window.point = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["l" /* point */]
-window.polygon = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["m" /* polygon */]
-window.triangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["q" /* triangle */]
+window.point = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["m" /* point */]
+window.polygon = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["n" /* polygon */]
+window.triangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["r" /* triangle */]
 window.ellipse = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["c" /* ellipse */]
 window.image = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["f" /* image */]
-window.text = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["p" /* text */]
+window.text = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["q" /* text */]
 window.font = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["e" /* font */]
-window.playSound = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["k" /* playSound */]
+window.playSound = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["l" /* playSound */]
+window.play = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["k" /* play */]
 
 
 /***/ }),
@@ -1553,19 +1554,20 @@ class Sine {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return noFill; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return noStroke; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return fill; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return stroke; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return stroke; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return lineWidth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return rectangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return rectangle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return circle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return line; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return point; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return polygon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return triangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return point; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return polygon; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return triangle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ellipse; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return image; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return text; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return text; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return font; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return playSound; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return playSound; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return play; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__colors__ = __webpack_require__(6);
 
@@ -1629,9 +1631,10 @@ function line (x1, y1, x2, y2, lW, c) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
-function point (x, y) {
+function point (x, y, c) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["d" /* RGBA */])(0, 0, 0, 0)
+  if (c) fill(c)
+  noStroke()
   circle(x, y, 3)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
@@ -1701,9 +1704,10 @@ function image (src, x, y, w, h) {
   }
 }
 
-function text (src, x, y, c) {
+function text (src, x, y, size, color) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (c) fill(c)
+  if (size) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px Arial'
+  if (color) fill(color)
   x = x || 0
   y = y || 0
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y)
@@ -1715,11 +1719,23 @@ function font (size, font) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px ' + font
 }
 
-function playSound (sound) {
-  var m = new Audio()
-  m.src = sound
-  m.play()
+var globalAudio = {}
+function play (src) {
+  let m
+  if (globalAudio.hasOwnProperty(src)) {
+    m = globalAudio[src]
+    m.play()
+  } else {
+    m = new Audio()
+    m.src = src
+    globalAudio[src] = m
+    m.oncanplaythrough = function () {
+      this.play()
+    }
+  }
 }
+
+var playSound = play
 
 
 

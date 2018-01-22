@@ -7,9 +7,9 @@ import { loadRssAndRun } from './resource'
 import { RGB, RGBA, HSL, HSLA } from './colors'
 
 import { Swing, Increase, Sine } from './changingNumber'
-import { background, noFill, noStroke, fill, stroke, lineWidth, 
-  rectangle, circle, line, point, polygon, triangle, ellipse, 
-  image, text, font, playSound } from './basicDraw'
+import { background, noFill, noStroke, fill, stroke, lineWidth,
+  rectangle, circle, line, point, polygon, triangle, ellipse,
+  image, text, font, playSound, play } from './basicDraw'
 
 // canvas
 window.canvas = canvas
@@ -47,7 +47,7 @@ window.Increase = Increase
 window.Sine = Sine
 
 window.background = background
-window.noFill =  noFill
+window.noFill = noFill
 window.noStroke = noStroke
 window.fill = fill
 window.stroke = stroke
@@ -63,3 +63,4 @@ window.image = image
 window.text = text
 window.font = font
 window.playSound = playSound
+window.play = play

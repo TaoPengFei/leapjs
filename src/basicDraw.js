@@ -59,9 +59,10 @@ function line (x1, y1, x2, y2, lW, c) {
   ctx.restore()
 }
 
-function point (x, y) {
+function point (x, y, c) {
   ctx.save()
-  ctx.strokeStyle = RGBA(0, 0, 0, 0)
+  if (c) fill(c)
+  noStroke()
   circle(x, y, 3)
   ctx.restore()
 }
@@ -131,9 +132,10 @@ function image (src, x, y, w, h) {
   }
 }
 
-function text (src, x, y, c) {
+function text (src, x, y, size, color) {
   ctx.save()
-  if (c) fill(c)
+  if (size) ctx.font = size + 'px Arial'
+  if (color) fill(color)
   x = x || 0
   y = y || 0
   ctx.fillText(src, x, y)
@@ -145,10 +147,22 @@ function font (size, font) {
   ctx.font = size + 'px ' + font
 }
 
-function playSound (sound) {
-  var m = new Audio()
-  m.src = sound
-  m.play()
+var globalAudio = {}
+function play (src) {
+  let m
+  if (globalAudio.hasOwnProperty(src)) {
+    m = globalAudio[src]
+    m.play()
+  } else {
+    m = new Audio()
+    m.src = src
+    globalAudio[src] = m
+    m.oncanplaythrough = function () {
+      this.play()
+    }
+  }
 }
 
-export { background, noFill, noStroke, fill, stroke, lineWidth, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, font, playSound }
+var playSound = play
+
+export { background, noFill, noStroke, fill, stroke, lineWidth, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, font, playSound, play }
