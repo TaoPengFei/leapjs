@@ -134,7 +134,11 @@ function image (src, x, y, w, h) {
 
 function text (src, x, y, size, color) {
   ctx.save()
-  if (size) ctx.font = size + 'px Arial'
+  if (typeof (size) === 'number') {
+    ctx.font = size + 'px Arial'
+  } else if (typeof (size) === 'string') {
+    fill(size)
+  }
   if (color) fill(color)
   x = x || 0
   y = y || 0

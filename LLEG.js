@@ -1706,7 +1706,11 @@ function image (src, x, y, w, h) {
 
 function text (src, x, y, size, color) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (size) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px Arial'
+  if (typeof (size) === 'number') {
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px Arial'
+  } else if (typeof (size) === 'string') {
+    fill(size)
+  }
   if (color) fill(color)
   x = x || 0
   y = y || 0
