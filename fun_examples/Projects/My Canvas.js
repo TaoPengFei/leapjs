@@ -87,6 +87,9 @@ Mouse.down = function() {
     x2 = Mouse.x;
     y2 = Mouse.y;
     isDrawing = true;
+    my_brush.x = Mouse.x;
+    my_brush.y = Mouse.y;
+    my_brush.draw();
 };
 
 Mouse.up = function() {
