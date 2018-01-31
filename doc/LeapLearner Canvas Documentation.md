@@ -56,15 +56,17 @@
 
 ### 基本形状
 
-| Code                                   | Shape                             |
-| -------------------------------------- | --------------------------------- |
-| `rectangle(x, y, w, h)`                | ![](./images/basic_rectangle.png) |
-| `circle(x, y, r)`                      | ![](./images/basic_circle.png)    |
-| `line(x1, y1, x2, y2)`                 | ![](./images/basic_line.png)      |
-| `point(x, y)`                          | ![](./images/basic_point.png)     |
-| `triangle(x1, y1, x2, y2, x3, y3)`     | ![](./images/basic_triangle.png)  |
-| `polygon(x1, y1, x2, y2, x3, y3, ...)` | ![](./images/basic_polygon.png)   |
-| `ellipse(x, y, rX, rY)`                | ![](./images/basic_ellipse.png)   |
+说明：前面加*的参数表示可选参数，除color是字符串参数外，其他参数均为数值参数。
+
+| Code                                     | Shape                             |
+| ---------------------------------------- | --------------------------------- |
+| `rectangle(x, y, w, h, *color)`<br />*color - 可选，颜色字符串 | ![](./images/basic_rectangle.png) |
+| `circle(x, y, r, *color)`<br />          | ![](./images/basic_circle.png)    |
+| `line(x1, y1, x2, y2, *color)`<br />`line(x1, y1, x2, y2, *lineWidth, *color)` | ![](./images/basic_line.png)      |
+| `point(x, y, *color)`                    | ![](./images/basic_point.png)     |
+| `triangle(x1, y1, x2, y2, x3, y3, *color)` | ![](./images/basic_triangle.png)  |
+| `polygon(x1, y1, x2, y2, x3, y3, ..., *color)` | ![](./images/basic_polygon.png)   |
+| `ellipse(x, y, rX, rY, *color)`          | ![](./images/basic_ellipse.png)   |
 
 
 
@@ -690,6 +692,14 @@ line.stroke();
 
 ![](./images/lineDash.png)
 
+### 透明度
+
+设置图形的`globalAlpha`可以改变图形的透明度，默认为1，设置区间：0~1。
+
+### 叠加方式
+
+设置图形的`globalCompositeOperation`属性可以设定图像的叠加方式。机制比较复杂，不建议使用。
+
 ### 渐变色
 
 在上面的例子中，我们图形的颜色是单一的。而在实际生活中，颜色往往都不是均匀的。我们可以创建一个变化的颜色来实现这个效果。
@@ -865,11 +875,11 @@ music.play();
 
 属性和方法
 
-| 属性   | 作用           |      |
-| ---- | ------------ | ---- |
-| src  | 获取或者设置音乐链接地址 |      |
-|      |              |      |
-|      |              |      |
+| 属性               | 作用            |      |
+| ---------------- | ------------- | ---- |
+| src              | 获取或者设置音乐链接地址  |      |
+| oncanplaythrough | 在音效加载结束后使用该方法 |      |
+|                  |               |      |
 
 
 
@@ -886,7 +896,7 @@ music.play();
 
 ### 音效
 
-无论是音乐还是音效，浏览器在加载时都需要耗费一定的时间，因此一般都是通过异步加载的。因此只有在加载结束后才能进行播放。一般通过`onload`函数来调用播放音效。
+无论是音乐还是音效，浏览器在加载时都需要耗费一定的时间，因此一般都是通过异步加载的。因此只有在加载结束后才能进行播放。一般通过`oncanplaythrough`函数来调用播放音效。
 
 如果是音效，我们可以在项目执行之前进行加载。本书不涉及到资源的管理和加载，如果有兴趣，可以去网上了解更多预加载的知识。
 
@@ -1619,9 +1629,16 @@ item.draw();
 
 ### 碰撞
 
-所有图形类都有一个方法collide，接受一个参数，必须是另外一个图形类实例，如果两个图形相互碰撞，那么返回碰撞点坐标。
+所有图形类都有一个方法collide，接受一个参数，必须是另外一个图形类实例，如果两个图形相互碰撞，那么返回碰撞点坐标。否则返回`false`
 
 ```javascript
 rect.collide(circle);
 ```
 
+坐标点是一个对象，因此可以直接使用if来判断是否发生碰撞。
+
+在图形进行旋转、翻转、平移后，碰撞仍可以进行判断。
+
+### 图像的碰撞
+
+为了提高执行的效率，不提供像素级别的碰撞判断，图片的碰撞体积默认为图像宽高的0.8（80%），可以通过`setCollisionScale`来设定碰撞宽高的比例。
