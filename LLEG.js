@@ -1640,11 +1640,15 @@ function point (x, y, c) {
 }
 
 function polygon () {
+  let len = arguments.length
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(arguments[0], arguments[1])
-  for (let i = 2; i < arguments.length - 1; i += 2) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i + 1]) }
+  for (let i = 2; i < len - 1; i += 2) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i + 1]) }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
+  if (len % 2 === 1 && typeof (arguments[len - 1]) === 'string') {
+    fill(arguments[len - 1])
+  }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()

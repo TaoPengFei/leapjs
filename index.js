@@ -57,7 +57,6 @@ function load (file) {
 $(function () {
   $('li a').click(function (e) {
     e.preventDefault()
-    console.log(1)
     var link = $(this).attr('href')
     load(link)
   })
