@@ -9,7 +9,7 @@ import { RGB, RGBA, HSL, HSLA } from './colors'
 import { Swing, Increase, Sine } from './changingNumber'
 import { background, noFill, noStroke, fill, stroke, lineWidth,
   rectangle, circle, line, point, polygon, triangle, ellipse,
-  image, text, font, playSound, play } from './basicDraw'
+  image, text, font, playSound, play, pause } from './basicDraw'
 
 // canvas
 window.canvas = canvas
@@ -64,3 +64,4 @@ window.text = text
 window.font = font
 window.playSound = playSound
 window.play = play
+window.pause = pause

@@ -156,14 +156,16 @@ function font (size, font) {
 }
 
 var globalAudio = {}
-function play (src) {
+function play (src, loop) {
   let m
   if (globalAudio.hasOwnProperty(src)) {
     m = globalAudio[src]
+    m.loop = loop
     m.play()
   } else {
     m = new Audio()
     m.src = src
+    if (loop) m.loop = loop
     globalAudio[src] = m
     m.oncanplaythrough = function () {
       this.play()
@@ -171,6 +173,13 @@ function play (src) {
   }
 }
 
+function pause (src) {
+  if (globalAudio.hasOwnProperty(src)) {
+    let m = globalAudio[src]
+    m.pause()
+  }
+}
+
 var playSound = play
 
-export { background, noFill, noStroke, fill, stroke, lineWidth, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, font, playSound, play }
+export { background, noFill, noStroke, fill, stroke, lineWidth, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, font, playSound, play, pause }
