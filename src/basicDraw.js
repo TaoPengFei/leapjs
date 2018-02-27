@@ -68,11 +68,15 @@ function point (x, y, c) {
 }
 
 function polygon () {
+  let last = arguments.length;
   ctx.save()
   ctx.beginPath()
   ctx.moveTo(arguments[0], arguments[1])
-  for (let i = 2; i < arguments.length - 1; i += 2) { ctx.lineTo(arguments[i], arguments[i + 1]) }
+  for (let i = 2; i < last - 1; i += 2) { ctx.lineTo(arguments[i], arguments[i + 1]) }
   ctx.closePath()
+  if(last % 2 === 1 && typeof(arguments[last]) === "string"){
+    fill(arguments[last])
+  }
   ctx.fill()
   ctx.stroke()
   ctx.restore()
