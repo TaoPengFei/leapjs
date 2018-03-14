@@ -1,3 +1,4 @@
+/* global stroke, fill, text, line */
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
 const clickShapes = require('./util.js').clickShapes
@@ -13,61 +14,58 @@ let ctx = canvas.getContext('2d')
 canvas.resize = function (width, height) {
   canvas.width = width || window.innerWidth - 2 // borders size
   canvas.height = height || window.innerHeight - 60 // p, height
-  ctx.strokeStyle = '#00FFFF'
-  ctx.fillStyle = 'rgba(0, 255, 255, 0.5)'
+  ctx.fillStyle = ctx.strokeStyle = 'orange'
+  ctx.textBaseline = 'top'
 }
 
 canvas.resize()
 
+canvas.scaleX = 1
+canvas.scaleY = 1
+canvas.scale = function (x, y) {
+  ctx.scale(1 / canvas.scaleX, 1 / canvas.scaleY)
+  canvas.scaleX = x
+  canvas.scaleY = y
+  ctx.scale(x, y)
+}
+
+canvas.rotate = function (degree) {
+  ctx.rotate(degree * Math.PI / 180)
+}
+
 canvas.clear = function () {
   clickShapes.clear()
+  ctx.save()
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
   ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.restore()
 }
 
 canvas.showAxis = function () {
   ctx.save()
-  ctx.strokeStyle = 'black'
-  let txt = new Text('', 1, 1, 15)
-  txt.fillStyle = 'orange'
+  stroke('black')
+  fill('orange')
 
-  for (let i = 0; i < canvas.width; i += 10) {
-    if (i % 100 === 0) {
-      txt.src = i.toString()
-      txt.x = i + 1
-      txt.draw()
-      ctx.lineWidth = 0.4
-    } else ctx.lineWidth = 0.1
-    ctx.beginPath()
-    ctx.moveTo(i, 0)
-    ctx.lineTo(i, canvas.height)
-    ctx.closePath()
-    ctx.stroke()
+  let gap = 10
+  let lw = 0
+  if (canvas.scaleX >= 10 && canvas.scaleY >= 10) gap = 1
+
+  for (let i = 0; i < canvas.width / 10 * gap; i += gap) {
+    if (i % (10 * gap) === 0) {
+      text(i.toString(), i, 0, gap * 1.5)
+      lw = 0.04 * gap
+    } else lw = 0.01 * gap
+    line(i, 0, i, canvas.width, lw)
   }
 
-  txt.x = 1
-  for (let i = 0; i < canvas.height; i += 10) {
-    if (i % 100 === 0) {
-      txt.src = i.toString()
-      txt.y = i + 1
-      if (i > 0) txt.draw()
-      ctx.lineWidth = 0.3
-    } else ctx.lineWidth = 0.1
-    ctx.beginPath()
-    ctx.moveTo(0, i)
-    ctx.lineTo(canvas.width, i)
-    ctx.closePath()
-    ctx.stroke()
+  for (let i = 0; i < canvas.height / 10 * gap; i += gap) {
+    if (i % (10 * gap) === 0) {
+      text(i.toString(), 0, i, gap * 1.5)
+      lw = 0.03 * gap
+    } else lw = 0.01 * gap
+    line(0, i, canvas.height, i, lw)
   }
   ctx.restore()
-}
-
-ctx.drawPathByPoints = function (ps) {
-  ctx.beginPath()
-  ctx.moveTo(ps[0].x, ps[0].y)
-
-  for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
-
-  ctx.closePath()
 }
 
 ctx.update = function (shape) {
@@ -88,6 +86,8 @@ ctx.update = function (shape) {
   if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation
 
   if (shape.lineDash) ctx.setLineDash(shape.lineDash)
+  if (shape.textAlign) ctx.textAlign = shape.textAlign
+  if (shape.textBaseline) ctx.textBaseline = shape.textBaseline
 
   if (shape.transform.transformed()) ctx.updateTransform(shape.transform)
 }

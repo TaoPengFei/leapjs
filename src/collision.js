@@ -2,7 +2,18 @@
 // p: Point, {x, y}
 // ps: Points, Array
 // rect: {minX, maxX, minY, maxY}
-import { ctx } from './canvas'
+// import { ctx } from './canvas'
+let canvas = document.createElement('canvas')
+let ctx = canvas.getContext('2d')
+
+ctx.drawPathByPoints = function (ps) {
+  ctx.beginPath()
+  ctx.moveTo(ps[0].x, ps[0].y)
+
+  for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
+
+  ctx.closePath()
+}
 
 function collide (shape1, shape2) {
   const ps1 = shape1.points

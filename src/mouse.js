@@ -1,4 +1,4 @@
-import { canvas, p } from './canvas'
+import { canvas, p, scale10 } from './canvas'
 import { Key } from './keys'
 import { clickShapes } from './util'
 
@@ -15,10 +15,15 @@ TouchStart.init = function () {
 
 function windowToCanvas (canvas, x, y) {
   let box = canvas.getBoundingClientRect()
-  return {
-    x: x - box.left * (canvas.width / box.width),
-    y: y - box.top * (canvas.height / box.height)
+
+  x -= box.left * (canvas.width / box.width)
+  y -= box.top * (canvas.height / box.height)
+
+  if (scale10) {
+    x /= 10
+    y /= 10
   }
+  return { x: x, y: y }
 }
 
 function updateEvent (e) {

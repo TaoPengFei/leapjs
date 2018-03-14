@@ -278,12 +278,12 @@ class Text extends Rectangle {
 
   _stroke () {
     ctx.font = this.size + 'px ' + this.font
-    ctx.strokeText(this.src, this.x, this.y + this.h)
+    ctx.strokeText(this.src, this.x, this.y)
   }
 
   _fill () {
     ctx.font = this.size + 'px ' + this.font
-    ctx.fillText(this.src, this.x, this.y + this.h)
+    ctx.fillText(this.src, this.x, this.y)
   }
 
   draw () { this.fill() }

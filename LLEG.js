@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,6 +71,8 @@
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return canvas; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ctx; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return p; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return scale10; });
+/* global stroke, fill, text, line */
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
 const clickShapes = __webpack_require__(1).clickShapes
@@ -86,61 +88,57 @@ let ctx = canvas.getContext('2d')
 canvas.resize = function (width, height) {
   canvas.width = width || window.innerWidth - 2 // borders size
   canvas.height = height || window.innerHeight - 60 // p, height
-  ctx.strokeStyle = '#00FFFF'
-  ctx.fillStyle = 'rgba(0, 255, 255, 0.5)'
+  ctx.fillStyle = ctx.strokeStyle = 'orange'
+  ctx.textBaseline = 'top'
 }
 
 canvas.resize()
 
+let scale10 = false
+canvas.scale10 = function () {
+  if (~scale10) {
+    scale10 = true
+    ctx.scale(10, 10)
+  }
+}
+
+canvas.rotate = function (degree) {
+  ctx.rotate(degree * Math.PI / 180)
+}
+
 canvas.clear = function () {
   clickShapes.clear()
+  ctx.save()
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
   ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.restore()
 }
 
 canvas.showAxis = function () {
   ctx.save()
-  ctx.strokeStyle = 'black'
-  let txt = new Text('', 1, 1, 15)
-  txt.fillStyle = 'orange'
+  stroke('black')
+  fill('orange')
 
-  for (let i = 0; i < canvas.width; i += 10) {
-    if (i % 100 === 0) {
-      txt.src = i.toString()
-      txt.x = i + 1
-      txt.draw()
-      ctx.lineWidth = 0.4
-    } else ctx.lineWidth = 0.1
-    ctx.beginPath()
-    ctx.moveTo(i, 0)
-    ctx.lineTo(i, canvas.height)
-    ctx.closePath()
-    ctx.stroke()
+  let gap = 10
+  let lw = 0
+  if (scale10) gap = 1
+
+  for (let i = 0; i < canvas.width / 10 * gap; i += gap) {
+    if (i % (10 * gap) === 0) {
+      text(i.toString(), i, 0, gap * 1.5)
+      lw = 0.04 * gap
+    } else lw = 0.01 * gap
+    line(i, 0, i, canvas.width, lw)
   }
 
-  txt.x = 1
-  for (let i = 0; i < canvas.height; i += 10) {
-    if (i % 100 === 0) {
-      txt.src = i.toString()
-      txt.y = i + 1
-      if (i > 0) txt.draw()
-      ctx.lineWidth = 0.3
-    } else ctx.lineWidth = 0.1
-    ctx.beginPath()
-    ctx.moveTo(0, i)
-    ctx.lineTo(canvas.width, i)
-    ctx.closePath()
-    ctx.stroke()
+  for (let i = 0; i < canvas.height / 10 * gap; i += gap) {
+    if (i % (10 * gap) === 0) {
+      text(i.toString(), 0, i, gap * 1.5)
+      lw = 0.03 * gap
+    } else lw = 0.01 * gap
+    line(0, i, canvas.height, i, lw)
   }
   ctx.restore()
-}
-
-ctx.drawPathByPoints = function (ps) {
-  ctx.beginPath()
-  ctx.moveTo(ps[0].x, ps[0].y)
-
-  for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
-
-  ctx.closePath()
 }
 
 ctx.update = function (shape) {
@@ -161,6 +159,8 @@ ctx.update = function (shape) {
   if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation
 
   if (shape.lineDash) ctx.setLineDash(shape.lineDash)
+  if (shape.textAlign) ctx.textAlign = shape.textAlign
+  if (shape.textBaseline) ctx.textBaseline = shape.textBaseline
 
   if (shape.transform.transformed()) ctx.updateTransform(shape.transform)
 }
@@ -303,10 +303,15 @@ TouchStart.init = function () {
 
 function windowToCanvas (canvas, x, y) {
   let box = canvas.getBoundingClientRect()
-  return {
-    x: x - box.left * (canvas.width / box.width),
-    y: y - box.top * (canvas.height / box.height)
+
+  x -= box.left * (canvas.width / box.width)
+  y -= box.top * (canvas.height / box.height)
+
+  if (__WEBPACK_IMPORTED_MODULE_0__canvas__["d" /* scale10 */]) {
+    x /= 10
+    y /= 10
   }
+  return { x: x, y: y }
 }
 
 function updateEvent (e) {
@@ -407,16 +412,16 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onclick = function (e) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resource__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__collision__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__collision__ = __webpack_require__(8);
 
 
 
 
 
 
-const clone = __webpack_require__(10)
+const clone = __webpack_require__(9)
 
 class Shape {
   constructor () {
@@ -690,12 +695,12 @@ class Text extends Rectangle {
 
   _stroke () {
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = this.size + 'px ' + this.font
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeText(this.src, this.x, this.y + this.h)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeText(this.src, this.x, this.y)
   }
 
   _fill () {
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = this.size + 'px ' + this.font
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(this.src, this.x, this.y + this.h)
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(this.src, this.x, this.y)
   }
 
   draw () { this.fill() }
@@ -883,42 +888,6 @@ function check () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return RGB; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return RGBA; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HSL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HSLA; });
-function RGB (r, g, b) {
-  r = Math.floor(r)
-  g = Math.floor(g)
-  b = Math.floor(b)
-  return 'rgb(' + r + ', ' + g + ', ' + b + ')' 
-}
-
-function RGBA (r, g, b, a) {
-  r = Math.floor(r)
-  g = Math.floor(g)
-  b = Math.floor(b)
-  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')' 
-}
-
-function HSL (h, s, l) {
-  h = Math.floor(h)
-  return `hsl(${h}, ${s * 100}%, ${l * 100}%)`
-}
-
-function HSLA (h, s, l, a) {
-  h = Math.floor(h)
-  return `hsla(${h}, ${s * 100}%, ${l * 100}%, ${a})`
-}
-
-
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(2);
@@ -926,7 +895,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shapes__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resource__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__changingNumber__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basicDraw__ = __webpack_require__(12);
 
@@ -997,7 +966,7 @@ window.pause = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["k" /* pause */]
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1079,18 +1048,28 @@ class Transform {
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return collide; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return pointInShape; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
 // detect collision using shadows
 // p: Point, {x, y}
 // ps: Points, Array
 // rect: {minX, maxX, minY, maxY}
+// import { ctx } from './canvas'
+let canvas = document.createElement('canvas')
+let ctx = canvas.getContext('2d')
 
+ctx.drawPathByPoints = function (ps) {
+  ctx.beginPath()
+  ctx.moveTo(ps[0].x, ps[0].y)
+
+  for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
+
+  ctx.closePath()
+}
 
 function collide (shape1, shape2) {
   const ps1 = shape1.points
@@ -1114,16 +1093,16 @@ function collide (shape1, shape2) {
   let collideRect = getCollideRect(r1, r2)
 
   // if point inside shapes, return point
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawPathByPoints(ps2)
+  ctx.drawPathByPoints(ps2)
   for (let i = 0; i < ps1.length; i++) {
     let p = ps1[i]
-    if (pointInRect(p, collideRect) && __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].isPointInPath(p.x, p.y)) { return p }
+    if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) { return p }
   }
 
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawPathByPoints(ps1)
+  ctx.drawPathByPoints(ps1)
   for (let i = 0; i < ps2.length; i++) {
     let p = ps2[i]
-    if (pointInRect(p, collideRect) && __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].isPointInPath(p.x, p.y)) { return p }
+    if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) { return p }
   }
   // points check end
 
@@ -1219,8 +1198,8 @@ function pointInShape (p, shape) {
   let rect = getRectShape(ps)
   if (!pointInRect(p, rect)) { return false }
 
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawPathByPoints(ps)
-  if (__WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].isPointInPath(p.x, p.y)) { return p }
+  ctx.drawPathByPoints(ps)
+  if (ctx.isPointInPath(p.x, p.y)) { return p }
 
   return false
 }
@@ -1229,7 +1208,7 @@ function pointInShape (p, shape) {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports) {
 
 var clone = (function() {
@@ -1491,6 +1470,42 @@ if (typeof module === 'object' && module.exports) {
 
 
 /***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return RGB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return RGBA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HSL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HSLA; });
+function RGB (r, g, b) {
+  r = Math.floor(r)
+  g = Math.floor(g)
+  b = Math.floor(b)
+  return 'rgb(' + r + ', ' + g + ', ' + b + ')' 
+}
+
+function RGBA (r, g, b, a) {
+  r = Math.floor(r)
+  g = Math.floor(g)
+  b = Math.floor(b)
+  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')' 
+}
+
+function HSL (h, s, l) {
+  h = Math.floor(h)
+  return `hsl(${h}, ${s * 100}%, ${l * 100}%)`
+}
+
+function HSLA (h, s, l, a) {
+  h = Math.floor(h)
+  return `hsla(${h}, ${s * 100}%, ${l * 100}%, ${a})`
+}
+
+
+
+
+/***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1571,113 +1586,78 @@ class Sine {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return play; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return pause; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__colors__ = __webpack_require__(6);
 
 
+function background (style) { rectangle(0, 0, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height, style) }
 
-function background (r, g, b) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (arguments.length === 1) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = r } else { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["c" /* RGB */])(r, g, b) }
-  rectangle(0, 0, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height)
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
-}
+function noFill () { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = 'rgba(0,0,0,0)' }
+function noStroke () { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = 'rgba(0,0,0,0)' }
 
-function noFill () { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["d" /* RGBA */])(0, 0, 0, 0) }
-function noStroke () { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["d" /* RGBA */])(0, 0, 0, 0) }
+function fill (style) { if (style) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = style }
+function stroke (style) { if (style) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = style }
 
-function fill (r, g, b) {
-  if (arguments.length === 1) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = r } else { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["c" /* RGB */])(r, g, b) }
-}
-
-function stroke (r, g, b) {
-  if (arguments.length === 1) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = r } else { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = Object(__WEBPACK_IMPORTED_MODULE_1__colors__["c" /* RGB */])(r, g, b) }
-}
-
-function lineWidth (thickness) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = thickness }
+function lineWidth (thickness) { if (thickness) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = thickness }
 
 function rectangle (x, y, w, h, c) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (c) fill(c)
+  fill(c)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].rect(x, y, w, h)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 function circle (x, y, r, c) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (c) fill(c)
+  fill(c)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].arc(x, y, r, 0, 2 * Math.PI)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
-// with selectable parameter : lineWidth and color
 // line(x1, y1, x2, y2, *lineWidth, *color);
-// line(x1, y1, x2, y2, *color)
 function line (x1, y1, x2, y2, lW, c) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (typeof (lW) === 'number') {
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = lW
-    if (c) stroke(c)
-  } else {
-    if (lW) stroke(lW)
-  }
+  lineWidth(lW)
+  stroke(c)
+
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(x1, y1)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(x2, y2)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 function point (x, y, c) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (c) fill(c)
+  fill(c)
   noStroke()
   circle(x, y, 3)
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 function polygon () {
   let len = arguments.length
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(arguments[0], arguments[1])
   for (let i = 2; i < len - 1; i += 2) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i + 1]) }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
-  if (len % 2 === 1 && typeof (arguments[len - 1]) === 'string') {
-    fill(arguments[len - 1])
-  }
+  if (len % 2 === 1) { fill(arguments[len - 1]) }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 function triangle (x1, y1, x2, y2, x3, y3, c) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (c) fill(c)
+  fill(c)
   polygon(x1, y1, x2, y2, x3, y3)
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 function ellipse (x, y, rX, rY, c) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (c) fill(c)
+  fill(c)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].ellipse(x, y, rX, rY, 0, 0, Math.PI * 2)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 var globalImages = {}
 
-function image (src, x, y, w, h) {
-  x = x || 0
-  y = y || 0
+function image (src, x = 0, y = 0, w, h) {
   let img
   if (globalImages.hasOwnProperty(src)) {
     img = globalImages[src]
@@ -1710,13 +1690,9 @@ function image (src, x, y, w, h) {
   }
 }
 
-function text (src, x, y, size, color) {
+function text (src, x, y, size = 20, color) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (typeof (size) === 'number') {
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px Arial'
-  } else if (typeof (size) === 'string') {
-    fill(size)
-  }
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px Arial'
   if (color) fill(color)
   x = x || 0
   y = y || 0
