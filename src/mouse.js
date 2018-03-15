@@ -1,4 +1,4 @@
-import { canvas, p, scale10 } from './canvas'
+import { canvas, p } from './canvas'
 import { Key } from './keys'
 import { clickShapes } from './util'
 
@@ -19,10 +19,9 @@ function windowToCanvas (canvas, x, y) {
   x -= box.left * (canvas.width / box.width)
   y -= box.top * (canvas.height / box.height)
 
-  if (scale10) {
-    x /= 10
-    y /= 10
-  }
+  x /= canvas.scaleX
+  y /= canvas.scaleY
+
   return { x: x, y: y }
 }
 
