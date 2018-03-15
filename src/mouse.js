@@ -2,10 +2,7 @@ import { canvas, p } from './canvas'
 import { Key } from './keys'
 import { clickShapes } from './util'
 
-let Mouse = {
-  x: 0,
-  y: 0
-}
+let Mouse = { x: 0, y: 0 }
 
 let TouchStart = {}
 TouchStart.init = function () {
@@ -19,10 +16,7 @@ function windowToCanvas (canvas, x, y) {
   x -= box.left * (canvas.width / box.width)
   y -= box.top * (canvas.height / box.height)
 
-  x /= canvas.scaleX
-  y /= canvas.scaleY
-
-  return { x: x, y: y }
+  return canvas.getRealPoint({x, y})
 }
 
 function updateEvent (e) {

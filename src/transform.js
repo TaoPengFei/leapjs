@@ -38,7 +38,7 @@ class Transform {
   }
 
   rotate (degree) {
-    this.degree = degree
+    this.degree = degree * Math.PI / 180
   }
 
   getRealPoint (p) {

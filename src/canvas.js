@@ -2,14 +2,25 @@
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
 const clickShapes = require('./util.js').clickShapes
+const Transform = require('./transform.js').Transform
 
 canvas.style.cssText = 'border: 1px solid #d3d3d3;'
-p.style.cssText = 'color: orange; position: absolute; bottom: 23px;'
+p.style.cssText = 'color: orange;'
 
 document.body.appendChild(canvas)
 document.body.appendChild(p)
 
 let ctx = canvas.getContext('2d')
+
+ctx._setTransform = function (transform) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
+  ctx.transform(
+    transform.scaleX, transform.skewX,
+    transform.skewY, transform.scaleY,
+    transform.translateX, transform.translateY
+  )
+  ctx.rotate(transform.degree)
+}
 
 canvas.resize = function (width, height) {
   canvas.width = width || window.innerWidth - 2 // borders size
@@ -19,19 +30,23 @@ canvas.resize = function (width, height) {
 }
 
 canvas.resize()
+canvas.transform = new Transform()
 
-canvas.scaleX = 1
-canvas.scaleY = 1
 canvas.scale = function (x, y) {
-  ctx.scale(1 / canvas.scaleX, 1 / canvas.scaleY)
-  canvas.scaleX = x
-  canvas.scaleY = y
-  ctx.scale(x, y)
+  canvas.transform.scale(x, y)
+  ctx._setTransform(canvas.transform)
+  // thick the line width
   ctx.lineWidth = 2 / (x + y)
 }
 
 canvas.rotate = function (degree) {
-  ctx.rotate(degree * Math.PI / 180)
+  canvas.transform.rotate(degree)
+  ctx._setTransform(canvas.transform)
+}
+
+canvas._translate = function (x, y) {
+  canvas.transform.translate(x, y)
+  ctx._setTransform(canvas.transform)
 }
 
 canvas.clear = function () {
@@ -49,7 +64,7 @@ canvas.showAxis = function () {
 
   let gap = 10
   let lw = 0
-  if (canvas.scaleX >= 10 && canvas.scaleY >= 10) gap = 1
+  if (canvas.transform.scaleX >= 10 && canvas.transform.scaleY >= 10) gap = 1
 
   for (let i = 0; i < canvas.width; i += gap) {
     if (i % (10 * gap) === 0) {
@@ -94,11 +109,9 @@ ctx.update = function (shape) {
 }
 
 ctx.updateTransform = function (transform) {
-  let degree = transform.degree * Math.PI / 180
-
   ctx.translate(transform.anchorX, transform.anchorY)
 
-  ctx.rotate(degree)
+  ctx.rotate(transform.degree)
   ctx.transform(
     transform.scaleX, transform.skewX,
     transform.skewY, transform.scaleY,
@@ -106,6 +119,30 @@ ctx.updateTransform = function (transform) {
   )
 
   ctx.translate(-transform.anchorX, -transform.anchorY)
+}
+
+canvas.getRealPoint = function (p) {
+  if (!this.transform.transformed()) { return p }
+  let t = this.transform
+
+  let x = p.x
+  let y = p.y
+  let x0 = x
+  let y0 = y
+
+  x = (x0 - t.translateX) / t.scaleX
+  y = (y0 - t.translateY) / t.scaleY
+
+  let degree = t.degree
+  let sin = Math.sin(-degree)
+  let cos = Math.cos(-degree)
+
+  x0 = x
+  y0 = y
+  x = x0 * cos - y0 * sin
+  y = y0 * cos + x0 * sin
+
+  return {x, y}
 }
 
 export { canvas, ctx, p }
