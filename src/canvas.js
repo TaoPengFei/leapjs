@@ -69,17 +69,21 @@ canvas.showAxis = function () {
   for (let i = 0; i < canvas.width; i += gap) {
     if (i % (10 * gap) === 0) {
       text(i.toString(), i, 0, gap * 1.5)
+      text((-i).toString(), -i, 0, gap * 1.5)
       lw = 0.04 * gap
     } else lw = 0.01 * gap
-    line(i, 0, i, canvas.height, lw)
+    line(i, -canvas.height, i, canvas.height, lw)
+    line(-i, -canvas.height, -i, canvas.height, lw)
   }
 
   for (let i = 0; i < canvas.height; i += gap) {
     if (i % (10 * gap) === 0) {
       text(i.toString(), 0, i, gap * 1.5)
+      text((-i).toString(), 0, -i, gap * 1.5)
       lw = 0.03 * gap
     } else lw = 0.01 * gap
-    line(0, i, canvas.width, i, lw)
+    line(-canvas.width, i, canvas.width, i, lw)
+    line(-canvas.width, -i, canvas.width, -i, lw)
   }
   ctx.restore()
 }
