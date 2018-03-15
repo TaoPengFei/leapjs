@@ -66,8 +66,8 @@ canvas.showAxis = function () {
   let lw = 0
   if (canvas.transform.scaleX >= 10 && canvas.transform.scaleY >= 10) gap = 1
 
-  let w = canvas.width / canvas.transform.scaleX
-  let h = canvas.height / canvas.transform.scaleY
+  let w = canvas.width / Math.abs(canvas.transform.scaleX)
+  let h = canvas.height / Math.abs(canvas.transform.scaleY)
   for (let i = 0; i < w; i += gap) {
     if (i % (10 * gap) === 0) {
       text(i.toString(), i, 0, gap * 1.5)
