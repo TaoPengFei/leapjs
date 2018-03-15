@@ -43,4 +43,8 @@ class Sine {
   }
 }
 
-export { Swing, Increase, Sine }
+function randint (a, b) {
+  return Math.floor(a + Math.random() * (b - a))
+}
+
+export { Swing, Increase, Sine, randint }
