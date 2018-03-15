@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,19 +71,29 @@
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return canvas; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ctx; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return p; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return scale10; });
 /* global stroke, fill, text, line */
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
 const clickShapes = __webpack_require__(1).clickShapes
+const Transform = __webpack_require__(2).Transform
 
 canvas.style.cssText = 'border: 1px solid #d3d3d3;'
-p.style.cssText = 'color: orange; position: absolute; bottom: 23px;'
+p.style.cssText = 'color: orange;'
 
 document.body.appendChild(canvas)
 document.body.appendChild(p)
 
 let ctx = canvas.getContext('2d')
+
+ctx._setTransform = function (transform) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
+  ctx.transform(
+    transform.scaleX, transform.skewX,
+    transform.skewY, transform.scaleY,
+    transform.translateX, transform.translateY
+  )
+  ctx.rotate(transform.degree)
+}
 
 canvas.resize = function (width, height) {
   canvas.width = width || window.innerWidth - 2 // borders size
@@ -93,17 +103,23 @@ canvas.resize = function (width, height) {
 }
 
 canvas.resize()
+canvas.transform = new Transform()
 
-let scale10 = false
-canvas.scale10 = function () {
-  if (~scale10) {
-    scale10 = true
-    ctx.scale(10, 10)
-  }
+canvas.scale = function (x, y) {
+  canvas.transform.scale(x, y)
+  ctx._setTransform(canvas.transform)
+  // thick the line width
+  ctx.lineWidth = 2 / (x + y)
 }
 
 canvas.rotate = function (degree) {
-  ctx.rotate(degree * Math.PI / 180)
+  canvas.transform.rotate(degree)
+  ctx._setTransform(canvas.transform)
+}
+
+canvas._translate = function (x, y) {
+  canvas.transform.translate(x, y)
+  ctx._setTransform(canvas.transform)
 }
 
 canvas.clear = function () {
@@ -121,22 +137,22 @@ canvas.showAxis = function () {
 
   let gap = 10
   let lw = 0
-  if (scale10) gap = 1
+  if (canvas.transform.scaleX >= 10 && canvas.transform.scaleY >= 10) gap = 1
 
-  for (let i = 0; i < canvas.width / 10 * gap; i += gap) {
+  for (let i = 0; i < canvas.width; i += gap) {
     if (i % (10 * gap) === 0) {
       text(i.toString(), i, 0, gap * 1.5)
       lw = 0.04 * gap
     } else lw = 0.01 * gap
-    line(i, 0, i, canvas.width, lw)
+    line(i, 0, i, canvas.height, lw)
   }
 
-  for (let i = 0; i < canvas.height / 10 * gap; i += gap) {
+  for (let i = 0; i < canvas.height; i += gap) {
     if (i % (10 * gap) === 0) {
       text(i.toString(), 0, i, gap * 1.5)
       lw = 0.03 * gap
     } else lw = 0.01 * gap
-    line(0, i, canvas.height, i, lw)
+    line(0, i, canvas.width, i, lw)
   }
   ctx.restore()
 }
@@ -166,11 +182,9 @@ ctx.update = function (shape) {
 }
 
 ctx.updateTransform = function (transform) {
-  let degree = transform.degree * Math.PI / 180
-
   ctx.translate(transform.anchorX, transform.anchorY)
 
-  ctx.rotate(degree)
+  ctx.rotate(transform.degree)
   ctx.transform(
     transform.scaleX, transform.skewX,
     transform.skewY, transform.scaleY,
@@ -178,6 +192,30 @@ ctx.updateTransform = function (transform) {
   )
 
   ctx.translate(-transform.anchorX, -transform.anchorY)
+}
+
+canvas.getRealPoint = function (p) {
+  if (!this.transform.transformed()) { return p }
+  let t = this.transform
+
+  let x = p.x
+  let y = p.y
+  let x0 = x
+  let y0 = y
+
+  x = (x0 - t.translateX) / t.scaleX
+  y = (y0 - t.translateY) / t.scaleY
+
+  let degree = t.degree
+  let sin = Math.sin(-degree)
+  let cos = Math.cos(-degree)
+
+  x0 = x
+  y0 = y
+  x = x0 * cos - y0 * sin
+  y = y0 * cos + x0 * sin
+
+  return {x, y}
 }
 
 
@@ -238,6 +276,89 @@ window.clickShapes = clickShapes
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Transform", function() { return Transform; });
+class Transform {
+  constructor () {
+    this.anchorX = 0
+    this.anchorY = 0
+    this.scaleX = 1
+    this.scaleY = 1
+    this.skewX = 0
+    this.skewY = 0
+    this.translateX = 0
+    this.translateY = 0
+    this.degree = 0
+  }
+
+  transformed () {
+    return this.scaleX !== 1 || this.scaleY !== 1 ||
+      this.skewX || this.skewY ||
+      this.translateX || this.translateY || this.degree
+  }
+
+  scale (x, y) {
+    this.scaleX = x
+    this.scaleY = y
+  }
+
+  translate (x, y) {
+    this.translateX = x
+    this.translateY = y
+  }
+
+  skew (x, y) {
+    this.skewX = x
+    this.skewY = y
+  }
+
+  setAnchor (x, y) {
+    this.anchorX = x
+    this.anchorY = y
+  }
+
+  rotate (degree) {
+    this.degree = degree * Math.PI / 180
+  }
+
+  getRealPoint (p) {
+    if (!this.transformed()) { return p }
+
+    let x = p.x
+    let y = p.y
+
+    x -= this.anchorX
+    y -= this.anchorY
+
+    let degree = this.degree * Math.PI / 180
+    let sin = Math.sin(degree)
+    let cos = Math.cos(degree)
+
+    let newX = x * cos - y * sin
+    let newY = y * cos + x * sin
+    x = newX
+    y = newY
+
+    newX = this.scaleX * x + this.skewX * y + this.translateX
+    newY = this.skewY * x + this.scaleY * y + this.translateY
+    x = newX
+    y = newY
+
+    x += this.anchorX
+    y += this.anchorY
+
+    return {x, y}
+  }
+}
+
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Key; });
 let Key = {}
 
@@ -278,22 +399,19 @@ document.onkeypress = function (e) {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Mouse; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(1);
 
 
 
 
-let Mouse = {
-  x: 0,
-  y: 0
-}
+let Mouse = { x: 0, y: 0 }
 
 let TouchStart = {}
 TouchStart.init = function () {
@@ -307,11 +425,7 @@ function windowToCanvas (canvas, x, y) {
   x -= box.left * (canvas.width / box.width)
   y -= box.top * (canvas.height / box.height)
 
-  if (__WEBPACK_IMPORTED_MODULE_0__canvas__["d" /* scale10 */]) {
-    x /= 10
-    y /= 10
-  }
-  return { x: x, y: y }
+  return canvas.getRealPoint({x, y})
 }
 
 function updateEvent (e) {
@@ -394,7 +508,7 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onclick = function (e) {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -411,9 +525,9 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onclick = function (e) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Ellipse; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resource__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resource__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__collision__ = __webpack_require__(8);
 
 
@@ -425,7 +539,7 @@ const clone = __webpack_require__(9)
 
 class Shape {
   constructor () {
-    this.transform = new __WEBPACK_IMPORTED_MODULE_3__transform__["a" /* Transform */]()
+    this.transform = new __WEBPACK_IMPORTED_MODULE_3__transform__["Transform"]()
     this._points = []
   }
 
@@ -832,14 +946,14 @@ const Triangle = Polygon
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rss; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadRssAndRun; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shapes__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shapes__ = __webpack_require__(5);
 
 
 
@@ -884,19 +998,19 @@ function check () {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shapes__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shapes__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resource__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resource__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__changingNumber__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__basicMethod__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basicDraw__ = __webpack_require__(12);
 
 
@@ -939,11 +1053,13 @@ window.RGBA = __WEBPACK_IMPORTED_MODULE_6__colors__["d" /* RGBA */]
 window.HSL = __WEBPACK_IMPORTED_MODULE_6__colors__["a" /* HSL */]
 window.HSLA = __WEBPACK_IMPORTED_MODULE_6__colors__["b" /* HSLA */]
 
-// VARS
-window.Swing = __WEBPACK_IMPORTED_MODULE_7__changingNumber__["c" /* Swing */]
-window.Increase = __WEBPACK_IMPORTED_MODULE_7__changingNumber__["a" /* Increase */]
-window.Sine = __WEBPACK_IMPORTED_MODULE_7__changingNumber__["b" /* Sine */]
+// basic method
+window.Swing = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["c" /* Swing */]
+window.Increase = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["a" /* Increase */]
+window.Sine = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["b" /* Sine */]
+window.randint = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["d" /* randint */]
 
+// basic draw method
 window.background = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["a" /* background */]
 window.noFill = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["i" /* noFill */]
 window.noStroke = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["j" /* noStroke */]
@@ -963,88 +1079,6 @@ window.font = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["e" /* font */]
 window.playSound = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["m" /* playSound */]
 window.play = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["l" /* play */]
 window.pause = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["k" /* pause */]
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Transform; });
-class Transform {
-  constructor () {
-    this.anchorX = 0
-    this.anchorY = 0
-    this.scaleX = 1
-    this.scaleY = 1
-    this.skewX = 0
-    this.skewY = 0
-    this.translateX = 0
-    this.translateY = 0
-    this.degree = 0
-  }
-
-  transformed () {
-    return this.scaleX !== 1 || this.scaleY !== 1 ||
-      this.skewX || this.skewY ||
-      this.translateX || this.translateY || this.degree
-  }
-
-  scale (x, y) {
-    this.scaleX = x
-    this.scaleY = y
-  }
-
-  translate (x, y) {
-    this.translateX = x
-    this.translateY = y
-  }
-
-  skew (x, y) {
-    this.skewX = x
-    this.skewY = y
-  }
-
-  setAnchor (x, y) {
-    this.anchorX = x
-    this.anchorY = y
-  }
-
-  rotate (degree) {
-    this.degree = degree
-  }
-
-  getRealPoint (p) {
-    if (!this.transformed()) { return p }
-
-    let x = p.x
-    let y = p.y
-
-    x -= this.anchorX
-    y -= this.anchorY
-
-    let degree = this.degree * Math.PI / 180
-    let sin = Math.sin(degree)
-    let cos = Math.cos(degree)
-
-    let newX = x * cos - y * sin
-    let newY = y * cos + x * sin
-    x = newX
-    y = newY
-
-    newX = this.scaleX * x + this.skewX * y + this.translateX
-    newY = this.skewY * x + this.scaleY * y + this.translateY
-    x = newX
-    y = newY
-
-    x += this.anchorX
-    y += this.anchorY
-
-    return {x, y}
-  }
-}
-
-
 
 
 /***/ }),
@@ -1513,6 +1547,7 @@ function HSLA (h, s, l, a) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Swing; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Increase; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Sine; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return randint; });
 class Swing {
   constructor (min, max, speed) {
     this.min = min
@@ -1556,6 +1591,10 @@ class Sine {
     return (this.max + this.min) / 2 +
       (this.max - this.min) / 2 * Math.sin(deltaT / this.cycle * Math.PI * 2)
   }
+}
+
+function randint (a, b) {
+  return Math.floor(a + Math.random() * (b - a))
 }
 
 
