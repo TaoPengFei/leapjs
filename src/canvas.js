@@ -66,24 +66,26 @@ canvas.showAxis = function () {
   let lw = 0
   if (canvas.transform.scaleX >= 10 && canvas.transform.scaleY >= 10) gap = 1
 
-  for (let i = 0; i < canvas.width; i += gap) {
+  let w = canvas.width / canvas.transform.scaleX
+  let h = canvas.height / canvas.transform.scaleY
+  for (let i = 0; i < w; i += gap) {
     if (i % (10 * gap) === 0) {
       text(i.toString(), i, 0, gap * 1.5)
       text((-i).toString(), -i, 0, gap * 1.5)
       lw = 0.04 * gap
     } else lw = 0.01 * gap
-    line(i, -canvas.height, i, canvas.height, lw)
-    line(-i, -canvas.height, -i, canvas.height, lw)
+    line(i, -h, i, h, lw)
+    line(-i, -h, -i, h, lw)
   }
 
-  for (let i = 0; i < canvas.height; i += gap) {
+  for (let i = 0; i < h; i += gap) {
     if (i % (10 * gap) === 0) {
       text(i.toString(), 0, i, gap * 1.5)
       text((-i).toString(), 0, -i, gap * 1.5)
       lw = 0.03 * gap
     } else lw = 0.01 * gap
-    line(-canvas.width, i, canvas.width, i, lw)
-    line(-canvas.width, -i, canvas.width, -i, lw)
+    line(-w, i, w, i, lw)
+    line(-w, -i, w, -i, lw)
   }
   ctx.restore()
 }
