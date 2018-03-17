@@ -1,4 +1,4 @@
-/* global stroke, fill, text, line */
+/* global text, line */
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
 const clickShapes = require('./util.js').clickShapes
@@ -59,8 +59,7 @@ canvas.clear = function () {
 
 canvas.showAxis = function () {
   ctx.save()
-  stroke('black')
-  fill('orange')
+  ctx.strokeStyle = 'black'
 
   let gap = 10
   let lw = 0

@@ -7,8 +7,7 @@ import { loadRssAndRun } from './resource'
 import { RGB, RGBA, HSL, HSLA } from './colors'
 
 import { Swing, Increase, Sine, randint } from './basicMethod'
-import { background, noFill, noStroke, fill, stroke, lineWidth,
-  rectangle, circle, line, point, polygon, triangle, ellipse,
+import { background, fill, rectangle, circle, line, point, polygon, triangle, ellipse,
   image, text, font, playSound, play, pause } from './basicDraw'
 
 // canvas
@@ -49,11 +48,7 @@ window.randint = randint
 
 // basic draw method
 window.background = background
-window.noFill = noFill
-window.noStroke = noStroke
 window.fill = fill
-window.stroke = stroke
-window.lineWidth = lineWidth
 window.rectangle = rectangle
 window.circle = circle
 window.line = line
