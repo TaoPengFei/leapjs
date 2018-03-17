@@ -1733,16 +1733,16 @@ function image (src, x = 0, y = 0, w, h) {
   }
 }
 
-function text (src, x = 0, y = 0, size = 20, color) {
+function text (src, x = 0, y = 0, size = 20, c) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px ' + textFont
-  fill(color)
+  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = c
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
 let textFont = 'Arial'
-function font (font) { textFont = 'Arial' }
+function font (font) { textFont = font }
 
 var globalAudio = {}
 function play (src, loop) {

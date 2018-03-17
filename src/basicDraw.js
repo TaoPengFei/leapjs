@@ -109,16 +109,16 @@ function image (src, x = 0, y = 0, w, h) {
   }
 }
 
-function text (src, x = 0, y = 0, size = 20, color) {
+function text (src, x = 0, y = 0, size = 20, c) {
   ctx.save()
   ctx.font = size + 'px ' + textFont
-  fill(color)
+  if (c) ctx.fillStyle = c
   ctx.fillText(src, x, y)
   ctx.restore()
 }
 
 let textFont = 'Arial'
-function font (font) { textFont = 'Arial' }
+function font (font) { textFont = font }
 
 var globalAudio = {}
 function play (src, loop) {
