@@ -5,7 +5,7 @@ class Volatile {
   }
 
   [Symbol.toPrimitive] (hint) {
-    passedTime = (new Date().getTime() - this.startTime ) / 1000
+    let passedTime = (new Date().getTime() - this.startTime ) / 1000
     return this.func(passedTime)
   }
 }
@@ -43,7 +43,7 @@ class Increase {
 
   [Symbol.toPrimitive] (hint) {
     let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
-    if(!this.loop && passedTime > this.cycleTime) return this.min;
+    if(!this.loop && passedTime > this.cycleTime) return this.max;
 
     passedTime %= this.cycleTime
 
