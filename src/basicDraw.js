@@ -47,7 +47,7 @@ function line (x1, y1, x2, y2, lW, c) {
 
 function point (x, y, c) {
   startDraw()
-  circle(x, y, 3)
+  circle(x, y, 0.5)
   endDraw(c)
 }
 
