@@ -1062,7 +1062,8 @@ window.HSLA = __WEBPACK_IMPORTED_MODULE_6__colors__["b" /* HSLA */]
 window.Swing = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["c" /* Swing */]
 window.Increase = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["a" /* Increase */]
 window.Sine = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["b" /* Sine */]
-window.randint = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["d" /* randint */]
+window.Volatile = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["d" /* Volatile */]
+window.randint = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["e" /* randint */]
 
 // basic draw method
 window.background = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["a" /* background */]
@@ -1548,49 +1549,77 @@ function HSLA (h, s, l, a) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Swing; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Increase; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Sine; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return randint; });
-class Swing {
-  constructor (min, max, speed) {
-    this.min = min
-    this.max = max
-    this.cycle = (max - min) / speed * 2000
-    this.t = new Date().getTime()
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Volatile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return randint; });
+class Volatile {
+  constructor (func) {
+    this.func = func
+    this.startTime = new Date().getTime()
   }
 
   [Symbol.toPrimitive] (hint) {
-    var deltaT = (new Date().getTime() - this.t) % this.cycle
-    var x = (this.max - this.min) * 2 * deltaT / this.cycle + this.min
-    if (deltaT > this.cycle / 2) return 2 * this.max - x
-    else return x
+    passedTime = (new Date().getTime() - this.startTime ) / 1000
+    return this.func(passedTime)
+  }
+}
+
+class Swing {
+  constructor (min, max, cycleTime, loop=true) {
+    this.min = min
+    this.max = max
+    this.cycleTime = cycleTime
+    this.loop = loop
+    this.startTime = new Date().getTime()
+  }
+
+  [Symbol.toPrimitive] (hint) {
+    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
+    if(!this.loop && passedTime > this.cycleTime) return this.min;
+
+    passedTime %= this.cycleTime
+
+    if(passedTime > this.cycleTime / 2) 
+      passedTime = this.cycleTime - passedTime
+
+    return (this.max - this.min) * 2 * passedTime / this.cycleTime + this.min
   }
 }
 
 class Increase {
-  constructor (min, max, speed) {
+  constructor (min, max, cycleTime, loop=true) {
     this.min = min
     this.max = max
-    this.cycle = (max - min) / speed * 1000
-    this.t = new Date().getTime()
+    this.cycleTime = cycleTime
+    this.loop = loop
+    this.startTime = new Date().getTime()
   }
 
   [Symbol.toPrimitive] (hint) {
-    var deltaT = (new Date().getTime() - this.t) % this.cycle
-    return (this.max - this.min) * deltaT / this.cycle + this.min
+    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
+    if(!this.loop && passedTime > this.cycleTime) return this.min;
+
+    passedTime %= this.cycleTime
+
+    return (this.max - this.min) * passedTime / this.cycleTime + this.min
   }
 }
 
 class Sine {
-  constructor (min, max, speed) {
-    this.min = min
-    this.max = max
-    this.cycle = (max - min) / speed * 2000
-    this.t = new Date().getTime()
+  constructor (mean, wave, cycleTime, loop=true) {
+    this.mean = mean
+    this.wave = wave
+    this.cycleTime = cycleTime
+    this.loop = loop
+    this.startTime = new Date().getTime()
   }
 
   [Symbol.toPrimitive] (hint) {
-    var deltaT = (new Date().getTime() - this.t) % this.cycle
-    return (this.max + this.min) / 2 +
-      (this.max - this.min) / 2 * Math.sin(deltaT / this.cycle * Math.PI * 2)
+    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
+    if(!this.loop && passedTime > this.cycleTime) return this.mean;
+
+    passedTime %= this.cycleTime
+
+    return this.mean + this.wave * Math.sin(passedTime / this.cycleTime * Math.PI * 2)
   }
 }
 
@@ -1671,7 +1700,7 @@ function line (x1, y1, x2, y2, lW, c) {
 
 function point (x, y, c) {
   startDraw()
-  circle(x, y, 3)
+  circle(x, y, 0.5)
   endDraw(c)
 }
 

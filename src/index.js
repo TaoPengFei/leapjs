@@ -6,7 +6,7 @@ import { nextFrame } from './util'
 import { loadRssAndRun } from './resource'
 import { RGB, RGBA, HSL, HSLA } from './colors'
 
-import { Swing, Increase, Sine, randint } from './basicMethod'
+import { Swing, Increase, Sine, Volatile, randint } from './basicMethod'
 import { background, fill, rectangle, circle, line, point, polygon, triangle, ellipse,
   image, text, font, playSound, play, pause } from './basicDraw'
 
@@ -44,6 +44,7 @@ window.HSLA = HSLA
 window.Swing = Swing
 window.Increase = Increase
 window.Sine = Sine
+window.Volatile = Volatile
 window.randint = randint
 
 // basic draw method
