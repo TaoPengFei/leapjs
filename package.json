@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo visit /test.html in the browser",
     "build": "webpack --config webpack.config.prod.js --optimize-minimize",
-    "start": "python -m SimpleHTTPServer"
+    "start": "python -m http.server 80"
   },
   "keywords": [
     "canvas",
