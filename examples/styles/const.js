@@ -10,8 +10,14 @@
 http://www.w3school.com.cn/tags/html_ref_colornames.asp
 
 ***************************************************************/
-background("red");
+canvas.resize(400, 200);
+background("lightblue");
 
-rectangle(100, 100, 200, 40, 'yellow');
-
-ellipse(100, 300, 40, 20, 'blue');
+circle(200, 200, 200, 'red');
+circle(200, 200, 190, 'orange');
+circle(200, 200, 180, 'yellow');
+circle(200, 200, 170, 'green');
+circle(200, 200, 160, 'cyan');
+circle(200, 200, 150, 'blue');
+circle(200, 200, 140, 'purple');
+circle(200, 200, 130, 'lightblue');
