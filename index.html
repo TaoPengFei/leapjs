@@ -29,7 +29,7 @@
   <div id="sidebar">
     <h1>LL Canvas Engine</h1>
     <p>Author: Vic Wang</p>
-    <h2>Basic Drawing Methods</h2>
+    <h2>Drawing</h2>
     <ol>
       <li><a href='./examples/basicDraw/image.js'>image</a></li>
       <li><a href='./examples/basicDraw/text.js'>text</a></li>
@@ -46,19 +46,47 @@
     <h2>Styles</h2>
     <ol>
       <li><a href='./examples/styles/const.js'>const</a></li>
+      <li><a href='./examples/styles/rgb.js'>RGB</a></li>
+      <li><a href='./examples/styles/rgba.js'>RGBA</a></li>
+      <li><a href='./examples/styles/fillStyle.js'>fillStyle</a></li>
+      <li><a href='./examples/styles/strokeStyle.js'>strokeStyle</a></li>
+      <li><a href='./examples/styles/lineGradient.js'>LineGradient</a></li>
+      <li><a href='./examples/styles/radialGradient.js'>RadialGradient</a></li>
       <li><a href='./examples/styles/hsl.js'>HSL</a></li>
+      <li><a href='./examples/styles/hsla.js'>HSLA</a></li>
+      <li><a href='./examples/styles/shadow.js'>shadow</a></li>
     </ol>
-    <h2>Basic Canvas Methods</h2>
+    <h2>Text</h2>
+    <ol>
+      <li><a href='./examples/text/textAlign.js'>textAlign</a></li>
+      <li><a href='./examples/text/textBaseline.js'>textBaseline</a></li>
+      <li><a href='./examples/text/measureText.js'>measureText</a></li>
+    </ol>
+    <h2>Shapes</h2>
+    <ol>
+      <li><a href='./examples/shapes/rectangle.js'>Rectangle</a></li>
+      <li><a href='./examples/shapes/ellipse.js'>Ellipse</a></li>
+    </ol>
+    <h2>Shapes Methods</h2>
+    <ol>
+      <li><a href='./examples/shapesMethods/xy.js'>xy</a></li>
+      <li><a href='./examples/shapesMethods/collide.js'>collide</a></li>
+      <li><a href='./examples/shapesMethods/clone.js'>clone</a></li>
+    </ol>
+    <h2>Canvas</h2>
     <ol>
       <li><a href='./examples/canvas/showAxis.js'>showAxis</a></li>
       <li><a href='./examples/canvas/clear.js'>clear</a></li>
       <li><a href='./examples/canvas/_translate.js'>_translate</a></li>
       <li><a href='./examples/canvas/rotate.js'>rotate</a></li>
       <li><a href='./examples/canvas/scale.js'>scale</a></li>
+      <li><a href='./examples/events/preventDefault.js'>preventDefault</a></li>
     </ol>
-    <h2>Basic Shapes</h2>
+    <h2>ctx</h2>
     <ol>
-      <li><a href='./examples/shapes/clone.js'>Clone</a></li>
+      <li><a href='./examples/ctx/globalAlpha.js'>globalAlpha</a></li>
+      <li><a href='./examples/ctx/clearRect.js'>clearRect</a></li>
+      <li><a href='./examples/ctx/globalCompositeOperation.js'>globalCompositeOperation</a></li>
     </ol>
     <h2>Numbers</h2>
     <ol>
@@ -68,60 +96,35 @@
       <li><a href='./examples/numbers/sine.js'>Sine</a></li>
       <li><a href='./examples/numbers/volatile.js'>Volatile</a></li>
     </ol>
-    <h2>Styles</h2>
+    <h2>Images</h2>
     <ol>
-      <li><a href='./examples/styles/alpha.js'>Alpha</a></li>
-      <li><a href='./examples/styles/randomColor.js'>Random Color</a></li>
-      <li><a href='./examples/styles/gradient.js'>Gradient</a></li>
-      <li><a href='./examples/styles/rainbow.js'>Rainbow</a></li>
-    </ol> 
-    <h2>Basic Example</h2>
-    <ol>
-      <li><a href='./examples/shapes/rectangle.js'>Rectangle</a></li>
-      <li><a href='./examples/shapes/ellipse.js'>Ellipse</a></li>
-      <li><a href='./examples/shapes/snowman.js'>Snowman</a></li>
-      <li><a href='./examples/shapes/snowman2.js'>Snowman2</a></li>
-      <li><a href='./examples/shapes/moveLine.js'>moveLine</a></li>
-      <li><a href='./examples/shapes/movePolygon.js'>movePolygon</a></li>
+      <li><a href='./examples/images/createImageData.js'>createImageData</a></li>
+      <li><a href='./examples/images/getImageData.js'>getImageData</a></li>
+      <li><a href='./examples/images/putImageData.js'>putImageData</a></li>
+      <li><a href='./examples/images/data.js'>data</a></li>
     </ol>
 
-    <h2>Event</h2>
+    <h2>Examples</h2>
     <ol>
-      <li><a href='./examples/events/preventDefault.js'>Prevent Default</a></li>
       <li><a href='./examples/events/draw.js'>Point Draw</a></li>
       <li><a href='./examples/events/keyEvent.js'>Key Event</a></li>
       <li><a href='./examples/events/piano.js'>Piano</a></li>
-    </ol>
-    <h2>Animation</h2>
-    <ol>
       <li><a href='./examples/animations/setInterval.js'>SetInterval</a></li>
       <li><a href='./examples/animations/swing.js'>Swing</a></li>
       <li><a href='./examples/animations/sunrise.js'>Sunrise</a></li>
       <li><a href='./examples/animations/animation.js'>Animation</a></li>
       <li><a href='./examples/animations/fish.js'>Fish</a></li>
-    </ol>
-    <h2>Collision</h2>
-    <ol>
       <li><a href='./examples/collision/rectCollision.js'>Rect</a></li>
       <li><a href='./examples/collision/collision.js'>Collision</a></li>
       <li><a href='./examples/collision/polygonCollision.js'>Polygon</a></li>
       <li><a href='./examples/collision/lotCollision.js'>Lot Collision</a></li>
-    </ol>
-    <h2>Physics</h2>
-    <ol>
       <li><a href='./examples/physics/moveTo.js'>MoveTo</a></li>
       <li><a href='./examples/physics/gravity.js'>Gravity</a></li>
       <li><a href='./examples/physics/gravityAndCollision.js'>G&C</a></li>
-    </ol>
-    <h2>Projects</h2>
-    <ol>
       <li><a href='./examples/projects/fantasticSpot.js'>Fantastic Spot</a></li>
       <li><a href='./examples/projects/drops.js'>Drops</a></li>
       <li><a href='./examples/projects/crab.js'>Crab</a></li>
       <li><a href='./examples/projects/fish2.js'>Fish2</a></li>
-    </ol>
-    <h2>Games</h2>
-    <ol>
       <li><a href='./examples/games/clickHero.js'>Click Hero</a></li>
       <li><a href='./examples/games/flppyBird.js'>Flappy Bird</a></li>
       <li><a href='./examples/games/keyboardPractice.js'>Keyboard Practice</a></li>

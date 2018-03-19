@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
+/******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/ 		}
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -32,6 +32,9 @@
 /******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
@@ -60,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,7 +78,7 @@
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
 const clickShapes = __webpack_require__(1).clickShapes
-const Transform = __webpack_require__(2).Transform
+const Transform = __webpack_require__(6).Transform
 
 canvas.style.cssText = 'border: 1px solid #d3d3d3;'
 p.style.cssText = 'color: orange;'
@@ -281,89 +284,6 @@ window.clickShapes = clickShapes
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Transform", function() { return Transform; });
-class Transform {
-  constructor () {
-    this.anchorX = 0
-    this.anchorY = 0
-    this.scaleX = 1
-    this.scaleY = 1
-    this.skewX = 0
-    this.skewY = 0
-    this.translateX = 0
-    this.translateY = 0
-    this.degree = 0
-  }
-
-  transformed () {
-    return this.scaleX !== 1 || this.scaleY !== 1 ||
-      this.skewX || this.skewY ||
-      this.translateX || this.translateY || this.degree
-  }
-
-  scale (x, y) {
-    this.scaleX = x
-    this.scaleY = y
-  }
-
-  translate (x, y) {
-    this.translateX = x
-    this.translateY = y
-  }
-
-  skew (x, y) {
-    this.skewX = x
-    this.skewY = y
-  }
-
-  setAnchor (x, y) {
-    this.anchorX = x
-    this.anchorY = y
-  }
-
-  rotate (degree) {
-    this.degree = degree * Math.PI / 180
-  }
-
-  getRealPoint (p) {
-    if (!this.transformed()) { return p }
-
-    let x = p.x
-    let y = p.y
-
-    x -= this.anchorX
-    y -= this.anchorY
-
-    let degree = this.degree * Math.PI / 180
-    let sin = Math.sin(degree)
-    let cos = Math.cos(degree)
-
-    let newX = x * cos - y * sin
-    let newY = y * cos + x * sin
-    x = newX
-    y = newY
-
-    newX = this.scaleX * x + this.skewX * y + this.translateX
-    newY = this.skewY * x + this.scaleY * y + this.translateY
-    x = newX
-    y = newY
-
-    x += this.anchorX
-    y += this.anchorY
-
-    return {x, y}
-  }
-}
-
-
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Key; });
 let Key = {}
 
@@ -404,14 +324,14 @@ document.onkeypress = function (e) {
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Mouse; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Mouse; });
 
 
 
@@ -513,34 +433,86 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onclick = function (e) {
 
 
 /***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shapes__ = __webpack_require__(5);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Rss; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadRssAndRun; });
+
+
+
+let count = 0
+let loaded = 0
+let main
+
+function loadRssAndRun (func) {
+  main = func
+  check()
+}
+
+let Rss = {}
+Rss.add = function () { count++ }
+Rss.load = function () { loaded++ }
+Rss.isLoaded = function () { return loaded >= count }
+
+let n = 0
+
+function check () {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].clear()
+  if (Rss.isLoaded()) { main() } else {   
+
+    new __WEBPACK_IMPORTED_MODULE_1__shapes__["f" /* Text */]('LeapLearner', __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width / 2 - 110, 200, 40).draw()
+
+    let msg = 'loading'
+    for (let i = 0; i < n % 6; i++) { msg += '.' }
+    new __WEBPACK_IMPORTED_MODULE_1__shapes__["f" /* Text */](msg, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width / 2 - 40, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 240).draw()
+
+    new __WEBPACK_IMPORTED_MODULE_1__shapes__["b" /* Rectangle */](50, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 200, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width - 100, 10).fill()
+
+    let r2 = new __WEBPACK_IMPORTED_MODULE_1__shapes__["b" /* Rectangle */](50, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 200, (__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width - 100) * loaded / count, 10)
+    r2.fillStyle = 'orange'
+    r2.fill()
+
+    n++
+    setTimeout(check, 100)
+  }
+}
+
+
+
+
+/***/ }),
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export Shape */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Line; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return Rectangle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return Polygon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return Triangle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Circle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return Point; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return Text; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return Sprite; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Animation; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Ellipse; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resource__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__collision__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transform__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resource__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__collision__ = __webpack_require__(11);
+/* unused harmony export Shape */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Line; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Rectangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Polygon; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Triangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return Circle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return Point; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return Text; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return Sprite; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return Animation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return Ellipse; });
 
 
 
 
 
 
-const clone = __webpack_require__(9)
+const clone = __webpack_require__(10)
 
 class Shape {
   constructor () {
@@ -600,11 +572,11 @@ class Shape {
   getRealPoint (p) { return this.transform.getRealPoint(p) }
 
   click () {}
-  touched () { return Object(__WEBPACK_IMPORTED_MODULE_5__collision__["b" /* pointInShape */])(__WEBPACK_IMPORTED_MODULE_2__mouse__["a" /* Mouse */], this) }
+  touched () { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__collision__["a" /* pointInShape */])(__WEBPACK_IMPORTED_MODULE_2__mouse__["a" /* Mouse */], this) }
 
   collide (other) {
     if (other instanceof Shape) {
-      return Object(__WEBPACK_IMPORTED_MODULE_5__collision__["a" /* collide */])(this, other)
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__collision__["b" /* collide */])(this, other)
     } else {
       return false
     }
@@ -835,10 +807,10 @@ class Sprite extends Rectangle {
     this.img.crossOrigin = 'anonymous'
     this.img.src = src
     this.img.onload = function () {
-      __WEBPACK_IMPORTED_MODULE_4__resource__["a" /* Rss */].load()
+      __WEBPACK_IMPORTED_MODULE_4__resource__["b" /* Rss */].load()
     }
 
-    __WEBPACK_IMPORTED_MODULE_4__resource__["a" /* Rss */].add()
+    __WEBPACK_IMPORTED_MODULE_4__resource__["b" /* Rss */].add()
   }
 
   get src () { return this.img.src }
@@ -846,7 +818,7 @@ class Sprite extends Rectangle {
 
   set onload (callback) {
     this.img.onload = function () {
-      __WEBPACK_IMPORTED_MODULE_4__resource__["a" /* Rss */].load()
+      __WEBPACK_IMPORTED_MODULE_4__resource__["b" /* Rss */].load()
       callback()
     }
   }
@@ -955,47 +927,78 @@ const Triangle = Polygon
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rss; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadRssAndRun; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shapes__ = __webpack_require__(5);
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Transform", function() { return Transform; });
+class Transform {
+  constructor () {
+    this.anchorX = 0
+    this.anchorY = 0
+    this.scaleX = 1
+    this.scaleY = 1
+    this.skewX = 0
+    this.skewY = 0
+    this.translateX = 0
+    this.translateY = 0
+    this.degree = 0
+  }
 
+  transformed () {
+    return this.scaleX !== 1 || this.scaleY !== 1 ||
+      this.skewX || this.skewY ||
+      this.translateX || this.translateY || this.degree
+  }
 
+  scale (x, y) {
+    this.scaleX = x
+    this.scaleY = y
+  }
 
-let count = 0
-let loaded = 0
-let main
+  translate (x, y) {
+    this.translateX = x
+    this.translateY = y
+  }
 
-function loadRssAndRun (func) {
-  main = func
-  check()
-}
+  skew (x, y) {
+    this.skewX = x
+    this.skewY = y
+  }
 
-let Rss = {}
-Rss.add = function () { count++ }
-Rss.load = function () { loaded++ }
-Rss.isLoaded = function () { return loaded >= count }
+  setAnchor (x, y) {
+    this.anchorX = x
+    this.anchorY = y
+  }
 
-let n = 0
+  rotate (degree) {
+    this.degree = degree * Math.PI / 180
+  }
 
-function check () {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].clear()
-  if (Rss.isLoaded()) { main() } else {   
+  getRealPoint (p) {
+    if (!this.transformed()) { return p }
 
-    new __WEBPACK_IMPORTED_MODULE_1__shapes__["i" /* Text */]('LeapLearner', __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width / 2 - 110, 200, 40).draw()
+    let x = p.x
+    let y = p.y
 
-    let msg = 'loading'
-    for (let i = 0; i < n % 6; i++) { msg += '.' }
-    new __WEBPACK_IMPORTED_MODULE_1__shapes__["i" /* Text */](msg, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width / 2 - 40, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 240).draw()
+    x -= this.anchorX
+    y -= this.anchorY
 
-    new __WEBPACK_IMPORTED_MODULE_1__shapes__["g" /* Rectangle */](50, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 200, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width - 100, 10).fill()
+    let degree = this.degree * Math.PI / 180
+    let sin = Math.sin(degree)
+    let cos = Math.cos(degree)
 
-    let r2 = new __WEBPACK_IMPORTED_MODULE_1__shapes__["g" /* Rectangle */](50, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height - 200, (__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width - 100) * loaded / count, 10)
-    r2.fillStyle = 'orange'
-    r2.fill()
+    let newX = x * cos - y * sin
+    let newY = y * cos + x * sin
+    x = newX
+    y = newY
 
-    n++
-    setTimeout(check, 100)
+    newX = this.scaleX * x + this.skewX * y + this.translateX
+    newY = this.skewY * x + this.scaleY * y + this.translateY
+    x = newX
+    y = newY
+
+    x += this.anchorX
+    y += this.anchorY
+
+    return {x, y}
   }
 }
 
@@ -1007,80 +1010,172 @@ function check () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shapes__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resource__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__basicMethod__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basicDraw__ = __webpack_require__(12);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return background; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return fill; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return rectangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return circle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return line; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return point; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return polygon; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return triangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return ellipse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return image; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return text; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return font; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return playSound; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return play; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return pause; });
 
 
+function background (style) { rectangle(0, 0, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height, style) }
+
+let isFill = true
+
+function fill (bool = true) { isFill = bool }
+
+function startDraw () {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+}
+
+function endDraw (c) {
+  if (isFill) {
+    if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = c
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
+  }
+  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = c
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+}
+
+function rectangle (x, y, w, h, c) {
+  startDraw()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].rect(x, y, w, h)
+  endDraw(c)
+}
+
+function circle (x, y, r, c) {
+  startDraw()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].arc(x, y, r, 0, 2 * Math.PI)
+  endDraw(c)
+}
+
+// line(x1, y1, x2, y2, *lineWidth, *color);
+function line (x1, y1, x2, y2, lW, c) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  if (lW) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = lW
+  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = c
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(x1, y1)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(x2, y2)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+}
+
+function point (x, y, c) {
+  startDraw()
+  circle(x, y, 0.5)
+  endDraw(c)
+}
+
+function polygon () {
+  startDraw()
+  let len = arguments.length
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(arguments[0], arguments[1])
+  for (let i = 2; i < len - 1; i += 2) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i + 1]) }
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
+  let c = null
+  if (len % 2 === 1) { c = arguments[len - 1] }
+  endDraw(c)
+}
+
+function triangle (x1, y1, x2, y2, x3, y3, c) {
+  startDraw()
+  polygon(x1, y1, x2, y2, x3, y3)
+  endDraw(c)
+}
+
+function ellipse (x, y, rX, rY, c) {
+  startDraw()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].ellipse(x, y, rX, rY, 0, 0, Math.PI * 2)
+  endDraw(c)
+}
+
+var globalImages = {}
+
+function image (src, x = 0, y = 0, w, h) {
+  let img
+  if (globalImages.hasOwnProperty(src)) {
+    img = globalImages[src]
+  } else {
+    img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.src = src
+    globalImages[src] = img
+  }
+
+  img._x = x
+  img._y = y
+  img.w = w
+  img.h = h
+
+  if (img.complete) {
+    if (w && h) {
+      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y, w, h)
+    } else {
+      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y)
+    }
+  } else {
+    img.onload = function () {
+      if (this.w && this.h) {
+        __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y, this.w, this.h)
+      } else {
+        __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y)
+      }
+    }
+  }
+}
+
+function text (src, x = 0, y = 0, size = 20, c) {
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px ' + textFont
+  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = c
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y)
+  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
+}
+
+let textFont = 'Arial'
+function font (font) { textFont = font }
+
+var globalAudio = {}
+function play (src, loop) {
+  let m
+  if (globalAudio.hasOwnProperty(src)) {
+    m = globalAudio[src]
+    m.loop = loop
+    m.play()
+  } else {
+    m = new Audio()
+    m.src = src
+    if (loop) m.loop = loop
+    globalAudio[src] = m
+    m.oncanplaythrough = function () {
+      this.play()
+    }
+  }
+}
+
+function pause (src) {
+  if (globalAudio.hasOwnProperty(src)) {
+    let m = globalAudio[src]
+    m.pause()
+  }
+}
+
+var playSound = play
 
 
-
-
-
-
-
-
-
-// canvas
-window.canvas = __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */]
-window.ctx = __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */]
-
-// shapes
-window.Line = __WEBPACK_IMPORTED_MODULE_3__shapes__["d" /* Line */]
-window.Rectangle = __WEBPACK_IMPORTED_MODULE_3__shapes__["g" /* Rectangle */]
-window.Polygon = __WEBPACK_IMPORTED_MODULE_3__shapes__["f" /* Polygon */]
-window.Triangle = __WEBPACK_IMPORTED_MODULE_3__shapes__["j" /* Triangle */]
-window.Circle = __WEBPACK_IMPORTED_MODULE_3__shapes__["b" /* Circle */]
-window.Text = __WEBPACK_IMPORTED_MODULE_3__shapes__["i" /* Text */]
-window.Sprite = __WEBPACK_IMPORTED_MODULE_3__shapes__["h" /* Sprite */]
-window.Animation = __WEBPACK_IMPORTED_MODULE_3__shapes__["a" /* Animation */]
-window.Point = __WEBPACK_IMPORTED_MODULE_3__shapes__["e" /* Point */]
-window.Ellipse = __WEBPACK_IMPORTED_MODULE_3__shapes__["c" /* Ellipse */]
-
-// events
-window.Key = __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */]
-window.Mouse = __WEBPACK_IMPORTED_MODULE_2__mouse__["a" /* Mouse */]
-
-// rss
-window.nextFrame = __WEBPACK_IMPORTED_MODULE_4__util__["nextFrame"]
-window.loadRssAndRun = __WEBPACK_IMPORTED_MODULE_5__resource__["b" /* loadRssAndRun */]
-
-// colors
-window.RGB = __WEBPACK_IMPORTED_MODULE_6__colors__["c" /* RGB */]
-window.RGBA = __WEBPACK_IMPORTED_MODULE_6__colors__["d" /* RGBA */]
-window.HSL = __WEBPACK_IMPORTED_MODULE_6__colors__["a" /* HSL */]
-window.HSLA = __WEBPACK_IMPORTED_MODULE_6__colors__["b" /* HSLA */]
-
-// basic method
-window.Swing = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["c" /* Swing */]
-window.Increase = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["a" /* Increase */]
-window.Sine = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["b" /* Sine */]
-window.Volatile = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["d" /* Volatile */]
-window.randint = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["e" /* randint */]
-
-// basic draw method
-window.background = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["a" /* background */]
-window.fill = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["d" /* fill */]
-window.rectangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["m" /* rectangle */]
-window.circle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["b" /* circle */]
-window.line = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["g" /* line */]
-window.point = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["k" /* point */]
-window.polygon = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["l" /* polygon */]
-window.triangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["o" /* triangle */]
-window.ellipse = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["c" /* ellipse */]
-window.image = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["f" /* image */]
-window.text = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["n" /* text */]
-window.font = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["e" /* font */]
-window.playSound = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["j" /* playSound */]
-window.play = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["i" /* play */]
-window.pause = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["h" /* pause */]
 
 
 /***/ }),
@@ -1088,156 +1183,85 @@ window.pause = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["h" /* pause */]
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return collide; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return pointInShape; });
-// detect collision using shadows
-// p: Point, {x, y}
-// ps: Points, Array
-// rect: {minX, maxX, minY, maxY}
-// import { ctx } from './canvas'
-let canvas = document.createElement('canvas')
-let ctx = canvas.getContext('2d')
-
-ctx.drawPathByPoints = function (ps) {
-  ctx.beginPath()
-  ctx.moveTo(ps[0].x, ps[0].y)
-
-  for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
-
-  ctx.closePath()
-}
-
-function collide (shape1, shape2) {
-  const ps1 = shape1.points
-  const ps2 = shape2.points
-
-  if (ps1.length < 2) return false
-  if (ps2.length < 2) return false
-
-  // quick check start
-  let r1 = {}
-  let r2 = {}
-  r1 = getRectShape(ps1)
-  r2 = getRectShape(ps2)
-
-  if (r1.minX > r2.maxX || r1.minY > r2.maxY || r2.minX > r1.maxX || r2.minY > r1.maxY) {
-    return false
-  }
-  // quick check end
-
-  // possible rect
-  let collideRect = getCollideRect(r1, r2)
-
-  // if point inside shapes, return point
-  ctx.drawPathByPoints(ps2)
-  for (let i = 0; i < ps1.length; i++) {
-    let p = ps1[i]
-    if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) { return p }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Swing; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Increase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Sine; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Volatile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return randint; });
+class Volatile {
+  constructor (func) {
+    this.func = func
+    this.startTime = new Date().getTime()
   }
 
-  ctx.drawPathByPoints(ps1)
-  for (let i = 0; i < ps2.length; i++) {
-    let p = ps2[i]
-    if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) { return p }
-  }
-  // points check end
-
-  // lines check
-  for (let i = 0; i < ps1.length - 1; i++) { // bcz we had checked the points, ignore the last line
-    let p1 = ps1[i]
-    let p2 = ps1[i + 1]
-    for (let j = 0; j < ps2.length - 1; j++) {
-      let p3 = ps2[j]
-      let p4 = ps2[j + 1]
-
-      let p = lineCollideLine(p1, p2, p3, p4)
-      if (p) return p
-    }
-  }
-
-  return false
-}
-
-function getCollideRect (r1, r2) {
-  return {
-    minX: r1.minX > r2.minX ? r1.minX : r2.minX,
-    minY: r1.minY > r2.minY ? r1.minY : r2.minY,
-    maxX: r1.maxX < r2.maxX ? r1.maxX : r2.maxX,
-    maxY: r1.maxY < r2.maxY ? r1.maxY : r2.maxY
+  [Symbol.toPrimitive] (hint) {
+    let passedTime = (new Date().getTime() - this.startTime ) / 1000
+    return this.func(passedTime)
   }
 }
 
-function lineCollideLine (p1, p2, p3, p4) {
-  let x1 = p1.x
-  let x2 = p2.x
-  let x3 = p3.x
-  let x4 = p4.x
+class Swing {
+  constructor (min, max, cycleTime, loop=true) {
+    this.min = min
+    this.max = max
+    this.cycleTime = cycleTime
+    this.loop = loop
+    this.startTime = new Date().getTime()
+  }
 
-  let y1 = p1.y
-  let y2 = p2.y
-  let y3 = p3.y
-  let y4 = p4.y
+  [Symbol.toPrimitive] (hint) {
+    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
+    if(!this.loop && passedTime > this.cycleTime) return this.min;
 
-  // quick check
-  if (Math.min(x1, x2) > Math.max(x3, x4) ||
-      Math.min(y1, y2) > Math.max(y3, y4) ||
-      Math.max(x1, x2) < Math.min(x3, x4) ||
-      Math.max(y1, y2) < Math.min(y3, y4)) { return false }
+    passedTime %= this.cycleTime
 
-  // same slope rate
-  if ((y1 - y2) * (x3 - x4) === (x1 - x2) * (y3 - y4)) { return false }
+    if(passedTime > this.cycleTime / 2) 
+      passedTime = this.cycleTime - passedTime
 
-  if (cross(p3, p2, p3, p4) * cross(p3, p4, p3, p1) < 0 ||
-    cross(p1, p4, p1, p2) * cross(p1, p2, p1, p3) < 0) { return false }
-
-  // get collide point
-  let b1 = (y2 - y1) * x1 + (x1 - x2) * y1
-  let b2 = (y4 - y3) * x3 + (x3 - x4) * y3
-  let D = (x2 - x1) * (y4 - y3) - (x4 - x3) * (y2 - y1)
-  let D1 = b2 * (x2 - x1) - b1 * (x4 - x3)
-  let D2 = b2 * (y2 - y1) - b1 * (y4 - y3)
-
-  return {
-    x: D1 / D,
-    y: D2 / D
+    return (this.max - this.min) * 2 * passedTime / this.cycleTime + this.min
   }
 }
 
-function cross (p1, p2, p3, p4) {
-  return (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x)
-}
+class Increase {
+  constructor (min, max, cycleTime, loop=true) {
+    this.min = min
+    this.max = max
+    this.cycleTime = cycleTime
+    this.loop = loop
+    this.startTime = new Date().getTime()
+  }
 
-function max (a, b) { return Math.max(a, b) }
-function min (a, b) { return Math.min(a, b) }
+  [Symbol.toPrimitive] (hint) {
+    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
+    if(!this.loop && passedTime > this.cycleTime) return this.max;
 
-function getRectShape (ps) {
-  let xs = ps.map(p => p.x)
-  let ys = ps.map(p => p.y)
+    passedTime %= this.cycleTime
 
-  return {
-    minX: xs.reduce(min),
-    maxX: xs.reduce(max),
-    minY: ys.reduce(min),
-    maxY: ys.reduce(max)
+    return (this.max - this.min) * passedTime / this.cycleTime + this.min
   }
 }
 
-function pointInRect (p, r) {
-  return r.minX <= p.x && p.x <= r.maxX &&
-    r.minY <= p.y && p.y <= r.maxY
+class Sine {
+  constructor (mean, wave, cycleTime, loop=true) {
+    this.mean = mean
+    this.wave = wave
+    this.cycleTime = cycleTime
+    this.loop = loop
+    this.startTime = new Date().getTime()
+  }
+
+  [Symbol.toPrimitive] (hint) {
+    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
+    if(!this.loop && passedTime > this.cycleTime) return this.mean;
+
+    passedTime %= this.cycleTime
+
+    return this.mean + this.wave * Math.sin(passedTime / this.cycleTime * Math.PI * 2)
+  }
 }
 
-function pointInShape (p, shape) {
-  let ps = shape.points
-  if (ps.length < 3) return false
-
-  let rect = getRectShape(ps)
-  if (!pointInRect(p, rect)) { return false }
-
-  ctx.drawPathByPoints(ps)
-  if (ctx.isPointInPath(p.x, p.y)) { return p }
-
-  return false
+function randint (a, b) {
+  return Math.floor(a + Math.random() * (b - a))
 }
 
 
@@ -1245,6 +1269,42 @@ function pointInShape (p, shape) {
 
 /***/ }),
 /* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RGB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return RGBA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HSL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return HSLA; });
+function RGB (r, g, b) {
+  r = Math.floor(r)
+  g = Math.floor(g)
+  b = Math.floor(b)
+  return 'rgb(' + r + ', ' + g + ', ' + b + ')' 
+}
+
+function RGBA (r, g, b, a) {
+  r = Math.floor(r)
+  g = Math.floor(g)
+  b = Math.floor(b)
+  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')' 
+}
+
+function HSL (h, s, l) {
+  h = Math.floor(h)
+  return `hsl(${h}, ${s * 100}%, ${l * 100}%)`
+}
+
+function HSLA (h, s, l, a) {
+  h = Math.floor(h)
+  return `hsla(${h}, ${s * 100}%, ${l * 100}%, ${a})`
+}
+
+
+
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 var clone = (function() {
@@ -1339,7 +1399,7 @@ function clone(parent, circular, depth, prototype, includeNonEnumerable) {
       child = new nativeSet();
     } else if (_instanceof(parent, Image)) {
       child = new Image();
-      child.crossOrigin = 'anonymous'
+      child.crossOrigin = parent.crossOrigin;
       child.src = parent.src;
       return child;
     } else if (_instanceof(parent, nativePromise)) {
@@ -1506,125 +1566,160 @@ if (typeof module === 'object' && module.exports) {
 
 
 /***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return RGB; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return RGBA; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HSL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HSLA; });
-function RGB (r, g, b) {
-  r = Math.floor(r)
-  g = Math.floor(g)
-  b = Math.floor(b)
-  return 'rgb(' + r + ', ' + g + ', ' + b + ')' 
-}
-
-function RGBA (r, g, b, a) {
-  r = Math.floor(r)
-  g = Math.floor(g)
-  b = Math.floor(b)
-  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')' 
-}
-
-function HSL (h, s, l) {
-  h = Math.floor(h)
-  return `hsl(${h}, ${s * 100}%, ${l * 100}%)`
-}
-
-function HSLA (h, s, l, a) {
-  h = Math.floor(h)
-  return `hsla(${h}, ${s * 100}%, ${l * 100}%, ${a})`
-}
-
-
-
-
-/***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Swing; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Increase; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Sine; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Volatile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return randint; });
-class Volatile {
-  constructor (func) {
-    this.func = func
-    this.startTime = new Date().getTime()
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return collide; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return pointInShape; });
+// detect collision using shadows
+// p: Point, {x, y}
+// ps: Points, Array
+// rect: {minX, maxX, minY, maxY}
+// import { ctx } from './canvas'
+let canvas = document.createElement('canvas')
+let ctx = canvas.getContext('2d')
+
+ctx.drawPathByPoints = function (ps) {
+  ctx.beginPath()
+  ctx.moveTo(ps[0].x, ps[0].y)
+
+  for (let i = 1; i < ps.length; i++) { ctx.lineTo(ps[i].x, ps[i].y) }
+
+  ctx.closePath()
+}
+
+function collide (shape1, shape2) {
+  const ps1 = shape1.points
+  const ps2 = shape2.points
+
+  if (ps1.length < 2) return false
+  if (ps2.length < 2) return false
+
+  // quick check start
+  let r1 = {}
+  let r2 = {}
+  r1 = getRectShape(ps1)
+  r2 = getRectShape(ps2)
+
+  if (r1.minX > r2.maxX || r1.minY > r2.maxY || r2.minX > r1.maxX || r2.minY > r1.maxY) {
+    return false
+  }
+  // quick check end
+
+  // possible rect
+  let collideRect = getCollideRect(r1, r2)
+
+  // if point inside shapes, return point
+  ctx.drawPathByPoints(ps2)
+  for (let i = 0; i < ps1.length; i++) {
+    let p = ps1[i]
+    if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) { return p }
   }
 
-  [Symbol.toPrimitive] (hint) {
-    let passedTime = (new Date().getTime() - this.startTime ) / 1000
-    return this.func(passedTime)
+  ctx.drawPathByPoints(ps1)
+  for (let i = 0; i < ps2.length; i++) {
+    let p = ps2[i]
+    if (pointInRect(p, collideRect) && ctx.isPointInPath(p.x, p.y)) { return p }
+  }
+  // points check end
+
+  // lines check
+  for (let i = 0; i < ps1.length - 1; i++) { // bcz we had checked the points, ignore the last line
+    let p1 = ps1[i]
+    let p2 = ps1[i + 1]
+    for (let j = 0; j < ps2.length - 1; j++) {
+      let p3 = ps2[j]
+      let p4 = ps2[j + 1]
+
+      let p = lineCollideLine(p1, p2, p3, p4)
+      if (p) return p
+    }
+  }
+
+  return false
+}
+
+function getCollideRect (r1, r2) {
+  return {
+    minX: r1.minX > r2.minX ? r1.minX : r2.minX,
+    minY: r1.minY > r2.minY ? r1.minY : r2.minY,
+    maxX: r1.maxX < r2.maxX ? r1.maxX : r2.maxX,
+    maxY: r1.maxY < r2.maxY ? r1.maxY : r2.maxY
   }
 }
 
-class Swing {
-  constructor (min, max, cycleTime, loop=true) {
-    this.min = min
-    this.max = max
-    this.cycleTime = cycleTime
-    this.loop = loop
-    this.startTime = new Date().getTime()
-  }
+function lineCollideLine (p1, p2, p3, p4) {
+  let x1 = p1.x
+  let x2 = p2.x
+  let x3 = p3.x
+  let x4 = p4.x
 
-  [Symbol.toPrimitive] (hint) {
-    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
-    if(!this.loop && passedTime > this.cycleTime) return this.min;
+  let y1 = p1.y
+  let y2 = p2.y
+  let y3 = p3.y
+  let y4 = p4.y
 
-    passedTime %= this.cycleTime
+  // quick check
+  if (Math.min(x1, x2) > Math.max(x3, x4) ||
+      Math.min(y1, y2) > Math.max(y3, y4) ||
+      Math.max(x1, x2) < Math.min(x3, x4) ||
+      Math.max(y1, y2) < Math.min(y3, y4)) { return false }
 
-    if(passedTime > this.cycleTime / 2) 
-      passedTime = this.cycleTime - passedTime
+  // same slope rate
+  if ((y1 - y2) * (x3 - x4) === (x1 - x2) * (y3 - y4)) { return false }
 
-    return (this.max - this.min) * 2 * passedTime / this.cycleTime + this.min
-  }
-}
+  if (cross(p3, p2, p3, p4) * cross(p3, p4, p3, p1) < 0 ||
+    cross(p1, p4, p1, p2) * cross(p1, p2, p1, p3) < 0) { return false }
 
-class Increase {
-  constructor (min, max, cycleTime, loop=true) {
-    this.min = min
-    this.max = max
-    this.cycleTime = cycleTime
-    this.loop = loop
-    this.startTime = new Date().getTime()
-  }
+  // get collide point
+  let b1 = (y2 - y1) * x1 + (x1 - x2) * y1
+  let b2 = (y4 - y3) * x3 + (x3 - x4) * y3
+  let D = (x2 - x1) * (y4 - y3) - (x4 - x3) * (y2 - y1)
+  let D1 = b2 * (x2 - x1) - b1 * (x4 - x3)
+  let D2 = b2 * (y2 - y1) - b1 * (y4 - y3)
 
-  [Symbol.toPrimitive] (hint) {
-    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
-    if(!this.loop && passedTime > this.cycleTime) return this.max;
-
-    passedTime %= this.cycleTime
-
-    return (this.max - this.min) * passedTime / this.cycleTime + this.min
+  return {
+    x: D1 / D,
+    y: D2 / D
   }
 }
 
-class Sine {
-  constructor (mean, wave, cycleTime, loop=true) {
-    this.mean = mean
-    this.wave = wave
-    this.cycleTime = cycleTime
-    this.loop = loop
-    this.startTime = new Date().getTime()
-  }
+function cross (p1, p2, p3, p4) {
+  return (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x)
+}
 
-  [Symbol.toPrimitive] (hint) {
-    let passedTime = (new Date().getTime() - this.startTime) / 1000  // second
-    if(!this.loop && passedTime > this.cycleTime) return this.mean;
+function max (a, b) { return Math.max(a, b) }
+function min (a, b) { return Math.min(a, b) }
 
-    passedTime %= this.cycleTime
+function getRectShape (ps) {
+  let xs = ps.map(p => p.x)
+  let ys = ps.map(p => p.y)
 
-    return this.mean + this.wave * Math.sin(passedTime / this.cycleTime * Math.PI * 2)
+  return {
+    minX: xs.reduce(min),
+    maxX: xs.reduce(max),
+    minY: ys.reduce(min),
+    maxY: ys.reduce(max)
   }
 }
 
-function randint (a, b) {
-  return Math.floor(a + Math.random() * (b - a))
+function pointInRect (p, r) {
+  return r.minX <= p.x && p.x <= r.maxX &&
+    r.minY <= p.y && p.y <= r.maxY
+}
+
+function pointInShape (p, shape) {
+  let ps = shape.points
+  if (ps.length < 3) return false
+
+  let rect = getRectShape(ps)
+  if (!pointInRect(p, rect)) { return false }
+
+  ctx.drawPathByPoints(ps)
+  if (ctx.isPointInPath(p.x, p.y)) { return p }
+
+  return false
 }
 
 
@@ -1635,172 +1730,80 @@ function randint (a, b) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return background; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return fill; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return rectangle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return circle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return line; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return point; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return polygon; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return triangle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ellipse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return image; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return text; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return font; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return playSound; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return play; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return pause; });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__canvas__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keys__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mouse__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shapes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resource__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__colors__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__basicMethod__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basicDraw__ = __webpack_require__(7);
 
 
-function background (style) { rectangle(0, 0, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].width, __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].height, style) }
-
-let isFill = true
-
-function fill (bool = true) { isFill = bool }
-
-function startDraw () {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
-}
-
-function endDraw (c) {
-  if (isFill) {
-    if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = c
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
-  }
-  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = c
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
-}
-
-function rectangle (x, y, w, h, c) {
-  startDraw()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].rect(x, y, w, h)
-  endDraw(c)
-}
-
-function circle (x, y, r, c) {
-  startDraw()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].arc(x, y, r, 0, 2 * Math.PI)
-  endDraw(c)
-}
-
-// line(x1, y1, x2, y2, *lineWidth, *color);
-function line (x1, y1, x2, y2, lW, c) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (lW) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = lW
-  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = c
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(x1, y1)
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(x2, y2)
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
-}
-
-function point (x, y, c) {
-  startDraw()
-  circle(x, y, 0.5)
-  endDraw(c)
-}
-
-function polygon () {
-  startDraw()
-  let len = arguments.length
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(arguments[0], arguments[1])
-  for (let i = 2; i < len - 1; i += 2) { __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(arguments[i], arguments[i + 1]) }
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
-  let c = null
-  if (len % 2 === 1) { c = arguments[len - 1] }
-  endDraw(c)
-}
-
-function triangle (x1, y1, x2, y2, x3, y3, c) {
-  startDraw()
-  polygon(x1, y1, x2, y2, x3, y3)
-  endDraw(c)
-}
-
-function ellipse (x, y, rX, rY, c) {
-  startDraw()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].ellipse(x, y, rX, rY, 0, 0, Math.PI * 2)
-  endDraw(c)
-}
-
-var globalImages = {}
-
-function image (src, x = 0, y = 0, w, h) {
-  let img
-  if (globalImages.hasOwnProperty(src)) {
-    img = globalImages[src]
-  } else {
-    img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.src = src
-    globalImages[src] = img
-  }
-
-  img._x = x
-  img._y = y
-  img.w = w
-  img.h = h
-
-  if (img.complete) {
-    if (w && h) {
-      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y, w, h)
-    } else {
-      __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(img, x, y)
-    }
-  } else {
-    img.onload = function () {
-      if (this.w && this.h) {
-        __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y, this.w, this.h)
-      } else {
-        __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].drawImage(this, this._x, this._y)
-      }
-    }
-  }
-}
-
-function text (src, x = 0, y = 0, size = 20, c) {
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].font = size + 'px ' + textFont
-  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = c
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillText(src, x, y)
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
-}
-
-let textFont = 'Arial'
-function font (font) { textFont = font }
-
-var globalAudio = {}
-function play (src, loop) {
-  let m
-  if (globalAudio.hasOwnProperty(src)) {
-    m = globalAudio[src]
-    m.loop = loop
-    m.play()
-  } else {
-    m = new Audio()
-    m.src = src
-    if (loop) m.loop = loop
-    globalAudio[src] = m
-    m.oncanplaythrough = function () {
-      this.play()
-    }
-  }
-}
-
-function pause (src) {
-  if (globalAudio.hasOwnProperty(src)) {
-    let m = globalAudio[src]
-    m.pause()
-  }
-}
-
-var playSound = play
 
 
+
+
+
+
+
+
+
+// canvas
+window.canvas = __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */]
+window.ctx = __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */]
+
+// shapes
+window.Line = __WEBPACK_IMPORTED_MODULE_3__shapes__["a" /* Line */]
+window.Rectangle = __WEBPACK_IMPORTED_MODULE_3__shapes__["b" /* Rectangle */]
+window.Polygon = __WEBPACK_IMPORTED_MODULE_3__shapes__["c" /* Polygon */]
+window.Triangle = __WEBPACK_IMPORTED_MODULE_3__shapes__["d" /* Triangle */]
+window.Circle = __WEBPACK_IMPORTED_MODULE_3__shapes__["e" /* Circle */]
+window.Text = __WEBPACK_IMPORTED_MODULE_3__shapes__["f" /* Text */]
+window.Sprite = __WEBPACK_IMPORTED_MODULE_3__shapes__["g" /* Sprite */]
+window.Animation = __WEBPACK_IMPORTED_MODULE_3__shapes__["h" /* Animation */]
+window.Point = __WEBPACK_IMPORTED_MODULE_3__shapes__["i" /* Point */]
+window.Ellipse = __WEBPACK_IMPORTED_MODULE_3__shapes__["j" /* Ellipse */]
+
+// events
+window.Key = __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */]
+window.Mouse = __WEBPACK_IMPORTED_MODULE_2__mouse__["a" /* Mouse */]
+
+// rss
+window.nextFrame = __WEBPACK_IMPORTED_MODULE_4__util__["nextFrame"]
+window.loadRssAndRun = __WEBPACK_IMPORTED_MODULE_5__resource__["a" /* loadRssAndRun */]
+
+// colors
+window.RGB = __WEBPACK_IMPORTED_MODULE_6__colors__["a" /* RGB */]
+window.RGBA = __WEBPACK_IMPORTED_MODULE_6__colors__["b" /* RGBA */]
+window.HSL = __WEBPACK_IMPORTED_MODULE_6__colors__["c" /* HSL */]
+window.HSLA = __WEBPACK_IMPORTED_MODULE_6__colors__["d" /* HSLA */]
+
+// basic method
+window.Swing = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["a" /* Swing */]
+window.Increase = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["b" /* Increase */]
+window.Sine = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["c" /* Sine */]
+window.Volatile = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["d" /* Volatile */]
+window.randint = __WEBPACK_IMPORTED_MODULE_7__basicMethod__["e" /* randint */]
+
+// basic draw method
+window.background = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["a" /* background */]
+window.fill = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["b" /* fill */]
+window.rectangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["c" /* rectangle */]
+window.circle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["d" /* circle */]
+window.line = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["e" /* line */]
+window.point = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["f" /* point */]
+window.polygon = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["g" /* polygon */]
+window.triangle = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["h" /* triangle */]
+window.ellipse = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["i" /* ellipse */]
+window.image = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["j" /* image */]
+window.text = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["k" /* text */]
+window.font = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["l" /* font */]
+window.playSound = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["m" /* playSound */]
+window.play = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["n" /* play */]
+window.pause = __WEBPACK_IMPORTED_MODULE_8__basicDraw__["o" /* pause */]
 
 
 /***/ })

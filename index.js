@@ -62,4 +62,4 @@ $(function () {
   })
 })
 
-load('./examples/animations/animation.js')
+load('./examples/index.js')

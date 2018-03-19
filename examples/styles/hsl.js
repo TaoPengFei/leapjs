@@ -4,18 +4,20 @@
 
 HSL(h, saturation, light)
 
-h: 颜色编号，从0到360
-saturation：饱和度，0~1
-light：亮度，0~1
+* h: 颜色编号，从0到360
+* saturation：饱和度，0~1
+* light：亮度，0~1
 
 ***************************************************************/
-var line = new Line(50, 150, 100, 150);
 
-line.setAnchor(150, 150);
-line.lineWidth = 5;
+rectangle(100, 100, 80, 50, HSL(100, 0.5, 0.5));
+rectangle(200, 100, 80, 50, HSL(200, 0.5, 0.5));
+rectangle(300, 100, 80, 50, HSL(300, 0.5, 0.5));
 
-for(var i=0; i<=360; i++){
-    line.strokeStyle = HSL(i, 1, 0.5);
-    line.rotate(i);
-    line.stroke();
-}
+rectangle(100, 200, 80, 50, HSL(100, 1, 0.5));
+rectangle(200, 200, 80, 50, HSL(200, 1, 0.5));
+rectangle(300, 200, 80, 50, HSL(300, 1, 0.5));
+
+rectangle(100, 300, 80, 50, HSL(100, 1, 0.9));
+rectangle(200, 300, 80, 50, HSL(200, 1, 0.9));
+rectangle(300, 300, 80, 50, HSL(300, 1, 0.9));
