@@ -10,16 +10,17 @@ height: 长方形的高度
 
 ***************************************************************/
 
-var rect = new Rectangle(10, 10, 100, 50);
-rect.draw();
-
-var rect = new Rectangle(10, 200, 50, 100);
+var rect = new Rectangle(10, 10, 50, 100);
 rect.fillStyle = "red";
-rect.fill();
+rect.draw();
 
 rect.x += 100;
 rect.strokeStyle = "green";
 rect.stroke();
 
 rect.x += 100;
-rect.draw();
+rect.shadowColor = 'pink';
+rect.shadowBlur = 4;
+rect.shadowOffsetX = 5;
+rect.shadowOffsetY = 5;
+rect.fill();

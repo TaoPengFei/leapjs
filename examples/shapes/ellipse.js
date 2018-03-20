@@ -10,18 +10,21 @@ radiusY:    椭圆的垂直半径
 
 ***************************************************************/
 
-var ellipse = new Ellipse(200, 200, 100, 50); // x, y, rX, rY
-ellipse.strokeStyle = "#760012";
-ellipse.fillStyle = "#128712";
+var e = new Ellipse(100, 100, 50, 20); // x, y, rX, rY
+e.strokeStyle = "red";
+e.fillStyle = "orange";
 
-ellipse.draw();
+e.draw();
 
-ellipse.y = 400;
-ellipse.rX = 150;
+e.y += 100;
+e.rX = 30;
+e.fill();
 
-ellipse.fill();
+e.x += 100;
+e.radiusY = 40; // both radiusY or rY works
 
-ellipse.x = 600;
-ellipse.radiusY = 100; // both radiusY or rY works
-
-ellipse.stroke();
+e.shadowColor = 'pink';
+e.shadowBlur = 4;
+e.shadowOffsetX = 5;
+e.shadowOffsetY = 5;
+e.fill();
