@@ -2,7 +2,7 @@ import { canvas, ctx } from './canvas'
 import { Key } from './keys'
 import { Mouse } from './mouse'
 import { Line, Rectangle, Polygon, Triangle, Circle, Text, Sprite, Animation, Point, Ellipse } from './shapes'
-import { nextFrame } from './util'
+import { nextFrame, run, stop } from './util'
 import { loadRssAndRun } from './resource'
 import { RGB, RGBA, HSL, HSLA } from './colors'
 
@@ -33,6 +33,8 @@ window.Mouse = Mouse
 // rss
 window.nextFrame = nextFrame
 window.loadRssAndRun = loadRssAndRun
+window.run = run
+window.stop = stop
 
 // colors
 window.RGB = RGB

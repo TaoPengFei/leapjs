@@ -36,8 +36,9 @@ function circle (x, y, r, c) {
 // line(x1, y1, x2, y2, *lineWidth, *color);
 function line (x1, y1, x2, y2, lW, c) {
   ctx.save()
-  if (lW) ctx.lineWidth = lW
-  if (c) ctx.strokeStyle = c
+  if (typeof lW === 'string') c = lW;
+  else if (lW) ctx.lineWidth = lW;
+  if (c) ctx.strokeStyle = c;
   ctx.beginPath()
   ctx.moveTo(x1, y1)
   ctx.lineTo(x2, y2)

@@ -37,4 +37,16 @@ var nextFrame = function (func) {
 var clickShapes = new Set()
 window.clickShapes = clickShapes
 
-export { nextFrame, clickShapes }
+//
+const runningFuncs = {};
+const run = function (func, interval=20) {
+  stop(func);
+  runningFuncs[func.name] = setInterval(func, interval);
+}
+
+const stop = function (func) {
+  let id = runningFuncs[func.name];
+  if(id) clearInterval(id)
+}
+
+export { nextFrame, clickShapes, run, stop }

@@ -370,8 +370,9 @@ class Animation extends Sprite {
 
 class Point extends Circle {
   constructor (x, y) {
-    super(x, y, 2)
+    super(x, y, 0.5)
     this.fillStyle = 'red'
+    this.strokeStyle = 'rgba(0, 0, 0, 0)'
   }
 }
 

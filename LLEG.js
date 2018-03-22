@@ -237,6 +237,8 @@ canvas.getRealPoint = function (p) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nextFrame", function() { return nextFrame; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clickShapes", function() { return clickShapes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "run", function() { return run; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stop", function() { return stop; });
 // requestAnimationFrame
 (function () {
   var lastTime = 0
@@ -275,6 +277,18 @@ var nextFrame = function (func) {
 // handle shape click event;
 var clickShapes = new Set()
 window.clickShapes = clickShapes
+
+//
+const runningFuncs = {};
+const run = function (func, interval=20) {
+  stop(func);
+  runningFuncs[func.name] = setInterval(func, interval);
+}
+
+const stop = function (func) {
+  let id = runningFuncs[func.name];
+  if(id) clearInterval(id)
+}
 
 
 
@@ -878,8 +892,9 @@ class Animation extends Sprite {
 
 class Point extends Circle {
   constructor (x, y) {
-    super(x, y, 2)
+    super(x, y, 0.5)
     this.fillStyle = 'red'
+    this.strokeStyle = 'rgba(0, 0, 0, 0)'
   }
 }
 
@@ -1064,8 +1079,9 @@ function circle (x, y, r, c) {
 // line(x1, y1, x2, y2, *lineWidth, *color);
 function line (x1, y1, x2, y2, lW, c) {
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
-  if (lW) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = lW
-  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = c
+  if (typeof lW === 'string') c = lW;
+  else if (lW) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineWidth = lW;
+  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = c;
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].beginPath()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].moveTo(x1, y1)
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].lineTo(x2, y2)
@@ -1774,6 +1790,8 @@ window.Mouse = __WEBPACK_IMPORTED_MODULE_2__mouse__["a" /* Mouse */]
 // rss
 window.nextFrame = __WEBPACK_IMPORTED_MODULE_4__util__["nextFrame"]
 window.loadRssAndRun = __WEBPACK_IMPORTED_MODULE_5__resource__["a" /* loadRssAndRun */]
+window.run = __WEBPACK_IMPORTED_MODULE_4__util__["run"]
+window.stop = __WEBPACK_IMPORTED_MODULE_4__util__["stop"]
 
 // colors
 window.RGB = __WEBPACK_IMPORTED_MODULE_6__colors__["a" /* RGB */]
