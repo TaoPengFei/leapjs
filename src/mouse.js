@@ -48,13 +48,7 @@ canvas.onmousedown = function (e) {
   }
 }
 
-let _preventDefault = false
-canvas.preventDefaultEvent = function () {
-  _preventDefault = true
-}
-
 canvas.ontouchstart = function (e) {
-  if (_preventDefault) { e.preventDefault() }
   canvas.onmousedown(e)
   TouchStart.init()
 }
@@ -65,7 +59,6 @@ canvas.onmousemove = function (e) {
 }
 
 canvas.ontouchmove = function (e) {
-  if (_preventDefault) { e.preventDefault() }
   canvas.onmousemove(e)
   if (Mouse.x - TouchStart.x > 50 && Key.ArrowRight.down) {
     Key.ArrowRight.down()
@@ -82,10 +75,10 @@ canvas.ontouchmove = function (e) {
     Key.ArrowDown.down()
     TouchStart.init()
   }
+  e.preventDefault();
 }
 
 canvas.ontouchend = canvas.onmouseup = function (e) {
-  if (_preventDefault) { e.preventDefault() }
   updateEvent(e)
   if (Mouse.up) Mouse.up()
 }

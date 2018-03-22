@@ -80,7 +80,7 @@ let p = document.createElement('p')
 const clickShapes = __webpack_require__(1).clickShapes
 const Transform = __webpack_require__(6).Transform
 
-canvas.style.cssText = 'border: 1px solid #d3d3d3;'
+canvas.style.cssText = 'border: 1px solid #d3d3d3;user-select:none; -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;';
 p.style.cssText = 'color: orange;'
 
 document.body.appendChild(canvas)
@@ -396,13 +396,7 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousedown = function (
   }
 }
 
-let _preventDefault = false
-__WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].preventDefaultEvent = function () {
-  _preventDefault = true
-}
-
 __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].ontouchstart = function (e) {
-  if (_preventDefault) { e.preventDefault() }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousedown(e)
   TouchStart.init()
 }
@@ -413,7 +407,6 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousemove = function (
 }
 
 __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].ontouchmove = function (e) {
-  if (_preventDefault) { e.preventDefault() }
   __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousemove(e)
   if (Mouse.x - TouchStart.x > 50 && __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowRight.down) {
     __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowRight.down()
@@ -430,10 +423,10 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].ontouchmove = function (
     __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */].ArrowDown.down()
     TouchStart.init()
   }
+  e.preventDefault();
 }
 
 __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].ontouchend = __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmouseup = function (e) {
-  if (_preventDefault) { e.preventDefault() }
   updateEvent(e)
   if (Mouse.up) Mouse.up()
 }
