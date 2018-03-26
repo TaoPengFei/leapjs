@@ -12,12 +12,12 @@ function startDraw () {
 }
 
 function endDraw (c) {
+  if (c) ctx.strokeStyle = c
+  ctx.stroke()
   if (isFill) {
     if (c) ctx.fillStyle = c
     ctx.fill()
   }
-  if (c) ctx.strokeStyle = c
-  ctx.stroke()
   ctx.restore()
 }
 

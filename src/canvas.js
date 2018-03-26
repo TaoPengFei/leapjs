@@ -4,7 +4,21 @@ let p = document.createElement('p')
 const clickShapes = require('./util.js').clickShapes
 const Transform = require('./transform.js').Transform
 
-canvas.style.cssText = 'border: 1px solid #d3d3d3;user-select:none; -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;';
+canvas.style.cssText = `
+  border: 1px solid #d3d3d3;
+
+  user-select:none; 
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+
+  -webkit-touch-callout:none;
+  touch-callout:none;`
+/*
+  position: absolute; 
+  z-index: 1;
+*/
+
 p.style.cssText = 'color: orange;'
 
 document.body.appendChild(canvas)
