@@ -108,16 +108,16 @@ ctx.update = function (shape) {
   if (shape.strokeStyle) ctx.strokeStyle = shape.strokeStyle
 
   if (shape.shadowColor) ctx.shadowColor = shape.shadowColor
-  if (shape.shadowBlur) ctx.shadowBlur = shape.shadowBlur
-  if (shape.shadowOffsetX) ctx.shadowOffsetX = shape.shadowOffsetX
-  if (shape.shadowOffsetY) ctx.shadowOffsetY = shape.shadowOffsetY
+  if (shape.shadowBlur !== undefined) ctx.shadowBlur = shape.shadowBlur
+  if (shape.shadowOffsetX !== undefined) ctx.shadowOffsetX = shape.shadowOffsetX
+  if (shape.shadowOffsetY !== undefined) ctx.shadowOffsetY = shape.shadowOffsetY
 
   if (shape.lineCap) ctx.lineCap = shape.lineCap
   if (shape.lineJoin) ctx.lineJoin = shape.lineJoin
-  if (shape.lineWidth) ctx.lineWidth = shape.lineWidth
-  if (shape.miterLimit) ctx.miterLimit = shape.miterLimit
+  if (shape.lineWidth !== undefined) ctx.lineWidth = shape.lineWidth
+  if (shape.miterLimit !== undefined) ctx.miterLimit = shape.miterLimit
 
-  if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha
+  if (shape.globalAlpha !== undefined) ctx.globalAlpha = shape.globalAlpha
   if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation
 
   if (shape.lineDash) ctx.setLineDash(shape.lineDash)
