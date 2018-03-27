@@ -15,7 +15,9 @@ pattern     用于创建 pattern 笔触的 pattern 对象
 
 
 ***************************************************************/
+fill(false);
+
+circle(100, 100, 30);
 
 ctx.strokeStyle = 'red';
-
 circle(100, 100, 50);

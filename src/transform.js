@@ -1,4 +1,4 @@
-class Transform {
+export default class Transform {
   constructor () {
     this.anchorX = 0
     this.anchorY = 0
@@ -8,7 +8,7 @@ class Transform {
     this.skewY = 0
     this.translateX = 0
     this.translateY = 0
-    this.degree = 0
+    this._degree = 0
   }
 
   transformed () {
@@ -38,8 +38,10 @@ class Transform {
   }
 
   rotate (degree) {
-    this.degree = degree * Math.PI / 180
+    this._degree = degree;
   }
+
+  get degree() { return this._degree  * Math.PI / 180; };
 
   getRealPoint (p) {
     if (!this.transformed()) { return p }
@@ -50,9 +52,9 @@ class Transform {
     x -= this.anchorX
     y -= this.anchorY
 
-    let degree = this.degree * Math.PI / 180
-    let sin = Math.sin(degree)
-    let cos = Math.cos(degree)
+    let degree = this.degree;
+    let sin = Math.sin(degree);
+    let cos = Math.cos(degree);
 
     let newX = x * cos - y * sin
     let newY = y * cos + x * sin
@@ -70,5 +72,3 @@ class Transform {
     return {x, y}
   }
 }
-
-export { Transform }

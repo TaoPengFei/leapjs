@@ -29,16 +29,6 @@
 ***************************************************************/
 
 // Let us code the future
-var title = new Text("LeapLearner", 100, 150, 70);
-var slogan = new Text("Code the future", 180, 600, 30);
-var mike = new Sprite('https://rss.leaplearner.com/Image/Role/Frog1.png', 180, 300);
-title.draw();
-slogan.draw();
-
-mike.onload = function() {
-    mike.draw();
-};
-
-Mouse.click = function() {
-    window.open("https://code.leaplearner.com/show.html?v=11511");
-};
+text("LeapLearner", 50, 100, 60);
+text("Code the future", 110, 450, 30);
+image('https://rss.leaplearner.com/Image/Role/Frog1.png', 110, 200);

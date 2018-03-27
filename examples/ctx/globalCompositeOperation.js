@@ -27,20 +27,12 @@ xor 使用异或操作对源图像与目标图像进行组合。
 ***************************************************************/
 canvas.resize(1, 1);
 
-var gco=new Array();
-gco.push("source-atop");
-gco.push("source-in");
-gco.push("source-out");
-gco.push("source-over");
-gco.push("destination-atop");
-gco.push("destination-in");
-gco.push("destination-out");
-gco.push("destination-over");
-gco.push("lighter");
-gco.push("copy");
-gco.push("xor");
+var gco= ["source-atop", "source-in", "source-out", "source-over", 
+          "destination-atop", "destination-in", "destination-out",
+          "destination-over", "lighter", "copy", "xor"];
+
 for (n=0;n<gco.length;n++)
-    {
+{
     document.write("<div id='p_" + n + "' style='float:left;'>" + gco[n] + ":<br>");
     var c=document.createElement("canvas");
     c.width=120;
@@ -55,4 +47,4 @@ for (n=0;n<gco.length;n++)
     ctx.arc(50,50,30,0,2*Math.PI);
     ctx.fill();
     document.write("</div>");   
-    }
+}

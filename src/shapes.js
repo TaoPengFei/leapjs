@@ -1,7 +1,7 @@
 import { ctx } from './canvas'
 import { clickShapes } from './util'
 import { Mouse } from './mouse'
-import { Transform } from './transform'
+import Transform from './transform'
 import { Rss } from './resource'
 import { collide, pointInShape } from './collision'
 const clone = require('clone')
@@ -42,8 +42,8 @@ class Shape {
 
   _draw () {
     this._path()
+    // ctx.stroke()
     ctx.fill()
-    ctx.stroke()
   }
 
   draw () {
@@ -180,6 +180,7 @@ class Polygon extends Shape {
 
   get x () {
     let x = 0
+    this._points.each(point => x += point.x)
     for (let i = 0; i < this._points.length; i++) { x += this._points[i].x }
     return x / this._points.length
   }

@@ -1,8 +1,12 @@
 /* global text, line */
+import {clickShapes} from './util'
+import Transform from './transform'
+
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
-const clickShapes = require('./util.js').clickShapes
-const Transform = require('./transform.js').Transform
+
+document.body.appendChild(canvas)
+document.body.appendChild(p)
 
 canvas.style.cssText = `
   border: 1px solid #d3d3d3;
@@ -21,9 +25,6 @@ canvas.style.cssText = `
 
 p.style.cssText = 'color: orange;'
 
-document.body.appendChild(canvas)
-document.body.appendChild(p)
-
 let ctx = canvas.getContext('2d')
 
 ctx._setTransform = function (transform) {
@@ -37,8 +38,8 @@ ctx._setTransform = function (transform) {
 }
 
 canvas.resize = function (width, height) {
-  canvas.width = width || window.innerWidth - 2 // borders size
-  canvas.height = height || window.innerHeight - 60 // p, height
+  canvas.width = width || 450 // borders size
+  canvas.height = height || 600 // p, height
   ctx.fillStyle = ctx.strokeStyle = 'orange'
   ctx.textBaseline = 'top'
 }

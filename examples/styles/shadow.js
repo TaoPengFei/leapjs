@@ -23,9 +23,9 @@ number      正值或负值，定义阴影与形状的垂直距离。
 
 ***************************************************************/
 
-ctx.shadowColor = 'red';
-ctx.shadowBlur = 50;
-ctx.shadowOffsetX=10;
-ctx.shadowOffsetY=10;
+ctx.shadowColor = 'black';
+ctx.shadowBlur = 10;
+ctx.shadowOffsetX = 5;
+ctx.shadowOffsetY = 5;
 
-circle(100, 100, 50);
+rectangle(100, 100, 200, 150);

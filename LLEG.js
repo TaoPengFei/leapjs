@@ -71,20 +71,37 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__transform__ = __webpack_require__(6);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return canvas; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ctx; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return p; });
 /* global text, line */
+
+
+
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
-const clickShapes = __webpack_require__(1).clickShapes
-const Transform = __webpack_require__(6).Transform
-
-canvas.style.cssText = 'border: 1px solid #d3d3d3;user-select:none; -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;';
-p.style.cssText = 'color: orange;'
 
 document.body.appendChild(canvas)
 document.body.appendChild(p)
+
+canvas.style.cssText = `
+  border: 1px solid #d3d3d3;
+
+  user-select:none; 
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+
+  -webkit-touch-callout:none;
+  touch-callout:none;`
+/*
+  position: absolute; 
+  z-index: 1;
+*/
+
+p.style.cssText = 'color: orange;'
 
 let ctx = canvas.getContext('2d')
 
@@ -99,14 +116,14 @@ ctx._setTransform = function (transform) {
 }
 
 canvas.resize = function (width, height) {
-  canvas.width = width || window.innerWidth - 2 // borders size
-  canvas.height = height || window.innerHeight - 60 // p, height
+  canvas.width = width || 450 // borders size
+  canvas.height = height || 600 // p, height
   ctx.fillStyle = ctx.strokeStyle = 'orange'
   ctx.textBaseline = 'top'
 }
 
 canvas.resize()
-canvas.transform = new Transform()
+canvas.transform = new __WEBPACK_IMPORTED_MODULE_1__transform__["a" /* default */]()
 
 canvas.scale = function (x, y) {
   canvas.transform.scale(x, y)
@@ -126,7 +143,7 @@ canvas._translate = function (x, y) {
 }
 
 canvas.clear = function () {
-  clickShapes.clear()
+  __WEBPACK_IMPORTED_MODULE_0__util__["d" /* clickShapes */].clear()
   ctx.save()
   ctx.setTransform(1, 0, 0, 1, 0, 0)
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -170,16 +187,16 @@ ctx.update = function (shape) {
   if (shape.strokeStyle) ctx.strokeStyle = shape.strokeStyle
 
   if (shape.shadowColor) ctx.shadowColor = shape.shadowColor
-  if (shape.shadowBlur) ctx.shadowBlur = shape.shadowBlur
-  if (shape.shadowOffsetX) ctx.shadowOffsetX = shape.shadowOffsetX
-  if (shape.shadowOffsetY) ctx.shadowOffsetY = shape.shadowOffsetY
+  if (shape.shadowBlur !== undefined) ctx.shadowBlur = shape.shadowBlur
+  if (shape.shadowOffsetX !== undefined) ctx.shadowOffsetX = shape.shadowOffsetX
+  if (shape.shadowOffsetY !== undefined) ctx.shadowOffsetY = shape.shadowOffsetY
 
   if (shape.lineCap) ctx.lineCap = shape.lineCap
   if (shape.lineJoin) ctx.lineJoin = shape.lineJoin
-  if (shape.lineWidth) ctx.lineWidth = shape.lineWidth
-  if (shape.miterLimit) ctx.miterLimit = shape.miterLimit
+  if (shape.lineWidth !== undefined) ctx.lineWidth = shape.lineWidth
+  if (shape.miterLimit !== undefined) ctx.miterLimit = shape.miterLimit
 
-  if (shape.globalAlpha) ctx.globalAlpha = shape.globalAlpha
+  if (shape.globalAlpha !== undefined) ctx.globalAlpha = shape.globalAlpha
   if (shape.globalCompositeOperation) ctx.globalCompositeOperation = shape.globalCompositeOperation
 
   if (shape.lineDash) ctx.setLineDash(shape.lineDash)
@@ -234,39 +251,10 @@ canvas.getRealPoint = function (p) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nextFrame", function() { return nextFrame; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clickShapes", function() { return clickShapes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "run", function() { return run; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stop", function() { return stop; });
-// requestAnimationFrame
-(function () {
-  var lastTime = 0
-  var vendors = ['webkit', 'moz']
-  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame']
-    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||
-      window[vendors[x] + 'CancelRequestAnimationFrame']
-  }
-
-  if (!window.requestAnimationFrame) {
-    window.requestAnimationFrame = function (func, element) {
-      var currTime = new Date().getTime()
-      var timeToCall = Math.max(0, 16.7 - (currTime - lastTime))
-      var id = window.setTimeout(function () {
-        func(currTime + timeToCall)
-      }, timeToCall)
-      lastTime = currTime + timeToCall
-      return id
-    }
-  }
-  if (!window.cancelAnimationFrame) {
-    window.cancelAnimationFrame = function (id) {
-      clearTimeout(id)
-    }
-  }
-}())
-
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return nextFrame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return clickShapes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return run; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return stop; });
 // void run multi frame
 var frameId
 var nextFrame = function (func) {
@@ -276,7 +264,6 @@ var nextFrame = function (func) {
 
 // handle shape click event;
 var clickShapes = new Set()
-window.clickShapes = clickShapes
 
 //
 const runningFuncs = {};
@@ -385,7 +372,7 @@ __WEBPACK_IMPORTED_MODULE_0__canvas__["a" /* canvas */].onmousedown = function (
 
   // handle events of all shapes, LIFO
   // IMPORTANT
-  const array = Array.from(__WEBPACK_IMPORTED_MODULE_2__util__["clickShapes"])
+  const array = Array.from(__WEBPACK_IMPORTED_MODULE_2__util__["d" /* clickShapes */])
   let i = array.length
   while (i--) {
     let shape = array[i]
@@ -523,7 +510,7 @@ const clone = __webpack_require__(10)
 
 class Shape {
   constructor () {
-    this.transform = new __WEBPACK_IMPORTED_MODULE_3__transform__["Transform"]()
+    this.transform = new __WEBPACK_IMPORTED_MODULE_3__transform__["a" /* default */]()
     this._points = []
   }
 
@@ -538,7 +525,7 @@ class Shape {
   }
 
   stroke () {
-    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["clickShapes"].add(this) // use for handle click event
+    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["d" /* clickShapes */].add(this) // use for handle click event
 
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].update(this)
@@ -547,7 +534,7 @@ class Shape {
   }
 
   fill () {
-    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["clickShapes"].add(this) // use for handle click event
+    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["d" /* clickShapes */].add(this) // use for handle click event
 
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].update(this)
@@ -557,12 +544,12 @@ class Shape {
 
   _draw () {
     this._path()
+    // ctx.stroke()
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
-    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
   }
 
   draw () {
-    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["clickShapes"].add(this) // use for handle click event
+    if (this.click) __WEBPACK_IMPORTED_MODULE_1__util__["d" /* clickShapes */].add(this) // use for handle click event
 
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].save()
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].update(this)
@@ -695,6 +682,7 @@ class Polygon extends Shape {
 
   get x () {
     let x = 0
+    this._points.each(point => x += point.x)
     for (let i = 0; i < this._points.length; i++) { x += this._points[i].x }
     return x / this._points.length
   }
@@ -935,8 +923,6 @@ const Triangle = Polygon
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Transform", function() { return Transform; });
 class Transform {
   constructor () {
     this.anchorX = 0
@@ -947,7 +933,7 @@ class Transform {
     this.skewY = 0
     this.translateX = 0
     this.translateY = 0
-    this.degree = 0
+    this._degree = 0
   }
 
   transformed () {
@@ -977,8 +963,10 @@ class Transform {
   }
 
   rotate (degree) {
-    this.degree = degree * Math.PI / 180
+    this._degree = degree;
   }
+
+  get degree() { return this._degree  * Math.PI / 180; };
 
   getRealPoint (p) {
     if (!this.transformed()) { return p }
@@ -989,9 +977,9 @@ class Transform {
     x -= this.anchorX
     y -= this.anchorY
 
-    let degree = this.degree * Math.PI / 180
-    let sin = Math.sin(degree)
-    let cos = Math.cos(degree)
+    let degree = this.degree;
+    let sin = Math.sin(degree);
+    let cos = Math.cos(degree);
 
     let newX = x * cos - y * sin
     let newY = y * cos + x * sin
@@ -1009,7 +997,7 @@ class Transform {
     return {x, y}
   }
 }
-
+/* harmony export (immutable) */ __webpack_exports__["a"] = Transform;
 
 
 
@@ -1051,9 +1039,10 @@ function endDraw (c) {
   if (isFill) {
     if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fillStyle = c
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].fill()
+  } else {
+    if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = c
+    __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke();
   }
-  if (c) __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].strokeStyle = c
-  __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].stroke()
   __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].restore()
 }
 
@@ -1111,7 +1100,7 @@ function ellipse (x, y, rX, rY, c) {
   endDraw(c)
 }
 
-var globalImages = {}
+const globalImages = {}
 
 function image (src, x = 0, y = 0, w, h) {
   let img
@@ -1157,7 +1146,7 @@ function text (src, x = 0, y = 0, size = 20, c) {
 let textFont = 'Arial'
 function font (font) { textFont = font }
 
-var globalAudio = {}
+const globalAudio = {}
 function play (src, loop) {
   let m
   if (globalAudio.hasOwnProperty(src)) {
@@ -1781,10 +1770,10 @@ window.Key = __WEBPACK_IMPORTED_MODULE_1__keys__["a" /* Key */]
 window.Mouse = __WEBPACK_IMPORTED_MODULE_2__mouse__["a" /* Mouse */]
 
 // rss
-window.nextFrame = __WEBPACK_IMPORTED_MODULE_4__util__["nextFrame"]
+window.nextFrame = __WEBPACK_IMPORTED_MODULE_4__util__["a" /* nextFrame */]
 window.loadRssAndRun = __WEBPACK_IMPORTED_MODULE_5__resource__["a" /* loadRssAndRun */]
-window.run = __WEBPACK_IMPORTED_MODULE_4__util__["run"]
-window.stop = __WEBPACK_IMPORTED_MODULE_4__util__["stop"]
+window.run = __WEBPACK_IMPORTED_MODULE_4__util__["b" /* run */]
+window.stop = __WEBPACK_IMPORTED_MODULE_4__util__["c" /* stop */]
 
 // colors
 window.RGB = __WEBPACK_IMPORTED_MODULE_6__colors__["a" /* RGB */]

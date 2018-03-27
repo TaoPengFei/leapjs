@@ -10,7 +10,8 @@ var cursor = new Line(200, 110, 200, 190);
 cursor.lineWidth = 3;
 cursor.strokeStyle = 'black';
 cursor.globalAlpha = new Swing(0, 1, 2);
-font(80, 'Consolas');
+font('Consolas');
+ctx.font = '80px COnsolas';
 var retry = new Text('Press [Enter] to try again!', 120, 500, 30);
 retry.fillStyle = 'orange';
 retry.globalAlpha = new Sine(0, 2, 2);
@@ -141,6 +142,7 @@ function getText(){
 }
 
 function main(){
+    canvas.clear();
     nextFrame(main);
     
     // win
@@ -161,9 +163,9 @@ function main(){
     
     text("Stage: " + rank, 80, 10, 40, 'orange');
     text("Error: " + errorCount + '/' +maxError, 400, 20, 30, errorCount > maxError ? 'red' : 'green');
-    text(targetText, 200-shiftLenth, 100, null, 'white');
-    text(typeText, 200-shiftLenth, 100, null, 'green');
-    text(errorText, 200-shiftLenth, 100, null, 'red');
+    text(targetText, 200-shiftLenth, 100, 80, 'white');
+    text(typeText, 200-shiftLenth, 100, 80, 'green');
+    text(errorText, 200-shiftLenth, 100, 80, 'red');
     
     keyboard.draw();
     stage.draw();
@@ -221,13 +223,12 @@ function start(){
 }
 
 function shake(){
-    canvas.decrease = 1;
-    canvas.shakeSize = new Swing(0, 0.3, 3); // min, max, speed/second
+    canvas.decrease = new Increase(1, 0, 1, false);
+    canvas.shakeSize = new Sine(0, 0.1, 0.4);
     
     if(canvas.func) clearInterval(canvas.func);
     
     canvas.func = setInterval(function(){
-        canvas.decrease /= 1.1; // decrease speed
         let scale = 1 + canvas.shakeSize * canvas.decrease;
         canvas._translate(canvas.width*(1-scale)/2, canvas.height*(1-scale)/2);
         canvas.scale(scale, scale);

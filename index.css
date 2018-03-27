@@ -20,7 +20,7 @@
 }
 
 #sidebar h2 {
-  font-size: 0.7rem;
+  font-size: 1rem;
 }
 
 #sidebar a:visited, #sidebar a:link {
@@ -39,7 +39,7 @@
   margin-bottom: 0.2rem;
   margin-left: 10px;
   padding: 0;
-  font-size: 0.7rem;
+  font-size: 1rem;
 }
 
 #code {

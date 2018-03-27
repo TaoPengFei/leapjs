@@ -12,11 +12,12 @@ function startDraw () {
 }
 
 function endDraw (c) {
-  if (c) ctx.strokeStyle = c
-  ctx.stroke()
   if (isFill) {
     if (c) ctx.fillStyle = c
     ctx.fill()
+  } else {
+    if (c) ctx.strokeStyle = c
+    ctx.stroke();
   }
   ctx.restore()
 }
@@ -75,7 +76,7 @@ function ellipse (x, y, rX, rY, c) {
   endDraw(c)
 }
 
-var globalImages = {}
+const globalImages = {}
 
 function image (src, x = 0, y = 0, w, h) {
   let img
@@ -121,7 +122,7 @@ function text (src, x = 0, y = 0, size = 20, c) {
 let textFont = 'Arial'
 function font (font) { textFont = font }
 
-var globalAudio = {}
+const globalAudio = {}
 function play (src, loop) {
   let m
   if (globalAudio.hasOwnProperty(src)) {
