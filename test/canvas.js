@@ -14,9 +14,9 @@ describe('Canvas', function () {
 
       ctx.strokeStyle = ''
       ctx.fillStyle = ''
-      canvas.resize()
-      assert.equal(canvas.width, window.innerWidth - 2)
-      assert.equal(canvas.height, window.innerHeight - 60)
+      canvas.resize();
+      assert.equal(canvas.width, 450);
+      assert.equal(canvas.height, 600);
 
       assert.equal(ctx.strokeStyle, '#00ffff')
       assert.equal(ctx.fillStyle, 'rgba(0, 255, 255, 0.501960784313726)')
