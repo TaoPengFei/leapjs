@@ -1,5 +1,4 @@
 canvas.resize(350, 500);
-canvas.preventDefaultEvent();
 
 var player, bg, enemy, scoreTxt, playerCry, life, alien, bgm, success, fail, _hp, score;
 

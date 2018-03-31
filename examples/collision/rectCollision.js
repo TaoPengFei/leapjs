@@ -1,8 +1,6 @@
 var rect = new Rectangle(100, 100, 100, 100);
 var rect2 = new Rectangle(50, 180, 200, 20);
 
-rect.setAnchor(150, 150);
-
 var degree = 0;
 
 (function main(){
