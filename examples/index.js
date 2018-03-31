@@ -25,6 +25,7 @@
 
 开发环境：https://code.leaplearner.com/
 更多例子：https://code.leaplearner.com/show.html?v=11511
+目前最新库版本：http://llcs-1252287760.cossh.myqcloud.com/lleg/lleg.min.v0.2.4.js
 
 ***************************************************************/
 
