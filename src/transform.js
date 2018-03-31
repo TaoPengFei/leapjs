@@ -9,12 +9,13 @@ export default class Transform {
     this.translateX = 0
     this.translateY = 0
     this._degree = 0
+    this.anchor = {x: 0.5, y: 0.5};
   }
 
   transformed () {
     return this.scaleX !== 1 || this.scaleY !== 1 ||
       this.skewX || this.skewY ||
-      this.translateX || this.translateY || this.degree
+      this.translateX || this.translateY || this._degree
   }
 
   scale (x, y) {
@@ -33,8 +34,8 @@ export default class Transform {
   }
 
   setAnchor (x, y) {
-    this.anchorX = x
-    this.anchorY = y
+    this.anchor.x = x
+    this.anchor.y = y
   }
 
   rotate (degree) {

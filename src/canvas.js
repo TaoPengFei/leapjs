@@ -125,7 +125,10 @@ ctx.update = function (shape) {
   if (shape.textAlign) ctx.textAlign = shape.textAlign
   if (shape.textBaseline) ctx.textBaseline = shape.textBaseline
 
-  if (shape.transform.transformed()) ctx.updateTransform(shape.transform)
+  if (shape.transform.transformed()) {
+    shape.updateAnchor();
+    ctx.updateTransform(shape.transform)
+  }
 }
 
 ctx.updateTransform = function (transform) {

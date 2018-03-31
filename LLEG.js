@@ -203,7 +203,10 @@ ctx.update = function (shape) {
   if (shape.textAlign) ctx.textAlign = shape.textAlign
   if (shape.textBaseline) ctx.textBaseline = shape.textBaseline
 
-  if (shape.transform.transformed()) ctx.updateTransform(shape.transform)
+  if (shape.transform.transformed()) {
+    shape.updateAnchor();
+    ctx.updateTransform(shape.transform)
+  }
 }
 
 ctx.updateTransform = function (transform) {
@@ -588,6 +591,17 @@ class Shape {
   setLineDash (arr) {
     this.lineDash = arr
   }
+
+  get minX () { return Math.min(...this._points.map(p => p.x)); };
+  get minY () { return Math.min(...this._points.map(p => p.y)); };
+  get maxX () { return Math.max(...this._points.map(p => p.x)); };
+  get maxY () { return Math.max(...this._points.map(p => p.y)); };
+
+  updateAnchor() {
+    this._updatePoints();
+    this.transform.anchorX = this.minX + (this.maxX - this.minX) * this.transform.anchor.x;
+    this.transform.anchorY = this.minY + (this.maxY - this.minY) * this.transform.anchor.y;
+  }
 }
 
 class Circle extends Shape {
@@ -640,14 +654,14 @@ class Line extends Shape {
     this._points.push({x: this.x2, y: this.y2})
   }
 
-  get x () { return (this.x1 + this.x2) / 2 }
+  get x () { return (this.minX + this.maxX) / 2 }
   set x (x) {
     let deltaX = x - this.x
     this.x1 += deltaX
     this.x2 += deltaX
   }
 
-  get y () { return (this.y1 + this.y2) / 2 }
+  get y () { return (this.minY + this.maxY) / 2 }
   set y (y) {
     let deltaY = y - this.y
     this.y1 += deltaY
@@ -680,22 +694,13 @@ class Polygon extends Shape {
     __WEBPACK_IMPORTED_MODULE_0__canvas__["b" /* ctx */].closePath()
   }
 
-  get x () {
-    let x = 0
-    this._points.each(point => x += point.x)
-    for (let i = 0; i < this._points.length; i++) { x += this._points[i].x }
-    return x / this._points.length
-  }
+  get x () { return (this.minX + this.maxX)/2 };
   set x (x) {
     let deltaX = x - this.x
     for (let i = 0; i < this._points.length; i++) { this._points[i].x += deltaX }
   }
 
-  get y () {
-    let y = 0
-    for (let i = 0; i < this._points.length; i++) { y += this._points[i].y }
-    return y / this._points.length
-  }
+  get y () { return (this.minY + this.maxY)/2 };
   set y (y) {
     let deltaY = y - this.y
     for (let i = 0; i < this._points.length; i++) { this._points[i].y += deltaY }
@@ -934,12 +939,13 @@ class Transform {
     this.translateX = 0
     this.translateY = 0
     this._degree = 0
+    this.anchor = {x: 0.5, y: 0.5};
   }
 
   transformed () {
     return this.scaleX !== 1 || this.scaleY !== 1 ||
       this.skewX || this.skewY ||
-      this.translateX || this.translateY || this.degree
+      this.translateX || this.translateY || this._degree
   }
 
   scale (x, y) {
@@ -958,8 +964,8 @@ class Transform {
   }
 
   setAnchor (x, y) {
-    this.anchorX = x
-    this.anchorY = y
+    this.anchor.x = x
+    this.anchor.y = y
   }
 
   rotate (degree) {

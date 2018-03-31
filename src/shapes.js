@@ -86,6 +86,17 @@ class Shape {
   setLineDash (arr) {
     this.lineDash = arr
   }
+
+  get minX () { return Math.min(...this._points.map(p => p.x)); };
+  get minY () { return Math.min(...this._points.map(p => p.y)); };
+  get maxX () { return Math.max(...this._points.map(p => p.x)); };
+  get maxY () { return Math.max(...this._points.map(p => p.y)); };
+
+  updateAnchor() {
+    this._updatePoints();
+    this.transform.anchorX = this.minX + (this.maxX - this.minX) * this.transform.anchor.x;
+    this.transform.anchorY = this.minY + (this.maxY - this.minY) * this.transform.anchor.y;
+  }
 }
 
 class Circle extends Shape {
@@ -138,14 +149,14 @@ class Line extends Shape {
     this._points.push({x: this.x2, y: this.y2})
   }
 
-  get x () { return (this.x1 + this.x2) / 2 }
+  get x () { return (this.minX + this.maxX) / 2 }
   set x (x) {
     let deltaX = x - this.x
     this.x1 += deltaX
     this.x2 += deltaX
   }
 
-  get y () { return (this.y1 + this.y2) / 2 }
+  get y () { return (this.minY + this.maxY) / 2 }
   set y (y) {
     let deltaY = y - this.y
     this.y1 += deltaY
@@ -178,22 +189,13 @@ class Polygon extends Shape {
     ctx.closePath()
   }
 
-  get x () {
-    let x = 0
-    this._points.each(point => x += point.x)
-    for (let i = 0; i < this._points.length; i++) { x += this._points[i].x }
-    return x / this._points.length
-  }
+  get x () { return (this.minX + this.maxX)/2 };
   set x (x) {
     let deltaX = x - this.x
     for (let i = 0; i < this._points.length; i++) { this._points[i].x += deltaX }
   }
 
-  get y () {
-    let y = 0
-    for (let i = 0; i < this._points.length; i++) { y += this._points[i].y }
-    return y / this._points.length
-  }
+  get y () { return (this.minY + this.maxY)/2 };
   set y (y) {
     let deltaY = y - this.y
     for (let i = 0; i < this._points.length; i++) { this._points[i].y += deltaY }
