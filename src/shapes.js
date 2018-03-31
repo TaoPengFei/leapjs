@@ -4,7 +4,7 @@ import { Mouse } from './mouse'
 import Transform from './transform'
 import { Rss } from './resource'
 import { collide, pointInShape } from './collision'
-const clone = require('clone')
+import clone from './clone'
 
 class Shape {
   constructor () {

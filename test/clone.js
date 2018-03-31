@@ -2,7 +2,7 @@ var assert = chai.assert;
 
 describe('Clone', function(){
     describe('Sprite', function(){
-        var url = "http://llcs-1252287760.cossh.myqcloud.com/animations/fire.png";
+        var url = "https://llcs-1252287760.cossh.myqcloud.com/animations/fire.png";
         var sprite = new Sprite();
         sprite.src = url;
         var sprite_clone = sprite.clone();
