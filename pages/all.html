@@ -1,0 +1,174 @@
+<html lang="en">
+<head>
+  <title>LeapLearner</title>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width initial-scale=1'>
+
+  <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.29.0/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.29.0/theme/ambiance.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.29.0/addon/lint/lint.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.29.0/addon/hint/show-hint.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="https://cdn.bootcss.com/jshint/2.9.5/jshint.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.29.0/codemirror.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.29.0/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/lint/lint.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/lint/javascript-lint.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/hint/show-hint.min.js"></script>    
+  <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/hint/javascript-hint.min.js"></script>
+
+  <script src="https://cdn.bootcss.com/codemirror/5.30.0/mode/xml/xml.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.29.0/addon/hint/xml-hint.min.js"></script>
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #ff9c0f;">
+  <a class="navbar-brand" href="../">LeapLearner</a>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          参考手册
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+          <a class="dropdown-item" href="methods.html">基本绘图函数</a>
+          <a class="dropdown-item" href="shapes.html">基本图形</a>
+
+          <a class="dropdown-item" href="styles.html">参考样式</a>
+          <a class="dropdown-item" href="canvas.html">画布方法</a>
+
+        </div>
+      </li>
+      <a class="nav-link active" href="projects.html">项目合辑</a>
+      <a class="nav-link active" href="games.html">游戏合辑</a>
+    </ul>
+</nav>
+
+  <div id="sidebar">
+    <h1>LL Canvas Engine</h1>
+    <p>Author: Vic Wang</p>
+
+    <h2>Styles</h2>
+    <ol>
+      <li><a href='../examples/styles/const.js'>const</a></li>
+      <li><a href='../examples/styles/rgb.js'>RGB</a></li>
+      <li><a href='../examples/styles/rgba.js'>RGBA</a></li>
+      <li><a href='../examples/styles/fillStyle.js'>fillStyle</a></li>
+      <li><a href='../examples/styles/strokeStyle.js'>strokeStyle</a></li>
+      <li><a href='../examples/styles/lineGradient.js'>LineGradient</a></li>
+      <li><a href='../examples/styles/radialGradient.js'>RadialGradient</a></li>
+      <li><a href='../examples/styles/hsl.js'>HSL</a></li>
+      <li><a href='../examples/styles/hsla.js'>HSLA</a></li>
+      <li><a href='../examples/styles/shadow.js'>shadow</a></li>
+    </ol>
+    <h2>Text</h2>
+    <ol>
+      <li><a href='../examples/text/textAlign.js'>textAlign</a></li>
+      <li><a href='../examples/text/textBaseline.js'>textBaseline</a></li>
+      <li><a href='../examples/text/measureText.js'>measureText</a></li>
+    </ol>
+    <h2>Shapes</h2>
+    <ol>
+      <li><a href='../examples/shapes/rectangle.js'>Rectangle</a></li>
+      <li><a href='../examples/shapes/circle.js'>Circle</a></li>
+      <li><a href='../examples/shapes/ellipse.js'>Ellipse</a></li>
+      <li><a href='../examples/shapes/polygon.js'>Polygon</a></li>
+      <li><a href='../examples/shapes/triangle.js'>Triangle</a></li>
+    </ol>
+    <h2>Shapes Methods</h2>
+    <ol>
+      <li><a href='../examples/shapesMethods/xy.js'>xy</a></li>
+      <li><a href='../examples/shapesMethods/rotate.js'>rotate</a></li>
+      <li><a href='../examples/shapesMethods/setAnchor.js'>setAnchor</a></li>
+      <li><a href='../examples/shapesMethods/scale.js'>scale</a></li>
+      <li><a href='../examples/shapesMethods/skew.js'>skew</a></li>
+      <li><a href='../examples/shapesMethods/translate.js'>translate</a></li>
+      <li><a href='../examples/shapesMethods/collide.js'>collide</a></li>
+      <li><a href='../examples/shapesMethods/clone.js'>clone</a></li>
+    </ol>
+    <h2>Canvas</h2>
+    <ol>
+      <li><a href='../examples/canvas/showAxis.js'>showAxis</a></li>
+      <li><a href='../examples/canvas/clear.js'>clear</a></li>
+      <li><a href='../examples/canvas/_translate.js'>_translate</a></li>
+      <li><a href='../examples/canvas/rotate.js'>rotate</a></li>
+      <li><a href='../examples/canvas/scale.js'>scale</a></li>
+    </ol>
+    <h2>ctx</h2>
+    <ol>
+      <li><a href='../examples/ctx/globalAlpha.js'>globalAlpha</a></li>
+      <li><a href='../examples/ctx/clearRect.js'>clearRect</a></li>
+      <li><a href='../examples/ctx/globalCompositeOperation.js'>globalCompositeOperation</a></li>
+    </ol>
+    <h2>Numbers</h2>.
+    <ol>
+      <li><a href='../examples/numbers/randint.js'>randint</a></li>
+      <li><a href='../examples/numbers/increase.js'>Increase</a></li>
+      <li><a href='../examples/numbers/swing.js'>Swing</a></li>
+      <li><a href='../examples/numbers/sine.js'>Sine</a></li>
+      <li><a href='../examples/numbers/volatile.js'>Volatile</a></li>
+    </ol>
+    <h2>Images</h2>
+    <ol>
+      <li><a href='../examples/images/createImageData.js'>createImageData</a></li>
+      <li><a href='../examples/images/getImageData.js'>getImageData</a></li>
+      <li><a href='../examples/images/putImageData.js'>putImageData</a></li>
+      <li><a href='../examples/images/data.js'>data</a></li>
+    </ol>
+    <h2>Basic Methods</h2>
+    <ol>
+      <li><a href='../examples/basicMethods/let.js'>let</a></li>
+      <li><a href='../examples/basicMethods/alert.js'>alert</a></li>
+    </ol>
+    <h2>Examples</h2>
+    <ol>
+      <li><a href='../examples/events/draw.js'>Point Draw</a></li>
+      <li><a href='../examples/events/keyEvent.js'>Key Event</a></li>
+      <li><a href='../examples/events/piano.js'>Piano</a></li>
+      <li><a href='../examples/animations/setInterval.js'>SetInterval</a></li>
+      <li><a href='../examples/animations/sunrise.js'>Sunrise</a></li>
+      <li><a href='../examples/animations/animation.js'>Animation</a></li>
+      <li><a href='../examples/animations/fish.js'>Fish</a></li>
+      <li><a href='../examples/collision/rectCollision.js'>Rect</a></li>
+      <li><a href='../examples/collision/collision.js'>Collision</a></li>
+      <li><a href='../examples/collision/polygonCollision.js'>Polygon</a></li>
+      <li><a href='../examples/collision/lotCollision.js'>Lot Collision</a></li>
+      <li><a href='../examples/physics/moveTo.js'>MoveTo</a></li>
+      <li><a href='../examples/physics/gravity.js'>Gravity</a></li>
+      <li><a href='../examples/physics/gravityAndCollision.js'>G&C</a></li>
+      <li><a href='../examples/projects/fantasticSpot.js'>Fantastic Spot</a></li>
+    </ol>
+
+  </div>
+  <div id="code">
+    <textarea id="js"></textarea>
+  </div>
+  <div id="output">
+    <button onclick="submit()">Run</button>
+    <iframe></iframe>
+  </div>
+
+<nav class="navbar sticky-bottom navbar-expand-lg navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">友情链接</span>
+  <div class="collapse navbar-collapse">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link disabled" target="_blank" href="https://www.leaplearner.com">Website</a>
+      <a class="nav-item nav-link disabled" target="_blank" href="https://code.leaplearner.com" target="_blank">IDE</a>
+      <a class="nav-item nav-link disabled" target="_blank" href="https://code.leaplearner.com/show.html?v=11511">项目合辑</a>
+      <a class="nav-item nav-link disabled" target="_blank" href="http://cs.leaplearner.com">cs链接</a>
+      <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+    </div>
+  </div>
+</nav>
+
+<script src="index.js"></script>
+</script>
+</body>
+</html>

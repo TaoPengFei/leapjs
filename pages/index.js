@@ -56,9 +56,11 @@ function load (file) {
 
 $(function () {
   $('li a').click(function (e) {
-    e.preventDefault()
     var link = $(this).attr('href')
-    load(link)
+    if(link.slice(-2) === 'js'){
+      e.preventDefault()
+      load(link)
+    }
   })
 })
 
