@@ -125,4 +125,4 @@ let footer =
   $("footer").html(footer);
 })
 
-load('../examples/index.js')
+load('examples/index.js')
