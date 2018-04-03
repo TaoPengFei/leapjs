@@ -17,8 +17,8 @@ function iframeHtml () {
   var js = JSEditor.getValue()
 
   html += '<html>\n'
-  html += '<body style="margin:0">\n'
-  html += '<script src="LLEG.js"></script>\n'
+  html += '<body>\n'
+  html += '<script src="/LLEG.js"></script>\n'
   html += '<script>'
   html += js
   html += '</script>\n'
@@ -62,4 +62,4 @@ $(function () {
   })
 })
 
-load('./examples/index.js')
+load('/examples/index.js')

@@ -2,17 +2,13 @@
   width: 15%;
   display: block;
   float: left;
-  height: 100%;
-  padding-bottom:0px;
-  padding-top: 0px;
+  height: calc(100vh - 7rem);
   overflow-y: scroll;
   overflow: -moz-scrollbars-vertical;
 }
 
 #sidebar h1 {
   font-size: 25px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
 }
 
 #sidebar h1 a:link, #sidebar h1 a:visited {
@@ -29,16 +25,11 @@
 }
 
 #sidebar ol {
-  margin: 0;
-  padding-left: 10px;
-  padding-top: 0;
+  padding-left: 15px;
 }
 
 #sidebar ol li {
-  margin-top: 0;
-  margin-bottom: 0.2rem;
-  margin-left: 10px;
-  padding: 0;
+  margin-left: 15px;
   font-size: 1rem;
 }
 
@@ -46,22 +37,18 @@
   width: 45%;
   display: block;
   float: left;
-  height: 100%;
-  padding-bottom:0px;
-  padding-top: 0px;
+  height: calc(100vh - 7rem);
 }
 
 #output {
   width: 40%;
   display: block;
   float: left;
-  height: 100%;
-  padding-bottom:0px;
-  padding-top: 0px;
+  height: calc(100vh - 7rem);
 }
 
 iframe {
-  height: 95%;
+  height: 100%;
   width: 100%;
   border: none;
 }

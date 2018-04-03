@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>LLEG</title>
+  <title>LeapLearner</title>
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width initial-scale=1'>
 
@@ -23,9 +23,22 @@
 
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="pages/index.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #ff9c0f;">
+  <span class="navbar-brand mb-0 h1">LeapLearner</span>
+  <div class="collapse navbar-collapse">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/">Home<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" href="pages/methods.html">基本方法</a>
+      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+    </div>
+  </div>
+</nav>
+
   <div id="sidebar">
     <h1>LL Canvas Engine</h1>
     <p>Author: Vic Wang</p>
@@ -140,19 +153,30 @@
       <li><a href='./examples/games/flppyBird.js'>Flappy Bird</a></li>
       <li><a href='./examples/games/keyboardPractice.js'>Keyboard Practice</a></li>
       <li><a href='./examples/games/theAlien.js'>The Alien</a></li>
+      <li><a href='./examples/games/theFries.js'>The French Fries</a></li>
     </ol>
   </div>
   <div id="code">
     <textarea id="js"></textarea>
-
   </div>
   <div id="output">
     <button onclick="submit()">Run</button>
     <iframe></iframe>
-    <div id="error-info"></div>
   </div>
+
+<nav class="navbar sticky-bottom navbar-expand-lg navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">友情链接</span>
+  <div class="collapse navbar-collapse">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link disabled" target="_blank" href="https://www.leaplearner.com">Website</a>
+      <a class="nav-item nav-link disabled" target="_blank" href="https://code.leaplearner.com" target="_blank">IDE</a>
+      <a class="nav-item nav-link disabled" target="_blank" href="https://code.leaplearner.com/show.html?v=11511">项目合辑</a>
+      <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+    </div>
   </div>
-  <script src="index.js"></script>
-  </script>
+</nav>
+
+<script src="pages/index.js"></script>
+</script>
 </body>
 </html>
