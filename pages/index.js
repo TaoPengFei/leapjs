@@ -18,7 +18,7 @@ function iframeHtml () {
 
   html += '<html>\n'
   html += '<body>\n'
-  html += '<script src="/LLEG.js"></script>\n'
+  html += '<script src="../LLEG.js"></script>\n'
   html += '<script>'
   html += js
   html += '</script>\n'
