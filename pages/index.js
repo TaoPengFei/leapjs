@@ -94,8 +94,8 @@ let header =
           <a class="dropdown-item" href="#">变量</a>\
           <a class="dropdown-item" href="#">对象</a>\
 \
-          <a class="dropdown-item" href="#">循环</a>\
           <a class="dropdown-item" href="#">数组</a>\
+          <a class="dropdown-item" href="#">循环</a>\
           <a class="dropdown-item" href="#">函数</a>\
           <a class="dropdown-item" href="#">类</a>\
 \
