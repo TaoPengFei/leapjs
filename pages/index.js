@@ -64,4 +64,4 @@ $(function () {
   })
 })
 
-load('/examples/index.js')
+load('../examples/index.js')
