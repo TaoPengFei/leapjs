@@ -1,8 +1,7 @@
 /****************************************************************************/
-// 引用外部库，提供QrEncoder类
-</script>
-<script src='https://rss.leaplearner.com/teachfiles/Text/qrcode.js'></script>
-<script>
+//</script><script src='https://rss.leaplearner.com/teachfiles/Text/qrcode.js'>
+// 引用外部库
+//</script><script>
 /****************************************************************************/
 canvas.resize(300, 300);
 
@@ -18,5 +17,5 @@ arr.forEach(function(ar, i){
         if(b){
             rectangle(j*size, i*size, size, size, 'black');
         }
-    })
-})
+    });
+});
