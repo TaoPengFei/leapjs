@@ -1,3 +1,4 @@
+function load(){
 ace.require("ace/ext/language_tools");  
 var JSEditor = ace.edit("code");  
 JSEditor.setOptions({  
@@ -128,3 +129,5 @@ let footer =
 })
 
 load('examples/index.js')
+
+}
