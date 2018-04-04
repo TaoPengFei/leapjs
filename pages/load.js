@@ -1,18 +1,4 @@
-function load(){
-ace.require("ace/ext/language_tools");  
-var JSEditor = ace.edit("code");  
-JSEditor.setOptions({  
-  mode: "ace/mode/javascript",
-  theme: "",
-  enableBasicAutocompletion: true,  
-  // enableSnippets: true,  
-  enableLiveAutocompletion: true,//只能补全  
-  fontFamily: 'Courier New',
-  fontSize: 16,
-  showPrintMargin: false,
-  useSoftTabs: true,
-});  
-
+var JSEditor;
 
 function iframeHtml () {
   var html = ''
@@ -28,23 +14,7 @@ function iframeHtml () {
   return html
 }
 
-function submit () {
-  var el = document.getElementsByTagName('iframe')[0]
-  el.parentNode.removeChild(el)
-
-  var iframe = document.createElement('iframe')
-  document.querySelector('div#output').appendChild(iframe)
-
-  var iframeDoc = iframe.contentDocument
-
-  iframeDoc.open()
-  iframeDoc.write(iframeHtml())
-  iframeDoc.close()
-
-  iframe.focus()
-}
-
-function load (file) {
+function loadFile (file) {
   $.ajax({
     type: 'get',
     url: file,
@@ -57,14 +27,31 @@ function load (file) {
   })
 }
 
+function load(){
+ace.require("ace/ext/language_tools");  
+JSEditor = ace.edit("code");  
+JSEditor.setOptions({  
+  mode: "ace/mode/javascript",
+  theme: "",
+  enableBasicAutocompletion: true,  
+  // enableSnippets: true,  
+  enableLiveAutocompletion: true,//只能补全  
+  fontFamily: 'Courier New',
+  fontSize: 16,
+  showPrintMargin: false,
+  useSoftTabs: true,
+  navigateWithinSoftTabs: true,
+}); 
+
 $(function () {
   $('li a').click(function (e) {
     var link = $(this).attr('href')
     if(link.slice(-2) === 'js'){
       e.preventDefault()
-      load(link)
+      loadFile(link)
     }
   })
+})
   
 let header = 
 '\
@@ -124,10 +111,25 @@ let footer =
   </div>\
 </nav>\
 '
-  $("header").html(header);
-  $("footer").html(footer);
-})
+$("header").html(header);
+$("footer").html(footer);
 
-load('examples/index.js')
+loadFile('examples/index.js')
 
+}
+
+function submit () {
+  var el = document.getElementsByTagName('iframe')[0]
+  el.parentNode.removeChild(el)
+
+  var iframe = document.createElement('iframe')
+  document.querySelector('div#output').appendChild(iframe)
+
+  var iframeDoc = iframe.contentDocument
+
+  iframeDoc.open()
+  iframeDoc.write(iframeHtml())
+  iframeDoc.close()
+
+  iframe.focus()
 }
