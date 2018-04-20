@@ -83,7 +83,7 @@ let header = `
           JS语法
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-          <a class="dropdown-item" href="#">变量</a>
+          <a class="dropdown-item" href="variables.html">变量</a>
           <a class="dropdown-item" href="#">对象</a>
           <a class="dropdown-item" href="#">数组</a>
           <a class="dropdown-item" href="#">循环</a>
@@ -141,6 +141,9 @@ function load(){
     showPrintMargin: false,
     useSoftTabs: true,
     navigateWithinSoftTabs: true,
+    wrapBehavioursEnabled: true,
+    autoScrollEditorIntoView: true,
+    wrap: true,
   }); 
 $("header").html(header);
 $("footer").html(footer);
