@@ -84,11 +84,11 @@ let header = `
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
           <a class="dropdown-item" href="variables.html">变量</a>
-          <a class="dropdown-item" href="#">对象</a>
-          <a class="dropdown-item" href="#">数组</a>
-          <a class="dropdown-item" href="#">循环</a>
-          <a class="dropdown-item" href="#">函数</a>
-          <a class="dropdown-item" href="#">类</a>
+          <a class="dropdown-item" href="object.html">对象</a>
+          <a class="dropdown-item" href="array.html">数组</a>
+          <a class="dropdown-item" href="loop.html">循环</a>
+          <a class="dropdown-item" href="function.html">函数</a>
+          <a class="dropdown-item" href="class.html">类</a>
         </div>
       </li>
       <a class="nav-link active" href="projects.html">项目合辑</a>
