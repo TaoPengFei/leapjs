@@ -93,6 +93,7 @@ let header = `
       </li>
       <a class="nav-link active" href="projects.html">项目合辑</a>
       <a class="nav-link active" href="games.html">游戏合辑</a>
+      <a class="nav-link active" href="ide.html">在线IDE</a>
     </ul>
 </nav>
 `;
