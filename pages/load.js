@@ -3,14 +3,37 @@ var JSEditor;
 function iframeHtml () {
   var html = ''
   var text = JSEditor.getValue();
+   
+  html += `
+  <html>
+  <body>
+    <script src="../LLEG.js"></script>
+    <script>
+      let _logY = 0;
+      const _log = console.log;
+      function _to2(n){ return n<10 ? "0"+n : n};
+      function _to3(n){ 
+        if(n<10) return "00" + n;
+        if(n<100) return "0" + n;
+        return n;
+      }
+      console.log = function(obj){
+        a = new Date(); 
+        str = [_to2(a.getHours()), _to2(a.getMinutes()), _to2(a.getSeconds())].join(":")  
+        + "." + _to3(a.getMilliseconds()) + " " + JSON.stringify(obj);
+        text(str, 10, 10 + 20 * _logY++);
+        _log(obj);
+      }
+    </script>
+    <script>
+  `;
 
-  html += '<html>\n'
-  html += '<body>\n'
-  html += '<script src="../LLEG.js"></script>\n'
-  html += '<script>'
   html += text
-  html += '</script>\n'
-  html += '</body>\n'
+
+  html += `
+    </script>
+  </body>
+  `;
   return html
 }
 
@@ -27,22 +50,6 @@ function loadFile (file) {
   })
 }
 
-function load(){
-ace.require("ace/ext/language_tools");  
-JSEditor = ace.edit("code");  
-JSEditor.setOptions({  
-  mode: "ace/mode/javascript",
-  theme: "",
-  enableBasicAutocompletion: true,  
-  // enableSnippets: true,  
-  enableLiveAutocompletion: true,//只能补全  
-  fontFamily: 'Courier New',
-  fontSize: 16,
-  showPrintMargin: false,
-  useSoftTabs: true,
-  navigateWithinSoftTabs: true,
-}); 
-
 $(function () {
   $('li a').click(function (e) {
     var link = $(this).attr('href')
@@ -53,70 +60,56 @@ $(function () {
   })
 })
   
-let header = 
-'\
-<nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #ff9c0f;">\
-  <a class="navbar-brand" href="../">LeapLearner</a>\
-    <ul class="navbar-nav">\
-      <li class="nav-item dropdown">\
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
-          参考手册\
-        </a>\
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">\
-\
-          <a class="dropdown-item" href="methods.html">绘图函数</a>\
-          <a class="dropdown-item" href="shapes.html">简单图形</a>\
-\
-          <a class="dropdown-item" href="styles.html">参考样式</a>\
-          <a class="dropdown-item" href="canvas.html">画布方法</a>\
-          <a class="dropdown-item" href="events.html">事件</a>\
-          <a class="dropdown-item" href="animations.html">动画效果</a>\
-          <a class="dropdown-item" href="physics.html">物理效果</a>\
-\
-        </div>\
-      </li>\
-      <li class="nav-item dropdown">\
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
-          JS语法\
-        </a>\
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">\
-\
-          <a class="dropdown-item" href="#">变量</a>\
-          <a class="dropdown-item" href="#">对象</a>\
-\
-          <a class="dropdown-item" href="#">数组</a>\
-          <a class="dropdown-item" href="#">循环</a>\
-          <a class="dropdown-item" href="#">函数</a>\
-          <a class="dropdown-item" href="#">类</a>\
-\
-        </div>\
-      </li>\
-      <a class="nav-link active" href="projects.html">项目合辑</a>\
-      <a class="nav-link active" href="games.html">游戏合辑</a>\
-    </ul>\
-</nav>\
-';
-let footer = 
+let header = `
+<nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #ff9c0f;">
+  <a class="navbar-brand" href="../">LeapLearner</a>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          参考手册
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="methods.html">绘图函数</a>
+          <a class="dropdown-item" href="shapes.html">简单图形</a>
+          <a class="dropdown-item" href="styles.html">参考样式</a>
+          <a class="dropdown-item" href="canvas.html">画布方法</a>
+          <a class="dropdown-item" href="events.html">事件</a>
+          <a class="dropdown-item" href="animations.html">动画效果</a>
+          <a class="dropdown-item" href="physics.html">物理效果</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          JS语法
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+          <a class="dropdown-item" href="#">变量</a>
+          <a class="dropdown-item" href="#">对象</a>
+          <a class="dropdown-item" href="#">数组</a>
+          <a class="dropdown-item" href="#">循环</a>
+          <a class="dropdown-item" href="#">函数</a>
+          <a class="dropdown-item" href="#">类</a>
+        </div>
+      </li>
+      <a class="nav-link active" href="projects.html">项目合辑</a>
+      <a class="nav-link active" href="games.html">游戏合辑</a>
+    </ul>
+</nav>
+`;
 
-'\
-<nav class="navbar sticky-bottom navbar-expand-lg navbar-dark bg-dark">\
-  <span class="navbar-brand mb-0 h1">友情链接</span>\
-  <div class="collapse navbar-collapse">\
-    <div class="navbar-nav">\
-      <a class="nav-item nav-link disabled" target="_blank" href="https://www.leaplearner.com">官网</a>\
-      <a class="nav-item nav-link disabled" target="_blank" href="https://code.leaplearner.com" target="_blank">在线IDE</a>\
-      <a class="nav-item nav-link disabled" target="_blank" href="http://cs.leaplearner.com">cs链接</a>\
-      <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->\
-    </div>\
-  </div>\
-</nav>\
-'
-$("header").html(header);
-$("footer").html(footer);
-
-loadFile('examples/index.js')
-
-}
+let footer = `
+<nav class="navbar sticky-bottom navbar-expand-lg navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">友情链接</span>
+  <div class="collapse navbar-collapse">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link disabled" target="_blank" href="https://www.leaplearner.com">官网</a>
+      <a class="nav-item nav-link disabled" target="_blank" href="https://code.leaplearner.com" target="_blank">在线IDE</a>
+      <a class="nav-item nav-link disabled" target="_blank" href="http://cs.leaplearner.com">cs链接</a>
+      <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+    </div>
+  </div>
+</nav>
+`;
 
 function submit () {
   var el = document.getElementsByTagName('iframe')[0]
@@ -132,4 +125,26 @@ function submit () {
   iframeDoc.close()
 
   iframe.focus()
+}
+
+function load(){
+  ace.require("ace/ext/language_tools");  
+  JSEditor = ace.edit("code");  
+  JSEditor.setOptions({  
+    mode: "ace/mode/javascript",
+    theme: "",
+    // enableBasicAutocompletion: true,  
+    // enableSnippets: true,  
+    enableLiveAutocompletion: true,//智能补全  
+    fontFamily: 'Courier New',
+    fontSize: 16,
+    showPrintMargin: false,
+    useSoftTabs: true,
+    navigateWithinSoftTabs: true,
+  }); 
+$("header").html(header);
+$("footer").html(footer);
+
+loadFile('examples/index.js')
+
 }

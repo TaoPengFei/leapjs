@@ -3,7 +3,7 @@
   display: block;
   float: left;
   height: calc(100vh - 7rem);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow: -moz-scrollbars-vertical;
 }
 

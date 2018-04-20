@@ -2,7 +2,7 @@ canvas.resize(600, 700);
 
 // elements
 var bg = new Sprite('https://rss.leaplearner.com/Image/Bgs/Alarm_bg_01.png', 0, 0, canvas.width, canvas.height);
-var stage = new Sprite('https://rss.leaplearner.com/Image/Bgs/Alarm_frame_01.png', -canvas.width, 0, canvas.width, canvas.height);
+var stage = new Sprite('https://rss.leaplearner.com/Image/Bgs/Alarm_frame_01.png', 0, 0, canvas.width, canvas.height);
 var monster = new Sprite('https://rss.leaplearner.com/Image/Animals/DigitalMonster_angry.png', 352, 240, 400, 540);
 stage.scale(-1, 1);
 var keyboard = new Sprite('https://rss.leaplearner.com/teachfiles/Media/键盘.png', 50, 200, 500, 300);

@@ -71,7 +71,9 @@ class Sine {
 }
 
 function randint (a, b) {
-  return Math.floor(a + Math.random() * (b - a))
+  a = Math.floor(a);
+  b = Math.floor(b);
+  return Math.floor(a + Math.random() * (b - a + 1))
 }
 
 export { Swing, Increase, Sine, Volatile, randint }
