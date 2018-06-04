@@ -319,12 +319,12 @@ class Sprite extends Rectangle {
   }
 
   clip (sx, sy, sw, sh) {
-    this.sx = sx > 0 ? sx : 1
-    this.sy = sy > 0 ? sx : 1
-    this.sw = sw
-    this.sh = sh
-    this.w = this.w || sw
-    this.h = this.h || sh
+    this.sx = sx > 0 ? sx : 1;
+    this.sy = sy > 0 ? sy : 1;
+    this.sw = sw;
+    this.sh = sh;
+    this.w = this.w || sw;
+    this.h = this.h || sh;
   }
 
   _draw () {
