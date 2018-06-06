@@ -2,7 +2,7 @@ canvas.resize(350, 500);
 var url = "https://llcs-1252287760.cossh.myqcloud.com/";
 var sky = new Sprite(url+"bgs/bg.png", 0, 0, 800, 550);
 var crab = new Animation(url+"animations/crab.png", 120, 430, 90, 60);
-crab.setFrame(0, 0, 117, 90, 6, 1);
+crab.setFrame(6, 1);
 crab.setCollisionScale(0.9, 0.5);
 
 var spike = new Sprite(url + 'images/spike1.png', 150, 0, 50, 50);

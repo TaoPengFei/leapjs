@@ -74,7 +74,7 @@ class Shape {
     }
   }
 
-  clone () { return clone(this, false) }
+  clone () { return clone(this, false); }
 
   _updatePoints () {}
 
@@ -298,12 +298,12 @@ class Sprite extends Rectangle {
     this.collideW = 0.8
     this.collideH = 0.8
 
-    this.img = new window.Image()
-    this.img.crossOrigin = 'anonymous'
-    this.img.src = src
-    this.img.onload = function () {
-      Rss.load()
-    }
+    this.img = new window.Image();
+    this.img.crossOrigin = 'anonymous';
+    this.img.src = src;
+    this.img.onload = function() {
+      Rss.load();
+    };
 
     Rss.add()
   }
@@ -313,7 +313,6 @@ class Sprite extends Rectangle {
 
   set onload (callback) {
     this.img.onload = function () {
-      Rss.load()
       callback()
     }
   }
@@ -323,8 +322,6 @@ class Sprite extends Rectangle {
     this.sy = sy > 0 ? sy : 1;
     this.sw = sw;
     this.sh = sh;
-    this.w = this.w || sw;
-    this.h = this.h || sh;
   }
 
   _draw () {
@@ -345,29 +342,34 @@ class Sprite extends Rectangle {
 class Animation extends Sprite {
   constructor (src, x, y, w, h) {
     super(src, x, y, w, h)
-    this.speed = 10
+    this.speed = 10;
+    this._cf = 0; // current frame count
   }
 
-  setFrame (sx, sy, sw, sh, c, r) {
-    this.c = c
-    this.r = r || 1
-    this.cf = 0 // current frame count
-    this.clip(sx, sy, sw, sh)
+  setFrame (c, r = 1) {
+    this._c = c
+    this._r = r;
   }
 
   setSpeed (speed) {
     this.speed = speed
-    if (this.speed < 1) this.speed = 1
-    if (this.speed > 60) this.speed = 60
+    if (this.speed < 1) this.speed = 1;
+    if (this.speed > 100) this.speed = 100;
   }
 
   _draw () {
-    let sx = this.sx + this.sw * (Math.floor(this.cf * this.speed / 60) % this.c)
-    let sy = this.sy + this.sh * (Math.floor(this.cf * this.speed / 60 / this.c) % this.r)
+  	this.sw = this.img.naturalWidth / this._c;
+    this.sh = this.img.naturalHeight / this._r;
+
+    this.w = this.w || this.sw;
+  	this.h = this.h || this.sh;
+
+    let sx = this.sw * (Math.floor(this._cf * this.speed / 60) % this._c)
+    let sy = this.sh * (Math.floor(this._cf * this.speed / 60 / this._c) % this._r)
     ctx.drawImage(this.img, sx, sy, this.sw, this.sh,
       this.x, this.y, this.w, this.h)
 
-    this.cf++ // update frame count
+    this._cf++ // update frame count
   }
 }
 

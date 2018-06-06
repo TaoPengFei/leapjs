@@ -26,7 +26,7 @@ var speed = 3;
 function start(){
     // Objects
     player = new Animation(playerImage, 100, canvas.height-120, 90, 60);
-    player.setFrame(0, 0, 117, 90, 6, 1);
+    player.setFrame(6, 1);
     player.setCollisionScale(0.9, 0.5);
 
     bg = new Sprite(background, 0, 0, canvas.width, canvas.height);

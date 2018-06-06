@@ -22,7 +22,7 @@
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
     "webpack": "^4.8.3",
-    "webpack-cli": "^2.1.4"
+    "webpack-cli": "^2.1.5"
   },
   "directories": {
     "doc": "doc",
