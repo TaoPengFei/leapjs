@@ -294,18 +294,17 @@ class Text extends Rectangle {
 
 class Sprite extends Rectangle {
   constructor (src, x = 0, y = 0, w = null, h = null) {
-    super(x, y, w, h)
-    this.collideW = 0.8
-    this.collideH = 0.8
+    super(x, y, w, h);
+    this.collideW = 0.8;
+    this.collideH = 0.8;
 
     this.img = new window.Image();
     this.img.crossOrigin = 'anonymous';
+    this.img.onload = function(){ Rss.load(); };
+    this.img.onerror = function(){ console.log("图片加载失败：" + this.src); };
     this.img.src = src;
-    this.img.onload = function() {
-      Rss.load();
-    };
 
-    Rss.add()
+    Rss.add();
   }
 
   get src () { return this.img.src }
