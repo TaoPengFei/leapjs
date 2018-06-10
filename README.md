@@ -8,10 +8,10 @@ npm run build
 npm start
 
 ## Website
-http://xrdpnx.coding.me/lleg
+http://xrdpnx.coding.me/leapjs
 
 ## Readme
-http://xrdpnx.coding.me/lleg/doc/LLEG.md
+http://xrdpnx.coding.me/leapjs/doc/LLEG.md
 
 ## Test
 npm start
