@@ -9,7 +9,7 @@ var sky = new Sprite(url+"bgs/bg.png", 0, 0, 80, 40);
 var ground = new Sprite(url+"bgs/ground.png", 0, canvas.height/10-10, 80, 15);
 
 var hero = new Animation(url+"animations/guagua.png", 5, 12, 5, 7);
-hero.setFrame(8, 1); // columns, rows
+hero.setFrame(0, 0, 61, 98, 8, 1); // shiftX, shiftY, frameX, frameY, columns, rows
 hero.setCollisionScale(0.5, 0.5);
 
 var obstacles = [];
