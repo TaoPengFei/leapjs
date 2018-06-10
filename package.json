@@ -1,5 +1,5 @@
 {
-  "name": "lleg",
+  "name": "leapjs",
   "version": "1.0.0",
   "description": "A 2D Game Engine Base on h5 Canvas",
   "main": "src/index.js",
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.coding.net:xrdpnx/lleg.git"
+    "url": "git@git.coding.net:xrdpnx/leapjs.git"
   },
   "babel": {
     "presets": [

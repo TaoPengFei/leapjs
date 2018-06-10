@@ -4,8 +4,8 @@ module.exports = {
   mode: 'production',
   entry: './src/index.js',
   output: {
-    filename: 'lleg.min.js',
-    path: __dirname
+    filename: 'leap.min.js',
+    path: __dirname +  + '/dist/'
   },
   module: {
     noParse: [/clone/],
