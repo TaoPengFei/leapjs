@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'leap.min.js',
-    path: __dirname +  + '/dist/'
+    path: __dirname + '/dist/'
   },
   module: {
     noParse: [/clone/],
