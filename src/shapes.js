@@ -42,7 +42,9 @@ class Shape {
 
   _draw () {
     this._path()
-    // ctx.stroke()
+    if(this.strokeStyle){
+      ctx.stroke();
+    }
     ctx.fill()
   }
 
@@ -100,11 +102,12 @@ class Shape {
 }
 
 class Circle extends Shape {
-  constructor (x = 50, y = 50, r = 20) {
+  constructor (x = 50, y = 50, r = 20, color="orange") {
     super()
     this.x = x
     this.y = y
     this.r = r
+    this.fillStyle = color
   }
 
   get radius () { return this.r }
@@ -129,12 +132,14 @@ class Circle extends Shape {
 }
 
 class Line extends Shape {
-  constructor (x1 = 100, y1 = 100, x2 = 200, y2 = 100) {
+  constructor (x1 = 100, y1 = 100, x2 = 200, y2 = 100, lineWidth=1, color="orange") {
     super()
     this.x1 = x1
     this.y1 = y1
     this.x2 = x2
     this.y2 = y2
+    this.lineWidth = lineWidth
+    this.strokeStyle = color
   }
 
   _path () {
@@ -162,6 +167,11 @@ class Line extends Shape {
     this.y1 += deltaY
     this.y2 += deltaY
   }
+
+  _draw () {
+    this._path()
+    ctx.stroke()
+  }
 }
 
 class Polygon extends Shape {
@@ -175,6 +185,10 @@ class Polygon extends Shape {
     for (let i = 0; i < arguments.length - 1; i += 2) {
       let p = { x: arguments[i], y: arguments[i + 1] }
       this._points.push(p)
+    }
+
+    if(typeof (arguments[-1]) == "string"){
+      this.fillStyle = arguments[-1];
     }
   }
 
@@ -203,12 +217,13 @@ class Polygon extends Shape {
 }
 
 class Rectangle extends Shape {
-  constructor (x = 100, y = 100, w = 100, h = 50) {
+  constructor (x = 100, y = 100, w = 100, h = 50, color="orange") {
     super()
     this.x = x
     this.y = y
     this.w = w
     this.h = h
+    this.fillStyle = color
     this.collideW = 1
     this.collideH = 1
   }
@@ -245,11 +260,11 @@ class Rectangle extends Shape {
 }
 
 class Text extends Rectangle {
-  constructor (src = 'LeapLearner', x = 0, y = 0, size = 20, font = 'Arial') {
+  constructor (src = 'LeapLearner', x = 0, y = 0, size = 20, color="orange", font = 'Arial') {
     super(x, y, 100, size)
     this._src = src
     this._font = font
-    this.fillStyle = 'orange'
+    this.fillStyle = color
     this._updateWidth()
   }
 
@@ -373,20 +388,21 @@ class Animation extends Sprite {
 }
 
 class Point extends Circle {
-  constructor (x, y) {
+  constructor (x, y, color="red") {
     super(x, y, 0.5)
-    this.fillStyle = 'red'
+    this.fillStyle = color
     this.strokeStyle = 'rgba(0, 0, 0, 0)'
   }
 }
 
 class Ellipse extends Shape {
-  constructor (x, y, rX, rY) {
+  constructor (x, y, rX, rY, color="orange") {
     super()
     this.x = x
     this.y = y
     this.rX = rX
     this.rY = rY
+    this.fillStyle = color;
   }
 
   _path () {
