@@ -147,6 +147,4 @@ function pause (src) {
   }
 }
 
-var playSound = play
-
-export { background, fill, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, font, playSound, play, pause }
+export { background, fill, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, font, play, pause }

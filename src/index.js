@@ -8,7 +8,7 @@ import { RGB, RGBA, HSL, HSLA } from './colors'
 
 import { Swing, Increase, Sine, Volatile, randint } from './basicMethod'
 import { background, fill, rectangle, circle, line, point, polygon, triangle, ellipse,
-  image, text, font, playSound, play, pause } from './basicDraw'
+  image, text, font, play, pause } from './basicDraw'
 
 // canvas
 window.canvas = canvas
@@ -62,14 +62,10 @@ window.ellipse = ellipse
 window.image = image
 window.text = text
 window.font = font
-window.playSound = playSound
 window.play = play
 window.pause = pause
 
-window.noStroke = function(){
-    console.log("'noStroke' is deprecated, use 'fill(boolen)' instead");
-}
-
-window.canvas.preventDefaultEvent = function(){
-    console.log("'canvas.preventDefaultEvent' is deprecated, you don't need it any more");
-}
+window.noStroke = function(){ console.log("'noStroke' is deprecated, use 'fill(boolen)' instead");};
+window.canvas.preventDefaultEvent = function(){console.log("'canvas.preventDefaultEvent' is deprecated, you don't need it any more");};
+window.nextFrame = function () { console.log("'nextFrame' is deprecated, use 'run(function)' instead");};
+window.playSound = function () { console.log("'playSound' is deprecated, use 'play' instead"); }

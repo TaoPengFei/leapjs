@@ -4,13 +4,13 @@ module.exports = {
   mode: 'production',
   entry: './src/index.js',
   output: {
-    filename: 'leap.min.js',
+    filename: 'leap.min.v1.0.js',
     path: __dirname + '/dist/'
   },
   module: {
     noParse: [/clone/],
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+      { test: /\.js$/, exclude: /node_modules/}
     ]
   }
 };
