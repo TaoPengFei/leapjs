@@ -65,3 +65,11 @@ window.font = font
 window.playSound = playSound
 window.play = play
 window.pause = pause
+
+window.noStroke = function(){
+    console.log("'noStroke' is deprecated, use 'fill(boolen)' instead");
+}
+
+window.canvas.preventDefaultEvent = function(){
+    console.log("'canvas.preventDefaultEvent' is deprecated, you don't need it any more");
+}
