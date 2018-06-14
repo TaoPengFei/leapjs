@@ -97,7 +97,7 @@ class Shape {
 
   updateAnchor() {
     this._updatePoints();
-    t = this.transform;
+    let t = this.transform;
     if(t.anchor){
       t.anchorX = this.minX + (this.maxX - this.minX) * t.anchor.x;
       t.anchorY = this.minY + (this.maxY - this.minY) * t.anchor.y;  

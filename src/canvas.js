@@ -172,22 +172,14 @@ canvas.getRealPoint = function (p) {
   if (!this.transform.transformed()) { return p }
   let t = this.transform
 
-  let x = p.x
-  let y = p.y
-  let x0 = x
-  let y0 = y
+  let {x, y} = p;
 
-  x = (x0 - t.translateX) / t.scaleX
-  y = (y0 - t.translateY) / t.scaleY
+  x, y = (x - t.translateX)/t.scaleX, (y - t.translateY)/t.scaleY
 
-  let degree = t.degree
-  let sin = Math.sin(-degree)
-  let cos = Math.cos(-degree)
+  let sin = Math.sin(-t.degree)
+  let cos = Math.cos(-t.degree)
 
-  x0 = x
-  y0 = y
-  x = x0 * cos - y0 * sin
-  y = y0 * cos + x0 * sin
+  x, y = x*cos - y*sin, y*cos + x*sin
 
   return {x, y}
 }

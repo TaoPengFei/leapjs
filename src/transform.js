@@ -27,7 +27,7 @@ export default class Transform {
 
   setAnchor (x, y) {
     // 设置旋转中心点，不能和setAnchorRate共存
-    this.anchorX, this.anchorY = x, y;
+    [this.anchorX, this.anchorY] = [x, y];
     this.anchor = undefined;
   }
 
@@ -37,16 +37,16 @@ export default class Transform {
     this.anchor = {x, y};
   }
 
-  rotate (degree) { this._degree = degree; }
+  rotate (degree) { this._degree = degree*Math.PI / 180;}
 
-  set degree(degree) { this._degree = degree * 180 / Math.PI; }
-  get degree() { return this._degree  * Math.PI / 180; }
+  // 角度，单位为角度，一圈为360度，在内部记录为角度
+  set degree(degree) { this._degree = degree*Math.PI / 180; }
+  get degree() { return this._degree; }
 
   getRealPoint (p) {
     if (!this.transformed()) { return p }
 
-    let x = p.x
-    let y = p.y
+    let {x, y} = p
 
     x -= this.anchorX
     y -= this.anchorY
@@ -55,15 +55,10 @@ export default class Transform {
     let sin = Math.sin(degree);
     let cos = Math.cos(degree);
 
-    let newX = x * cos - y * sin
-    let newY = y * cos + x * sin
-    x = newX
-    y = newY
+    x, y = x*cos - y*sin, y*cos + x*sin
 
-    newX = this.scaleX * x + this.skewX * y + this.translateX
-    newY = this.skewY * x + this.scaleY * y + this.translateY
-    x = newX
-    y = newY
+    x, y = this.scaleX*x + this.skewX*y + this.translateX, this.skewY*x + this.scaleY*y + this.translateY
+
 
     x += this.anchorX
     y += this.anchorY
