@@ -41,25 +41,20 @@ ctx._setTransform = function (transform) {
 canvas.resize = function (width, height) {
   canvas.width = width || 450 // borders size
   canvas.height = height || 600 // p, height
-  ctx.fillStyle = ctx.strokeStyle = 'orange'
+  ctx.fillStyle = ctx.strokeStyle = 'orange';
   
   // 设置文字默认对齐方式：顶部对齐
   ctx.textBaseline = 'top'
 
   // 设置默认阴影
-  ctx.shadowColor = 'grey';
   ctx.shadowBlur = 5;
   ctx.shadowOffsetX = 2;
   ctx.shadowOffsetY = 2;
+  ctx.shadowOpen = true;
 }
 
 canvas.shadow = function(open=true){
-  if(open){
-    // 设置默认阴影
-    ctx.shadowColor = 'grey';
-  } else {
-    ctx.shadowColor = "rgba(0, 0, 0, 0)";
-  }
+  ctx.shadowOpen = open;
 }
 
 canvas.resize()
@@ -98,7 +93,7 @@ canvas.showAxis = function () {
   ctx.save()
   ctx.strokeStyle = 'black';
   ctx.fillStyle = 'orange';
-  ctx.shadowColor = "rgba(0, 0, 0, 0)"; // no shadow
+  ctx.shadowColor = "rgba(0,0,0,0)"; // no shadow
 
   let gap = 10 // 坐标轴间隔
   let lw = 0
@@ -132,11 +127,6 @@ ctx.update = function (shape) {
   if (shape.fillStyle) ctx.fillStyle = shape.fillStyle
   if (shape.strokeStyle) ctx.strokeStyle = shape.strokeStyle
 
-  if (shape.shadowColor) ctx.shadowColor = shape.shadowColor
-  if (shape.shadowBlur !== undefined) ctx.shadowBlur = shape.shadowBlur
-  if (shape.shadowOffsetX !== undefined) ctx.shadowOffsetX = shape.shadowOffsetX
-  if (shape.shadowOffsetY !== undefined) ctx.shadowOffsetY = shape.shadowOffsetY
-
   if (shape.lineCap) ctx.lineCap = shape.lineCap
   if (shape.lineJoin) ctx.lineJoin = shape.lineJoin
   if (shape.lineWidth !== undefined) ctx.lineWidth = shape.lineWidth
@@ -148,6 +138,14 @@ ctx.update = function (shape) {
   if (shape.lineDash) ctx.setLineDash(shape.lineDash)
   if (shape.textAlign) ctx.textAlign = shape.textAlign
   if (shape.textBaseline) ctx.textBaseline = shape.textBaseline
+
+  if (shape.shadowColor) ctx.shadowColor = shape.shadowColor;
+  // 如果图形不透明，设置图形的阴影
+  else if (ctx.shadowOpen && ctx.globalAlpha >= 1) ctx.shadowColor = "#00000088";
+
+  if (shape.shadowBlur !== undefined) ctx.shadowBlur = shape.shadowBlur
+  if (shape.shadowOffsetX !== undefined) ctx.shadowOffsetX = shape.shadowOffsetX
+  if (shape.shadowOffsetY !== undefined) ctx.shadowOffsetY = shape.shadowOffsetY
 
   if (shape.transform.transformed()) {
     shape.updateAnchor();
@@ -174,12 +172,12 @@ canvas.getRealPoint = function (p) {
 
   let {x, y} = p;
 
-  x, y = (x - t.translateX)/t.scaleX, (y - t.translateY)/t.scaleY
+  [x, y] = [(x - t.translateX)/t.scaleX, (y - t.translateY)/t.scaleY]
 
   let sin = Math.sin(-t.degree)
   let cos = Math.cos(-t.degree)
 
-  x, y = x*cos - y*sin, y*cos + x*sin
+  [x, y] = [x*cos - y*sin, y*cos + x*sin]
 
   return {x, y}
 }

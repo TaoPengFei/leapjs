@@ -1,6 +1,9 @@
 /***************************************************************
 
 shape.setAnchor(x, y)
+设置图形的形变中心点，x、y为坐标值，默认为图形的中心点
+
+shape.setAnchorRate(x, y)
 
 设置图形的旋转中心点，配合其他变形方法使用
 
@@ -15,7 +18,8 @@ ctx.globalAlpha = 0.5;
 var rect = new Rectangle(100, 100, 100, 100);
 var rect2 = new Rectangle(100, 100, 100, 100);
 
-rect2.setAnchor(0, 0);
+rect.setAnchor(100, 100);
+rect2.setAnchorRate(1, 1);
 
 i = 0;
 function main(){

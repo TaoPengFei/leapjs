@@ -60,8 +60,10 @@ class Shape {
   translate (x, y) { this.transform.translate(x, y) }
   scale (x, y) { this.transform.scale(x, y) }
   skew (x, y) { this.transform.skew(x, y) }
+
   setAnchor (x, y) { this.transform.setAnchor(x, y) }
   setAnchorRate (x, y) { this.transform.setAnchorRate(x, y) }
+  
   rotate (degree) { this.transform.rotate(degree) }
 
   getRealPoint (p) { return this.transform.getRealPoint(p) }
@@ -72,9 +74,9 @@ class Shape {
   collide (other) {
     if (other instanceof Shape) {
       return collide(this, other)
-    } else {
-      return false
     }
+
+    return false;
   }
 
   clone () { return clone(this, false); }
@@ -84,10 +86,6 @@ class Shape {
   get points () {
     this._updatePoints()
     return this._points.map(p => this.transform.getRealPoint(p))
-  }
-
-  setLineDash (arr) {
-    this.lineDash = arr
   }
 
   get minX () { return Math.min(...this._points.map(p => p.x)); };

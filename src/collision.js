@@ -76,15 +76,7 @@ function getCollideRect (r1, r2) {
 }
 
 function lineCollideLine (p1, p2, p3, p4) {
-  let x1 = p1.x
-  let x2 = p2.x
-  let x3 = p3.x
-  let x4 = p4.x
-
-  let y1 = p1.y
-  let y2 = p2.y
-  let y3 = p3.y
-  let y4 = p4.y
+  let [x1, y1, x2, y2, x3, y3, x4, y4] = [p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y]
 
   // quick check
   if (Math.min(x1, x2) > Math.max(x3, x4) ||
@@ -115,18 +107,15 @@ function cross (p1, p2, p3, p4) {
   return (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x)
 }
 
-function max (a, b) { return Math.max(a, b) }
-function min (a, b) { return Math.min(a, b) }
-
 function getRectShape (ps) {
   let xs = ps.map(p => p.x)
   let ys = ps.map(p => p.y)
 
   return {
-    minX: xs.reduce(min),
-    maxX: xs.reduce(max),
-    minY: ys.reduce(min),
-    maxY: ys.reduce(max)
+    minX: Math.min(...xs),
+    maxX: Math.max(...xs),
+    minY: Math.min(...ys),
+    maxY: Math.max(...ys)
   }
 }
 

@@ -14,16 +14,13 @@ export default class Transform {
   }
 
   transformed () {
-    return this.scaleX !== 1 || this.scaleY !== 1 ||
-      this.skewX || this.skewY ||
-      this.translateX || this.translateY || this._degree
+    return this.scaleX !== 1 || this.scaleY !== 1 || this.skewX || this.skewY ||
+      this.translateX || this.translateY || this._degree;
   }
 
-  scale (x, y) { this.scaleX, this.scaleY = x, y; }
-
-  translate (x, y) { this.translateX, this.translateY = x, y; }
-
-  skew (x, y) { this.skewX, this.skewY = x, y; }
+  scale     (x, y) { [this.scaleX,     this.scaleY]     = [x, y]; }
+  skew      (x, y) { [this.skewX,      this.skewY]      = [x, y]; }
+  translate (x, y) { [this.translateX, this.translateY] = [x, y]; }
 
   setAnchor (x, y) {
     // 设置旋转中心点，不能和setAnchorRate共存
@@ -46,7 +43,7 @@ export default class Transform {
   getRealPoint (p) {
     if (!this.transformed()) { return p }
 
-    let {x, y} = p
+    let {x, y} = p;
 
     x -= this.anchorX
     y -= this.anchorY
@@ -55,14 +52,14 @@ export default class Transform {
     let sin = Math.sin(degree);
     let cos = Math.cos(degree);
 
-    x, y = x*cos - y*sin, y*cos + x*sin
+    [x, y] = [x*cos - y*sin, y*cos + x*sin];
 
-    x, y = this.scaleX*x + this.skewX*y + this.translateX, this.skewY*x + this.scaleY*y + this.translateY
+    [x, y] = [this.scaleX*x + this.skewX*y + this.translateX, this.skewY*x + this.scaleY*y + this.translateY];
 
 
-    x += this.anchorX
-    y += this.anchorY
+    x += this.anchorX;
+    y += this.anchorY;
 
-    return {x, y}
+    return {x, y};
   }
 }
