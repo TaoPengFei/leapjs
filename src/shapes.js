@@ -1,5 +1,5 @@
 import { ctx } from './canvas'
-import { clickShapes } from './util'
+import { shapes } from './util'
 import { Mouse } from './mouse'
 import Transform from './transform'
 import { Rss } from './resource'
@@ -23,7 +23,7 @@ class Shape {
   }
 
   stroke () {
-    if (this.click) clickShapes.add(this) // use for handle click event
+    shapes.push(this) // use for handle click event
 
     ctx.save()
     ctx.update(this)
@@ -32,7 +32,7 @@ class Shape {
   }
 
   fill () {
-    if (this.click) clickShapes.add(this) // use for handle click event
+    shapes.push(this) // use for handle click event
 
     ctx.save()
     ctx.update(this)
@@ -49,7 +49,7 @@ class Shape {
   }
 
   draw () {
-    if (this.click) clickShapes.add(this) // use for handle click event
+    shapes.push(this) // use for handle click event
 
     ctx.save()
     ctx.update(this)
@@ -61,11 +61,12 @@ class Shape {
   scale (x, y) { this.transform.scale(x, y) }
   skew (x, y) { this.transform.skew(x, y) }
   setAnchor (x, y) { this.transform.setAnchor(x, y) }
+  setAnchorRate (x, y) { this.transform.setAnchorRate(x, y) }
   rotate (degree) { this.transform.rotate(degree) }
 
   getRealPoint (p) { return this.transform.getRealPoint(p) }
 
-  click () {}
+  // click () {}
   touched () { return pointInShape(Mouse, this) }
 
   collide (other) {
@@ -96,8 +97,11 @@ class Shape {
 
   updateAnchor() {
     this._updatePoints();
-    this.transform.anchorX = this.minX + (this.maxX - this.minX) * this.transform.anchor.x;
-    this.transform.anchorY = this.minY + (this.maxY - this.minY) * this.transform.anchor.y;
+    t = this.transform;
+    if(t.anchor){
+      t.anchorX = this.minX + (this.maxX - this.minX) * t.anchor.x;
+      t.anchorY = this.minY + (this.maxY - this.minY) * t.anchor.y;  
+    }
   }
 }
 
@@ -351,13 +355,19 @@ class Sprite extends Rectangle {
 }
 
 class Animation extends Sprite {
+  /*
+  帧动画
+  图片要求：必须是能够严格分为 n x m 个格子的图片，不支持偏移
+  */
   constructor (src, x, y, w, h) {
     super(src, x, y, w, h)
     this.speed = 10;
     this._cf = 0; // current frame count
+    this.setFrame();
   }
 
-  setFrame (c, r = 1) {
+  setFrame (c = 4, r = 1) {
+    // 设置帧动画的水平数量和垂直数量
     this._c = c
     this._r = r;
   }
@@ -369,18 +379,28 @@ class Animation extends Sprite {
   }
 
   _draw () {
-  	this.sw = this.img.naturalWidth / this._c;
-    this.sh = this.img.naturalHeight / this._r;
+    /*
+    每次绘制都会增加一个 _cf 值，
+    帧更新速度为 _cf * speed / 60
+    默认速度为10， 每10次draw都会更新一帧
+    速度设置为60时，每次draw都会更新一帧
 
-    this.w = this.w || this.sw;
-  	this.h = this.h || this.sh;
+    TODO: 将更新按照时间来更新，而非draw次数
+    */
+
+    // 每个帧图画的宽度和高度，
+    // naturalWidth属性只有在图片加载完成之后才会存在，所以不能放在constructor函数中
+    this.sw = this.img.naturalWidth / this._c;
+    this.sh = this.img.naturalHeight / this._r;
 
     let sx = this.sw * (Math.floor(this._cf * this.speed / 60) % this._c)
     let sy = this.sh * (Math.floor(this._cf * this.speed / 60 / this._c) % this._r)
+
     ctx.drawImage(this.img, sx, sy, this.sw, this.sh,
       this.x, this.y, this.w, this.h)
 
-    this._cf++ // update frame count
+    // update frame count
+    this._cf++;
   }
 }
 

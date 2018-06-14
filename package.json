@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo visit /test.html in the browser",
-    "build": "webpack --config webpack.config.prod.js --optimize-minimize",
+    "build": "webpack --config webpack.config.prod.js --optimize-minimize & webpack",
     "start": "python -m http.server 80"
   },
   "keywords": [

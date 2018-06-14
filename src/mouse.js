@@ -1,6 +1,6 @@
 import { canvas, p } from './canvas'
 import { Key } from './keys'
-import { clickShapes } from './util'
+import { shapes } from './util'
 
 let Mouse = { x: 0, y: 0 }
 
@@ -37,7 +37,7 @@ canvas.onmousedown = function (e) {
 
   // handle events of all shapes, LIFO
   // IMPORTANT
-  const array = Array.from(clickShapes)
+  const array = Array.from(shapes)
   let i = array.length
   while (i--) {
     let shape = array[i]

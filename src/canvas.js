@@ -1,6 +1,7 @@
 /* global text, line */
-import {clickShapes} from './util'
+import {shapes} from './util'
 import Transform from './transform'
+
 
 let canvas = document.createElement('canvas')
 let p = document.createElement('p')
@@ -41,7 +42,24 @@ canvas.resize = function (width, height) {
   canvas.width = width || 450 // borders size
   canvas.height = height || 600 // p, height
   ctx.fillStyle = ctx.strokeStyle = 'orange'
+  
+  // 设置文字默认对齐方式：顶部对齐
   ctx.textBaseline = 'top'
+
+  // 设置默认阴影
+  ctx.shadowColor = 'grey';
+  ctx.shadowBlur = 5;
+  ctx.shadowOffsetX = 2;
+  ctx.shadowOffsetY = 2;
+}
+
+canvas.shadow = function(open=true){
+  if(open){
+    // 设置默认阴影
+    ctx.shadowColor = 'grey';
+  } else {
+    ctx.shadowColor = "rgba(0, 0, 0, 0)";
+  }
 }
 
 canvas.resize()
@@ -65,7 +83,7 @@ canvas._translate = function (x, y) {
 }
 
 canvas.clear = function () {
-  clickShapes.clear()
+  shapes.clear()
   ctx.save()
   ctx.setTransform(1, 0, 0, 1, 0, 0)
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -73,10 +91,16 @@ canvas.clear = function () {
 }
 
 canvas.showAxis = function () {
+  /* 
+  显示坐标轴
+  宽度、高度大小为画布的2倍
+  */
   ctx.save()
-  ctx.strokeStyle = 'black'
+  ctx.strokeStyle = 'black';
+  ctx.fillStyle = 'orange';
+  ctx.shadowColor = "rgba(0, 0, 0, 0)"; // no shadow
 
-  let gap = 10
+  let gap = 10 // 坐标轴间隔
   let lw = 0
   if (canvas.transform.scaleX >= 10 && canvas.transform.scaleY >= 10) gap = 1
 
@@ -127,21 +151,21 @@ ctx.update = function (shape) {
 
   if (shape.transform.transformed()) {
     shape.updateAnchor();
-    ctx.updateTransform(shape.transform)
+    ctx.updateTransform(shape.transform);
   }
 }
 
 ctx.updateTransform = function (transform) {
-  ctx.translate(transform.anchorX, transform.anchorY)
+  ctx.translate(transform.anchorX, transform.anchorY);
 
-  ctx.rotate(transform.degree)
+  ctx.rotate(transform.degree);
   ctx.transform(
     transform.scaleX, transform.skewX,
     transform.skewY, transform.scaleY,
     transform.translateX, transform.translateY
-  )
+  );
 
-  ctx.translate(-transform.anchorX, -transform.anchorY)
+  ctx.translate(-transform.anchorX, -transform.anchorY);
 }
 
 canvas.getRealPoint = function (p) {

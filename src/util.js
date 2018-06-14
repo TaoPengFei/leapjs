@@ -6,7 +6,11 @@ var nextFrame = function (func) {
 }
 
 // handle shape click event;
-var clickShapes = new Set()
+var shapes = new Set()
+shapes.push = function(shape){
+    this.delete(shape);
+    this.add(shape);
+}
 
 //
 const runningFuncs = {};
@@ -20,4 +24,4 @@ const stop = function (func) {
   if(id) clearInterval(id)
 }
 
-export { nextFrame, clickShapes, run, stop }
+export { nextFrame, shapes, run, stop }

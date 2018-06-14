@@ -1,7 +1,8 @@
 export default class Transform {
+  // 
   constructor () {
-    this.anchorX = 0
-    this.anchorY = 0
+    this.anchorX = undefined
+    this.anchorY = undefined
     this.scaleX = 1
     this.scaleY = 1
     this.skewX = 0
@@ -18,31 +19,28 @@ export default class Transform {
       this.translateX || this.translateY || this._degree
   }
 
-  scale (x, y) {
-    this.scaleX = x
-    this.scaleY = y
-  }
+  scale (x, y) { this.scaleX, this.scaleY = x, y; }
 
-  translate (x, y) {
-    this.translateX = x
-    this.translateY = y
-  }
+  translate (x, y) { this.translateX, this.translateY = x, y; }
 
-  skew (x, y) {
-    this.skewX = x
-    this.skewY = y
-  }
+  skew (x, y) { this.skewX, this.skewY = x, y; }
 
   setAnchor (x, y) {
-    this.anchor.x = x
-    this.anchor.y = y
+    // 设置旋转中心点，不能和setAnchorRate共存
+    this.anchorX, this.anchorY = x, y;
+    this.anchor = undefined;
   }
 
-  rotate (degree) {
-    this._degree = degree;
+  setAnchorRate(x, y) {
+    // 设置旋转中心相对位置，不能和setAnchor共存
+    this.anchorX = this.anchorY = undefined;
+    this.anchor = {x, y};
   }
 
-  get degree() { return this._degree  * Math.PI / 180; };
+  rotate (degree) { this._degree = degree; }
+
+  set degree(degree) { this._degree = degree * 180 / Math.PI; }
+  get degree() { return this._degree  * Math.PI / 180; }
 
   getRealPoint (p) {
     if (!this.transformed()) { return p }
