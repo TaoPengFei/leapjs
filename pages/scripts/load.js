@@ -7,24 +7,7 @@ function iframeHtml () {
   html += `
   <html>
   <body>
-    <script src="../dist/leap.js"></script>
-    <script>
-      let _logY = 0;
-      const _log = console.log;
-      function _to2(n){ return n<10 ? "0"+n : n};
-      function _to3(n){
-        if(n<10) return "00" + n;
-        if(n<100) return "0" + n;
-        return n;
-      }
-      console.log = function(obj){
-        a = new Date();
-        str = [_to2(a.getHours()), _to2(a.getMinutes()), _to2(a.getSeconds())].join(":")
-        + "." + _to3(a.getMilliseconds()) + " " + JSON.stringify(obj);
-        text(str, 10, 10 + 20 * _logY++);
-        _log(obj);
-      }
-    </script>
+    <script src="../dist/leap.min.v1.0.js"></script>
     <script>
   `;
 

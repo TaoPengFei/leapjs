@@ -12,7 +12,7 @@ polygon.update = function(){
     this.rotate(degree++);
 };
 
-(function main(){
+function main(){
     canvas.clear();
     polygon.update();
     polygon.draw();
@@ -21,5 +21,6 @@ polygon.update = function(){
     if(p){
         new Point(p.x, p.y).draw();
     }
-    nextFrame(main);
-}());
+}
+
+run(main);

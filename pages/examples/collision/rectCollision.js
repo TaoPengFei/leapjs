@@ -3,7 +3,7 @@ var rect2 = new Rectangle(50, 180, 200, 20);
 
 var degree = 0;
 
-(function main(){
+function main(){
     canvas.clear();
     rect.rotate(degree++);
     rect.draw();
@@ -12,5 +12,6 @@ var degree = 0;
     if(p){
         new Point(p.x, p.y).draw();
     }
-    nextFrame(main);
-}());
+}
+
+run(main);

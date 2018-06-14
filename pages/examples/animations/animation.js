@@ -4,14 +4,7 @@ var image = new Sprite(url+"animations/fire.png", 0, 50, 60*5, 60);
 var fire = new Animation(url+"animations/fire.png", 0, 150, width=60, height=60);
 
 // 序列帧动画需要设置以下属性，才可生效
-fire.setFrame(
-    frameStartX=0,  // 帧图片开始的X位置
-    frameStartY=0,  // 帧图片开始的Y位置
-    frameWidth=77,  // 每一帧的宽度
-    frameHeight=84, // 每一帧的高度
-    frameCount=5,   // 列数
-    row=1           // 行数
-); 
+fire.setFrame(5, 1);
 
 // 设置帧动画播放速度，动画间隔 = 1000ms/speed
 fire.setSpeed(speed=1);     

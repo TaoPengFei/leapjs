@@ -11,10 +11,10 @@ Circle.prototype.update = function(){
     var act = this.acts[this.act_i];
     if(act){
         if(!(act.dx && act.dy)){
-			var d = Math.sqrt((act.x - this.x)*(act.x - this.x) + 
+            var d = Math.sqrt((act.x - this.x)*(act.x - this.x) + 
                               (act.y - this.y)*(act.y - this.y));
-        	act.dx = (act.x - this.x) / d;
-        	act.dy = (act.y - this.y) / d;
+            act.dx = (act.x - this.x) / d;
+            act.dy = (act.y - this.y) / d;
         }
         this.x += act.dx;
         this.y += act.dy;
@@ -25,12 +25,13 @@ Circle.prototype.update = function(){
     }
 };
 
-(function(){
+function draw(){
     canvas.clear();
     a.update();
     a.draw();    
-    nextFrame(arguments.callee);
-}());
+}
+
+run(draw);
 
 a.moveTo(100, 200);
 a.moveTo(300, 200);

@@ -154,25 +154,22 @@ class Line extends Shape {
     this._points.push({x: this.x2, y: this.y2})
   }
 
-  get x () { return (this.minX + this.maxX) / 2 }
+  get x () { return (this.x1 + this.x2) / 2 }
   set x (x) {
     let deltaX = x - this.x
     this.x1 += deltaX
     this.x2 += deltaX
   }
 
-  get y () { return (this.minY + this.maxY) / 2 }
+  get y () { return (this.y1 + this.y2) / 2 }
   set y (y) {
     let deltaY = y - this.y
     this.y1 += deltaY
     this.y2 += deltaY
   }
-
-  _draw () {
-    this._path()
-    ctx.stroke()
-  }
 }
+
+Line.prototype.draw = Line.prototype.stroke;
 
 class Polygon extends Shape {
   constructor () {

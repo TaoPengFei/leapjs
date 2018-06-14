@@ -18,7 +18,7 @@ Mouse.move = function(){
     circle.y = Mouse.y;
 };
 
-(function main(){
+function main(){
     canvas.clear();
     rect.draw();
     circle.draw();
@@ -26,5 +26,6 @@ Mouse.move = function(){
     if(p){
         new Point(p.x, p.y).draw();
     }
-    nextFrame(main);
-}());
+}
+
+run(main);

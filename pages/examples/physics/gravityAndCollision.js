@@ -11,10 +11,10 @@ function update(j){
         var p = this.collide(c);
 
         if(p){
- 			var d = Math.sqrt((this.x-c.x)*(this.x-c.x) +
+            var d = Math.sqrt((this.x-c.x)*(this.x-c.x) +
                               (this.y-c.y)*(this.y-c.y));
             
-           	var dx = (2*r - d)/(d + 1e-6) * (this.x-c.x);
+            var dx = (2*r - d)/(d + 1e-6) * (this.x-c.x);
             var dy = (2*r - d)/(d + 1e-6) * (this.y-c.y);
 
             this.x += dx/3;
@@ -35,13 +35,14 @@ for(var i=0; i<count; i++){
     cs.push(c);
 }
 
-(function main(){
+function main(){
     canvas.clear();
 
     for(var i=0; i<cs.length; i++){
         cs[i].update(i);
-        cs[i].draw();
+        cs[i].stroke();
     }
 
-    nextFrame(main);
-})();
+}
+
+run(main);
