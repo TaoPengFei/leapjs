@@ -11,53 +11,12 @@ function circle     (...args) { isFill ? new Circle(...args).draw()     : new Ci
 function line       (...args) { isFill ? new Line(...args).draw()       : new Line(...args).stroke() }
 function point      (...args) { isFill ? new Point(...args).draw()      : new Point(...args).stroke() }
 function polygon    (...args) { isFill ? new Polygon(...args).draw()    : new Polygon(...args).stroke() }
-function ellipse    (...args) { isFill ? new Ellipse(...arg).draw()     : new Ellipse(...arg).stroke() }
+function ellipse    (...args) { isFill ? new Ellipse(...args).draw()    : new Ellipse(...args).stroke() }
 
 const triangle = polygon
 
-const globalImages = {}
-
-function image (src, x = 0, y = 0, w, h) {
-  let img
-  if (globalImages.hasOwnProperty(src)) {
-    img = globalImages[src]
-  } else {
-    img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.src = src
-    globalImages[src] = img
-  }
-
-  img._x = x
-  img._y = y
-  img.w = w
-  img.h = h
-
-  if (img.complete) {
-    if (w && h) {
-      ctx.drawImage(img, x, y, w, h)
-    } else {
-      ctx.drawImage(img, x, y)
-    }
-  } else {
-    img.onload = function () {
-      if (this.w && this.h) {
-        ctx.drawImage(this, this._x, this._y, this.w, this.h)
-      } else {
-        ctx.drawImage(this, this._x, this._y)
-      }
-    }
-  }
-}
-
-function text (src, x = 0, y = 0, size = 20, c) {
-  let t = new Text(src, x, y, size, c);
-  t.font = textFont;
-  t.draw();
-}
-
-let textFont = 'Arial'
-function font (font) { textFont = font }
+function image (...args) { new Sprite(...args).draw() }
+function text (...args) { new Text(...args).draw() }
 
 const globalAudio = {}
 function play (src, loop=false) {
@@ -84,4 +43,4 @@ function pause (src) {
   }
 }
 
-export { background, fill, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, font, play, pause }
+export { background, fill, rectangle, circle, line, point, polygon, triangle, ellipse, image, text, play, pause }

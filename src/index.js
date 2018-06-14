@@ -31,7 +31,6 @@ window.Key = Key
 window.Mouse = Mouse
 
 // rss
-window.nextFrame = nextFrame
 window.loadRssAndRun = loadRssAndRun
 window.run = run
 window.stop = stop
@@ -61,11 +60,11 @@ window.triangle = triangle
 window.ellipse = ellipse
 window.image = image
 window.text = text
-window.font = font
 window.play = play
 window.pause = pause
 
-window.noStroke = function(){ console.log("'noStroke' is deprecated, use 'fill(boolen)' instead");};
-window.canvas.preventDefaultEvent = function(){console.log("'canvas.preventDefaultEvent' is deprecated, you don't need it any more");};
-window.nextFrame = function () { console.log("'nextFrame' is deprecated, use 'run(function)' instead");};
-window.playSound = function () { console.log("'playSound' is deprecated, use 'play' instead"); }
+window.noStroke = function(){ console.log("'noStroke'不再使用了, 请使用'fill(boolen)'");};
+window.canvas.preventDefaultEvent = function(){console.log("'canvas.preventDefaultEvent'不再使用了");};
+window.nextFrame = function () { console.log("'nextFrame'不再使用了, 请使用'run(function)' instead");};
+window.playSound = function () { console.log("'playSound'不再使用了, 请使用'play' instead"); }
+window.font = function () { console.log("'font'不再使用了"); }

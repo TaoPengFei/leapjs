@@ -42,9 +42,6 @@ class Shape {
 
   _draw () {
     this._path()
-    if(this.strokeStyle){
-      ctx.stroke();
-    }
     ctx.fill()
   }
 
@@ -104,12 +101,12 @@ class Shape {
 }
 
 class Circle extends Shape {
-  constructor (x = 50, y = 50, r = 20, color="orange") {
+  constructor (x=50, y=50, r=20, color="orange") {
     super()
     this.x = x
     this.y = y
     this.r = r
-    this.fillStyle = color
+    this.fillStyle = this.strokeStyle = color
   }
 
   get radius () { return this.r }
@@ -134,7 +131,7 @@ class Circle extends Shape {
 }
 
 class Line extends Shape {
-  constructor (x1 = 100, y1 = 100, x2 = 200, y2 = 100, lineWidth=1, color="orange") {
+  constructor (x1=100, y1=100, x2=200, y2=100, lineWidth=1, color="orange") {
     super()
     this.x1 = x1
     this.y1 = y1
@@ -174,20 +171,21 @@ class Line extends Shape {
 Line.prototype.draw = Line.prototype.stroke;
 
 class Polygon extends Shape {
-  constructor () {
+  constructor (...args) {
     super()
-    if (arguments.length < 6) {
-      throw String('Polygon should have at lease 3 points')
+    if (args.length < 6) {
+      console.log('Polygon should have at lease 3 points');
     }
 
     this._points = []
-    for (let i = 0; i < arguments.length - 1; i += 2) {
-      let p = { x: arguments[i], y: arguments[i + 1] }
+    for (let i = 0; i < args.length - 1; i += 2) {
+      let p = { x: args[i], y: args[i + 1] }
       this._points.push(p)
     }
 
-    if(typeof (arguments[-1]) == "string"){
-      this.fillStyle = arguments[-1];
+    let color = args[args.length-1]
+    if(typeof(color) == "string"){
+      this.fillStyle = this.strokeStyle = color;
     }
   }
 
@@ -215,14 +213,16 @@ class Polygon extends Shape {
   }
 }
 
+const Triangle = Polygon
+
 class Rectangle extends Shape {
-  constructor (x = 100, y = 100, w = 100, h = 50, color="orange") {
+  constructor (x=100, y=100, w=100, h=50, color="orange") {
     super()
     this.x = x
     this.y = y
     this.w = w
     this.h = h
-    this.fillStyle = color
+    this.fillStyle = this.strokeStyle = color
     this.collideW = 1
     this.collideH = 1
   }
@@ -259,11 +259,11 @@ class Rectangle extends Shape {
 }
 
 class Text extends Rectangle {
-  constructor (src = 'LeapLearner', x = 0, y = 0, size = 20, color="orange", font = 'Arial') {
+  constructor (src='LeapLearner', x=0, y=0, size=20, color="orange", font='Arial') {
     super(x, y, 100, size)
     this._src = src
     this._font = font
-    this.fillStyle = color
+    this.fillStyle = this.strokeStyle = color
     this._updateWidth()
   }
 
@@ -338,6 +338,10 @@ class Sprite extends Rectangle {
   }
 
   _draw () {
+    if (!this.img.complete) {
+      setTimeout(function(shape){ shape.draw() }, 100, this);
+      return;
+    }
     if (this.sx && this.sy && this.sw & this.sh) {
       ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh,
         this.x, this.y, this.w, this.h)
@@ -388,6 +392,13 @@ class Animation extends Sprite {
 
     // 每个帧图画的宽度和高度，
     // naturalWidth属性只有在图片加载完成之后才会存在，所以不能放在constructor函数中
+
+    // 加载图片完成后绘制
+    if (!this.img.complete) {
+      setTimeout(function(shape){ shape.draw() }, 100, this);
+      return;
+    }
+
     this.sw = this.img.naturalWidth / this._c;
     this.sh = this.img.naturalHeight / this._r;
 
@@ -404,20 +415,19 @@ class Animation extends Sprite {
 
 class Point extends Circle {
   constructor (x, y, color="red") {
-    super(x, y, 0.5)
-    this.fillStyle = color
-    this.strokeStyle = 'rgba(0, 0, 0, 0)'
+    super(x, y, 1, color);
+    this.strokeStyle = 'rgba(0,0,0,0)';
   }
 }
 
 class Ellipse extends Shape {
-  constructor (x, y, rX, rY, color="orange") {
+  constructor (x=200, y=100, rX=100, rY=50, color="orange") {
     super()
     this.x = x
     this.y = y
     this.rX = rX
     this.rY = rY
-    this.fillStyle = color;
+    this.fillStyle = this.strokeStyle = color
   }
 
   _path () {
@@ -444,7 +454,5 @@ class Ellipse extends Shape {
   set radiusY (rY) { this.rY = rY }
 }
 
-Point.prototype.draw = Point.prototype.fill
-const Triangle = Polygon
 
 export { Shape, Line, Rectangle, Polygon, Triangle, Circle, Point, Text, Sprite, Animation, Ellipse }
