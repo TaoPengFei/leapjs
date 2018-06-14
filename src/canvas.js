@@ -1,4 +1,3 @@
-/* global text, line */
 import {shapes} from './util'
 import Transform from './transform'
 
@@ -85,43 +84,54 @@ canvas.clear = function () {
   ctx.restore()
 }
 
+function ctxline(x1, y1, x2, y2){
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+}
+
 canvas.showAxis = function () {
   /* 
   显示坐标轴
   宽度、高度大小为画布的2倍
   */
-  ctx.save()
-  ctx.strokeStyle = 'black';
-  ctx.fillStyle = 'orange';
+  ctx.save();
+  ctx.strokeStyle = '#ff8800';
+  ctx.fillStyle = '#ff8800';
   ctx.shadowColor = "rgba(0,0,0,0)"; // no shadow
 
-  let gap = 10 // 坐标轴间隔
-  let lw = 0
-  if (canvas.transform.scaleX >= 10 && canvas.transform.scaleY >= 10) gap = 1
+  let t = canvas.transform;
+  let gap = 10; // 坐标轴间隔
+  if (t.scaleX >= 10 && t.scaleY >= 10){ gap = 1; }
 
-  let w = canvas.width / Math.abs(canvas.transform.scaleX)
-  let h = canvas.height / Math.abs(canvas.transform.scaleY)
+  let w = canvas.width / Math.abs(t.scaleX);
+  let h = canvas.height / Math.abs(t.scaleY);
+
+  ctx.font = gap*1.5 + "px Arial";
+  
   for (let i = 0; i < w; i += gap) {
     if (i % (10 * gap) === 0) {
-      text(i.toString(), i, 0, gap * 1.5)
-      text((-i).toString(), -i, 0, gap * 1.5)
-      lw = 0.04 * gap
-    } else lw = 0.01 * gap
-    line(i, -h, i, h, lw)
-    line(-i, -h, -i, h, lw)
+      ctx.fillText( i, i, 0);
+      ctx.fillText(-i, -i, 0);
+      ctx.lineWidth = gap/20;
+    } else ctx.lineWidth = gap/50;
+    ctxline(i, -h, i, h);
+    ctxline(-i, -h, -i, h);
   }
 
   for (let i = 0; i < h; i += gap) {
     if (i % (10 * gap) === 0) {
-      text(i.toString(), 0, i, gap * 1.5)
-      text((-i).toString(), 0, -i, gap * 1.5)
-      lw = 0.03 * gap
-    } else lw = 0.01 * gap
-    line(-w, i, w, i, lw)
-    line(-w, -i, w, -i, lw)
+      ctx.fillText( i, 0,  i);
+      ctx.fillText(-i, 0, -i);
+      ctx.lineWidth = gap/20;
+    } else ctx.lineWidth = gap/50;
+    ctxline(-w, i, w, i);
+    ctxline(-w, -i, w, -i);
   }
-  ctx.restore()
-}
+  ctx.restore();
+};
+
 
 ctx.update = function (shape) {
   if (shape.fillStyle) ctx.fillStyle = shape.fillStyle

@@ -1,80 +1,19 @@
 import { ctx, canvas } from './canvas'
 
-function background (style) { rectangle(0, 0, canvas.width, canvas.height, style) }
+function background (style) { new Rectangle(0, 0, canvas.width, canvas.height, style).draw(); }
 
 let isFill = true
 
 function fill (bool = true) { isFill = bool }
 
-function startDraw () {
-  ctx.save()
-  ctx.beginPath()
-}
+function rectangle  (...args) { isFill ? new Rectangle(...args).draw()  : new Rectangle(...args).stroke() }
+function circle     (...args) { isFill ? new Circle(...args).draw()     : new Circle(...args).stroke() }
+function line       (...args) { isFill ? new Line(...args).draw()       : new Line(...args).stroke() }
+function point      (...args) { isFill ? new Point(...args).draw()      : new Point(...args).stroke() }
+function polygon    (...args) { isFill ? new Polygon(...args).draw()    : new Polygon(...args).stroke() }
+function ellipse    (...args) { isFill ? new Ellipse(...arg).draw()     : new Ellipse(...arg).stroke() }
 
-function endDraw (c) {
-  if (isFill) {
-    if (c) ctx.fillStyle = c
-    ctx.fill()
-  } else {
-    if (c) ctx.strokeStyle = c
-    ctx.stroke();
-  }
-  ctx.restore()
-}
-
-function rectangle (x, y, w, h, c) {
-  startDraw()
-  ctx.rect(x, y, w, h)
-  endDraw(c)
-}
-
-function circle (x, y, r, c) {
-  startDraw()
-  ctx.arc(x, y, r, 0, 2 * Math.PI)
-  endDraw(c)
-}
-
-// line(x1, y1, x2, y2, *lineWidth, *color);
-function line (x1, y1, x2, y2, lW, c) {
-  ctx.save()
-  if (typeof lW === 'string') c = lW;
-  else if (lW) ctx.lineWidth = lW;
-  if (c) ctx.strokeStyle = c;
-  ctx.beginPath()
-  ctx.moveTo(x1, y1)
-  ctx.lineTo(x2, y2)
-  ctx.stroke()
-  ctx.restore()
-}
-
-function point (x, y, c) {
-  startDraw()
-  circle(x, y, 0.5)
-  endDraw(c)
-}
-
-function polygon () {
-  startDraw()
-  let len = arguments.length
-  ctx.moveTo(arguments[0], arguments[1])
-  for (let i = 2; i < len - 1; i += 2) { ctx.lineTo(arguments[i], arguments[i + 1]) }
-  ctx.closePath()
-  let c = null
-  if (len % 2 === 1) { c = arguments[len - 1] }
-  endDraw(c)
-}
-
-function triangle (x1, y1, x2, y2, x3, y3, c) {
-  startDraw()
-  polygon(x1, y1, x2, y2, x3, y3)
-  endDraw(c)
-}
-
-function ellipse (x, y, rX, rY, c) {
-  startDraw()
-  ctx.ellipse(x, y, rX, rY, 0, 0, Math.PI * 2)
-  endDraw(c)
-}
+const triangle = polygon
 
 const globalImages = {}
 
@@ -112,18 +51,16 @@ function image (src, x = 0, y = 0, w, h) {
 }
 
 function text (src, x = 0, y = 0, size = 20, c) {
-  ctx.save()
-  ctx.font = size + 'px ' + textFont
-  if (c) ctx.fillStyle = c
-  ctx.fillText(src, x, y)
-  ctx.restore()
+  let t = new Text(src, x, y, size, c);
+  t.font = textFont;
+  t.draw();
 }
 
 let textFont = 'Arial'
 function font (font) { textFont = font }
 
 const globalAudio = {}
-function play (src, loop) {
+function play (src, loop=false) {
   let m
   if (globalAudio.hasOwnProperty(src)) {
     m = globalAudio[src]
@@ -132,7 +69,7 @@ function play (src, loop) {
   } else {
     m = new Audio()
     m.src = src
-    if (loop) m.loop = loop
+    m.loop = loop
     globalAudio[src] = m
     m.oncanplaythrough = function () {
       this.play()
