@@ -8,8 +8,12 @@ import clone from './clone'
 
 class Shape {
   constructor () {
-    this.transform = new Transform()
-    this._points = []
+    this.transform = new Transform();
+    this._points = [];
+  }
+
+  set color (color) { 
+    this.fillStyle = this.strokeStyle = color;
   }
 
   _path () {}
@@ -54,14 +58,29 @@ class Shape {
     ctx.restore()
   }
 
-  translate (x, y) { this.transform.translate(x, y) }
-  scale (x, y) { this.transform.scale(x, y) }
-  skew (x, y) { this.transform.skew(x, y) }
+  translate (x, y) { 
+    this.transform.translate(x, y);
+    this.updateAnchor();
+  }
+  scale (x, y) { 
+    this.transform.scale(x, y);
+    this.updateAnchor();
+  }
+  skew (x, y) { 
+    this.transform.skew(x, y);
+    this.updateAnchor();
+  }
 
   setAnchor (x, y) { this.transform.setAnchor(x, y) }
-  setAnchorRate (x, y) { this.transform.setAnchorRate(x, y) }
+  setAnchorRate (x, y) { 
+    this.transform.setAnchorRate(x, y);
+    this.updateAnchor();
+  }
   
-  rotate (degree) { this.transform.rotate(degree) }
+  rotate (degree) {
+    this.transform.rotate(degree);
+    this.updateAnchor();
+  }
 
   getRealPoint (p) { return this.transform.getRealPoint(p) }
 
@@ -259,7 +278,7 @@ class Rectangle extends Shape {
 }
 
 class Text extends Rectangle {
-  constructor (src='LeapLearner', x=0, y=0, size=20, color="orange", font='Arial') {
+  constructor (src='LeapLearner', x=0, y=0, size=20, color="orange", font) {
     super(x, y, 100, size)
     this._src = src
     this._font = font
@@ -270,7 +289,7 @@ class Text extends Rectangle {
   _updateWidth () {
     ctx.save()
     ctx.update(this)
-    ctx.font = this.h + 'px ' + this._font
+    ctx.font = this.font;
     this.w = ctx.measureText(this._src).width
     ctx.restore()
   }
@@ -287,19 +306,22 @@ class Text extends Rectangle {
     this._updateWidth()
   }
 
-  get font () { return this._font }
+  get font () {
+    return this.h + 'px ' + (this._font ? this._font : ctx.font.split()[1]);
+  }
+
   set font (font) {
     this._font = font
     this._updateWidth()
   }
 
   _stroke () {
-    ctx.font = this.size + 'px ' + this.font
+    ctx.font = this.font;
     ctx.strokeText(this.src, this.x, this.y)
   }
 
   _fill () {
-    ctx.font = this.size + 'px ' + this.font
+    ctx.font = this.font;
     ctx.fillText(this.src, this.x, this.y)
   }
 

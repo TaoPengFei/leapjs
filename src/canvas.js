@@ -77,12 +77,12 @@ canvas._translate = function (x, y) {
 }
 
 canvas.clear = function () {
-  shapes.clear()
-  ctx.save()
-  ctx.setTransform(1, 0, 0, 1, 0, 0)
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-  ctx.restore()
-}
+  shapes.clear();
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
+};
 
 function ctxline(x1, y1, x2, y2){
   ctx.beginPath();
@@ -180,16 +180,13 @@ canvas.getRealPoint = function (p) {
   if (!this.transform.transformed()) { return p }
   let t = this.transform
 
-  let {x, y} = p;
-
-  [x, y] = [(x - t.translateX)/t.scaleX, (y - t.translateY)/t.scaleY]
+  let x = (p.x - t.translateX)/t.scaleX;
+  let y = (p.y - t.translateY)/t.scaleY
 
   let sin = Math.sin(-t.degree)
   let cos = Math.cos(-t.degree)
 
-  [x, y] = [x*cos - y*sin, y*cos + x*sin]
-
-  return {x, y}
+  return { x: x*cos - y*sin, y: y*cos + x*sin };
 }
 
 export { canvas, ctx, p }

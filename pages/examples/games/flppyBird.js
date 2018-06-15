@@ -4,7 +4,7 @@ var sky = new Sprite(url+"bgs/bg.png", 0, 0, 800, 450);
 var ground = new Sprite(url+"bgs/ground.png", 0, 430, 600, 150);
 
 var bird = new Animation(url+"animations/bird.png", 80, 20, 56, 42);
-bird.setFrame(0, 0, 112, 84, 8, 1); // shiftX, shiftY, frameX, frameY, columns, rows
+bird.setFrame(8, 1); // shiftX, shiftY, frameX, frameY, columns, rows
 
 bird.scale(-1, 1);    // These two lines are used to flip bird
 bird.setCollisionScale(0.4, 0.4); // the actual collision scale

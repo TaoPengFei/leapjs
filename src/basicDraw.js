@@ -1,22 +1,29 @@
 import { ctx, canvas } from './canvas'
+import {Rectangle, Circle, Line, Point, Polygon, Ellipse, Sprite, Text } from './shapes'
+import { shapes } from './util'
 
-function background (style) { new Rectangle(0, 0, canvas.width, canvas.height, style).draw(); }
+function background (style) { rectangle(0, 0, canvas.width, canvas.height, style) }
 
 let isFill = true
 
 function fill (bool = true) { isFill = bool }
 
-function rectangle  (...args) { isFill ? new Rectangle(...args).draw()  : new Rectangle(...args).stroke() }
-function circle     (...args) { isFill ? new Circle(...args).draw()     : new Circle(...args).stroke() }
-function line       (...args) { isFill ? new Line(...args).draw()       : new Line(...args).stroke() }
-function point      (...args) { isFill ? new Point(...args).draw()      : new Point(...args).stroke() }
-function polygon    (...args) { isFill ? new Polygon(...args).draw()    : new Polygon(...args).stroke() }
-function ellipse    (...args) { isFill ? new Ellipse(...args).draw()    : new Ellipse(...args).stroke() }
+function basicDraw(className, args){
+  let t = new className(...args);
+  isFill ? t.draw()  : t.stroke();
+  shapes.delete(t); // remove from shapes
+}
 
-const triangle = polygon
+const rectangle = function(...args) { basicDraw(Rectangle, args) };
+const circle    = function(...args) { basicDraw(Circle, args) };
+const line      = function(...args) { basicDraw(Line, args) };
+const point     = function(...args) { basicDraw(Point, args) };
+const polygon   = function(...args) { basicDraw(Polygon, args) };
+const ellipse   = function(...args) { basicDraw(Ellipse, args) };
+const triangle  = polygon;
 
-function image (...args) { new Sprite(...args).draw() }
-function text (...args) { new Text(...args).draw() }
+const image     = function(...args) { basicDraw(Sprite, args) }
+const text      = function(...args) { basicDraw(Text, args) }
 
 const globalAudio = {}
 function play (src, loop=false) {

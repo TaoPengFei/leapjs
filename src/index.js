@@ -34,6 +34,7 @@ window.Mouse = Mouse
 window.loadRssAndRun = loadRssAndRun
 window.run = run
 window.stop = stop
+window.nextFrame = nextFrame;
 
 // colors
 window.RGB = RGB
@@ -63,8 +64,7 @@ window.text = text
 window.play = play
 window.pause = pause
 
-window.noStroke = function(){ console.log("'noStroke'不再使用了, 请使用'fill(boolen)'");};
-window.canvas.preventDefaultEvent = function(){console.log("'canvas.preventDefaultEvent'不再使用了");};
-window.nextFrame = function () { console.log("'nextFrame'不再使用了, 请使用'run(function)' instead");};
-window.playSound = function () { console.log("'playSound'不再使用了, 请使用'play' instead"); }
-window.font = function () { console.log("'font'不再使用了"); }
+window.noStroke = function(){ console.log("'noStroke()'不再使用了, 请使用'fill(boolen)'");};
+window.canvas.preventDefaultEvent = function(){console.log("'canvas.preventDefaultEvent()'不再使用了");};
+window.playSound = function () { console.log("'playSound()'不再使用了, 请使用'play()'"); }
+window.font = function () { console.log("'font()'不再使用了，请直接使用'text()'方法"); }

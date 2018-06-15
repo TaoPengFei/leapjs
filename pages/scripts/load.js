@@ -7,7 +7,7 @@ function iframeHtml () {
   html += `
   <html>
   <body>
-    <script src="../dist/leap.min.v1.0.js"></script>
+    <script src="../dist/leap.v1.0.js"></script>
     <script>
   `;
 

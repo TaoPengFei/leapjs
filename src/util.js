@@ -5,22 +5,20 @@ var nextFrame = function (func) {
   frameId = window.requestAnimationFrame(func)
 }
 
-// handle shape click event;
-var shapes = new Set()
+// 所有在屏幕上的图形都由shapes来管理，为了避免占用内存，使用Set来管理所有shapes
+var shapes = new Set();
 shapes.push = function(shape){
     this.delete(shape);
     this.add(shape);
 }
 
-//
-const runningFuncs = {};
+const _rfs = {};
 const run = function (func, interval=20) {
-  stop(func);
-  runningFuncs[func.name] = setInterval(func, interval);
+  _rfs[func.name] = setInterval(func, interval);
 }
 
 const stop = function (func) {
-  let id = runningFuncs[func.name];
+  let id = _rfs[func.name];
   if(id) clearInterval(id)
 }
 
