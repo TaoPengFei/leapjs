@@ -1,16 +1,16 @@
 /***************************************************************
-
-text(string, x, y, *size, *color)
-
-在画布上写字：
-
-* 文字内容：string
-* 文字左上角顶点位置为（x,y）
-* 文字大小为size，可选参数，默认为20
-* 文字颜色为为color，可选参数，默认为 "orange"
-
-
-***************************************************************/
+ * 
+ * text(string, x, y, *size, *color)
+ * 
+ * 在画布上写字：
+ * 
+ * 文字内容：string
+ * 文字左上角顶点位置为（x,y）
+ * 文字大小为size，可选参数，默认为20
+ * 文字颜色为为color，可选参数，默认为 "orange"
+ * 
+ ***************************************************************/
+ 
 canvas.showAxis();
 
 text("Hello World!", 50, 50);
@@ -18,6 +18,16 @@ text("Hello World!", 50, 50);
 text("Hello World!", 50, 100, 30);
 
 text("Hello World!", 50, 150, 40, 'red');
+
+// 使用不同的字体
+
+text("Hello World!", 50, 250, 20, null, "Arial");
+
+text("Hello World!", 50, 300, 30, undefined, font="Consolas");
+
+text("你好，人类", 50, 350, 40, 'red', 'STCaiyun');
+
+text("Hello World!", 50, 400, 30);
 
 /***************************************************************
 
@@ -65,10 +75,4 @@ Microsoft
 等宽字体：
 * Consolas
 
-
 ***************************************************************/
-
-text("Hello World!", 50, 250, 20, null, "Arial");
-text("Hello World!", 50, 300, 30, undefined, font="Consolas");
-text("你好，人类", 50, 350, 40, 'red', 'STCaiyun');
-text("Hello World!", 50, 400, 30);
