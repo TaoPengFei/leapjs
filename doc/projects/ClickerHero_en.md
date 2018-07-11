@@ -1,10 +1,12 @@
+# Clicker Hero
+
 ## Teaching Stage
 
 ### View the Project!
 
 Open this URL：[http://ide.leaplearner.com/lmumov/1](http://ide.leaplearner.com/lmumov/1), Or scan the QR code to preview the project.
 
-![](clicker.png)
+![](../images/clicker.png)
 
 ### Development environment
 
@@ -19,7 +21,7 @@ The following is a screenshot of the IDE of LeapLearner, you can see three parts
 - `JavaScript`area: the code area. It is the most important part, where we enter the code.
 - `Output`area: the display area. It is to demonstrate the output.
 
-![ide](.\ide.png)
+![ide](../images/ide.png)
 
 `Share`: Click to generate link and QR code, you can share the project with others. Through the link or QR code, your friends can view your project.
 
@@ -41,7 +43,7 @@ In order to define the position of space, mathematicians invented coordinates, B
 
 We will define the coordinates of the upper left corner as `(0,0)`, The horizontal axis is  defined as the `x-axis`The vertical coordinate is defined as the `y-axis `. Any point in the plane, the projection on the `x-axis`is called the `x coordinate`, Similarly, the projection on the `y-axis` is the `y-coordinate`.Therefore, the coordinate system looks like this.
 
-![pos_xy](pos_xy.png)
+![pos_xy](../images/axis.axis
 
 As long as we have the value of the coordinate point, we can easily determine its position. 
 

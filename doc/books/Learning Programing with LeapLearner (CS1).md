@@ -1,12 +1,6 @@
----
-Learning Coding with LeapLearner
----
-
-# 乐学编程
+# Learning Programing with LeapLearner (I)
 
 本书是立乐在线课堂系列第一部分课程内容。
-
-[TOC]
 
 ## Chapter 1: 打开编程世界的大门
 
@@ -22,7 +16,7 @@ Learning Coding with LeapLearner
 - 猫咪能用猫类的语言与你说话吗？
 - 你能用人类的语言与计算机说话吗？
 
-![Cat_think](./images/Cat_think.png)
+![Cat_think](../images/Cat_think.png)
 
 你对老师说“你好”，老师能明白你的意思，但是你用人类的语言与计算机说“你好”，计算机并不会明白。
 
@@ -37,9 +31,9 @@ Learning Coding with LeapLearner
 
 
 ```javascript
-var title = new Text("A", 100, 150, 70);//A代表你的计算机的名字
-var slogen = new Text("B", 180, 600, 30);//B代表你想对计算机说的话
-```
+var title = new Text("A", 100, 150, 70); //A代表你的计算机的名字
+var slogen = new Text("B", 180, 600, 30); //B代表你想对计算机说的话
+``` 
 
 ##### 附录全代码
 
@@ -68,11 +62,11 @@ http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
 
 1.如图所示，点击`学生登录`
 
-![login](./images/login.png)
+![login](../images/login.png)
 
 2.如图所示，先输入账号，再输入密码，最后点击`登录`按钮
 
-![login2](./images/login2.png)
+![login2](../images/login2.png)
 
 ##### 编程环境介绍
 
@@ -80,7 +74,7 @@ http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
 
 我们在代码输入区域将代码输入完成后，如果一切正常，点击左上角`运行`按钮就可以看到你写的代码的结果了。
 
-![ide](./images/ide.png)
+![ide](../images/ide.png)
 
 ##### 功能说明
 
@@ -104,7 +98,7 @@ http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
 
 在计算机坐标系统中，有一条横方向的轴名字叫`x轴`，有一条竖方向的轴名字叫`y轴`。它们相交的点，代表横方向位置为0，竖方向位置也为0，这个点名字叫`原点`。想表示一个物体的坐标位置，要先说横方向位置再说竖方向位置。因此，整个坐标系看起来像是这个样子的。
 
-![pos_xy](./images/pos_xy.png)
+![pos_xy](../images/pos_xy.png)
 
 **说一说**
 
@@ -116,7 +110,7 @@ http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
 
 只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。比如点（250，150）在坐标轴上的位置，我们就可以很容易找出来了。
 
-![](./images/axis.png)
+![](../images/axis.png)
 
 > 小知识：笛卡尔坐标系和网页坐标系
 >
@@ -134,7 +128,7 @@ http://ou1htxdl4.bkt.clouddn.com/pdf/code%20the%20future.pdf
 
 今天它要去找小猫Susie、小青蛙Nina、小鸭子Quack 玩。它每次都在原点，即横方向位置是0，竖方向位置也是0的地方出发。
 
-![showAxis](./images/showAxis.png)
+![showAxis](../images/showAxis.png)
 
 **说一说**
 
@@ -211,7 +205,7 @@ function walk() {
 
 今天老师用代码画了一个坐标系和瞄准镜，通过改变`left`，`right`，`up`，`down`的值可以让瞄准镜向左、向右、向上、向下、移动，让我们来试一下吧。
 
-![coordinate](./images/coordinate.png)
+![coordinate](../images/coordinate.png)
 
 ```javascript
 var left; //向左
@@ -281,15 +275,15 @@ function moveCollimationMirror(left, right, up, down) {
 
 让我们使用编程的魔法，帮助他们复原吧。
 
-![Einstein_angry.png](./images/Einstein_angry.png)
+![Einstein_angry.png](../images/Einstein_angry.png)
 
 ​											黑魔法师Vic
 
-![](./images/magicBefore.png)
+![](../images/magicBefore.png)
 
 ​						黑魔法师Vic看到了可爱的小动物们准备使用变矮魔法
 
-![](./images/magicAfter.png)
+![](../images/magicAfter.png)
 
 ​						黑魔法师Vic使用了变矮魔法后小动物们都变矮了
 
@@ -356,9 +350,9 @@ document.onmousedown = function(event) {
 };
 ```
 
-![leftClick](./images/leftClick.png)
+![leftClick](../images/leftClick.png)
 
-![right](./images/rightClick.png)
+![right](../images/rightClick.png)
 
 #### 选中+右键菜单+复制粘贴
 
@@ -409,13 +403,13 @@ c.click = function(){
 
 - 老虎是几分，狐狸是几分、老鹰是几分、小蛇是几分
 
-![tiger](./images/tiger.png)
+![tiger](../images/tiger.png)
 
-![fox](./images/fox.png)
+![fox](../images/fox.png)
 
-![eagle](./images/eagle.png)
+![eagle](../images/eagle.png)
 
-![snake](./images/snake.png)
+![snake](../images/snake.png)
 
 ```javascript
 var frogBacGro = new Sprite('http://pic.qiantucdn.com/58pic/16/61/85/69858PICHs6_1024.jpg', 0, 0, 650, 332); //background
@@ -482,7 +476,7 @@ loadRssAndRun(main);
 
 把下面的代码复制并运行，按住鼠标会出现颜色，画出你喜欢的东西吧。
 
-![littlePainter](./images/littlePainter.png)
+![littlePainter](../images/littlePainter.png)
 
 ```javascript
 canvas.width = 600;
@@ -594,7 +588,7 @@ Loop();
 
 ### Lesson 5: 正确的打字姿势
 
-**正确的打字姿势 **
+**正确的打字姿势**
 
 打字时身子要坐正，双手轻松的放在键盘上。
 
@@ -602,11 +596,11 @@ Loop();
 
 下面的图叫键盘指法键位图，我们应该如图所示，双手放在`ASDFJKL;`键上。
 
-![keyboard1](./images/keyboard1.PNG)
+![keyboard1](../images/keyboard1.PNG)
 
 下图是键盘解析图，键盘从左往右最上方的Esc到F12是功能键区。
 
-![keyboard2.PNG](./images/keyboard2.PNG)
+![keyboard2.PNG](../images/keyboard2.PNG)
 
 https://www.typing.com/
 
@@ -630,7 +624,7 @@ https://www.typing.com/
 
 输入回车和删除键
 
-![enter.jpg](./images/enter.jpg)
+![enter.jpg](../images/enter.jpg)
 
 **试一试**
 
@@ -696,7 +690,7 @@ Key.Enter.press = function() {
 
 ```javascript
 var ball = new Circle（200，200, 50）;
-ball。draw()；
+ball.draw()；
 ```
 
 2.
@@ -739,7 +733,7 @@ var doWhat = ['','',''];
 var when = ['','',''];
 ```
 
-![storyKing](./images/storyKing.png)
+![storyKing](../images/storyKing.png)
 
 附录全代码：
 
@@ -785,7 +779,7 @@ function magicStory() {
 
 在生活中，有许许多多的颜色，让世界变得丰富起来。比如彩虹，就有红橙黄绿青蓝紫等颜色。
 
-![](./images/rainbow2.png)
+![](../images/rainbow2.png)
 
 #### 颜色代码
 
@@ -885,7 +879,7 @@ var colArr = ["red","orange","yellow","green","cyan","blue","purple"];//写入�
 
 
 
-![colorLight](./images/colorLight.png)
+![colorLight](../images/colorLight.png)
 
 ##### 附录全代码
 
@@ -950,13 +944,13 @@ function draw() {
 
 
 
-![babyOctopus](./images/babyOctopus.png)
+![babyOctopus](../images/babyOctopus.png)
 
 ​                                                                          **原本的章鱼宝宝是这样的**
 
 
 
-![babyOctopus2](./images/babyOctopus2.png)
+![babyOctopus2](../images/babyOctopus2.png)
 
 ​                                                           **喝了变灰魔法药水的章鱼宝宝是这样的**
 
@@ -1150,7 +1144,7 @@ function circle(circlex, circley, circleradius, co1) {
 
 我们现在有一张黑白的风景画，让我们用自己喜欢的颜色，画出属于自己的多彩风景画吧。
 
-![colorDraw](./images/colorDraw.png)
+![colorDraw](../images/colorDraw.png)
 
 ```javascript
 //写下你的名字吧
@@ -1397,7 +1391,7 @@ circle(100, 100, 50, 'orange');
 
 第一步，让我们思考下雪人是什么样子的。是不是下面这个样子的，它的身体、它的头部，还有它的眼睛，都是圆圆的，所以我们就可以用圆来模拟雪人。
 
-![](./images/snowman.png)
+![](../images/snowman.png)
 
 首先，让我们用圆来画出雪人的身体。我们需要把雪人的身体摆在合适的位置，对照坐标轴，为雪人的身体选择一个最合适的位置。
 
@@ -1405,7 +1399,7 @@ circle(100, 100, 50, 'orange');
 circle(200, 250, 100);
 ```
 
-![cs1_snowman1](./images/cs1_snowman1.png)
+![cs1_snowman1](../images/cs1_snowman1.png)
 
 运行，看雪人的身体是不是出现在屏幕上了。但是呢，雪人的身体是白色的，我们要把它改成白色的。在第一行代码后面加入一行代码，将雪人的颜色修改成为白色。
 
@@ -1413,7 +1407,7 @@ circle(200, 250, 100);
 circle(200, 250, 100,"white");
 ```
 
-![cs1_snowman2](./images/cs1_snowman2.png)
+![cs1_snowman2](../images/cs1_snowman2.png)
 
 快看，我们成功的用代码画出了一个白色的雪人身体。接下来，让我们把雪人的头画上去，雪人的头也是一个圆，同样，我们也要将雪人脑袋的颜色改成白色。
 
@@ -1421,7 +1415,7 @@ circle(200, 250, 100,"white");
 circle(200, 130, 60,"white");
 ```
 
-![cs1_snowman3](./images/cs1_snowman3.png)
+![cs1_snowman3](../images/cs1_snowman3.png)
 
 再次运行，看雪人的头是不是出现了。接下来，就是雪人的眼睛了，这里我们让雪人的眼睛变成黑色。你可以选择喜欢其他你喜欢的颜色，先画出左眼再画出右眼。
 
@@ -1430,7 +1424,7 @@ circle(180, 120, 10,"black");
 circle(220, 120, 10,"black");
 ```
 
-![cs1_snowman4](./images/cs1_snowman4.png)
+![cs1_snowman4](../images/cs1_snowman4.png)
 
 我的雪人完成了，接下来就到你了。
 
@@ -1467,7 +1461,7 @@ c.r = 100;
 c.draw(200, 200); // body
 ```
 
-![cs1_paul1](./images/cs1_paul1.png)
+![cs1_paul1](../images/cs1_paul1.png)
 
 接下来，让我们把保罗的脚们画上去，脚比身体要小很多，所以我要把半径减小。我的保罗有5只脚，让我们依次画出它们来。
 
@@ -1480,7 +1474,7 @@ c.draw(264, 309); // foot 4
 c.draw(310, 276); // foot 5
 ```
 
-![cs1_paul2](./images/cs1_paul2.png)
+![cs1_paul2](../images/cs1_paul2.png)
 
 保罗出现了，不过好像它背对着我们，让我们来想个办法让它转过来。在上面加个眼睛和嘴巴。
 
@@ -1497,7 +1491,7 @@ c.draw(200, 250);  // mouse
 
 看，我们的小章鱼保罗出现了，快来分享你们的作品吧。
 
-![](./images/paul.png)
+![](../images/paul.png)
 
 
 
@@ -1512,7 +1506,7 @@ c.draw(200, 250);  // mouse
 
 我们把类似下面的图形叫做矩形，它包括了正方形和长方形。在生活中有许许多多的图形都是矩形。
 
-![rect](./images/rectangle.png)
+![rect](../images/rectangle.png)
 
 在画布上画出一个矩形，我们需要使用以下的代码。
 
@@ -1536,7 +1530,7 @@ circle(120, 200, 30, "black");
 circle(280, 200, 30, "black");
 ```
 
-![cs1_bus](./images/cs1_bus.png)
+![cs1_bus](../images/cs1_bus.png)
 
 **说一说**
 
@@ -1563,7 +1557,7 @@ line(80, 150, 150, 220);
 line(320, 150, 250, 220);
 ```
 
-![cs1_snowman5](./images/cs1_snowman5.png)
+![cs1_snowman5](../images/cs1_snowman5.png)
 
 **试一试**
 
@@ -1584,7 +1578,7 @@ line(320, 150, 250, 220);
 
 我们现在就有一个变量盒子，它的名字叫box。
 
-![variableA.png](./images/variableA.png)
+![variableA.png](../images/variableA.png)
 
 今天立乐星球的小动物们也来了呢
 
@@ -1592,13 +1586,13 @@ line(320, 150, 250, 220);
 
 - 点一点你最喜欢的立乐星球小动物
 
-![variableB.png](./images/variableB.png)
+![variableB.png](../images/variableB.png)
 
 #### **说一说**
 
 - 发生了什么
 
-![](./images/variableC.png)
+![](../images/variableC.png)
 
 #### **试一试**
 
@@ -1739,7 +1733,7 @@ eye.draw()
 image('http://static.leaplearner.com/image/image.png', 53, 363, 40, 40);
 ```
 
-![cacti](./images/cacti.png)
+![cacti](../images/cacti.png)
 
 #### 图片的顺序
 
@@ -1755,7 +1749,7 @@ image('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_eagle.png',335,230,95,103);
 image('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png',430,230,95,103);
 ```
 
-![ImageOrder](./images/ImageOrder.png)
+![ImageOrder](../images/ImageOrder.png)
 
 ### Lesson 18: 图片的位置
 
@@ -1767,9 +1761,9 @@ image('http://ou1htxdl4.bkt.clouddn.com/image/L1U2_1_snake.png',430,230,95,103);
 
 通过修改图片的宽度和高度来完成放大和缩小。
 
-动物可不是一样大小，我们要让动物变的和他们实际体型一样。（也就说小猫是不可能比大象的图片大的哟）![](./images/elephant.jpg)
+动物可不是一样大小，我们要让动物变的和他们实际体型一样。（也就说小猫是不可能比大象的图片大的哟）![](../images/elephant.jpg)
 
-![Cat_happy.png](./images/Cat_happy.png)
+![Cat_happy.png](../images/Cat_happy.png)
 
 让我们找两张动物的图片来试一试吧。
 
@@ -1917,7 +1911,7 @@ playSound('https://rss.leaplearner.com/BGM/Fish/GameMasterInterface.mp3');
 
 如何使用音乐素材库: 点击左侧`多媒体`，点击`音乐`，红色方框标出的橙色小三角形可以选择不同的音乐哦，选择你最喜欢的音乐吧!	
 
-![musicGuide](./images/musicGuide.png)
+![musicGuide](../images/musicGuide.png)
 
 ### Lesson 24: 制作自己的音乐钢琴
 

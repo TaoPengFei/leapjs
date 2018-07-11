@@ -421,7 +421,7 @@ rect.fillStyle = "red";
 rect.fill()
 ```
 
-![style1](./images/style1.png)
+![style1](../images/style1.png)
 
 ### RGB值
 
@@ -465,7 +465,7 @@ HSL(360, 1.00, 1.00)
 
 
 
-![](./images/hsl.png)
+![](../images/hsl.png)
 
 ### HSLA
 
@@ -507,7 +507,7 @@ rect.draw();
 
 渐变色效果
 
-![rgba](./images/gradient.png)
+![rgba](../images/gradient.png)
 
 addColorStop是在图像的特定位置创建出制定的颜色，中间的变化则由计算机自动完成。
 

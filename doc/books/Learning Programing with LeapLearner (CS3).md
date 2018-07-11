@@ -1,8 +1,4 @@
----
-Learning Coding with LeapLearner
----
-
-# 乐学编程
+# Learning Programing with LeapLearner (III)
 
 本书是立乐在线课堂系列第三部分课程内容，建议在完成立乐在线课堂系列第二部分内容的学习之后再开始学习。
 
@@ -44,7 +40,7 @@ p.draw();
 
 在点的参数中，第一个坐标`150`是x坐标，也就是横坐标，在水平方向上，找到150的位置，它位于100和200的中间。第二个坐标50是y坐标，也就是纵坐标，在垂直方向上，找到50的位置，它位于0和100的中间。这两个坐标确定了点的位置，最后我们用`draw`方法把点绘制在画布上，就得到了下面的结果。
 
-![point](./images/cs3_point.png)
+![point](../images/cs3_point.png)
 
 点的颜色可以通过点的`fillStyle`属性来设置，通过设置不同的样式，画出来的点可以有不一样的颜色。
 
@@ -57,7 +53,7 @@ p.draw();
 
 通过修改点的颜色，我们就在同样的位置画出了一个绿色的的点。
 
-![point2](./images/cs3_point2.png)
+![point2](../images/cs3_point2.png)
 
 **练习**
 
@@ -98,7 +94,7 @@ Mouse.click = function(){
 
 运行项目，在画布上点击鼠标，看看会不会留下痕迹。
 
-![](./images/cs3_points3.png)
+![](../images/cs3_points3.png)
 
 **实例：点点点II**
 
@@ -116,7 +112,7 @@ Mouse.move = function(){
 
 点击运行，然后将鼠标在画布上移动，就会留下各种个样的轨迹。如果不满意当前的图像，重新运行就可以清空屏幕上的图像了。
 
-![](./images/cs3_points4.png)
+![](../images/cs3_points4.png)
 
 看起来好像达到我们的要求了，美中不足的时只要鼠标移动，就会自动在画布上留下很多我们不希望看到的点。
 
@@ -181,7 +177,7 @@ Mouse.move = function(){
 
 画笔已经就位，我们来用它写首诗试一试，写的慢，可以写出连续的笔划，写的快，笔划就会变成一个个点，也是别有一番意境呢。
 
-![points4](./images/cs3_point4.png)
+![points4](../images/cs3_point4.png)
 
 **比一比**
 
@@ -233,7 +229,7 @@ rect.click = function(){
 
 运行项目，先用鼠标画出一条红色的线条，再点击绿色矩形，就可以用鼠标画出一条绿色的线条了。
 
-![point5](./images/cs3_point5.png)
+![point5](../images/cs3_point5.png)
 
 好了，接下来，我们可以添加更多的颜色上去了，快动手试一试吧。
 
@@ -261,7 +257,7 @@ main();
 
 我们就可以利用点在画布上画出一条不断延长的线了。
 
-![](images/cs3_point_line.png)
+![](../images/cs3_point_line.png)
 
 当然了，我们有更好的办法可以画出线条来。下面我们就来学学怎么用Line来定义线条。
 
@@ -298,7 +294,7 @@ line.draw();
 
 最终效果图如下，仔细观察`output`中线条的粗细程度。
 
-![line](./images/line.png)
+![line](../images/line.png)
 
 
 
@@ -334,7 +330,7 @@ polygon.stroke();
 
 为了让点坐标看起来更明显，我们将每个点的坐标都单独放置一行。注意，最后一个坐标后面不能加上逗号。
 
-![](./images/cs3_polygon_2.png)
+![](../images/cs3_polygon_2.png)
 
 **实例：画个五角星**
 
@@ -354,7 +350,7 @@ polygon.fill();
 
 五边形变成了一个五角星了！
 
-![](./images/cs3_polygon_1.png)
+![](../images/cs3_polygon_1.png)
 
 比一比：
 
@@ -410,7 +406,7 @@ moutain2.fill();
 
 最后我们的作品就出来了，可以打印出来挂在墙上哦
 
-![](./images/cs3_moutains.png)
+![](../images/cs3_moutains.png)
 
 ## 变量
 
@@ -501,7 +497,7 @@ s.draw();
 
 输入结果
 
-![string1](./images/string1.png)
+![string1](../images/string1.png)
 
 
 
@@ -512,7 +508,7 @@ var s = new Text("Hello, World!", 100, 100);
 s.draw();
 ```
 
-![](./images/cs3_string_2.png)
+![](../images/cs3_string_2.png)
 
 同样，如果在运行的时候，修改字符串的位置，也可以更改字符串的位置。
 
@@ -640,7 +636,7 @@ Mouse.click = function(){
 
 运行项目，点击画布上任意一个位置，就会留下坐标值了。是不是可以方面的记录每个点的坐标值了。
 
-![](./images/cs3_string.png)
+![](../images/cs3_string.png)
 
 #### 空格
 
@@ -731,7 +727,7 @@ var
 
 打开项目，在文本框中输入一个字符串，点击运行后，就可以在画布上成功显示出制作完成的二维码。
 
-![qrcode](./images/qrcode1.png)
+![qrcode](../images/qrcode1.png)
 
 这就是我们成功制作的第一个二维码啦，但是从这张图上我们无法直接读取出来里面的信息。这时，就需要我们学会去读取二维码。
 

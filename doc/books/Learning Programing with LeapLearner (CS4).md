@@ -1,3 +1,5 @@
+# Learning Programing with LeapLearner (IV)
+
 ## 代码规范
 
 ### 对象规则
@@ -417,7 +419,7 @@ setInterval(loop, 1000);
 
 执行代码，我们可以看到每隔一秒，就会输出一个新的矩形，不停的重叠起来。如果，我们将原来的图形清除，是不是就会有一种图形动起来的感觉了！
 
-![setInterval_1](.\images\setInterval_1.png)
+![setInterval_1](..\images\setInterval_1.png)
 
 ##### 实例：动画
 
@@ -752,7 +754,7 @@ main();
 
 伪代码
 
-```markdown
+```latex
 如果（小球碰到了右边），让小球的x速度等于负数
 如果（小球碰到了左边），让小球的x速度等于正数
 如果（小球碰到了上边），让小球的y速度等于正数
@@ -1081,7 +1083,7 @@ tri.draw();
 
 就得到我们想要的三角形了。
 
-![math](./images/math.png)
+![math](../images/math.png)
 
 #### 方法
 
@@ -1141,4 +1143,4 @@ time.draw();
 
 每次运行时，都会依据你当前的时间来显示
 
-![date](./images/date.png)
+![date](../images/date.png)

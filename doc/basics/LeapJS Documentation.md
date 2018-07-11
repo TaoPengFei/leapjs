@@ -52,13 +52,13 @@
 
 | Code                                     | Shape                             |
 | ---------------------------------------- | --------------------------------- |
-| `rectangle(x, y, w, h, *color)`<br />*color - 可选，颜色字符串 | ![](./images/basic_rectangle.png) |
-| `circle(x, y, r, *color)`<br />          | ![](./images/basic_circle.png)    |
-| `line(x1, y1, x2, y2, *color)`<br />`line(x1, y1, x2, y2, *lineWidth, *color)` | ![](./images/basic_line.png)      |
-| `point(x, y, *color)`                    | ![](./images/basic_point.png)     |
-| `triangle(x1, y1, x2, y2, x3, y3, *color)` | ![](./images/basic_triangle.png)  |
-| `polygon(x1, y1, x2, y2, x3, y3, ..., *color)` | ![](./images/basic_polygon.png)   |
-| `ellipse(x, y, rX, rY, *color)`          | ![](./images/basic_ellipse.png)   |
+| `rectangle(x, y, w, h, *color)`<br />*color - 可选，颜色字符串 | ![](../images/basic_rectangle.png) |
+| `circle(x, y, r, *color)`<br />          | ![](../images/basic_circle.png)    |
+| `line(x1, y1, x2, y2, *color)`<br />`line(x1, y1, x2, y2, *lineWidth, *color)` | ![](../images/basic_line.png)      |
+| `point(x, y, *color)`                    | ![](../images/basic_point.png)     |
+| `triangle(x1, y1, x2, y2, x3, y3, *color)` | ![](../images/basic_triangle.png)  |
+| `polygon(x1, y1, x2, y2, x3, y3, ..., *color)` | ![](../images/basic_polygon.png)   |
+| `ellipse(x, y, rX, rY, *color)`          | ![](../images/basic_ellipse.png)   |
 
 ### 图片
 
@@ -96,7 +96,7 @@
 
 只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。比如点（250，150）在坐标轴上的位置，我们就可以很容易找出来了。
 
-![](./images/axis.png)
+![](../images/axis.png)
 
 > 小知识：笛卡尔坐标系和网页坐标系
 >
@@ -184,7 +184,7 @@ rect.y = 210;
 rect.draw();
 ```
 
-![stroke](./images/stroke.png)
+![stroke](../images/stroke.png)
 
 矩形除了以上属性外，还有一些属性值和方法，所有矩形相关的属性和方法都列在下方。
 
@@ -410,7 +410,7 @@ line.draw();
 
 最终效果图如下，仔细观察`output`中线条的粗细程度。
 
-![line](./images/line.png)
+![line](../images/line.png)
 
 
 
@@ -474,7 +474,7 @@ rect.fillStyle = "red";
 rect.fill()
 ```
 
-![style1](./images/style1.png)
+![style1](../images/style1.png)
 
 ##### 实例：颜色指示板
 
@@ -522,7 +522,7 @@ rect.strokeStyle = RGB(150, 100, 0);
 rect.stroke();
 ```
 
-![storke](./images/style2.png)
+![storke](../images/style2.png)
 
 RGB的另外一种写法是“#FFFFFF"，在这里，FFFFFF是一个16进制的数字，每两位代表了一种颜色的高低。`FF`代表了255，在16进制中，F代表了15，因此FF的计算方式是
 
@@ -644,7 +644,7 @@ Mouse.move = function(){
 
 展示效果，但鼠标在画布上移动时，便会随机的绘制出各种图案来，步步生花。
 
-![rgba](./images/rgba.png)
+![rgba](../images/rgba.png)
 
 ### HSL
 
@@ -654,7 +654,7 @@ HSL(360, 1.00, 1.00)
 
 
 
-![](./images/hsl.png)
+![](../images/hsl.png)
 
 ### HSLA
 
@@ -670,7 +670,7 @@ line.setLineDash([5, 10]);
 line.stroke();
 ```
 
-![](./images/lineDash.png)
+![](../images/lineDash.png)
 
 ### 透明度
 
@@ -698,7 +698,7 @@ rect.draw();
 
 渐变色效果
 
-![rgba](./images/gradient.png)
+![rgba](../images/gradient.png)
 
 addColorStop是在图像的特定位置创建出制定的颜色，中间的变化则由计算机自动完成。
 
@@ -738,7 +738,7 @@ for(var i=0; i<180; i+=1){
 
 一条漂亮的彩虹出来啦
 
-![rgba](./images/rainbow.png)
+![rgba](../images/rainbow.png)
 
 ## 贴图与动画
 
@@ -1465,7 +1465,7 @@ polygon.draw();
 
 要明确旋转的位置，我们需要明确旋转的中心点和方向。默认情况下，我们将原点`(0, 0)`设置为旋转的中心点。将顺时针方向的角度规定为正方向。
 
-![degree](./images/degree.png)
+![degree](../images/degree.png)
 
 ##### 实例：旋转的矩形
 
@@ -1479,7 +1479,7 @@ rect.draw();
 
 可以看到，矩形以原点为中心旋转了10°。
 
-![rotate](./images/rotate.png)
+![rotate](../images/rotate.png)
 
 那么，我们能不能让矩形以矩形的中心点进行旋转呢，当然可以啦，我们只要把矩形的旋转点设置在矩形的中心就可以了。
 
@@ -1498,7 +1498,7 @@ rect.draw();
 
 Bingo! 矩形按照我们的想法旋转起来了。
 
-![rotate2](./images/rotate2.png)
+![rotate2](../images/rotate2.png)
 
 大家可以想一想，如果旋转度数为负数会是怎么样的呢，旋转读数超过360度呢，又会是怎么样的，快来试一试吧。
 

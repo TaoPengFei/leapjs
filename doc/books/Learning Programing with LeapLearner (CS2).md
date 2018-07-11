@@ -1,6 +1,4 @@
-[TOC]
-
-# 《Learning Programing with LeapLearner (CS II)》教材
+# Learning Programing with LeapLearner (II)
 
 ## Chapter 1 丰富的颜色
 
@@ -300,11 +298,11 @@
 
 我们将左上角的坐标定义为`(0,0)`，把水平轴为`x轴`，把垂直坐标定义为`y轴`。平面上的任意一个点，在`x轴`上的投影称之为该点的`x坐标`，同样，在`y轴`上的投影即`y坐标`。因此，整个坐标系看起来像是这个样子的。
 
-![pos_xy](.\images\pos_xy.png)
+![pos_xy](..\images\pos_xy.png)
 
 只要确定了坐标点的值，我们就能很容易的确定坐标的位置了。比如点（250，150）在坐标轴上的位置，我们就可以很容易找出来了。
 
-![](./images/axis.png)
+![](../images/axis.png)
 
 #### 试一试
 
@@ -312,13 +310,13 @@
 >
 >    A：(      ,      )          B：(      ,      )          C：(      ,      )          D：(      ,      )
 >
->    ![坐标题1](.\images\axis1.png) 
+>    ![坐标题1](..\images\axis1.png) 
 >
 > 2. 请在下列坐标系中标出以下几个点的位置
 >
 >    A：(200 , 100)          B：(200,300)          C：(100,300)          D：(300,300)
 >
->    ![坐标题2](.\images\axis2.png) 
+>    ![坐标题2](..\images\axis2.png) 
 
 为了方便我们使用坐标，在我们的开发环境中，只要将鼠标移动到画布上，在画布的左下角就会显示鼠标当前位置的坐标。
 
@@ -338,7 +336,7 @@
 
 > 在代码的对应位置填入正确的数字，让其画出的线段如图所示：
 >
-> ![line1](.\images\line1.png) 
+> ![line1](..\images\line1.png) 
 >
 > ```javascript
 > var line = new Line(_____,_____,_____,_____);
@@ -427,7 +425,7 @@
 
 > 在代码的对应位置填入正确的数字，让其画出的线段如图所示：
 >
-> ![circle1](.\images\circle1.png)  
+> ![circle1](..\images\circle1.png)  
 >
 > ```javascript
 > var circle = new Circle(_____,_____,_____);
@@ -438,7 +436,7 @@
 
 > 观察下图中三个圆的画法，说说它们有什么不同？
 >
-> ![circle2](.\images\circle2.png) 
+> ![circle2](..\images\circle2.png) 
 
 图中演示了圆的三种画法：描边，填充和绘制。
 
@@ -472,7 +470,7 @@
 
   它的效果如下图所示：
 
-  ![circle3](.\images\circle3.png) 
+  ![circle3](..\images\circle3.png) 
 
   其中：
 
@@ -502,7 +500,7 @@
 
   这段代码的效果如下：
 
-  ![circle4](.\images\circle4.png) 
+  ![circle4](..\images\circle4.png) 
 
   其中，`fillStyle`可以设置成任意颜色，`circle.fillStyle = "yellow";`就是将`circle`这个圆的填充颜色设置为了黄色
 
@@ -552,7 +550,7 @@
 
 > 在代码的对应位置填入正确的数字，让其画出的矩形如图所示：
 >
-> ![rect1](.\images\rect1.png) 
+> ![rect1](..\images\rect1.png) 
 >
 > ```javascript
 > var rect = new Rectangle(_____,_____,_____,_____);
@@ -561,7 +559,7 @@
 
 * **矩形的描边与填充**
 
-![rect2](.\images\rect2.png) 
+![rect2](..\images\rect2.png) 
 
 如上图所示，与圆形类似，矩形也有三种画法：描边、填充和绘制
 
@@ -599,7 +597,7 @@
 
   它的效果如下图所示：
 
-  ![rect3](.\images\rect3.png) 
+  ![rect3](..\images\rect3.png) 
 
   其中：
 
@@ -618,7 +616,7 @@
 
   这段代码的效果如下：
 
-  ![rect4](.\images\rect4.png) 
+  ![rect4](..\images\rect4.png) 
 
   其中，`fillStyle`可以设置成任意颜色，`rect.fillStyle = "pink";`就是将`rect`这个矩形的填充颜色设置为了粉色
 
@@ -922,7 +920,7 @@ setInterval(Loop,10);
 
 可以看到，我们同时改变`circle.x`和`circle.y`，就可以让`circle`沿斜方向移动。从这个案例中我们可以看出，在同一帧中，可以改变多个属性。因为一帧的时间实在是太快了，我们可以认为这些改变是同时发生的。
 
-![速度分解图](.\images\move.jpg) 
+![速度分解图](..\images\move.jpg) 
 
 #### 做一做
 
@@ -1073,7 +1071,7 @@ setInterval(Loop,10);
 
 看看下面这张图中的两个小恐龙，他们有什么不同呢？
 
-![jpg和png](.\images\jpgandpng.png) 
+![jpg和png](..\images\jpgandpng.png) 
 
 我们发现，左边的恐龙是透明底的，而右边的却有一个白色的底。为什么会有这样的区别呢？这是因为它们的格式是不一样的。
 
@@ -1140,7 +1138,6 @@ var sprite = new Sprite('https://static.leaplearner.com/image/image.png',150,200
 
   图片大小受图片的宽度和高度两个属性影响，宽度和高度的意义如下图所示。
 
-  ![]() 
 
   图片宽度的属性名为`width`，图片高度的属性名为`height`。修改这两个属性的值，就可以改变图片的大小。请看以下代码：
 
@@ -1193,11 +1190,11 @@ var sprite = new Sprite('https://static.leaplearner.com/image/image.png',150,200
 >
 > 2. 点击界面左侧![多媒体资源](https://code.leaplearner.com/resource/assets/icon_library.png) 按钮，再点击“音乐”，查看音乐列表。
 >
->    ![music1](.\images\music1.jpg) 
+>    ![music1](..\images\music1.jpg) 
 >
 > 3. 点击`fish`，点击选择音乐`ParkourTrack`，右侧代码框就会出现一行代码，这段代码就可以播放音乐文件。
 >
->    ![music2](.\images\music2.jpg) 
+>    ![music2](..\images\music2.jpg) 
 >
 > 4. 点击左上角的`运行`，就能播放音乐了。
 >
