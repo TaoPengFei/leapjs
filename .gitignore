@@ -4,4 +4,4 @@ package-lock.json
 *.docx
 .eslintrc.js
 src/.idea
-doc/_build
+docs/_build
