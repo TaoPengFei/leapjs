@@ -1,4 +1,4 @@
-![logo](.\images\logo.png)
+![logo](..\images\logo.png)
 
 
 
@@ -32,7 +32,7 @@
 
 下面是立乐IDE的一个截图，可以看见分成了2个区域，左边是展示区域，右边是代码输入区域。我们在代码输入区域将代码输入完成后，如果一切正常，点击运行按钮就可以看到运行结果了。
 
-![ide](.\images\ide.png)
+![ide](..\images\ide.png)
 
 #### 功能说明
 
@@ -90,7 +90,7 @@
 
 我们将左上角的坐标定义为`(0,0)`，把水平轴为`x轴`，把垂直坐标定义为`y轴`。平面上的任意一个点，在`x轴`上的投影称之为该点的`x坐标`，同样，在`y轴`上的投影即`y坐标`。因此，整个坐标系看起来像是这个样子的。
 
-![pos_xy](.\images\pos_xy.png)
+![pos_xy](..\images\pos_xy.png)
 
 #### 屏幕坐标
 
@@ -106,7 +106,7 @@
 
 长方形和正方形，统称为矩形，在数学描述中，矩形是如下的图形：相邻的两边相互垂直，而不相邻的两边平行且长度相等。
 
-![rectangle](.\images\rectangle.png)
+![rectangle](..\images\rectangle.png)
 
 要在画布上准确的描述一个矩形的位置和大小，我们需要以下属性
 
@@ -130,7 +130,7 @@ rect.draw();
 
 第二行，我们执行了`rect`的一个方法`draw()`，将这个矩形画在了画布上，点击`Run`就可以看到一下效果：
 
-![rect](.\images\rect.png)
+![rect](..\images\rect.png)
 
 图中这个浅蓝色的方块就是我们的`rect`矩形。
 
@@ -234,7 +234,7 @@ circle.draw();
 
 和矩形一样，圆是一个封闭的图形。对圆而言，确定圆心和圆的半径，即可确定圆的位置和大小。
 
-![circle](.\images\circle.png)
+![circle](..\images\circle.png)
 
 #### 属性值
 
@@ -498,7 +498,7 @@ for(var i=0; i<colors.length; i++){
 
 展示效果
 
-![color_const](.\images\color_const.png)
+![color_const](..\images\color_const.png)
 
 
 
@@ -563,7 +563,7 @@ parseInt('15', 16)	//=> 22
 
 下面列举了一些比较受欢迎的RGB值
 
-![favourite_rgp](.\images\favourite_rgp.png)
+![favourite_rgp](..\images\favourite_rgp.png)
 
 ### 透明度
 
@@ -602,7 +602,7 @@ circle.fill();
 
 显示效果
 
-![alpha](.\images\alpha.png)
+![alpha](..\images\alpha.png)
 
 思考：绘制图形时，顺序不一样，产生的图形是否会不一致，为什么？
 
@@ -784,7 +784,7 @@ loadRssAndRun(main);
 
 下面是一张食人花的图，它一共有7个动作，从第一张图到最后一张图，我们发现食人花做了一个张开又合上的动作。下面我们就来看怎么让食人花动起来。
 
-![ani](.\images\ani.png)
+![ani](..\images\ani.png)
 
 #### 定义
 
@@ -979,7 +979,7 @@ Mouse.click = function(){
 
 点击画布，就会在画布上留下一个圆圈。
 
-![click](.\images\click.png)
+![click](..\images\click.png)
 
 #### 移动事件
 
@@ -1595,7 +1595,7 @@ item.draw();
 
 效果如下：
 
-![skew](.\images\skew.png)
+![skew](..\images\skew.png)
 
 实例
 
