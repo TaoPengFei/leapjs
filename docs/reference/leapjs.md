@@ -1,348 +1,3 @@
-# LeapJS 说明文档
-
-## 简介
-
-LeapJS是由LeapLeaner开发的基于浏览器的一个插件，有了LeapJS，我们就可以在浏览器上使用简单的一些命令进行动画的创作，开发各种小游戏等。利用LeapJS学习JS，可以让你在学习JS的过程中充满乐趣。
-
-要尝试LeapJS，只要打开运行环境：http://code.leaplearner.com，在左侧输入代码，点击运行，就可以看到效果了！在第一次打开这个页面时，我们已经为你创建了默认的代码，你可以尝试着去修改代码中的数字，来看看每个数字代表什么含义。
-
-![newProject](../images/2018/newProject.png)
-
-在这个运行环境中，我们还准备了许多隐藏的功能，我们将在后面的章节中一一介绍。
-
-
-
-## 基本绘图函数
-
-以下函数会在画布上绘制出相应的图形。通过使用基本绘图函数，我们可以组合出任意我们想要的图形。
-
-### 基本形状
-
-说明：前面加*的参数表示可选参数，除color是字符串参数外，其他参数均为数值参数。
-
-#### 长方形 rectangle
-
-长方形是由顶点位置和宽和高组成，并且我们可以画出不同颜色的长方形。长方形的定义如下：
-
-```javascript
-rectangle(x, y, w, h, *color)
-/***************************
-x - x坐标
-y - y坐标
-w - 宽度
-h - 高度
-color - 颜色，默认为orange
-***************************/
-```
-
-通过设定rectangle的属性，我们可以绘制不同的一些长方形。
-
-```javascript
-canvas.showAxis();
-rectangle(50, 50, 100, 50);
-rectangle(50, 150, 100, 50, 'red');
-rectangle(50, 250, 100, 50, '#ffff00');
-
-// 如果想要画一个边框的长方形边框，在使用rectangle之前，使用fill方法
-fill(false); // 无填充
-rectangle(200, 50, 100, 50);
-rectangle(200, 150, 100, 50, 'red');
-rectangle(200, 250, 100, 50, '#ffff00');
-```
-
-运行后就可以得到下述结果，在这里`canvas.showAxis();`让我们能够在画布上显示出坐标。
-
-![rectangle](../images/2018/rectangle.png)
-
-
-
-#### 圆 circle
-
-```javascript
-circle(x, y, r, *color)
-/**************************
-  x - x坐标
-  y - y坐标
-  r - 半径
-  color - 颜色，默认为orange
-**************************/
-```
-
-示例代码
-
-```javascript
-canvas.showAxis();
-circle(100, 100, 30);
-circle(200, 100, 40, 'green');
-circle(300, 100, 50, 'red');
-
-// 如果想要画圆框，在使用circle之前，使用fill方法
-
-fill(false);
-circle(100, 200, 50);
-circle(200, 200, 40, 'green');
-circle(300, 200, 30, 'red');
-```
-
-运行效果：
-
-![circle](../images/2018/circle.png)
-
-#### 线段 line
-
-```javascript
-line(x1, y1, x2, y2, *lineWidth, *color)
-/**************************
-  x1 - 起点x坐标
-  y1 - 起点y坐标
-  x2 - 终点x坐标
-  y2 - 终点y坐标
-  lineWidth - 线宽，默认为1
-  color - 颜色，默认为orange
-**************************/
-```
-
-#### 点 point
-
-```javascript
-point(x, y, *color)
-/**************************
-  x - 点x坐标
-  y - 点y坐标
-  color - 颜色，默认为orange
-**************************/
-```
-
-#### 三角形 triangle
-
-```javascript
-triangle(x1, y1, x2, y2, x3, y3, *color)
-```
-
-代码举例：
-```javascript
-canvas.showAxis();
-triangle(50, 50, 100, 50, 100, 100);
-triangle(150, 100, 170, 50, 200, 100, 'red');
-
-fill(false);
-triangle(50, 150, 100, 150, 100, 200);
-triangle(150, 200, 170, 150, 200, 200, 'red');
-```
-
-
-
-![triangle](../images/2018/triangle.png)
-
-#### 多边形 polygon
-
-```javascript
-polygon(x1, y1, x2, y2, x3, y3, ..., *color)
-/**************************
-  x1, y1 - 第一个点的坐标
-  x2, y2 - 第二个点的坐标
-  ...
-  至少需要3个点，按照点的顺序连接起来
-**************************/
-```
-
-#### 椭圆 ellipse
-
-椭圆看起来就像是一个被压扁的圆，因此它有2个半径，一个数水平方向的半径radiuX，一个是垂直方向的半径radiuY。
-
-```javascript
-ellipse(x, y, xRadius, yRadius, *color)
-/***************************************************************
-在画布上画出一个椭圆：
-
-* 椭圆的圆心位置为（x,y）
-* 椭圆水平方向的半径为xRadius
-* 椭圆垂直方向的半径为yRadius
-* 颜色为为color，可选参数，默认为 "orange"
-***************************************************************/
-```
-
-同样的，我们可以用ellipse来在画布上画出椭圆
-
-```javascript
-canvas.showAxis();
-ellipse(100, 100, 30, 20);
-ellipse(200, 100, 20, 30, 'green');
-ellipse(300, 100, 40, 30, 'red');
-
-fill(false);
-ellipse(100, 200, 30, 20);
-ellipse(200, 200, 20, 30, 'green');
-ellipse(300, 200, 40, 30, 'red');
-```
-
-你能不能在图中找对每行代码对应的椭圆呢？
-
-![ellipse](../images/2018/ellipse.png)
-
-### 图片 image
-
-```javascript
-image(src, x, y, w, h)
-/**************************
-  src - 图片地址，图片需要从同一个网站地址，或者支持跨域访问
-  x, y - 图片左上角顶点的位置
-
-  ...
-  图片第一次绘制时需要从服务器下载，因此可能需要一段时间后才能绘制出来
-  如果覆盖了后面的图像，重新运行代码即可
-**************************/
-```
-由于浏览器安全的限制，部分网络上的图片不支持跨域的条件，就不可以在画布中使用。
-
-```javascript
-var url1 = "https://rss.leaplearner.com/Image/Bgs/Alarm_bg_01.png";
-var url2 = "https://rss.leaplearner.com/Image/Bgs/bluebg.jpg";
-
-// 使用图片铺满整个屏幕，利用canvas的属性，可以用来设置背景
-image(url1, 0, 0, canvas.width, canvas.heigh);
-
-// 不带任何参数，默认显示图片原始大小
-image("https://rss.leaplearner.com/Image/Role/Frog1.png");
-image("https://rss.leaplearner.com/Image/Role/Frog1.png", 200, 200, 100, 100);
-```
-
-运行效果如下，如果改变图片的位置和大小，我们可以重复利用同一张图片。
-
-![image](../images/2018/image.png)
-
-图片的加载需要时间，如果图片未缓存，画图片时会有一定的延迟，可能会导致图片的绘制顺序与预期不同。一般等图片缓存后重新执行就可以解决这个问题，否则需要定义一个函数，使用loadRssAndRun()来加载资源。使用loadRssAndRun()方法
-
-
-
-### 样式填充 fill
-
-`fill(bool)`:设置是否填充图形，默认为填充，设置后对所有之后的图形生效
-```javascript
-/******************************************
-fill(bool)
-
-设置图形是否填充，对后续所有图形生效
-* fill(true): 填充图形
-* fill(false): 不填充图形
-
-/******************************************/
-```
-
-举例：
-
-```javascript
-canvas.showAxis();
-circle(100, 50, 20);
-rectangle(50, 150, 100, 50, 'red');
-ellipse(100, 250, 30, 20, 'green');
-
-fill(false); // 无填充
-circle(200, 50, 20);
-rectangle(200, 150, 100, 50, 'red');
-ellipse(200, 250, 30, 20, 'green');
-
-fill(true);
-circle(300, 50, 20);
-rectangle(200, 150, 100, 50, 'red');
-ellipse(300, 250, 30, 20, 'green');
-```
-
-运行效果：
-
-![fill](../images/2018/fill.png)
-
-### 文字
-
-#### 字体 font
-
-```javascript
-/***************************************************************
-font(fontName)
-
-设置字体
-* 字体名称：fontName
-/***************************************************************/
-```
-
-能够使用的字体是和系统相关的，在不同系统下常见字体如下：
-
-Windows
-
-- ​    黑体：SimHei
-- ​    宋体：SimSun
-- ​    新宋体：NSimSun
-- ​    仿宋：FangSong
-- ​    楷体：KaiTi
-- ​    仿宋GB2312：FangSongGB2312
-- ​    楷体GB2312：KaiTiGB2312
-- ​    微软雅黑：Microsoft YaHei
-
-Mac Os
-
-- ​    冬青黑体: Hiragino Sans GB （SNOW LEOPARD开始提供）
-- ​    华文细黑：STHeiti Light （又名STXihei）
-- ​    华文黑体：STHeiti
-- ​    华文楷体：STKaiti
-- ​    华文宋体：STSong
-- ​    华文仿宋：STFangsong
-
-如果安装了Microsoft Office软件，那么还可以使用以下字体
-
-- ​    隶书：LiSu
-- ​    幼圆：YouYuan
-- ​    华文细黑：STXihei
-- ​    华文楷体：STKaiti
-- ​    华文宋体：STSong
-- ​    华文中宋：STZhongsong
-- ​    华文仿宋：STFangsong
-- ​    方正舒体：FZShuTi
-- ​    方正姚体：FZYaoti
-- ​    华文彩云：STCaiyun
-- ​    华文琥珀：STHupo
-- ​    华文隶书：STLiti
-- ​    华文行楷：STXingkai
-- ​    华文新魏：STXinwei
-
-等宽字体：
-* Consolas
-
-#### 写字 text
-
-`text(src, x, y, *size, *color, *font)` : 绘制文本，同样，我们需要x、y来绘制文字的位置
-
-```javascript
-/***************************************************************
- * text(string, x, y, *size, *color)
- * 
- * 在画布上写字：
- * 
- * 文字内容：string
- * 文字左上角顶点位置为（x,y）
- * 文字大小为size，可选参数，默认为20
- * 文字颜色为为color，可选参数，默认为 "orange"
- ***************************************************************/
-```
-
-我们来继续看一些写字例子：
-
-```javascript
-canvas.showAxis();
-text("Hello World!", 50, 50);
-text("Hello World!", 50, 100, 30);
-text("Hello World!", 50, 150, 40, 'red');
-
-// 使用不同的字体
-text("Hello World!", 50, 250, 20, null, "Arial");
-text("Hello World!", 50, 300, 30, undefined, font="Consolas");
-text("你好，人类", 50, 350, 40, 'red', 'STCaiyun');
-text("Hello World!", 50, 400, 30);
-```
-
-在这里，我们也能看到不同的字体表现出来的效果差异很大。
-
-![text](../images/2018/text.png)
-
 ### 音乐
 
 在编辑环境中，我们同样提供了一系列的音乐音效
@@ -385,7 +40,7 @@ class Shape {
 
 记录图形的位移、斜切、旋转属性，详见Transform一节
 
-##### 点击事件 click 
+##### 点击事件 click
 
 绑定点击事件后，当图形被鼠标点到，就会触发该事件
 
@@ -509,7 +164,7 @@ const Triangle = Polygon;
 
 ```javascript
 class Rectangle extends Shape
-  constructor (x = 100, y = 100, w = 100, h = 50, color="orange") 
+  constructor (x = 100, y = 100, w = 100, h = 50, color="orange")
 ```
 
 属性值
@@ -604,7 +259,7 @@ class Sprite extends Rectangle
 ![ani](../images/ani.png)
 
 ```javascript
-class Animation extends Sprite 
+class Animation extends Sprite
   constructor (src, x, y, w, h)
 ```
 
@@ -910,7 +565,7 @@ item.draw();
 ```javascript
 function GameLoop(){
     item.y += 1;
-  
+
     bg.draw();
     item.draw();
     nextFrame(GameLoop);
@@ -929,7 +584,7 @@ var item = new Sprite("http://ou1htxdl4.bkt.clouddn.com/coin.png", 150, 100, 50,
 
 function GameLoop(){
     item.y += 1;
-  
+
     bg.draw();
     item.draw();
     nextFrame(GameLoop);
@@ -975,7 +630,7 @@ var scoreMsg;
 function GameLoop(){
     item.y += 1;
     scoreMsg = "score:" + score;
-  
+
     bg.draw();
     item.draw();
     scoreMsg.draw();
@@ -1005,7 +660,7 @@ var scoreMsg;
 function GameLoop(){
     item.y += 1;
     scoreMsg = "score:" + score;
-  
+
     bg.draw();
     item.draw();
     scoreMsg.draw();
@@ -1073,7 +728,7 @@ var scoreMsg;
 function GameLoop(){
     item.y += 1;
     scoreMsg = "score:" + score;
-  
+
     bg.draw();
     item.draw();
     scoreMsg.draw();
@@ -1181,7 +836,7 @@ retry.click = GameStart;
 
 function GameOver(){
     "Game Over".draw(120, 160, "white");
-    retry.draw();    
+    retry.draw();
 }
 ```
 
@@ -1225,10 +880,10 @@ function GameStart(){
 
 function GameLoop(){
     item.y += speed;
-    
+
     bg.draw();
     item.draw();
-    
+
     var scoreMsg = "Score: " + score;
     scoreMsg.draw();
 
@@ -1243,7 +898,7 @@ retry.click = GameStart;
 
 function GameOver(){
     "Game Over".draw(120, 160, "white");
-    retry.draw();    
+    retry.draw();
 }
 
 loadRssAndRun(GameStart);

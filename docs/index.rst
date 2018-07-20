@@ -9,9 +9,6 @@ LeapJS 教程
 .. toctree::
    :maxdepth: 2
 
-   basics/index
-   reference/index
-   books/index
-   tests/index
+   introduction/index
+   basic_shapes/index
    projects/index
-   updates/index
