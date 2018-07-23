@@ -1,8 +1,10 @@
-LeapJS 简介
+图形对象
 =======================================
 
 .. toctree::
    :maxdepth: 2
 
-   introduction
-   brief
+   shape
+   shapes
+   sprite
+   animation

@@ -1,8 +1,8 @@
-LeapJS 简介
+事件
 =======================================
 
 .. toctree::
    :maxdepth: 2
 
-   introduction
-   brief
+   mouse
+   keyboard

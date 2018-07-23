@@ -1,8 +1,7 @@
-LeapJS 简介
+碰撞
 =======================================
 
 .. toctree::
    :maxdepth: 2
 
-   introduction
-   brief
+   collision

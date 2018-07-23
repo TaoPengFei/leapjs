@@ -1,8 +1,7 @@
-LeapJS 简介
+样式
 =======================================
 
 .. toctree::
    :maxdepth: 2
 
-   introduction
-   brief
+   style

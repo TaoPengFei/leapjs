@@ -1,8 +1,8 @@
-LeapJS 简介
+音乐与音效
 =======================================
 
 .. toctree::
    :maxdepth: 2
 
-   introduction
-   brief
+   audio_methods
+   audio_objects

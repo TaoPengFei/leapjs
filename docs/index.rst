@@ -11,4 +11,10 @@ LeapJS 教程
 
    introduction/index
    basic_shapes/index
+   shapes/index
+   style/index
+   audio/index
+   events/index
+   transform/transform
+   physical/index
    projects/index
