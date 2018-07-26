@@ -9,12 +9,20 @@
 方法一：
 
 ```javascript
-Key.a.press = function(console.log('a'));
+Key.a.press = function(){
+    console.log('a')
+};
 ```
 
+方法二：
+
 ```javascript
-Key['a']press = function(console.log('a'));
+Key['a'].press = function(){
+    console.log('a')
+};
 ```
+
+当定义了以上方法后，只要我们按下a键，就会在控制台输出a字。
 
 Key是一个对象，因此以上两种方式都可以实现对按键a的监听。
 
