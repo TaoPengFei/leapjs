@@ -1,8 +1,7 @@
-碰撞
+画布
 =======================================
 
 .. toctree::
    :maxdepth: 2
 
-   gravity
-   collision
+   canvas

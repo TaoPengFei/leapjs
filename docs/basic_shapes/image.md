@@ -26,7 +26,7 @@ image("https://rss.leaplearner.com/Image/Role/Frog1.png");
 image("https://rss.leaplearner.com/Image/Role/Frog1.png", 200, 200, 100, 100);
 ```
 
-运行效果如下，如果改变图片的位置和大小，我们可以重复利用同一张图片。
+运行效果如下，如果改变图片的位置和大小，就可以在画布上显示出不同的样式。我们可以重复利用同一张图片，做出不一样的效果。
 
 ![image](../images/2018/image.png)
 
