@@ -1,5 +1,7 @@
 ## 圆 circle
 
+在代码编辑区域写下
+
 ### 绘制方法 `circle`
 
 ```javascript

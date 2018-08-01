@@ -11,3 +11,4 @@
 
    ClickerHero
    ClickerHero_en
+   example
