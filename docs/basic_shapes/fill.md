@@ -34,3 +34,5 @@ ellipse(300, 250, 30, 20, 'green');
 运行效果：
 
 ![fill](../images/2018/fill.png)
+
+我们首先用`canvas.showAxis()`显示画布坐标，然后用3个不同的绘图函数画出了3个实心的图形。

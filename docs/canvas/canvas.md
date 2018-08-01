@@ -10,6 +10,7 @@ canvas是H5的一个模块，用于绘制图像。
 
 
 
+
 ### 高度 height
 
 返回或者设置画布的高度
@@ -24,7 +25,18 @@ canvas是H5的一个模块，用于绘制图像。
 
 canvas.clear()
 
-### 显示画布坐标轴
+<div class="admonition note">
+<p class="first admonition-title">图形监听事件</p>
+<p class="last">canvas.clear同时也会清理所有的图形监听事件。</p>
+</div>
+
+### 显示坐标轴 showAxis
+
+```javascript
+canvas.showAxis();
+```
+
+显示画布的坐标轴，显示的宽度为画布宽度 * 2，显示的高度为画布高度 * 2，中心点为原点。默认情况下，我们只能看到右下区间的内容。
 
 canvas.showAxis()
 
@@ -56,6 +68,13 @@ canvas.shadow(open=true)
 ```javascript
 canvas.shadow(false)
 ```
+
+
+
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Its a note! in markdown!</p>
+</div>
 
 
 

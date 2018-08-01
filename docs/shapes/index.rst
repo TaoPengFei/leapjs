@@ -1,10 +1,10 @@
-图形对象
+图片和动画
 =======================================
 
 .. toctree::
    :maxdepth: 2
 
    shape
-   shapes
+   image
    sprite
    animation

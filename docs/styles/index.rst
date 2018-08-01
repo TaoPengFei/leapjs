@@ -6,6 +6,7 @@
 
    style
    color
+   shadow
    lineStyle
    transparent
    gradient
