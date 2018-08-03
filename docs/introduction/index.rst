@@ -6,3 +6,4 @@ LeapJS 简介
 
    introduction
    brief
+   firstProgram

@@ -21,7 +21,7 @@
 JavaScript是一个网页脚本语言，几乎所有的网页应用都离不开JavaScript，可以预知的是，在今后很长一段时间内（十几年），JavaScript都会是网页中最主流的编程语言。在网页中，JavaScript几乎是天然可以运行，这就省去了安装编译环境所需要的大量时间。
 
 <div class="admonition hint ">
-<p class="first admonition-title">hint </p>
+<p class="first admonition-title">小提示</p>
 <p class="last">在网页中，还有HTML以及CSS，他们都只是一种标记语言，并不是真正的编程语言</p>
 </div>
 
