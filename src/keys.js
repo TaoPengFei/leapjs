@@ -16,6 +16,7 @@ document.onkeyup = function (e) {
   let key = Key[e.key]
   if (key && key.up) {
     key.up()
+    key.pressed = false;
   }
 }
 
@@ -24,6 +25,7 @@ document.onkeydown = function (e) {
   if (key && key.down) { key.down() }
   if (noPressKeys.includes(e.key) && key.press) {
     key.press()
+    key.pressed = true;
   }
 }
 
