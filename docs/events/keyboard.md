@@ -1,9 +1,27 @@
 ## 键盘
+
 ### 键盘状态
 
-当键盘上a键被按下时，以下属性值会变为true，当a键松开时，以下属性值又变为false值，当没有进行键盘操作时，默认为undefined状态。
+当键盘上`a键`被按下时，以下属性值会变为`true`，当`a键`松开时，以下属性值又变为`false`值。在进行条件判断时，可以利用这一特性进行判断。
 
-Key['a'].pressed
+```javascript
+Key['a'].pressed // true/false
+```
+
+**例子：用键盘控制圆圈出现并变大**
+
+```javascript
+function draw(){
+    canvas.clear();
+    if(Key.a.pressed){
+        circle(100, 100, 50);
+    }
+}
+
+run(draw);
+```
+
+
 
 ### 键盘事件
 
@@ -54,6 +72,53 @@ Key['1'].press = function(){};
 ```
 
 
+
+### 状态还是事件
+
+当我们需要用键盘来控制项目时，有上述两种方式，那什么时候用状态判断的方式，什么时候用事件的方式呢？
+
+正如这两个方式的名称，当我们需要表达`状态变化`时，我们选择使用状态，比如，控制一个角色的移动，我们希望当左键按下的时候（状态），角色往左移动，这就是一个状态的切换，从静止到往左移动，那么这里就适合用状态来进行判断。
+
+**例子：使用状态来移动**
+
+```javascript
+var cat = new Sprite("https://r.leaplearner.com/i/Cat.png", 100, 100, 50, 60);
+
+function draw(){
+    canvas.clear();
+    if(Key.ArrowLeft.pressed){
+        cat.x --;
+    }
+    cat.draw();
+}
+
+run(draw);
+```
+
+可以看到，当按下左键时，小猫变为移动状态，匀速的往左边移动。
+
+![keyStatus](../images/events/keyStatus.gif)
+
+**例子：使用事件来移动**
+
+如果我们只是想让角色移动一格，那么这就是一个`事件`，因为移动结束后角色恢复到了静止的状态，这里就是用是用事件的方式来控制。当然，我们还可以通过事件来控制状态的变化。
+
+```javascript
+var cat = new Sprite("https://r.leaplearner.com/i/Cat.png", 200, 100, 50, 60);
+
+function draw(){
+    canvas.clear();
+    cat.draw();
+}
+
+Key.ArrowLeft.press = function(){
+    cat.x -= 10;
+};
+
+run(draw);
+```
+
+![keyEvent](../images/events/keyEvent.gif)
 
 ### 手势事件
 
