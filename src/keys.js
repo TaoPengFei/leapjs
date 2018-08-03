@@ -13,26 +13,23 @@ for (let i = 0; i < keyboard2.length; i++) {
 }
 
 document.onkeyup = function (e) {
-  let key = Key[e.key]
-  if (key && key.up) {
-    key.up()
-    key.pressed = false;
-  }
+  let key = Key[e.key];
+  key.pressed = false;
+  if (key && key.up) { key.up(); }
 }
 
 document.onkeydown = function (e) {
-  let key = Key[e.key]
-  if (key && key.down) { key.down() }
-  if (noPressKeys.includes(e.key) && key.press) {
-    key.press()
-    key.pressed = true;
-  }
+  let key = Key[e.key];
+  key.pressed = true;
+
+  if (key && key.down) { key.down(); }
+  if (noPressKeys.includes(e.key) && key.press) { key.press(); }
 }
 
 // keyboard2 will not file key press event
 document.onkeypress = function (e) {
-  let key = Key[e.key]
-  if (key && key.press) { key.press() }
+  let key = Key[e.key];
+  if (key && key.press) { key.press(); }
 }
 
 export { Key }
