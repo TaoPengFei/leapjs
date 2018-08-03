@@ -36,17 +36,32 @@
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -162,7 +177,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _can
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Key\", function() { return Key; });\nlet Key = {}\r\n\r\nconst keyboard = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=,./<>?|\\\\;:\\'\"'\r\nconst keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', ' ', 'Tab', 'Shift', 'Control', 'Alt', 'Backspace']\r\nconst noPressKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape', 'Tab', 'Shift', 'Control', 'Alt', 'Backspace']\r\n\r\nfor (let i = 0; i < keyboard.length; i++) {\r\n  Key[keyboard[i]] = {}\r\n}\r\n\r\nfor (let i = 0; i < keyboard2.length; i++) {\r\n  Key[keyboard2[i]] = {}\r\n}\r\n\r\ndocument.onkeyup = function (e) {\r\n  let key = Key[e.key]\r\n  if (key && key.up) {\r\n    key.up()\r\n  }\r\n}\r\n\r\ndocument.onkeydown = function (e) {\r\n  let key = Key[e.key]\r\n  if (key && key.down) { key.down() }\r\n  if (noPressKeys.includes(e.key) && key.press) {\r\n    key.press()\r\n  }\r\n}\r\n\r\n// keyboard2 will not file key press event\r\ndocument.onkeypress = function (e) {\r\n  let key = Key[e.key]\r\n  if (key && key.press) { key.press() }\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/keys.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Key\", function() { return Key; });\nlet Key = {}\r\n\r\nconst keyboard = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=,./<>?|\\\\;:\\'\"'\r\nconst keyboard2 = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', ' ', 'Tab', 'Shift', 'Control', 'Alt', 'Backspace']\r\nconst noPressKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape', 'Tab', 'Shift', 'Control', 'Alt', 'Backspace']\r\n\r\nfor (let i = 0; i < keyboard.length; i++) {\r\n  Key[keyboard[i]] = {}\r\n}\r\n\r\nfor (let i = 0; i < keyboard2.length; i++) {\r\n  Key[keyboard2[i]] = {}\r\n}\r\n\r\ndocument.onkeyup = function (e) {\r\n  let key = Key[e.key]\r\n  if (key && key.up) {\r\n    key.up()\r\n    key.pressed = false;\r\n  }\r\n}\r\n\r\ndocument.onkeydown = function (e) {\r\n  let key = Key[e.key]\r\n  if (key && key.down) { key.down() }\r\n  if (noPressKeys.includes(e.key) && key.press) {\r\n    key.press()\r\n    key.pressed = true;\r\n  }\r\n}\r\n\r\n// keyboard2 will not file key press event\r\ndocument.onkeypress = function (e) {\r\n  let key = Key[e.key]\r\n  if (key && key.press) { key.press() }\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/keys.js?");
 
 /***/ }),
 
