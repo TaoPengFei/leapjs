@@ -343,8 +343,16 @@ class Sprite extends Rectangle {
     Rss.add();
   }
 
+  getW () { return this.w || this.img.width; }
+  getH () { return this.h || this.img.height; }
+
   get src () { return this.img.src }
   set src (src) { this.img.src = src }
+
+  get cx () { return this.x + this.getW()/2; }
+  get cy () { return this.y + this.getH()/2; }
+  set cx (cx) { this.x = cx - this.getW() / 2; }
+  set cy (cy) { this.y = cy - this.getH() / 2; }
 
   set onload (callback) {
     this.img.onload = function () {
