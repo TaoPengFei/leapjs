@@ -5,8 +5,8 @@
 .. toctree::
    :maxdepth: 2
 
-   rectangle
    circle
+   rectangle
    text
    fill
    line
