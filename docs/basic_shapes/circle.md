@@ -138,7 +138,6 @@ circle(200, 100, 40, 'green');
 circle(300, 100, 50, 'red');
 
 // 如果想要画圆框，在使用circle之前，使用fill方法
-
 fill(false);
 circle(100, 200, 50);
 circle(200, 200, 40, 'green');
@@ -148,6 +147,27 @@ circle(300, 200, 30, 'red');
 `fill(false)`用于设置绘制的模式，参数`false`代表仅绘制边框而不绘制内部，也就是说，它可以让circle的作用变为画了一个空心的圆。当我们需要绘制圆的内部时，再次使用`fill(trure)`就可以让图形填充了。
 
 ![circle](../images/2018/circle.png)
+
+
+
+**例子：绘制奥运五环**
+
+![rings](../images/basic/rings.png)
+
+奥运五环代表五大洲，环环相扣。我们可以用circle来画出奥运五环。
+
+```javascript
+fill(false);
+ctx.lineWidth = 8;
+
+circle(100, 100, 45, "blue");
+circle(150, 150, 45, "yellow");
+circle(200, 100, 45, "black");
+circle(250, 150, 45, "green");
+circle(300, 100, 45, "red");
+```
+
+* ctx.lineWidth = 8，设置默认的线条宽度，默认为1，画出来的线条占据一个像素。设置为8后，画出来的所有线条为8个像素宽度。
 
 ### 圆形对象 `Circle`
 
@@ -204,7 +224,7 @@ c.draw();
 
 ##### 坐标值 `x`,`y`
 
-在这里，`x`就是`c`的一个属性值，代表圆c的x坐标值。用点运算符来读取，表达式为`c.x`。要修改c.x的值，则需要使用赋值运算符`=`。同样，`y`是`c`的另外一个属性值，代表圆c的y坐标值，表达式为`c.y`。我们来分析下`c.x`和`c.y`的变化过程：
+在这里，x就是圆c的一个属性值，代表圆c的x坐标值。用点运算符来读取，表达式为`c.x`。要修改c.x的值，则需要使用赋值运算符`=`。同样，y是圆c的另外一个属性值，代表圆c的y坐标值，表达式为`c.y`。我们来分析下`c.x`和`c.y`的变化过程：
 
 1. 创建时，第一个参数即`x`坐标值，也就是`c.x`的值为`100`，第二个参数是`y`坐标值，`c.y`的值为`100`
 2. 当我们执行`c.x = 250`;时，就将`c.x`设置为`250`，那么此时`c.x`的值就变为`250`
@@ -221,10 +241,6 @@ c.draw();
 ```javascript
 canvas.showAxis();
 var c = new Circle(100, 100, 50); // x, y, rX, rY
-c.lineWidth = 3;
-c.strokeStyle = "red";
-c.fillStyle = "orange";
-
 c.draw();
 
 c.y += 100;
