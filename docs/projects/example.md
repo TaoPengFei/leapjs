@@ -29,3 +29,14 @@
 <p class="first admonition-title">tip </p>
 <p class="last">tip </p>
 </div>
+
+$ \begin{matrix} 1 & 2  \\ a & b  \end{matrix}$
+
+
+$$
+\begin {matrix}
+1 & 2 & 3 \\
+a & b & c \\
+4 & 5 & 6
+\end {matrix} \tag{1}
+$$
