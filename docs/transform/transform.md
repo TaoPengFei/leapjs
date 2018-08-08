@@ -17,7 +17,7 @@ circle.draw();
 
 在没有改变circle的坐标前提下，我们把circle的位置改变了。
 
-![circle](C:\Data\leapjs\docs\images\transform\circle.png)
+![circle](../images/transform/circle.png)
 
 **实例：走路**
 

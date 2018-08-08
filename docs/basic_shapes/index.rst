@@ -8,9 +8,5 @@
    circle
    rectangle
    text
-   fill
-   line
-   point
-   ellipse
-   triangle
-   polygon
+   image
+   other_shapes

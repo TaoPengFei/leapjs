@@ -51,50 +51,66 @@ font(fontName)
 
 能够使用的字体是和系统相关的，在不同系统下常见字体如下：
 
-Windows
+#### 字体名称速查
 
-- ​    黑体：SimHei
-- ​    宋体：SimSun
-- ​    新宋体：NSimSun
-- ​    仿宋：FangSong
-- ​    楷体：KaiTi
-- ​    仿宋GB2312：FangSongGB2312
-- ​    楷体GB2312：KaiTiGB2312
-- ​    微软雅黑：Microsoft YaHei
+**Windows** 系统上可用的字体
 
-Mac Os
+| 字体   | 字体名称 |
+| ------ | -------- |
+| 黑体   | SimHei   |
+| 宋体   | SimSun   |
+| 新宋体 | NSimSun  |
+|  仿宋| FangSong  |
+| 楷体| KaiTi  |
+| 仿宋GB2312| FangSongGB2312  |
+|  楷体GB2312| KaiTiGB2312  |
+| 微软雅黑| Microsoft YaHei  |
 
-- ​    冬青黑体: Hiragino Sans GB （SNOW LEOPARD开始提供）
-- ​    华文细黑：STHeiti Light （又名STXihei）
-- ​    华文黑体：STHeiti
-- ​    华文楷体：STKaiti
-- ​    华文宋体：STSong
-- ​    华文仿宋：STFangsong
+**Mac Os** 上可以使用的字体有
+
+| 字体     | 字体名称                      |
+| -------- | ----------------------------- |
+| 冬青黑体 | Hiragino Sans GB              |
+| 华文细黑 | STHeiti Light （又名STXihei） |
+| 华文黑体 | STHeiti                       |
+| 华文楷体 | STKaiti                       |
+| 华文宋体 | STSong                        |
+| 华文仿宋 | STFangsong                    |
 
 如果安装了Microsoft Office软件，那么还可以使用以下字体
 
-- ​    隶书：LiSu
-- ​    幼圆：YouYuan
-- ​    华文细黑：STXihei
-- ​    华文楷体：STKaiti
-- ​    华文宋体：STSong
-- ​    华文中宋：STZhongsong
-- ​    华文仿宋：STFangsong
-- ​    方正舒体：FZShuTi
-- ​    方正姚体：FZYaoti
-- ​    华文彩云：STCaiyun
-- ​    华文琥珀：STHupo
-- ​    华文隶书：STLiti
-- ​    华文行楷：STXingkai
-- ​    华文新魏：STXinwei
+| 字体 | 字体名称 |
+| ---- | -------- |
+| 隶书 | LiSu     |
+|幼圆|YouYuan|
+|华文细黑|STXihei|
+|华文楷体|STKaiti|
+|华文宋体|STSong|
+|华文中宋|STZhongsong|
+|华文仿宋|STFangsong|
+|方正舒体|FZShuTi|
+|方正姚体|FZYaoti|
+|华文彩云|STCaiyun|
+|华文琥珀|STHupo|
+|华文隶书|STLiti|
+|华文行楷|STXingkai|
+|华文新魏|STXinwei|
 
-等宽字体：
+#### 等宽字体
 
-- Consolas
+如果一个字体所有字母的宽度都一样，那么这个字体就是一个等宽字体。在一些特殊情况下，我们可能需要使用等宽字体，比如代码区域，为了便于阅读和差错，大多数人更喜欢使用等宽字体。
+
+| 字体     | 字体名称 |
+| -------- | -------- |
+| Consolas | Consolas |
+|          |          |
+|          |          |
+
+
 
 #### 多行文字 Multi-lines
 
-可以通过重新定义`text`方法，让`text`支持`\n`作为分隔符，实现分行效果。
+canvas默认不支持多行文字，但是我们可以通过重新定义`text`方法，让`text`支持`\n`作为分隔符，实现分行效果。
 
 ```javascript
 var oldtext = text;
@@ -166,22 +182,24 @@ text("textAlign=right", 150, 140);
 定义和用法
 textBaseline 属性设置或返回在绘制文本时的当前文本基线。
 
-下面的图示演示了 textBaseline 属性支持的各种基线：
-
 文本基线图示
 注释：text() 或 text.draw() 方法在画布上定位文本时，将使用指定的 textBaseline 值。
 
 默认值：    top
 ctx.textBaseline="alphabetic|top|hanging|middle|ideographic|bottom";
 
-属性值
-值           描述
-alphabetic  文本基线是普通的字母基线。
-top         文本基线是 em 方框的顶端。。
-hanging     文本基线是悬挂基线。
-middle      文本基线是 em 方框的正中。
-ideographic 文本基线是表意基线。
-bottom      文本基线是 em 方框的底端。
+| 属性值 | 描述 |
+| ------ | -------- |
+|alphabetic  |文本基线是普通的字母基线。|
+|top         |文本基线是 em 方框的顶端。。|
+|hanging     |文本基线是悬挂基线。|
+|middle      |文本基线是 em 方框的正中。|
+|ideographic |文本基线是表意基线。|
+|bottom      |文本基线是 em 方框的底端。|
+
+
+
+下面的例子演示了 textBaseline 属性支持的各种基线：
 
 ```javascript
 line(5, 100, 395, 100, 1, "blue");
@@ -257,6 +275,8 @@ class Text extends Rectangle
 获取或者设置文本字体
 
 #### 自动换行 Auto line break
+
+画布不支持自动换行，我们可以根据文字的长度来自定义换行。
 
 ```javascript
 // Let us code the future

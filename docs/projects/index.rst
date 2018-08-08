@@ -9,6 +9,5 @@
 .. toctree::
    :maxdepth: 2
 
-   ClickerHero
-   ClickerHero_en
+   button
    example

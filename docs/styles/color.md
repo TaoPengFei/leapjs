@@ -1,8 +1,17 @@
 ## 颜色
 
+在网页中可以用以下方法来规定 CSS 中的颜色，不同颜色的表示法只是为了便于我们运用和理解，他们之间大多可以相互转换。
+
+* 颜色常量
+* 十六进制色
+* RGB 颜色
+* RGBA 颜色
+* HSL 颜色
+* HSLA 颜色
+
 ### 颜色常量
 
-`fillStyle`与`stokeStyle`可以设置为表示颜色的字符串常量，从而可以直接设置图形的颜色。
+我们最习惯的便是用英语单词来表示颜色，比如`"red"`、`"blue"`、`"white"`，在使用和阅读的过程中，颜色常量是最方便的一种方式。
 
 一些常见的颜色的常量有aqua、black、blue、fuchsia、gray、green、lime、maroon、navy、olive、purple、red、silver、teal、white、yellow。
 
@@ -16,11 +25,277 @@ rectangle(10, 10, 200, 100, "red");
 
 这里，函数rectangle中最后一个参数即表示颜色常量。一般情况下，如有这个颜色常量JS不支持，那么等同于使用了黑色效果。如果你在使用的过程中发现图形变为黑色了，那么很有可能是单词拼写错误导致的。
 
-![style1](../images/style1.png)
+#### 颜色常量速查
 
-更多参考资料：
+<table>
+<tbody><tr>
+<th style="width:25%"></th>
+<th style="width:25%"></th>
+<th style="width:25%"></th>
+<th style="width:25%"></th>
+</tr>
 
-http://www.w3school.com.cn/tags/html_ref_colornames.asp
+<tr>
+<td style="background-color:AliceBlue">AliceBlue</td>
+<td style="background-color:AntiqueWhite">AntiqueWhite</td>
+<td style="background-color:Aqua">Aqua</td>
+<td style="background-color:Aquamarine">Aquamarine</td>
+</tr>
+
+<td style="background-color:Azure">Azure</td>
+<td style="background-color:Beige">Beige</td>
+<td style="background-color:Bisque">Bisque</td>
+<td style="background-color:Black">Black</td>
+</tr>
+
+<tr>
+<td style="background-color:BlanchedAlmond">BlanchedAlmond</td>
+<td style="background-color:Blue">Blue</td>
+<td style="background-color:BlueViolet">BlueViolet</td>
+<td style="background-color:Brown">Brown</td>
+</tr>
+
+<tr>
+<td style="background-color:BurlyWood">BurlyWood</td>
+<td style="background-color:CadetBlue">CadetBlue</td>
+<td style="background-color:Chartreuse">Chartreuse</td>
+<td style="background-color:Chocolate">Chocolate</td>
+</tr>
+
+<tr>
+<td style="background-color:Coral">Coral</td>
+<td style="background-color:CornflowerBlue">CornflowerBlue</td>
+<td style="background-color:Cornsilk">Cornsilk</td>
+<td style="background-color:Crimson">Crimson</td>
+</tr>
+
+<tr>
+<td style="background-color:Cyan">Cyan</td>
+<td style="background-color:DarkBlue">DarkBlue</td>
+<td style="background-color:DarkCyan">DarkCyan</td>
+<td style="background-color:DarkGoldenRod">DarkGoldenRod</td>
+</tr>
+
+<tr>
+<td style="background-color:DarkGray">DarkGray</td>
+<td style="background-color:DarkGreen">DarkGreen</td>
+<td style="background-color:DarkKhaki">DarkKhaki</td>
+<td style="background-color:DarkMagenta">DarkMagenta</td>
+</tr>
+
+<tr>
+<td style="background-color:DarkOliveGreen">DarkOliveGreen</td>
+<td style="background-color:Darkorange">Darkorange</td>
+<td style="background-color:DarkOrchid">DarkOrchid</td>
+<td style="background-color:DarkRed">DarkRed</td>
+</tr>
+
+<tr>
+<td style="background-color:DarkSalmon">DarkSalmon</td>
+<td style="background-color:DarkSeaGreen">DarkSeaGreen</td>
+<td style="background-color:DarkSlateBlue">DarkSlateBlue</td>
+<td style="background-color:DarkSlateGray">DarkSlateGray</td>
+</tr>
+
+<tr>
+<td style="background-color:DarkTurquoise">DarkTurquoise</td>
+<td style="background-color:DarkViolet">DarkViolet</td>
+<td style="background-color:DeepPink">DeepPink</td>
+<td style="background-color:DeepSkyBlue">DeepSkyBlue</td>
+</tr>
+
+<tr>
+<td style="background-color:DimGray">DimGray</td>
+<td style="background-color:DodgerBlue">DodgerBlue</td>
+<td style="background-color:Feldspar">Feldspar</td>
+<td style="background-color:FireBrick">FireBrick</td>
+</tr>
+
+<tr>
+<td style="background-color:FloralWhite">FloralWhite</td>
+<td style="background-color:ForestGreen">ForestGreen</td>
+<td style="background-color:Fuchsia">Fuchsia</td>
+<td style="background-color:Gainsboro">Gainsboro</td>
+</tr>
+
+<tr>
+<td style="background-color:GhostWhite">GhostWhite</td>
+<td style="background-color:Gold">Gold</td>
+<td style="background-color:GoldenRod">GoldenRod</td>
+<td style="background-color:Gray">Gray</td>
+</tr>
+
+<tr>
+<td style="background-color:Green">Green</td>
+<td style="background-color:GreenYellow">GreenYellow</td>
+<td style="background-color:HoneyDew">HoneyDew</td>
+<td style="background-color:HotPink">HotPink</td>
+</tr>
+
+<tr>
+<td style="background-color:IndianRed ">IndianRed </td>
+<td style="background-color:Indigo ">Indigo </td>
+<td style="background-color:Ivory">Ivory</td>
+<td style="background-color:Khaki">Khaki</td>
+</tr>
+
+<tr>
+<td style="background-color:Lavender">Lavender</td>
+<td style="background-color:LavenderBlush">LavenderBlush</td>
+<td style="background-color:LawnGreen">LawnGreen</td>
+<td style="background-color:LemonChiffon">LemonChiffon</td>
+</tr>
+
+<tr>
+<td style="background-color:LightBlue">LightBlue</td>
+<td style="background-color:LightCoral">LightCoral</td>
+<td style="background-color:LightCyan">LightCyan</td>
+<td style="background-color:LightGoldenRodYellow">LightGoldenRodYellow</td>
+</tr>
+
+<tr>
+<td style="background-color:LightGrey">LightGrey</td>
+<td style="background-color:LightGreen">LightGreen</td>
+<td style="background-color:LightPink">LightPink</td>
+<td style="background-color:LightSalmon">LightSalmon</td>
+</tr>
+
+<tr>
+<td style="background-color:LightSeaGreen">LightSeaGreen</td>
+<td style="background-color:LightSkyBlue">LightSkyBlue</td>
+<td style="background-color:LightSlateBlue">LightSlateBlue</td>
+<td style="background-color:LightSlateGray">LightSlateGray</td>
+</tr>
+
+<tr>
+<td style="background-color:LightSteelBlue">LightSteelBlue</td>
+<td style="background-color:LightYellow">LightYellow</td>
+<td style="background-color:Lime">Lime</td>
+<td style="background-color:LimeGreen">LimeGreen</td>
+</tr>
+
+<tr>
+<td style="background-color:Linen">Linen</td>
+<td style="background-color:Magenta">Magenta</td>
+<td style="background-color:Maroon">Maroon</td>
+<td style="background-color:MediumAquaMarine">MediumAquaMarine</td>
+</tr>
+
+<tr>
+<td style="background-color:MediumBlue">MediumBlue</td>
+<td style="background-color:MediumOrchid">MediumOrchid</td>
+<td style="background-color:MediumPurple">MediumPurple</td>
+<td style="background-color:MediumSeaGreen">MediumSeaGreen</td>
+</tr>
+
+<tr>
+<td style="background-color:MediumSlateBlue">MediumSlateBlue</td>
+<td style="background-color:MediumSpringGreen">MediumSpringGreen</td>
+<td style="background-color:MediumTurquoise">MediumTurquoise</td>
+<td style="background-color:MediumVioletRed">MediumVioletRed</td>
+</tr>
+
+<tr>
+<td style="background-color:MidnightBlue">MidnightBlue</td>
+<td style="background-color:MintCream">MintCream</td>
+<td style="background-color:MistyRose">MistyRose</td>
+<td style="background-color:Moccasin">Moccasin</td>
+</tr>
+
+<tr>
+<td style="background-color:NavajoWhite">NavajoWhite</td>
+<td style="background-color:Navy">Navy</td>
+<td style="background-color:OldLace">OldLace</td>
+<td style="background-color:Olive">Olive</td>
+</tr>
+
+<tr>
+<td style="background-color:OliveDrab">OliveDrab</td>
+<td style="background-color:Orange">Orange</td>
+<td style="background-color:OrangeRed">OrangeRed</td>
+<td style="background-color:Orchid">Orchid</td>
+</tr>
+
+<tr>
+<td style="background-color:PaleGoldenRod">PaleGoldenRod</td>
+<td style="background-color:PaleGreen">PaleGreen</td>
+<td style="background-color:PaleTurquoise">PaleTurquoise</td>
+<td style="background-color:PaleVioletRed">PaleVioletRed</td>
+</tr>
+
+<tr>
+<td style="background-color:PapayaWhip">PapayaWhip</td>
+<td style="background-color:PeachPuff">PeachPuff</td>
+<td style="background-color:Peru">Peru</td>
+<td style="background-color:Pink">Pink</td>
+</tr>
+
+<tr>
+<td style="background-color:Plum">Plum</td>
+<td style="background-color:PowderBlue">PowderBlue</td>
+<td style="background-color:Purple">Purple</td>
+<td style="background-color:Red">Red</td>
+</tr>
+
+<tr>
+<td style="background-color:RosyBrown">RosyBrown</td>
+<td style="background-color:RoyalBlue">RoyalBlue</td>
+<td style="background-color:SaddleBrown">SaddleBrown</td>
+<td style="background-color:Salmon">Salmon</td>
+</tr>
+
+<tr>
+<td style="background-color:SandyBrown">SandyBrown</td>
+<td style="background-color:SeaGreen">SeaGreen</td>
+<td style="background-color:SeaShell">SeaShell</td>
+<td style="background-color:Sienna">Sienna</td>
+</tr>
+
+<tr>
+<td style="background-color:Silver">Silver</td>
+<td style="background-color:SkyBlue">SkyBlue</td>
+<td style="background-color:SlateBlue">SlateBlue</td>
+<td style="background-color:SlateGray">SlateGray</td>
+</tr>
+
+<tr>
+<td style="background-color:Snow">Snow</td>
+<td style="background-color:SpringGreen">SpringGreen</td>
+<td style="background-color:SteelBlue">SteelBlue</td>
+<td style="background-color:Tan">Tan</td>
+</tr>
+
+<tr>
+<td style="background-color:Teal">Teal</td>
+<td style="background-color:Thistle">Thistle</td>
+<td style="background-color:Tomato">Tomato</td>
+<td style="background-color:Turquoise">Turquoise</td>
+</tr>
+
+<tr>
+<td style="background-color:Violet">Violet</td>
+<td style="background-color:VioletRed">VioletRed</td>
+<td style="background-color:Wheat">Wheat</td>
+<td style="background-color:White">White</td>
+</tr>
+
+<tr>
+<td style="background-color:WhiteSmoke">WhiteSmoke</td>
+<td style="background-color:Yellow">Yellow</td>
+<td style="background-color:YellowGreen ">YellowGreen </td>
+</tr>
+
+</tbody></table>
+
+### 十六进制颜色值
+
+随着显示屏的发展，目前大部分显示屏都已经支持几万以上（65535种）的颜色，我们的词汇已经无法表达出来所有的颜色。
+
+十六进制颜色是这样规定的：#RRGGBB，其中的 RR（红色）、GG（绿色）、BB（蓝色）十六进制整数规定了颜色的成分。所有值必须介于 0 与 FF 之间。
+
+举例说，#0000ff 值显示为蓝色，这是因为蓝色成分被设置为最高值（ff），而其他成分被设置为 0。
+
+
 
 ### RGB值
 
@@ -40,16 +315,17 @@ RGB(red, green, blue);
 
 颜色RGB表示法
 * red: 红色的值，从0~255，数值越大，红色值越高
-
 * green: 绿色的值，从0~255，数值越大，绿色值越高
-
 * blue: 蓝色的值，从0~255，数值越大，蓝色值越高
 
-  
 
-### RGBA值
+#### RGBA值
 
-RGBA值是RGB的扩充，在使用颜色时可以直接制定该颜色的Alpha值。
+RGBA 颜色值得到以下浏览器的支持：IE9+、Firefox 3+、Chrome、Safari 以及 Opera 10+。
+
+RGBA 颜色值是 RGB 颜色值的扩展，带有一个 alpha 通道 - 它规定了对象的不透明度。
+
+RGBA 颜色值是这样规定的：rgba(red, green, blue, alpha)。alpha 参数是介于 0.0（完全透明）与 1.0（完全不透明）的数字。
 
 ```javascript
 rect.fillStyle = "rgba(255, 255, 0, 0,5)";
@@ -68,7 +344,16 @@ RGBA(red, green, blue, alpha);
 * alpha: 透明度，从0~1，0为全透明
 * 
 
-### HSL
+### HSL 颜色值
+
+HSL 颜色
+HSL 颜色值得到以下浏览器的支持：IE9+、Firefox、Chrome、Safari 以及 Opera 10+。
+
+HSL 指的是 hue（色调）、saturation（饱和度）、lightness（亮度） - 表示颜色柱面坐标表示法。
+
+HSL 颜色值是这样规定的：hsl(hue, saturation, lightness)。
+
+Hue 是色盘上的度数（从 0 到 360） - 0 (或 360) 是红色，120 是绿色，240 是蓝色。Saturation 是百分比值；0% 意味着灰色，而 100% 是全彩。Lightness 同样是百分比值；0% 是黑色，100% 是白色。
 
 ```javascript
 HSL(360, 1.00, 1.00)
@@ -82,6 +367,11 @@ HSL(360, 1.00, 1.00)
 
 HSL和RGB都是用于处理颜色，他们之间可以相互进行换算。
 
-### HSLA
+#### HSLA
 
-即HSL添加透明度Alpha
+HSLA 颜色
+HSLA 颜色值得到以下浏览器的支持：IE9+、Firefox 3+、Chrome、Safari 以及 Opera 10+。
+
+HSLA 颜色值是 HSL 颜色值的扩展，带有一个 alpha 通道 - 它规定了对象的不透明度。
+
+HSLA 颜色值是这样规定的：hsla(hue, saturation, lightness, alpha)，其中的 alpha 参数定义不透明度。alpha 参数是介于 0.0（完全透明）与 1.0（完全不透明）的数字。
