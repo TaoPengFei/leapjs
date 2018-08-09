@@ -24,7 +24,8 @@
     #############&!!!!;;;;'``':;;;;!!!%##############$
 
 开发环境：https://code.leaplearner.com/
-目前最新库版本：https://rss.leaplearner.com/teachfiles/Text/leap.min.v1.0.js
+目前最新库版本：https://rss.leaplearner.com/teachfiles/Text/leap.min.v1.1.js
+<script src="https://rss.leaplearner.com/teachfiles/Text/leap.min.v1.1.js"></script>
 
 ***************************************************************/
 
