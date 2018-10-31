@@ -117,6 +117,10 @@ class Shape {
       t.anchorY = this.minY + (this.maxY - this.minY) * t.anchor.y;  
     }
   }
+
+  setLineDash(lineDash) {
+    this.lineDash = lineDash;
+  }
 }
 
 class Circle extends Shape {

@@ -10,4 +10,5 @@
    :maxdepth: 2
 
    button
+   chase
    example
