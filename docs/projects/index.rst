@@ -11,4 +11,5 @@
 
    button
    chase
+   battle
    example
