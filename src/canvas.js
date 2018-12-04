@@ -49,7 +49,7 @@ canvas.resize = function (width, height) {
   ctx.shadowBlur = 5;
   ctx.shadowOffsetX = 2;
   ctx.shadowOffsetY = 2;
-  ctx.shadowOpen = true;
+  ctx.shadowOpen = false;
 }
 
 canvas.shadow = function(open=true){

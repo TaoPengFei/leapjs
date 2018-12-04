@@ -5,3 +5,4 @@ package-lock.json
 .eslintrc.js
 src/.idea
 docs/_build
+dist/
