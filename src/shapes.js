@@ -402,8 +402,12 @@ class Animation extends Sprite {
     this.setFrame();
   }
 
-  setFrame (c = 4, r = 1) {
+  setFrame (c = 4, r = 1, error = 'g2g') {
     // 设置帧动画的水平数量和垂直数量
+    if(error != 'g2g') {
+      console.log("请使用animation.setFrame(column 列, row 行)");
+    }
+
     this._c = c
     this._r = r;
   }

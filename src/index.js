@@ -65,6 +65,6 @@ window.play = play
 window.pause = pause
 
 window.noStroke = function(){ console.log("'noStroke()'不再使用了, 请使用'fill(boolen)'");};
-window.canvas.preventDefaultEvent = function(){console.log("'canvas.preventDefaultEvent()'不再使用了");};
-window.playSound = function () { console.log("'playSound()'不再使用了, 请使用'play()'"); }
-window.font = function () { console.log("'font()'不再使用了，请直接使用'text()'方法"); }
+window.canvas.preventDefaultEvent = function(){console.log("'canvas.preventDefaultEvent()'不再使用了，无需使用该方法");};
+window.playSound = function () { console.log("'playSound(src)'不再使用了, 请使用'play(src)'"); }
+window.font = function () { console.log("'font(name)'不再使用了，请直接使用'text(src, x=0, y=0, size=20, color='orange', font)'方法"); }
