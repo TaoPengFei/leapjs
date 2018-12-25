@@ -4,7 +4,7 @@ module.exports = {
   mode: 'production',
   entry: './src/index.js',
   output: {
-    filename: 'leap.min.v1.3.js',
+    filename: 'leap.min.v1.3.1.js',
     path: __dirname + '/dist/'
   },
   module: {

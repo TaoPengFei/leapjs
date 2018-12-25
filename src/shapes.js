@@ -47,6 +47,7 @@ class Shape {
   _draw () {
     this._path()
     ctx.fill()
+    ctx.stroke()  // 强烈要求改回去
   }
 
   draw () {
